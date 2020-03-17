@@ -2,28 +2,18 @@
   {
     "name": "Asset",
     "values": [
-      ["102700000000000003535445454d0000", "10.000 STEEM"],
+      ["102700000000000003535445454d0000", "10.000 HIVE"],
       ["081a99be1c0000000656455354530000", "123456.789000 VESTS"],
       ["1378feffffffffff0353424400000000", "-100.333 SBD"]
     ]
   },
   {
     "name": "Array::String",
-    "values": [
-      [
-        "0203666f6f03626172",
-        ["foo", "bar"]
-      ]
-    ]
+    "values": [["0203666f6f03626172", ["foo", "bar"]]]
   },
   {
     "name": "Array::UInt16",
-    "values": [
-      [
-        "026400c800",
-        [100, 200]
-      ]
-    ]
+    "values": [["026400c800", [100, 200]]]
   },
   {
     "name": "Boolean",
@@ -53,14 +43,7 @@
   },
   {
     "name": "FlatMap::String::Date",
-    "values": [
-      [
-        "0102326b80436d38",
-        [
-          ["2k", "2000-01-01T00:00:00"]
-        ]
-      ]
-    ]
+    "values": [["0102326b80436d38", [["2k", "2000-01-01T00:00:00"]]]]
   },
   {
     "name": "Int8",
@@ -137,9 +120,15 @@
     "values": [
       [
         "0203666f6f03626172e80300000000000003535445454d00000f77656464696e672070726573656e74",
-        ["transfer", {
-            "amount": 1, "from": "foo", "memo": "wedding present", "to": "bar"
-          }]
+        [
+          "transfer",
+          {
+            "amount": 1,
+            "from": "foo",
+            "memo": "wedding present",
+            "to": "bar"
+          }
+        ]
       ]
     ]
   },
@@ -152,9 +141,15 @@
           "expiration": "2017-07-15T16:51:19",
           "extensions": ["long-pants"],
           "operations": [
-            ["vote", {
-                "author": "bar", "permlink": "baz", "voter": "foo", "weight": 10000
-              }]
+            [
+              "vote",
+              {
+                "author": "bar",
+                "permlink": "baz",
+                "voter": "foo",
+                "weight": 10000
+              }
+            ]
           ],
           "ref_block_num": 1234,
           "ref_block_prefix": 1122334455
@@ -173,13 +168,19 @@
   {
     "name": "Price",
     "values": [
-      ["e80300000000000003535445454d00000b020000000000000353424400000000", {"base": "1.000 STEEM", "quote": "0.523 SBD"}]
+      [
+        "e80300000000000003535445454d00000b020000000000000353424400000000",
+        { "base": "1.000 HIVE", "quote": "0.523 HBD" }
+      ]
     ]
   },
   {
     "name": "PublicKey",
     "values": [
-      ["021ec205b7c084b96814310c8acb4a0048e82b236f1878acc273fd1cfd03dac7e1", "STM5832HKCJzs6K3rRCsZ1PidTKgjF38ZJb718Y3pCW92HEMsCGPf"]
+      [
+        "021ec205b7c084b96814310c8acb4a0048e82b236f1878acc273fd1cfd03dac7e1",
+        "STM5832HKCJzs6K3rRCsZ1PidTKgjF38ZJb718Y3pCW92HEMsCGPf"
+      ]
     ]
   }
 ]

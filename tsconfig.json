@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "lib": ["es2015", "esnext.asynciterable"],
+    "lib": ["dom", "ES7"],
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitThis": true,

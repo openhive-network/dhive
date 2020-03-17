@@ -10,8 +10,6 @@ export const agent = IS_BROWSER
   ? undefined
   : new https.Agent({ keepAlive: true });
 
-const fetch = global["fetch"];
-
 async function readFile(filename: string) {
   return new Promise<Buffer>((resolve, reject) => {
     fs.readFile(filename, (error, result) => {

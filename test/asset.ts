@@ -7,13 +7,13 @@ describe("asset", function() {
   it("should create from string", function() {
     const oneSteem = Asset.fromString("1.000 HIVE");
     assert.equal(oneSteem.amount, 1);
-    assert.equal(oneSteem.symbol, "STEEM");
+    assert.equal(oneSteem.symbol, "HIVE");
     const vests = Asset.fromString("0.123456 VESTS");
     assert.equal(vests.amount, 0.123456);
     assert.equal(vests.symbol, "VESTS");
-    const sbd = Asset.from("0.444 SBD");
+    const sbd = Asset.from("0.444 HBD");
     assert.equal(sbd.amount, 0.444);
-    assert.equal(sbd.symbol, "SBD");
+    assert.equal(sbd.symbol, "HBD");
   });
 
   it("should convert to string", function() {
