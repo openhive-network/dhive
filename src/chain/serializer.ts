@@ -34,7 +34,7 @@
  */
 
 import * as ByteBuffer from "bytebuffer";
-import { PublicKey } from "./../crypto";
+import { PublicKey } from "../crypto";
 import { Asset, Price } from "./asset";
 import { HexBuffer } from "./misc";
 import { Operation } from "./operation";

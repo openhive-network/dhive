@@ -35,7 +35,7 @@
 
 import * as ByteBuffer from "bytebuffer";
 
-import { PublicKey } from "./../crypto";
+import { PublicKey } from "../crypto";
 import { Asset } from "./asset";
 
 export interface AuthorityType {

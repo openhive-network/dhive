@@ -33,7 +33,7 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import { PublicKey } from "./../crypto";
+import { PublicKey } from "../crypto";
 import { AuthorityType } from "./account";
 import { Asset, Price, PriceType } from "./asset";
 import { SignedBlockHeader } from "./block";
