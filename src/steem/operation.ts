@@ -1,5 +1,5 @@
 /**
- * @file Steem operation type definitions.
+ * @file Hive operation type definitions.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -33,170 +33,170 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import {PublicKey} from './../crypto'
-import {AuthorityType} from './account'
-import {Asset, Price, PriceType} from './asset'
-import {SignedBlockHeader} from './block'
-import {BeneficiaryRoute} from './comment'
-import {ChainProperties, HexBuffer} from './misc'
+import { PublicKey } from "./../crypto";
+import { AuthorityType } from "./account";
+import { Asset, Price, PriceType } from "./asset";
+import { SignedBlockHeader } from "./block";
+import { BeneficiaryRoute } from "./comment";
+import { ChainProperties, HexBuffer } from "./misc";
 
 /**
  * Operation name.
  */
-export type OperationName = // <id>
-    | 'account_create' // 9
-    | 'account_create_with_delegation' // 41
-    | 'account_update' // 10
-    | 'account_update2' // 43
-    | 'account_witness_proxy' // 13
-    | 'account_witness_vote' // 12
-    | 'cancel_transfer_from_savings' // 34
-    | 'change_recovery_account' // 26
-    | 'claim_account' // 22
-    | 'claim_reward_balance' // 39
-    | 'create_proposal' // 44
-    | 'comment' // 1
-    | 'comment_options' // 19
-    | 'convert' // 8
-    | 'create_claimed_account' // 23
-    | 'custom' // 15
-    | 'custom_binary' // 35
-    | 'custom_json' // 18
-    | 'decline_voting_rights' // 36
-    | 'delegate_vesting_shares' // 40
-    | 'delete_comment' // 17
-    | 'escrow_approve' // 31
-    | 'escrow_dispute' // 28
-    | 'escrow_release' // 29
-    | 'escrow_transfer' // 27
-    | 'feed_publish' // 7
-    | 'limit_order_cancel' // 6
-    | 'limit_order_create' // 5
-    | 'limit_order_create2' // 21
-    | 'pow' // 14
-    | 'pow2' // 30
-    | 'recover_account' // 25
-    | 'remove_proposal' // 46
-    | 'report_over_production' // 16
-    | 'request_account_recovery' // 24
-    | 'reset_account' // 37
-    | 'set_reset_account' // 38
-    | 'set_withdraw_vesting_route' // 20
-    | 'transfer' // 2
-    | 'transfer_from_savings' // 33
-    | 'transfer_to_savings' // 32
-    | 'transfer_to_vesting' // 3
-    | 'update_proposal_votes' // 45
-    | 'vote' // 0
-    | 'withdraw_vesting' // 4
-    | 'witness_set_properties' // 42
-    | 'witness_update' // 11
+export type OperationName =  // <id>
+  | "account_create" // 9
+  | "account_create_with_delegation" // 41
+  | "account_update" // 10
+  | "account_update2" // 43
+  | "account_witness_proxy" // 13
+  | "account_witness_vote" // 12
+  | "cancel_transfer_from_savings" // 34
+  | "change_recovery_account" // 26
+  | "claim_account" // 22
+  | "claim_reward_balance" // 39
+  | "create_proposal" // 44
+  | "comment" // 1
+  | "comment_options" // 19
+  | "convert" // 8
+  | "create_claimed_account" // 23
+  | "custom" // 15
+  | "custom_binary" // 35
+  | "custom_json" // 18
+  | "decline_voting_rights" // 36
+  | "delegate_vesting_shares" // 40
+  | "delete_comment" // 17
+  | "escrow_approve" // 31
+  | "escrow_dispute" // 28
+  | "escrow_release" // 29
+  | "escrow_transfer" // 27
+  | "feed_publish" // 7
+  | "limit_order_cancel" // 6
+  | "limit_order_create" // 5
+  | "limit_order_create2" // 21
+  | "pow" // 14
+  | "pow2" // 30
+  | "recover_account" // 25
+  | "remove_proposal" // 46
+  | "report_over_production" // 16
+  | "request_account_recovery" // 24
+  | "reset_account" // 37
+  | "set_reset_account" // 38
+  | "set_withdraw_vesting_route" // 20
+  | "transfer" // 2
+  | "transfer_from_savings" // 33
+  | "transfer_to_savings" // 32
+  | "transfer_to_vesting" // 3
+  | "update_proposal_votes" // 45
+  | "vote" // 0
+  | "withdraw_vesting" // 4
+  | "witness_set_properties" // 42
+  | "witness_update"; // 11
 
 /**
  * Virtual operation name.
  */
-export type VirtualOperationName = // <id>
-    | 'author_reward' // 43
-    | 'comment_benefactor_reward' // 55
-    | 'comment_payout_update' // 53
-    | 'comment_reward' // 45
-    | 'curation_reward' // 44
-    | 'fill_convert_request' // 42
-    | 'fill_order' // 49
-    | 'fill_transfer_from_savings' // 51
-    | 'fill_vesting_withdraw' // 48
-    | 'hardfork' // 52
-    | 'interest' // 47
-    | 'liquidity_reward' // 46
-    | 'return_vesting_delegation' // 54
-    | 'shutdown_witness' // 50
+export type VirtualOperationName =  // <id>
+  | "author_reward" // 43
+  | "comment_benefactor_reward" // 55
+  | "comment_payout_update" // 53
+  | "comment_reward" // 45
+  | "curation_reward" // 44
+  | "fill_convert_request" // 42
+  | "fill_order" // 49
+  | "fill_transfer_from_savings" // 51
+  | "fill_vesting_withdraw" // 48
+  | "hardfork" // 52
+  | "interest" // 47
+  | "liquidity_reward" // 46
+  | "return_vesting_delegation" // 54
+  | "shutdown_witness"; // 50
 
 /**
  * Generic operation.
  */
 export interface Operation {
-    0: OperationName | VirtualOperationName
-    1: {[key: string]: any}
+  0: OperationName | VirtualOperationName;
+  1: { [key: string]: any };
 }
 
 export interface AppliedOperation {
-   trx_id: string
-   block: number
-   trx_in_block: number
-   op_in_trx: number
-   virtual_op: number
-   timestamp: string
-   op: Operation
+  trx_id: string;
+  block: number;
+  trx_in_block: number;
+  op_in_trx: number;
+  virtual_op: number;
+  timestamp: string;
+  op: Operation;
 }
 
 export interface AccountCreateOperation extends Operation {
-    0: 'account_create'
-    1: {
-        fee: string | Asset
-        creator: string // account_name_type
-        new_account_name: string // account_name_type
-        owner: AuthorityType
-        active: AuthorityType
-        posting: AuthorityType
-        memo_key: string | PublicKey // public_key_type
-        json_metadata: string
-    }
+  0: "account_create";
+  1: {
+    fee: string | Asset;
+    creator: string; // account_name_type
+    new_account_name: string; // account_name_type
+    owner: AuthorityType;
+    active: AuthorityType;
+    posting: AuthorityType;
+    memo_key: string | PublicKey; // public_key_type
+    json_metadata: string;
+  };
 }
 
 export interface AccountCreateWithDelegationOperation extends Operation {
-    0: 'account_create_with_delegation'
-    1: {
-        fee: string | Asset
-        delegation: string | Asset
-        creator: string // account_name_type
-        new_account_name: string // account_name_type
-        owner: AuthorityType
-        active: AuthorityType
-        posting: AuthorityType
-        memo_key: string | PublicKey // public_key_type
-        json_metadata: string
-        /**
-         * Extensions. Not currently used.
-         */
-        extensions: any[]
-    }
+  0: "account_create_with_delegation";
+  1: {
+    fee: string | Asset;
+    delegation: string | Asset;
+    creator: string; // account_name_type
+    new_account_name: string; // account_name_type
+    owner: AuthorityType;
+    active: AuthorityType;
+    posting: AuthorityType;
+    memo_key: string | PublicKey; // public_key_type
+    json_metadata: string;
+    /**
+     * Extensions. Not currently used.
+     */
+    extensions: any[];
+  };
 }
 
 export interface AccountUpdateOperation extends Operation {
-    0: 'account_update' // 10
-    1: {
-        account: string // account_name_type
-        owner?: AuthorityType // optional< authority >
-        active?: AuthorityType // optional< authority >
-        posting?: AuthorityType // optional< authority >
-        memo_key: string | PublicKey // public_key_type
-        json_metadata: string
-    }
+  0: "account_update"; // 10
+  1: {
+    account: string; // account_name_type
+    owner?: AuthorityType; // optional< authority >
+    active?: AuthorityType; // optional< authority >
+    posting?: AuthorityType; // optional< authority >
+    memo_key: string | PublicKey; // public_key_type
+    json_metadata: string;
+  };
 }
 
 export interface AccountWitnessProxyOperation extends Operation {
-    0: 'account_witness_proxy' // 13
-    1: {
-        account: string // account_name_type
-        proxy: string // account_name_type
-    }
+  0: "account_witness_proxy"; // 13
+  1: {
+    account: string; // account_name_type
+    proxy: string; // account_name_type
+  };
 }
 
 export interface AccountWitnessVoteOperation extends Operation {
-    0: 'account_witness_vote' // 12
-    1: {
-        account: string // account_name_type
-        witness: string // account_name_type
-        approve: boolean
-    }
+  0: "account_witness_vote"; // 12
+  1: {
+    account: string; // account_name_type
+    witness: string; // account_name_type
+    approve: boolean;
+  };
 }
 
 export interface CancelTransferFromSavingsOperation extends Operation {
-    0: 'cancel_transfer_from_savings' // 34
-    1: {
-        from: string // account_name_type
-        request_id: number // uint32_t
-    }
+  0: "cancel_transfer_from_savings"; // 34
+  1: {
+    from: string; // account_name_type
+    request_id: number; // uint32_t
+  };
 }
 
 /**
@@ -218,173 +218,173 @@ export interface CancelTransferFromSavingsOperation extends Operation {
  * witness according to stake.
  */
 export interface ChangeRecoveryAccountOperation extends Operation {
-    0: 'change_recovery_account' // 26
-    1: {
-        /**
-         * The account that would be recovered in case of compromise.
-         */
-        account_to_recover: string // account_name_type
-        /**
-         * The account that creates the recover request.
-         */
-        new_recovery_account: string // account_name_type
-        /**
-         * Extensions. Not currently used.
-         */
-        extensions: any[] // extensions_type
-    }
+  0: "change_recovery_account"; // 26
+  1: {
+    /**
+     * The account that would be recovered in case of compromise.
+     */
+    account_to_recover: string; // account_name_type
+    /**
+     * The account that creates the recover request.
+     */
+    new_recovery_account: string; // account_name_type
+    /**
+     * Extensions. Not currently used.
+     */
+    extensions: any[]; // extensions_type
+  };
 }
 
 export interface ClaimRewardBalanceOperation extends Operation {
-    0: 'claim_reward_balance' // 39
-    1: {
-        account: string // account_name_type
-        reward_steem: string | Asset
-        reward_sbd: string | Asset
-        reward_vests: string | Asset
-    }
+  0: "claim_reward_balance"; // 39
+  1: {
+    account: string; // account_name_type
+    reward_steem: string | Asset;
+    reward_sbd: string | Asset;
+    reward_vests: string | Asset;
+  };
 }
 
 export interface ClaimAccountOperation extends Operation {
-    0: 'claim_account' // 22
-    1: {
-        creator: string // account_name_type
-        fee: string | Asset
-        /**
-         * Extensions. Not currently used.
-         */
-        extensions: any[] // extensions_type
-    }
+  0: "claim_account"; // 22
+  1: {
+    creator: string; // account_name_type
+    fee: string | Asset;
+    /**
+     * Extensions. Not currently used.
+     */
+    extensions: any[]; // extensions_type
+  };
 }
 
 export interface CommentOperation extends Operation {
-    0: 'comment' // 1
-    1: {
-        parent_author: string // account_name_type
-        parent_permlink: string
-        author: string // account_name_type
-        permlink: string
-        title: string
-        body: string
-        json_metadata: string
-    }
+  0: "comment"; // 1
+  1: {
+    parent_author: string; // account_name_type
+    parent_permlink: string;
+    author: string; // account_name_type
+    permlink: string;
+    title: string;
+    body: string;
+    json_metadata: string;
+  };
 }
 
 export interface CommentOptionsOperation extends Operation {
-    0: 'comment_options' // 19
-    1: {
-      author: string // account_name_type
-      permlink: string
-      /** SBD value of the maximum payout this post will receive. */
-      max_accepted_payout: Asset | string
-      /** The percent of Steem Dollars to key, unkept amounts will be received as Steem Power. */
-      percent_steem_dollars: number // uint16_t
-      /** Whether to allow post to receive votes. */
-      allow_votes: boolean
-      /** Whether to allow post to recieve curation rewards. */
-      allow_curation_rewards: boolean
-      extensions: Array<[0, {beneficiaries: BeneficiaryRoute[]}]> // flat_set< comment_options_extension >
-    }
+  0: "comment_options"; // 19
+  1: {
+    author: string; // account_name_type
+    permlink: string;
+    /** SBD value of the maximum payout this post will receive. */
+    max_accepted_payout: Asset | string;
+    /** The percent of Steem Dollars to key, unkept amounts will be received as Steem Power. */
+    percent_steem_dollars: number; // uint16_t
+    /** Whether to allow post to receive votes. */
+    allow_votes: boolean;
+    /** Whether to allow post to recieve curation rewards. */
+    allow_curation_rewards: boolean;
+    extensions: Array<[0, { beneficiaries: BeneficiaryRoute[] }]>; // flat_set< comment_options_extension >
+  };
 }
 
 export interface ConvertOperation extends Operation {
-    0: 'convert' // 8
-    1: {
-        owner: string // account_name_type
-        requestid: number // uint32_t
-        amount: Asset | string
-    }
+  0: "convert"; // 8
+  1: {
+    owner: string; // account_name_type
+    requestid: number; // uint32_t
+    amount: Asset | string;
+  };
 }
 
 export interface CreateClaimedAccountOperation extends Operation {
-    0: 'create_claimed_account' // 23
-    1: {
-        creator: string // account_name_type
-        new_account_name: string // account_name_type
-        owner: AuthorityType
-        active: AuthorityType
-        posting: AuthorityType
-        memo_key: string | PublicKey // public_key_type
-        json_metadata: string
-        /**
-         * Extensions. Not currently used.
-         */
-        extensions: any[] // extensions_type
-    }
+  0: "create_claimed_account"; // 23
+  1: {
+    creator: string; // account_name_type
+    new_account_name: string; // account_name_type
+    owner: AuthorityType;
+    active: AuthorityType;
+    posting: AuthorityType;
+    memo_key: string | PublicKey; // public_key_type
+    json_metadata: string;
+    /**
+     * Extensions. Not currently used.
+     */
+    extensions: any[]; // extensions_type
+  };
 }
 
 export interface CustomOperation extends Operation {
-    0: 'custom' // 15
-    1: {
-        required_auths: string[]
-        id: number // uint16
-        data: Buffer | HexBuffer | number[]
-    }
+  0: "custom"; // 15
+  1: {
+    required_auths: string[];
+    id: number; // uint16
+    data: Buffer | HexBuffer | number[];
+  };
 }
 
 export interface CustomBinaryOperation extends Operation {
-    0: 'custom_binary' // 35
-    1: {
-        required_owner_auths: string[] // flat_set< account_name_type >
-        required_active_auths: string[] // flat_set< account_name_type >
-        required_posting_auths: string[] // flat_set< account_name_type >
-        required_auths: AuthorityType[]
-        /**
-         * ID string, must be less than 32 characters long.
-         */
-        id: string
-        data: Buffer | HexBuffer | number[]
-    }
+  0: "custom_binary"; // 35
+  1: {
+    required_owner_auths: string[]; // flat_set< account_name_type >
+    required_active_auths: string[]; // flat_set< account_name_type >
+    required_posting_auths: string[]; // flat_set< account_name_type >
+    required_auths: AuthorityType[];
+    /**
+     * ID string, must be less than 32 characters long.
+     */
+    id: string;
+    data: Buffer | HexBuffer | number[];
+  };
 }
 
 export interface CustomJsonOperation extends Operation {
-    0: 'custom_json' // 18
-    1: {
-        required_auths: string[] // flat_set< account_name_type >
-        required_posting_auths: string[] // flat_set< account_name_type >
-        /**
-         * ID string, must be less than 32 characters long.
-         */
-        id: string
-        /**
-         * JSON encoded string, must be valid JSON.
-         */
-        json: string
-    }
+  0: "custom_json"; // 18
+  1: {
+    required_auths: string[]; // flat_set< account_name_type >
+    required_posting_auths: string[]; // flat_set< account_name_type >
+    /**
+     * ID string, must be less than 32 characters long.
+     */
+    id: string;
+    /**
+     * JSON encoded string, must be valid JSON.
+     */
+    json: string;
+  };
 }
 
 export interface DeclineVotingRightsOperation extends Operation {
-    0: 'decline_voting_rights' // 36
-    1: {
-        account: string // account_name_type
-        decline: boolean
-    }
+  0: "decline_voting_rights"; // 36
+  1: {
+    account: string; // account_name_type
+    decline: boolean;
+  };
 }
 
 export interface DelegateVestingSharesOperation extends Operation {
-    0: 'delegate_vesting_shares' // 40
-    1: {
-        /**
-         * The account delegating vesting shares.
-         */
-        delegator: string // account_name_type
-        /**
-         * The account receiving vesting shares.
-         */
-        delegatee: string // account_name_type
-        /**
-         * The amount of vesting shares delegated.
-         */
-        vesting_shares: string | Asset
-    }
+  0: "delegate_vesting_shares"; // 40
+  1: {
+    /**
+     * The account delegating vesting shares.
+     */
+    delegator: string; // account_name_type
+    /**
+     * The account receiving vesting shares.
+     */
+    delegatee: string; // account_name_type
+    /**
+     * The amount of vesting shares delegated.
+     */
+    vesting_shares: string | Asset;
+  };
 }
 
 export interface DeleteCommentOperation extends Operation {
-    0: 'delete_comment' // 17
-    1: {
-        author: string // account_name_type
-        permlink: string
-    }
+  0: "delete_comment"; // 17
+  1: {
+    author: string; // account_name_type
+    permlink: string;
+  };
 }
 
 /**
@@ -393,18 +393,18 @@ export interface DeleteCommentOperation extends Operation {
  * Subsequent escrow approve operations, regardless of the approval, will be rejected.
  */
 export interface EscrowApproveOperation extends Operation {
-    0: 'escrow_approve' // 31
-    1: {
-        from: string // account_name_type
-        to: string // account_name_type
-        agent: string // account_name_type
-        /**
-         * Either to or agent.
-         */
-        who: string // account_name_type
-        escrow_id: number // uint32_t
-        approve: boolean
-    }
+  0: "escrow_approve"; // 31
+  1: {
+    from: string; // account_name_type
+    to: string; // account_name_type
+    agent: string; // account_name_type
+    /**
+     * Either to or agent.
+     */
+    who: string; // account_name_type
+    escrow_id: number; // uint32_t
+    approve: boolean;
+  };
 }
 
 /**
@@ -413,14 +413,14 @@ export interface EscrowApproveOperation extends Operation {
  * who gets what.
  */
 export interface EscrowDisputeOperation extends Operation {
-    0: 'escrow_dispute' // 28
-    1: {
-        from: string // account_name_type
-        to: string // account_name_type
-        agent: string // account_name_type
-        who: string // account_name_type
-        escrow_id: number // uint32_t
-    }
+  0: "escrow_dispute"; // 28
+  1: {
+    from: string; // account_name_type
+    to: string; // account_name_type
+    agent: string; // account_name_type
+    who: string; // account_name_type
+    escrow_id: number; // uint32_t
+  };
 }
 
 /**
@@ -434,32 +434,32 @@ export interface EscrowDisputeOperation extends Operation {
  *    following whichever agreement was in place between the parties.
  */
 export interface EscrowReleaseOperation extends Operation {
-    0: 'escrow_release' // 29
-    1: {
-        from: string // account_name_type
-        /**
-         * The original 'to'.
-         */
-        to: string // account_name_type
-        agent: string // account_name_type
-        /**
-         * The account that is attempting to release the funds, determines valid 'receiver'.
-         */
-        who: string // account_name_type
-        /**
-         * The account that should receive funds (might be from, might be to).
-         */
-        receiver: string // account_name_type
-        escrow_id: number // uint32_t
-        /**
-         * The amount of sbd to release.
-         */
-        sbd_amount: Asset | string
-        /**
-         * The amount of steem to release.
-         */
-        steem_amount: Asset | string
-    }
+  0: "escrow_release"; // 29
+  1: {
+    from: string; // account_name_type
+    /**
+     * The original 'to'.
+     */
+    to: string; // account_name_type
+    agent: string; // account_name_type
+    /**
+     * The account that is attempting to release the funds, determines valid 'receiver'.
+     */
+    who: string; // account_name_type
+    /**
+     * The account that should receive funds (might be from, might be to).
+     */
+    receiver: string; // account_name_type
+    escrow_id: number; // uint32_t
+    /**
+     * The amount of sbd to release.
+     */
+    sbd_amount: Asset | string;
+    /**
+     * The amount of steem to release.
+     */
+    steem_amount: Asset | string;
+  };
 }
 
 /**
@@ -481,53 +481,53 @@ export interface EscrowReleaseOperation extends Operation {
  * by the sender.
  */
 export interface EscrowTransferOperation extends Operation {
-    0: 'escrow_transfer' // 27
-    1: {
-        from: string // account_name_type
-        to: string // account_name_type
-        agent: string // account_name_type
-        escrow_id: number // uint32_t
-        sbd_amount: Asset | string
-        steem_amount: Asset | string
-        fee: Asset | string
-        ratification_deadline: string // time_point_sec
-        escrow_expiration: string // time_point_sec
-        json_meta: string
-    }
+  0: "escrow_transfer"; // 27
+  1: {
+    from: string; // account_name_type
+    to: string; // account_name_type
+    agent: string; // account_name_type
+    escrow_id: number; // uint32_t
+    sbd_amount: Asset | string;
+    steem_amount: Asset | string;
+    fee: Asset | string;
+    ratification_deadline: string; // time_point_sec
+    escrow_expiration: string; // time_point_sec
+    json_meta: string;
+  };
 }
 
 export interface FeedPublishOperation extends Operation {
-    0: 'feed_publish' // 7
-    1: {
-      publisher: string // account_name_type
-      exchange_rate: PriceType
-    }
+  0: "feed_publish"; // 7
+  1: {
+    publisher: string; // account_name_type
+    exchange_rate: PriceType;
+  };
 }
 
 /**
  * Cancels an order and returns the balance to owner.
  */
 export interface LimitOrderCancelOperation extends Operation {
-    0: 'limit_order_cancel' // 6
-    1: {
-      owner: string // account_name_type
-      orderid: number // uint32_t
-    }
+  0: "limit_order_cancel"; // 6
+  1: {
+    owner: string; // account_name_type
+    orderid: number; // uint32_t
+  };
 }
 
 /**
  * This operation creates a limit order and matches it against existing open orders.
  */
 export interface LimitOrderCreateOperation extends Operation {
-    0: 'limit_order_create' // 5
-    1: {
-      owner: string // account_name_type
-      orderid: number // uint32_t
-      amount_to_sell: Asset | string
-      min_to_receive: Asset | string
-      fill_or_kill: boolean
-      expiration: string // time_point_sec
-    }
+  0: "limit_order_create"; // 5
+  1: {
+    owner: string; // account_name_type
+    orderid: number; // uint32_t
+    amount_to_sell: Asset | string;
+    min_to_receive: Asset | string;
+    fill_or_kill: boolean;
+    expiration: string; // time_point_sec
+  };
 }
 
 /**
@@ -535,41 +535,41 @@ export interface LimitOrderCreateOperation extends Operation {
  * than calculating it from other fields.
  */
 export interface LimitOrderCreate2Operation extends Operation {
-    0: 'limit_order_create2' // 21
-    1: {
-      owner: string // account_name_type
-      orderid: number // uint32_t
-      amount_to_sell: Asset | string
-      fill_or_kill: boolean
-      exchange_rate: PriceType
-      expiration: string // time_point_sec
-    }
+  0: "limit_order_create2"; // 21
+  1: {
+    owner: string; // account_name_type
+    orderid: number; // uint32_t
+    amount_to_sell: Asset | string;
+    fill_or_kill: boolean;
+    exchange_rate: PriceType;
+    expiration: string; // time_point_sec
+  };
 }
 
 /**
  * Legacy proof of work operation.
  */
 export interface PowOperation extends Operation {
-    0: 'pow' // 14
-    1: {
-        worker_account: string // account_name_type
-        block_id: any
-        nonce: number // uint64_t
-        work: any
-        props: any
-    }
+  0: "pow"; // 14
+  1: {
+    worker_account: string; // account_name_type
+    block_id: any;
+    nonce: number; // uint64_t
+    work: any;
+    props: any;
+  };
 }
 
 /**
  * Legacy equihash proof of work operation.
  */
 export interface Pow2Operation extends Operation {
-    0: 'pow2' // 30
-    1: {
-        work: any
-        new_owner_key?: string | PublicKey // public_key_type
-        props: any
-    }
+  0: "pow2"; // 30
+  1: {
+    work: any;
+    new_owner_key?: string | PublicKey; // public_key_type
+    props: any;
+  };
 }
 
 /**
@@ -610,26 +610,26 @@ export interface Pow2Operation extends Operation {
  * concern.
  */
 export interface RecoverAccountOperation extends Operation {
-    0: 'recover_account' // 25
-    1: {
-        /**
-         * The account to be recovered.
-         */
-        account_to_recover: string // account_name_type
-        /**
-         * The new owner authority as specified in the request account recovery operation.
-         */
-        new_owner_authority: AuthorityType
-        /**
-         * A previous owner authority that the account holder will use to prove
-         * past ownership of the account to be recovered.
-         */
-        recent_owner_authority: AuthorityType
-        /**
-         * Extensions. Not currently used.
-         */
-        extensions: any[] // extensions_type
-    }
+  0: "recover_account"; // 25
+  1: {
+    /**
+     * The account to be recovered.
+     */
+    account_to_recover: string; // account_name_type
+    /**
+     * The new owner authority as specified in the request account recovery operation.
+     */
+    new_owner_authority: AuthorityType;
+    /**
+     * A previous owner authority that the account holder will use to prove
+     * past ownership of the account to be recovered.
+     */
+    recent_owner_authority: AuthorityType;
+    /**
+     * Extensions. Not currently used.
+     */
+    extensions: any[]; // extensions_type
+  };
 }
 
 /**
@@ -646,12 +646,12 @@ export interface RecoverAccountOperation extends Operation {
  * of the block producer to the reporter.
  */
 export interface ReportOverProductionOperation extends Operation {
-    0: 'report_over_production' // 16
-    1: {
-        reporter: string // account_name_type
-        first_block: SignedBlockHeader
-        second_block: SignedBlockHeader
-    }
+  0: "report_over_production"; // 16
+  1: {
+    reporter: string; // account_name_type
+    first_block: SignedBlockHeader;
+    second_block: SignedBlockHeader;
+  };
 }
 
 /**
@@ -682,26 +682,26 @@ export interface ReportOverProductionOperation extends Operation {
  * the recover account operation.
  */
 export interface RequestAccountRecoveryOperation extends Operation {
-    0: 'request_account_recovery' // 24
-    1: {
-        /**
-         * The recovery account is listed as the recovery account on the account to recover.
-         */
-        recovery_account: string // account_name_type
-        /**
-         * The account to recover. This is likely due to a compromised owner authority.
-         */
-        account_to_recover: string // account_name_type
-        /**
-         * The new owner authority the account to recover wishes to have. This is secret
-         * known by the account to recover and will be confirmed in a recover_account_operation.
-         */
-        new_owner_authority: AuthorityType
-        /**
-         * Extensions. Not currently used.
-         */
-        extensions: any[] // extensions_type
-    }
+  0: "request_account_recovery"; // 24
+  1: {
+    /**
+     * The recovery account is listed as the recovery account on the account to recover.
+     */
+    recovery_account: string; // account_name_type
+    /**
+     * The account to recover. This is likely due to a compromised owner authority.
+     */
+    account_to_recover: string; // account_name_type
+    /**
+     * The new owner authority the account to recover wishes to have. This is secret
+     * known by the account to recover and will be confirmed in a recover_account_operation.
+     */
+    new_owner_authority: AuthorityType;
+    /**
+     * Extensions. Not currently used.
+     */
+    extensions: any[]; // extensions_type
+  };
 }
 
 /**
@@ -709,12 +709,12 @@ export interface RequestAccountRecoveryOperation extends Operation {
  * new_owner_authority after 60 days of inactivity.
  */
 export interface ResetAccountOperation extends Operation {
-    0: 'reset_account' // 37
-    1: {
-        reset_account: string // account_name_type
-        account_to_reset: string // account_name_type
-        new_owner_authority: AuthorityType
-    }
+  0: "reset_account"; // 37
+  1: {
+    reset_account: string; // account_name_type
+    account_to_reset: string; // account_name_type
+    new_owner_authority: AuthorityType;
+  };
 }
 
 /**
@@ -722,12 +722,12 @@ export interface ResetAccountOperation extends Operation {
  * to execute the 'reset_account_operation' after 60 days.
  */
 export interface SetResetAccountOperation extends Operation {
-    0: 'set_reset_account' // 38
-    1: {
-        account: string // account_name_type
-        current_reset_account: string // account_name_type
-        reset_account: string // account_name_type
-    }
+  0: "set_reset_account"; // 38
+  1: {
+    account: string; // account_name_type
+    current_reset_account: string; // account_name_type
+    reset_account: string; // account_name_type
+  };
 }
 
 /**
@@ -738,60 +738,60 @@ export interface SetResetAccountOperation extends Operation {
  * vests to steem and back, guaranteeing they maintain their value.
  */
 export interface SetWithdrawVestingRouteOperation extends Operation {
-    0: 'set_withdraw_vesting_route' // 20
-    1: {
-        from_account: string // account_name_type
-        to_account: string // account_name_type
-        percent: number // uint16_t (100% = STEEMIT_100_PERCENT = 10000)
-        auto_vest: boolean
-    }
+  0: "set_withdraw_vesting_route"; // 20
+  1: {
+    from_account: string; // account_name_type
+    to_account: string; // account_name_type
+    percent: number; // uint16_t (100% = STEEMIT_100_PERCENT = 10000)
+    auto_vest: boolean;
+  };
 }
 
 /**
  * Transfers STEEM from one account to another.
  */
 export interface TransferOperation extends Operation {
-    0: 'transfer' // 2
-    1: {
-        /**
-         * Sending account name.
-         */
-        from: string // account_name_type
-        /**
-         * Receiving account name.
-         */
-        to: string // account_name_type
-        /**
-         * Amount of STEEM or SBD to send.
-         */
-        amount: string | Asset
-        /**
-         * Plain-text note attached to transaction.
-         */
-        memo: string
-    }
+  0: "transfer"; // 2
+  1: {
+    /**
+     * Sending account name.
+     */
+    from: string; // account_name_type
+    /**
+     * Receiving account name.
+     */
+    to: string; // account_name_type
+    /**
+     * Amount of STEEM or SBD to send.
+     */
+    amount: string | Asset;
+    /**
+     * Plain-text note attached to transaction.
+     */
+    memo: string;
+  };
 }
 
 export interface TransferFromSavingsOperation extends Operation {
-    0: 'transfer_from_savings' // 33
-    1: {
-        from: string // account_name_type
-        request_id: number // uint32_t
-        to: string // account_name_type
-        amount: string | Asset
-        memo: string
-    }
+  0: "transfer_from_savings"; // 33
+  1: {
+    from: string; // account_name_type
+    request_id: number; // uint32_t
+    to: string; // account_name_type
+    amount: string | Asset;
+    memo: string;
+  };
 }
 
 export interface TransferToSavingsOperation extends Operation {
-    0: 'transfer_to_savings' // 32
-    1: {
-        amount: string | Asset
-        from: string // account_name_type
-        memo: string
-        request_id: number // uint32_t
-        to: string // account_name_type
-    }
+  0: "transfer_to_savings"; // 32
+  1: {
+    amount: string | Asset;
+    from: string; // account_name_type
+    memo: string;
+    request_id: number; // uint32_t
+    to: string; // account_name_type
+  };
 }
 
 /**
@@ -802,28 +802,28 @@ export interface TransferToSavingsOperation extends Operation {
  * (A.k.a. Powering Up)
  */
 export interface TransferToVestingOperation extends Operation {
-    0: 'transfer_to_vesting' // 3
-    1: {
-        from: string // account_name_type
-        to: string // account_name_type
-        /**
-         * Amount to power up, must be STEEM.
-         */
-        amount: string | Asset
-    }
+  0: "transfer_to_vesting"; // 3
+  1: {
+    from: string; // account_name_type
+    to: string; // account_name_type
+    /**
+     * Amount to power up, must be STEEM.
+     */
+    amount: string | Asset;
+  };
 }
 
 export interface VoteOperation extends Operation {
-    0: 'vote' // 0
-    1: {
-        voter: string // account_name_type
-        author: string // account_name_type
-        permlink: string
-        /**
-         * Voting weight, 100% = 10000 (STEEMIT_100_PERCENT).
-         */
-        weight: number // int16_t
-    }
+  0: "vote"; // 0
+  1: {
+    voter: string; // account_name_type
+    author: string; // account_name_type
+    permlink: string;
+    /**
+     * Voting weight, 100% = 10000 (STEEMIT_100_PERCENT).
+     */
+    weight: number; // int16_t
+  };
 }
 
 /**
@@ -839,14 +839,14 @@ export interface VoteOperation extends Operation {
  * (A.k.a. Powering Down)
  */
 export interface WithdrawVestingOperation extends Operation {
-    0: 'withdraw_vesting' // 4
-    1: {
-        account: string // account_name_type
-        /**
-         * Amount to power down, must be VESTS.
-         */
-        vesting_shares: string | Asset
-    }
+  0: "withdraw_vesting"; // 4
+  1: {
+    account: string; // account_name_type
+    /**
+     * Amount to power down, must be VESTS.
+     */
+    vesting_shares: string | Asset;
+  };
 }
 
 /**
@@ -864,74 +864,74 @@ export interface WithdrawVestingOperation extends Operation {
  * producing blocks.
  */
 export interface WitnessUpdateOperation extends Operation {
-    0: 'witness_update' // 11
-    1: {
-        owner: string // account_name_type
-        /**
-         * URL for witness, usually a link to a post in the witness-category tag.
-         */
-        url: string
-        block_signing_key: string | PublicKey | null // public_key_type
-        props: ChainProperties
-        /**
-         * The fee paid to register a new witness, should be 10x current block production pay.
-         */
-        fee: string | Asset
-    }
+  0: "witness_update"; // 11
+  1: {
+    owner: string; // account_name_type
+    /**
+     * URL for witness, usually a link to a post in the witness-category tag.
+     */
+    url: string;
+    block_signing_key: string | PublicKey | null; // public_key_type
+    props: ChainProperties;
+    /**
+     * The fee paid to register a new witness, should be 10x current block production pay.
+     */
+    fee: string | Asset;
+  };
 }
 
 export interface WitnessSetPropertiesOperation extends Operation {
-    0: 'witness_set_properties' // 42
-    1: {
-        owner: string
-        props: Array<[string, Buffer]>
-        extensions: any[]
-    }
+  0: "witness_set_properties"; // 42
+  1: {
+    owner: string;
+    props: Array<[string, Buffer]>;
+    extensions: any[];
+  };
 }
 
 export interface AccountUpdate2Operation extends Operation {
-    0: 'account_update2' // 43
-    1: {
-        account: string // account_name_type
-        owner?: AuthorityType // optional< authority >
-        active?: AuthorityType // optional< authority >
-        posting?: AuthorityType // optional< authority >
-        memo_key?: string | PublicKey // public_key_type
-        json_metadata: string
-        posting_json_metadata: string
-        extensions: any[]
-    }
+  0: "account_update2"; // 43
+  1: {
+    account: string; // account_name_type
+    owner?: AuthorityType; // optional< authority >
+    active?: AuthorityType; // optional< authority >
+    posting?: AuthorityType; // optional< authority >
+    memo_key?: string | PublicKey; // public_key_type
+    json_metadata: string;
+    posting_json_metadata: string;
+    extensions: any[];
+  };
 }
 
 export interface CreateProposalOperation extends Operation {
-    0: 'create_proposal' // 44
-    1: {
-        creator: string
-        receiver: string
-        start_date: string // time_point_sec
-        end_date: string // time_point_sec
-        daily_pay: Asset | string
-        subject: string
-        permlink: string
-        extensions: any[]
-    }
+  0: "create_proposal"; // 44
+  1: {
+    creator: string;
+    receiver: string;
+    start_date: string; // time_point_sec
+    end_date: string; // time_point_sec
+    daily_pay: Asset | string;
+    subject: string;
+    permlink: string;
+    extensions: any[];
+  };
 }
 
 export interface UpdateProposalVotesOperation extends Operation {
-    0: 'update_proposal_votes' // 45
-    1: {
-        voter: string
-        proposal_ids: number[] // flat_set_ex<int64_t>
-        approve: boolean
-        extensions: any[]
-    }
+  0: "update_proposal_votes"; // 45
+  1: {
+    voter: string;
+    proposal_ids: number[]; // flat_set_ex<int64_t>
+    approve: boolean;
+    extensions: any[];
+  };
 }
 
 export interface RemoveProposalOperation extends Operation {
-    0: 'remove_proposal' // 46
-    1: {
-        proposal_owner: string
-        proposal_ids: number[] // flat_set_ex<int64_t>
-        extensions: any[]
-    }
+  0: "remove_proposal"; // 46
+  1: {
+    proposal_owner: string;
+    proposal_ids: number[]; // flat_set_ex<int64_t>
+    extensions: any[];
+  };
 }

@@ -1,5 +1,5 @@
 /**
- * @file Steem block type definitions.
+ * @file Hive block type definitions.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -33,32 +33,32 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import {Transaction} from './transaction'
+import { Transaction } from "./transaction";
 
 /**
  * Unsigned block header.
  */
 export interface BlockHeader {
-    previous: string // block_id_type
-    timestamp: string // time_point_sec
-    witness: string
-    transaction_merkle_root: string // checksum_type
-    extensions: any[] // block_header_extensions_type
+  previous: string; // block_id_type
+  timestamp: string; // time_point_sec
+  witness: string;
+  transaction_merkle_root: string; // checksum_type
+  extensions: any[]; // block_header_extensions_type
 }
 
 /**
  * Signed block header.
  */
 export interface SignedBlockHeader extends BlockHeader {
-    witness_signature: string // signature_type
+  witness_signature: string; // signature_type
 }
 
 /**
  * Full signed block.
  */
 export interface SignedBlock extends SignedBlockHeader {
-    block_id: string
-    signing_key: string
-    transaction_ids: string[]
-    transactions: Transaction[]
+  block_id: string;
+  signing_key: string;
+  transaction_ids: string[];
+  transactions: Transaction[];
 }
