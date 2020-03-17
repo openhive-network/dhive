@@ -1,5 +1,5 @@
 /**
- * @file Steem crypto helpers.
+ * @file Hive crypto helpers.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.

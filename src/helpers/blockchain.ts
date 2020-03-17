@@ -1,5 +1,5 @@
 /**
- * @file Steem blockchain helpers.
+ * @file Hive blockchain helpers.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -103,7 +103,7 @@ export class Blockchain {
    */
   public async *getBlockNumbers(options?: BlockchainStreamOptions | number) {
     // const config = await this.client.database.getConfig()
-    // const interval = config['STEEMIT_BLOCK_INTERVAL'] as number
+    // const interval = config['BLOCK_INTERVAL'] as number
     const interval = 3;
     if (!options) {
       options = {};
