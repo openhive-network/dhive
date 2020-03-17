@@ -38,8 +38,8 @@ import 'regenerator-runtime/runtime'
 // Microsoft is keeping to their long-held tradition of shipping broken
 // standards implementations, this forces Edge to use the polyfill insted.
 // tslint:disable-next-line:no-string-literal
-if (global['navigator'] && /Edge/.test(global['navigator'].userAgent)) {
-  delete global['fetch'] // tslint:disable-line:no-string-literal
+if (global.navigator && global.navigator.userAgent.includes('Edge')) {
+    delete global.fetch // tslint:disable-line:no-string-literal
 }
 
 import 'core-js/es6/map'

@@ -49,7 +49,7 @@ test: node_modules
 
 .PHONY: ci-test
 ci-test: node_modules
-	tslint -p tsconfig.json -c tslint.json
+	eslint -c .eslintrc.json src/**/*.ts
 	nyc -r lcov -e .ts -i ts-node/register mocha --exit --reporter tap --require ts-node/register test/*.ts
 
 .PHONY: browser-test
