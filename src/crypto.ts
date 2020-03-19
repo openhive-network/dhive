@@ -44,6 +44,7 @@ import { DEFAULT_ADDRESS_PREFIX, DEFAULT_CHAIN_ID } from "./client";
 import { Types } from "./chain/serializer";
 import { SignedTransaction, Transaction } from "./chain/transaction";
 import { copy } from "./utils";
+import * as util from "util";
 
 /**
  * Network id used in WIF-encoding.
@@ -274,11 +275,16 @@ export class PrivateKey {
     return encodePrivate(Buffer.concat([NETWORK_ID, this.key]));
   }
 
+  public inspect(): string {
+    const key = this.toString();
+    return `PrivateKey: ${key.slice(0, 6)}...${key.slice(-6)}`;
+  }
+
   /**
    * Used by `utils.inspect` and `console.log` in node.js. Does not show the full key
    * to get the full encoded key you need to explicitly call {@link toString}.
    */
-  public inspect() {
+  [util.inspect.custom](): string {
     const key = this.toString();
     return `PrivateKey: ${key.slice(0, 6)}...${key.slice(-6)}`;
   }

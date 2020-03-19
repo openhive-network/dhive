@@ -35,6 +35,7 @@
 
 import { EventEmitter } from "events";
 import { PassThrough } from "stream";
+import fetch from "cross-fetch";
 import { VError } from "verror";
 
 /**

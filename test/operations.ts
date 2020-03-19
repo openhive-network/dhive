@@ -8,7 +8,7 @@ const { Asset, PrivateKey, Client, HexBuffer } = ds;
 
 import { getTestnetAccounts, randomString, agent } from "./common";
 
-describe("operations", function() {
+describe.skip("operations", function() {
   this.slow(20 * 1000);
   this.timeout(60 * 1000);
 

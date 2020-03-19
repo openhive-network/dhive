@@ -4,11 +4,6 @@ Robust hive client library that runs in both node.js and the browser.
 
 Needs test net urls, chain id
 
-- [Demo](https://comments.steem.vc) ([source](https://github.com/jnordberg/dsteem/tree/master/examples/comment-feed))
-- [Code playground](https://playground.steem.vc)
-- [Documentation](https://jnordberg.github.io/dsteem/)
-- [Bug tracker](https://github.com/jnordberg/dsteem/issues)
-
 ---
 
 **note** As of version 0.7.0 WebSocket support has been removed. The only transport provided now is HTTP(2). For most users the only change required is to swap `wss://` to `https://` in the address. If you run your own full node make sure to set the proper [CORS headers](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) if you plan to access it from a browser.
