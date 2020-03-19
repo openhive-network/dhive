@@ -19,8 +19,7 @@ describe("rc_api", function() {
 
   // _calculateManabar max_mana: number, { current_mana, last_update_time }
 
-  // vesting_withdraw_rate needed to calc
-  it.skip("calculateVPMana", function() {
+  it("calculateVPMana", function() {
     let account: any = {
       name: "therealwolf",
       voting_manabar: {
@@ -29,7 +28,10 @@ describe("rc_api", function() {
       },
       vesting_shares: "80241942 VESTS",
       delegated_vesting_shares: "60666472 VESTS",
-      received_vesting_shares: "191002659 VESTS"
+      received_vesting_shares: "191002659 VESTS",
+      vesting_withdraw_rate: 0,
+      to_withdraw: 0,
+      withdrawn: 0
     };
 
     let bar = client.rc.calculateVPMana(account);
