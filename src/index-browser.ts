@@ -33,21 +33,13 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import 'regenerator-runtime/runtime'
+import "regenerator-runtime/runtime";
+import "core-js/es6/map";
+import "core-js/es6/number";
+import "core-js/es6/promise";
+import "core-js/es6/symbol";
+import "core-js/fn/array/from";
+import "core-js/modules/es7.symbol.async-iterator";
+import "cross-fetch/polyfill";
 
-// Microsoft is keeping to their long-held tradition of shipping broken
-// standards implementations, this forces Edge to use the polyfill insted.
-// tslint:disable-next-line:no-string-literal
-if (global.navigator && global.navigator.userAgent.includes('Edge')) {
-    delete global.fetch // tslint:disable-line:no-string-literal
-}
-
-import 'core-js/es6/map'
-import 'core-js/es6/number'
-import 'core-js/es6/promise'
-import 'core-js/es6/symbol'
-import 'core-js/fn/array/from'
-import 'core-js/modules/es7.symbol.async-iterator'
-import 'whatwg-fetch'
-
-export * from './index'
+export * from "./index";
