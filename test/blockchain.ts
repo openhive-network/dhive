@@ -10,7 +10,7 @@ import {
 
 import { agent, TEST_NODE } from "./common";
 
-describe.skip("blockchain", function() {
+describe("blockchain", function() {
   this.slow(5 * 1000);
   this.timeout(60 * 1000);
 

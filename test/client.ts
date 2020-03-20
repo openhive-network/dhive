@@ -4,7 +4,7 @@ import { VError } from "verror";
 
 import { Client, utils } from "./../src";
 
-describe.skip("client", function() {
+describe("client", function() {
   this.slow(200);
   this.timeout(30 * 1000);
 

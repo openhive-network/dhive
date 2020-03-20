@@ -123,7 +123,7 @@ export interface ClientOptions {
    */
   chainId?: string;
   /**
-   * Steem address prefix. Defaults to main steem network:
+   * Hive address prefix. Defaults to main network:
    * `STM`
    */
   addressPrefix?: string;
@@ -229,10 +229,10 @@ export class Client {
       opts.agent = options.agent;
     }
 
-    opts.addressPrefix = "TST";
+    opts.addressPrefix = "STX";
     opts.chainId =
-      "d043ab83d223f25f37e1876fe48a240d49d8e4b1daa2342064990a8036a8bb5b";
-    return new Client("https://steemitdev.steemit.com", opts);
+      "79276aea5d4877d9a25892eaa01b0adf019d3e5cb12a97478df3298ccdd01673";
+    return new Client("https://testnet.steem.vc", opts);
   }
 
   /**

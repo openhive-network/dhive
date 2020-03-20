@@ -4,7 +4,7 @@ import * as assert from "assert";
 import { Client, Asset, Transaction, PrivateKey } from "./../src";
 import { getTestnetAccounts, randomString, agent, TEST_NODE } from "./common";
 
-describe.skip("database api", function() {
+describe("database api", function() {
   this.slow(500);
   this.timeout(20 * 1000);
 

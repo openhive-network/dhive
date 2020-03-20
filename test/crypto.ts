@@ -72,7 +72,6 @@ describe("crypto", function() {
 
   it("should conceal private key when inspecting", function() {
     const key = PrivateKey.fromString(testnetPair.private);
-    console.log(key);
     assert.equal(inspect(key), "PrivateKey: 5JQy7m...z3fQR8");
     assert.equal(
       inspect(key.createPublic(testnetPrefix)),

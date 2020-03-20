@@ -5,7 +5,8 @@ import fetch from "cross-fetch";
 
 export const NUM_TEST_ACCOUNTS = 2;
 export const IS_BROWSER = global["isBrowser"] === true;
-export const TEST_NODE = process.env["TEST_NODE"] || "https://api.hive.blog";
+export const TEST_NODE =
+  process.env["TEST_NODE"] || "https://api.hivekings.com";
 
 export const agent = IS_BROWSER
   ? undefined
@@ -51,7 +52,7 @@ export async function createAccount(): Promise<{
   const username = `dsteem-${randomString(9)}`;
 
   // TESTNET URL NEEDED
-  const response = await fetch("https://testnet.steemitdev.com/create", {
+  const response = await fetch("https://testnet.steem.vc/create", {
     method: "POST",
     body: `username=${username}&password=${password}`,
     headers: { "Content-Type": "application/x-www-form-urlencoded" }

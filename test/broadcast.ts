@@ -7,7 +7,7 @@ import { Client, PrivateKey, utils } from "./../src";
 
 import { getTestnetAccounts, randomString, agent } from "./common";
 
-describe.skip("broadcast", function() {
+describe("broadcast", function() {
   this.slow(10 * 1000);
   this.timeout(60 * 1000);
 
