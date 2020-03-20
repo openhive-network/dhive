@@ -46,7 +46,7 @@ declare module 'dsteem/chain/asset' {
 	/**
 	 * Asset symbol string.
 	 */
-	export type AssetSymbol = 'HIVE' | 'VESTS' | 'HBD' | 'TESTS' | 'TBD';
+	export type AssetSymbol = "HIVE" | "VESTS" | "HBD" | "TESTS" | "TBD" | "STEEM" | "SBD";
 	/**
 	 * Class representing a hive asset, e.g. `1.000 HIVE` or `12.112233 VESTS`.
 	 */
@@ -76,6 +76,11 @@ declare module 'dsteem/chain/asset' {
 	     * Return asset precision.
 	     */
 	    getPrecision(): number;
+	    /**
+	     * returns a representation of this asset using only STEEM SBD for
+	     * legacy purposes
+	     */
+	    steem_symbols(): Asset;
 	    /**
 	     * Return a string representation of this asset, e.g. `42.000 HIVE`.
 	     */
