@@ -34,12 +34,12 @@
  */
 
 import "regenerator-runtime/runtime";
-import "core-js/es6/map";
-import "core-js/es6/number";
-import "core-js/es6/promise";
-import "core-js/es6/symbol";
-import "core-js/fn/array/from";
-import "core-js/modules/es7.symbol.async-iterator";
+import "core-js/features/map";
+import "core-js/features/number";
+import "core-js/features/promise";
+import "core-js/features/symbol";
+import "core-js/features/array/from";
+import "core-js/features/symbol/async-iterator";
 import "cross-fetch/polyfill";
 
 export * from "./index";
