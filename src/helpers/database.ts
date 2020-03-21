@@ -33,63 +33,63 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import { ExtendedAccount } from "../chain/account";
-import { Price } from "../chain/asset";
-import { BlockHeader, SignedBlock } from "../chain/block";
-import { Discussion } from "../chain/comment";
-import { DynamicGlobalProperties } from "../chain/misc";
-import { ChainProperties, VestingDelegation } from "../chain/misc";
-import { AppliedOperation } from "../chain/operation";
+import { ExtendedAccount } from '../chain/account'
+import { Price } from '../chain/asset'
+import { BlockHeader, SignedBlock } from '../chain/block'
+import { Discussion } from '../chain/comment'
+import { DynamicGlobalProperties } from '../chain/misc'
+import { ChainProperties, VestingDelegation } from '../chain/misc'
+import { AppliedOperation } from '../chain/operation'
 import {
   SignedTransaction,
   TransactionConfirmation
-} from "../chain/transaction";
-import { Client } from "./../client";
+} from '../chain/transaction'
+import { Client } from './../client'
 
 /**
  * Possible categories for `get_discussions_by_*`.
  */
 export type DiscussionQueryCategory =
-  | "active"
-  | "blog"
-  | "cashout"
-  | "children"
-  | "comments"
-  | "feed"
-  | "hot"
-  | "promoted"
-  | "trending"
-  | "votes"
-  | "created";
+  | 'active'
+  | 'blog'
+  | 'cashout'
+  | 'children'
+  | 'comments'
+  | 'feed'
+  | 'hot'
+  | 'promoted'
+  | 'trending'
+  | 'votes'
+  | 'created'
 
 export interface DisqussionQuery {
   /**
    * Name of author or tag to fetch.
    */
-  tag: string;
+  tag: string
   /**
    * Number of results, max 100.
    */
-  limit: number;
-  filter_tags?: string[];
-  select_authors?: string[];
-  select_tags?: string[];
+  limit: number
+  filter_tags?: string[]
+  select_authors?: string[]
+  select_tags?: string[]
   /**
    * Number of bytes of post body to fetch, default 0 (all)
    */
-  truncate_body?: number;
+  truncate_body?: number
   /**
    * Name of author to start from, used for paging.
    * Should be used in conjunction with `start_permlink`.
    */
-  start_author?: string;
+  start_author?: string
   /**
    * Permalink of post to start from, used for paging.
    * Should be used in conjunction with `start_author`.
    */
-  start_permlink?: string;
-  parent_author?: string;
-  parent_permlink?: string;
+  start_permlink?: string
+  parent_author?: string
+  parent_permlink?: string
 }
 
 export class DatabaseAPI {
@@ -99,21 +99,21 @@ export class DatabaseAPI {
    * Convenience for calling `database_api`.
    */
   public call(method: string, params?: any[]) {
-    return this.client.call("condenser_api", method, params);
+    return this.client.call('condenser_api', method, params)
   }
 
   /**
    * Return state of server.
    */
   public getDynamicGlobalProperties(): Promise<DynamicGlobalProperties> {
-    return this.call("get_dynamic_global_properties");
+    return this.call('get_dynamic_global_properties')
   }
 
   /**
    * Return median chain properties decided by witness.
    */
   public async getChainProperties(): Promise<ChainProperties> {
-    return this.call("get_chain_properties");
+    return this.call('get_chain_properties')
   }
 
   /**
@@ -122,14 +122,14 @@ export class DatabaseAPI {
    *             e.g. `@almost-digital` or `trending/travel`
    */
   public async getState(path: string): Promise<any> {
-    return this.call("get_state", [path]);
+    return this.call('get_state', [path])
   }
 
   /**
    * Return median price in SBD for 1 STEEM as reported by the witnesses.
    */
   public async getCurrentMedianHistoryPrice(): Promise<Price> {
-    return Price.from(await this.call("get_current_median_history_price"));
+    return Price.from(await this.call('get_current_median_history_price'))
   }
 
   /**
@@ -140,10 +140,10 @@ export class DatabaseAPI {
    */
   public async getVestingDelegations(
     account: string,
-    from = "",
+    from = '',
     limit = 1000
   ): Promise<VestingDelegation[]> {
-    return this.call("get_vesting_delegations", [account, from, limit]);
+    return this.call('get_vesting_delegations', [account, from, limit])
   }
 
   /**
@@ -151,21 +151,21 @@ export class DatabaseAPI {
    * https://github.com/steemit/steem/blob/master/libraries/protocol/include/steemit/protocol/config.hpp
    */
   public getConfig(): Promise<{ [name: string]: string | number | boolean }> {
-    return this.call("get_config");
+    return this.call('get_config')
   }
 
   /**
    * Return header for *blockNum*.
    */
   public getBlockHeader(blockNum: number): Promise<BlockHeader> {
-    return this.call("get_block_header", [blockNum]);
+    return this.call('get_block_header', [blockNum])
   }
 
   /**
    * Return block *blockNum*.
    */
   public getBlock(blockNum: number): Promise<SignedBlock> {
-    return this.call("get_block", [blockNum]);
+    return this.call('get_block', [blockNum])
   }
 
   /**
@@ -175,7 +175,7 @@ export class DatabaseAPI {
     blockNum: number,
     onlyVirtual = false
   ): Promise<AppliedOperation[]> {
-    return this.call("get_ops_in_block", [blockNum, onlyVirtual]);
+    return this.call('get_ops_in_block', [blockNum, onlyVirtual])
   }
 
   /**
@@ -189,7 +189,7 @@ export class DatabaseAPI {
     by: DiscussionQueryCategory,
     query: DisqussionQuery
   ): Promise<Discussion[]> {
-    return this.call(`get_discussions_by_${by}`, [query]);
+    return this.call(`get_discussions_by_${by}`, [query])
   }
 
   /**
@@ -197,7 +197,7 @@ export class DatabaseAPI {
    * @param usernames The accounts to fetch.
    */
   public getAccounts(usernames: string[]): Promise<ExtendedAccount[]> {
-    return this.call("get_accounts", [usernames]);
+    return this.call('get_accounts', [usernames])
   }
 
   /**
@@ -206,20 +206,20 @@ export class DatabaseAPI {
   public async getTransaction(
     txc: TransactionConfirmation | { block_num: number; id: string }
   ) {
-    const block = await this.client.database.getBlock(txc.block_num);
-    const idx = block.transaction_ids.indexOf(txc.id);
+    const block = await this.client.database.getBlock(txc.block_num)
+    const idx = block.transaction_ids.indexOf(txc.id)
     if (idx === -1) {
       throw new Error(
         `Unable to find transaction ${txc.id} in block ${txc.block_num}`
-      );
+      )
     }
-    return block.transactions[idx] as SignedTransaction;
+    return block.transactions[idx] as SignedTransaction
   }
 
   /**
    * Verify signed transaction.
    */
   public async verifyAuthority(stx: SignedTransaction): Promise<boolean> {
-    return this.call("verify_authority", [stx]);
+    return this.call('verify_authority', [stx])
   }
 }

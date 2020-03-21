@@ -46,7 +46,7 @@ declare module 'dsteem/chain/asset' {
 	/**
 	 * Asset symbol string.
 	 */
-	export type AssetSymbol = "HIVE" | "VESTS" | "HBD" | "TESTS" | "TBD" | "STEEM" | "SBD";
+	export type AssetSymbol = 'HIVE' | 'VESTS' | 'HBD' | 'TESTS' | 'TBD' | 'STEEM' | 'SBD';
 	/**
 	 * Class representing a hive asset, e.g. `1.000 HIVE` or `12.112233 VESTS`.
 	 */
@@ -772,11 +772,11 @@ declare module 'dsteem/chain/operation' {
 	/**
 	 * Operation name.
 	 */
-	export type OperationName = "account_create" | "account_create_with_delegation" | "account_update" | "account_update2" | "account_witness_proxy" | "account_witness_vote" | "cancel_transfer_from_savings" | "change_recovery_account" | "claim_account" | "claim_reward_balance" | "create_proposal" | "comment" | "comment_options" | "convert" | "create_claimed_account" | "custom" | "custom_binary" | "custom_json" | "decline_voting_rights" | "delegate_vesting_shares" | "delete_comment" | "escrow_approve" | "escrow_dispute" | "escrow_release" | "escrow_transfer" | "feed_publish" | "limit_order_cancel" | "limit_order_create" | "limit_order_create2" | "pow" | "pow2" | "recover_account" | "remove_proposal" | "report_over_production" | "request_account_recovery" | "reset_account" | "set_reset_account" | "set_withdraw_vesting_route" | "transfer" | "transfer_from_savings" | "transfer_to_savings" | "transfer_to_vesting" | "update_proposal_votes" | "vote" | "withdraw_vesting" | "witness_set_properties" | "witness_update";
+	export type OperationName = 'account_create' | 'account_create_with_delegation' | 'account_update' | 'account_update2' | 'account_witness_proxy' | 'account_witness_vote' | 'cancel_transfer_from_savings' | 'change_recovery_account' | 'claim_account' | 'claim_reward_balance' | 'create_proposal' | 'comment' | 'comment_options' | 'convert' | 'create_claimed_account' | 'custom' | 'custom_binary' | 'custom_json' | 'decline_voting_rights' | 'delegate_vesting_shares' | 'delete_comment' | 'escrow_approve' | 'escrow_dispute' | 'escrow_release' | 'escrow_transfer' | 'feed_publish' | 'limit_order_cancel' | 'limit_order_create' | 'limit_order_create2' | 'pow' | 'pow2' | 'recover_account' | 'remove_proposal' | 'report_over_production' | 'request_account_recovery' | 'reset_account' | 'set_reset_account' | 'set_withdraw_vesting_route' | 'transfer' | 'transfer_from_savings' | 'transfer_to_savings' | 'transfer_to_vesting' | 'update_proposal_votes' | 'vote' | 'withdraw_vesting' | 'witness_set_properties' | 'witness_update';
 	/**
 	 * Virtual operation name.
 	 */
-	export type VirtualOperationName = "author_reward" | "comment_benefactor_reward" | "comment_payout_update" | "comment_reward" | "curation_reward" | "fill_convert_request" | "fill_order" | "fill_transfer_from_savings" | "fill_vesting_withdraw" | "hardfork" | "interest" | "liquidity_reward" | "return_vesting_delegation" | "shutdown_witness";
+	export type VirtualOperationName = 'author_reward' | 'comment_benefactor_reward' | 'comment_payout_update' | 'comment_reward' | 'curation_reward' | 'fill_convert_request' | 'fill_order' | 'fill_transfer_from_savings' | 'fill_vesting_withdraw' | 'hardfork' | 'interest' | 'liquidity_reward' | 'return_vesting_delegation' | 'shutdown_witness';
 	/**
 	 * Generic operation.
 	 */
@@ -796,7 +796,7 @@ declare module 'dsteem/chain/operation' {
 	    op: Operation;
 	}
 	export interface AccountCreateOperation extends Operation {
-	    0: "account_create";
+	    0: 'account_create';
 	    1: {
 	        fee: string | Asset;
 	        creator: string;
@@ -809,7 +809,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface AccountCreateWithDelegationOperation extends Operation {
-	    0: "account_create_with_delegation";
+	    0: 'account_create_with_delegation';
 	    1: {
 	        fee: string | Asset;
 	        delegation: string | Asset;
@@ -827,7 +827,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface AccountUpdateOperation extends Operation {
-	    0: "account_update";
+	    0: 'account_update';
 	    1: {
 	        account: string;
 	        owner?: AuthorityType;
@@ -838,14 +838,14 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface AccountWitnessProxyOperation extends Operation {
-	    0: "account_witness_proxy";
+	    0: 'account_witness_proxy';
 	    1: {
 	        account: string;
 	        proxy: string;
 	    };
 	}
 	export interface AccountWitnessVoteOperation extends Operation {
-	    0: "account_witness_vote";
+	    0: 'account_witness_vote';
 	    1: {
 	        account: string;
 	        witness: string;
@@ -853,7 +853,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface CancelTransferFromSavingsOperation extends Operation {
-	    0: "cancel_transfer_from_savings";
+	    0: 'cancel_transfer_from_savings';
 	    1: {
 	        from: string;
 	        request_id: number;
@@ -878,7 +878,7 @@ declare module 'dsteem/chain/operation' {
 	 * witness according to stake.
 	 */
 	export interface ChangeRecoveryAccountOperation extends Operation {
-	    0: "change_recovery_account";
+	    0: 'change_recovery_account';
 	    1: {
 	        /**
 	         * The account that would be recovered in case of compromise.
@@ -895,7 +895,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface ClaimRewardBalanceOperation extends Operation {
-	    0: "claim_reward_balance";
+	    0: 'claim_reward_balance';
 	    1: {
 	        account: string;
 	        reward_hive: string | Asset;
@@ -904,7 +904,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface ClaimAccountOperation extends Operation {
-	    0: "claim_account";
+	    0: 'claim_account';
 	    1: {
 	        creator: string;
 	        fee: string | Asset;
@@ -915,7 +915,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface CommentOperation extends Operation {
-	    0: "comment";
+	    0: 'comment';
 	    1: {
 	        parent_author: string;
 	        parent_permlink: string;
@@ -927,7 +927,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface CommentOptionsOperation extends Operation {
-	    0: "comment_options";
+	    0: 'comment_options';
 	    1: {
 	        author: string;
 	        permlink: string;
@@ -945,7 +945,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface ConvertOperation extends Operation {
-	    0: "convert";
+	    0: 'convert';
 	    1: {
 	        owner: string;
 	        requestid: number;
@@ -953,7 +953,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface CreateClaimedAccountOperation extends Operation {
-	    0: "create_claimed_account";
+	    0: 'create_claimed_account';
 	    1: {
 	        creator: string;
 	        new_account_name: string;
@@ -969,7 +969,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface CustomOperation extends Operation {
-	    0: "custom";
+	    0: 'custom';
 	    1: {
 	        required_auths: string[];
 	        id: number;
@@ -977,7 +977,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface CustomBinaryOperation extends Operation {
-	    0: "custom_binary";
+	    0: 'custom_binary';
 	    1: {
 	        required_owner_auths: string[];
 	        required_active_auths: string[];
@@ -991,7 +991,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface CustomJsonOperation extends Operation {
-	    0: "custom_json";
+	    0: 'custom_json';
 	    1: {
 	        required_auths: string[];
 	        required_posting_auths: string[];
@@ -1006,14 +1006,14 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface DeclineVotingRightsOperation extends Operation {
-	    0: "decline_voting_rights";
+	    0: 'decline_voting_rights';
 	    1: {
 	        account: string;
 	        decline: boolean;
 	    };
 	}
 	export interface DelegateVestingSharesOperation extends Operation {
-	    0: "delegate_vesting_shares";
+	    0: 'delegate_vesting_shares';
 	    1: {
 	        /**
 	         * The account delegating vesting shares.
@@ -1030,7 +1030,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface DeleteCommentOperation extends Operation {
-	    0: "delete_comment";
+	    0: 'delete_comment';
 	    1: {
 	        author: string;
 	        permlink: string;
@@ -1042,7 +1042,7 @@ declare module 'dsteem/chain/operation' {
 	 * Subsequent escrow approve operations, regardless of the approval, will be rejected.
 	 */
 	export interface EscrowApproveOperation extends Operation {
-	    0: "escrow_approve";
+	    0: 'escrow_approve';
 	    1: {
 	        from: string;
 	        to: string;
@@ -1061,7 +1061,7 @@ declare module 'dsteem/chain/operation' {
 	 * who gets what.
 	 */
 	export interface EscrowDisputeOperation extends Operation {
-	    0: "escrow_dispute";
+	    0: 'escrow_dispute';
 	    1: {
 	        from: string;
 	        to: string;
@@ -1081,7 +1081,7 @@ declare module 'dsteem/chain/operation' {
 	 *    following whichever agreement was in place between the parties.
 	 */
 	export interface EscrowReleaseOperation extends Operation {
-	    0: "escrow_release";
+	    0: 'escrow_release';
 	    1: {
 	        from: string;
 	        /**
@@ -1127,7 +1127,7 @@ declare module 'dsteem/chain/operation' {
 	 * by the sender.
 	 */
 	export interface EscrowTransferOperation extends Operation {
-	    0: "escrow_transfer";
+	    0: 'escrow_transfer';
 	    1: {
 	        from: string;
 	        to: string;
@@ -1142,7 +1142,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface FeedPublishOperation extends Operation {
-	    0: "feed_publish";
+	    0: 'feed_publish';
 	    1: {
 	        publisher: string;
 	        exchange_rate: PriceType;
@@ -1152,7 +1152,7 @@ declare module 'dsteem/chain/operation' {
 	 * Cancels an order and returns the balance to owner.
 	 */
 	export interface LimitOrderCancelOperation extends Operation {
-	    0: "limit_order_cancel";
+	    0: 'limit_order_cancel';
 	    1: {
 	        owner: string;
 	        orderid: number;
@@ -1162,7 +1162,7 @@ declare module 'dsteem/chain/operation' {
 	 * This operation creates a limit order and matches it against existing open orders.
 	 */
 	export interface LimitOrderCreateOperation extends Operation {
-	    0: "limit_order_create";
+	    0: 'limit_order_create';
 	    1: {
 	        owner: string;
 	        orderid: number;
@@ -1177,7 +1177,7 @@ declare module 'dsteem/chain/operation' {
 	 * than calculating it from other fields.
 	 */
 	export interface LimitOrderCreate2Operation extends Operation {
-	    0: "limit_order_create2";
+	    0: 'limit_order_create2';
 	    1: {
 	        owner: string;
 	        orderid: number;
@@ -1191,7 +1191,7 @@ declare module 'dsteem/chain/operation' {
 	 * Legacy proof of work operation.
 	 */
 	export interface PowOperation extends Operation {
-	    0: "pow";
+	    0: 'pow';
 	    1: {
 	        worker_account: string;
 	        block_id: any;
@@ -1204,7 +1204,7 @@ declare module 'dsteem/chain/operation' {
 	 * Legacy equihash proof of work operation.
 	 */
 	export interface Pow2Operation extends Operation {
-	    0: "pow2";
+	    0: 'pow2';
 	    1: {
 	        work: any;
 	        new_owner_key?: string | PublicKey;
@@ -1249,7 +1249,7 @@ declare module 'dsteem/chain/operation' {
 	 * concern.
 	 */
 	export interface RecoverAccountOperation extends Operation {
-	    0: "recover_account";
+	    0: 'recover_account';
 	    1: {
 	        /**
 	         * The account to be recovered.
@@ -1284,7 +1284,7 @@ declare module 'dsteem/chain/operation' {
 	 * of the block producer to the reporter.
 	 */
 	export interface ReportOverProductionOperation extends Operation {
-	    0: "report_over_production";
+	    0: 'report_over_production';
 	    1: {
 	        reporter: string;
 	        first_block: SignedBlockHeader;
@@ -1319,7 +1319,7 @@ declare module 'dsteem/chain/operation' {
 	 * the recover account operation.
 	 */
 	export interface RequestAccountRecoveryOperation extends Operation {
-	    0: "request_account_recovery";
+	    0: 'request_account_recovery';
 	    1: {
 	        /**
 	         * The recovery account is listed as the recovery account on the account to recover.
@@ -1345,7 +1345,7 @@ declare module 'dsteem/chain/operation' {
 	 * new_owner_authority after 60 days of inactivity.
 	 */
 	export interface ResetAccountOperation extends Operation {
-	    0: "reset_account";
+	    0: 'reset_account';
 	    1: {
 	        reset_account: string;
 	        account_to_reset: string;
@@ -1357,7 +1357,7 @@ declare module 'dsteem/chain/operation' {
 	 * to execute the 'reset_account_operation' after 60 days.
 	 */
 	export interface SetResetAccountOperation extends Operation {
-	    0: "set_reset_account";
+	    0: 'set_reset_account';
 	    1: {
 	        account: string;
 	        current_reset_account: string;
@@ -1372,7 +1372,7 @@ declare module 'dsteem/chain/operation' {
 	 * vests to hive and back, guaranteeing they maintain their value.
 	 */
 	export interface SetWithdrawVestingRouteOperation extends Operation {
-	    0: "set_withdraw_vesting_route";
+	    0: 'set_withdraw_vesting_route';
 	    1: {
 	        from_account: string;
 	        to_account: string;
@@ -1384,7 +1384,7 @@ declare module 'dsteem/chain/operation' {
 	 * Transfers asset from one account to another.
 	 */
 	export interface TransferOperation extends Operation {
-	    0: "transfer";
+	    0: 'transfer';
 	    1: {
 	        /**
 	         * Sending account name.
@@ -1405,7 +1405,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface TransferFromSavingsOperation extends Operation {
-	    0: "transfer_from_savings";
+	    0: 'transfer_from_savings';
 	    1: {
 	        from: string;
 	        request_id: number;
@@ -1415,7 +1415,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface TransferToSavingsOperation extends Operation {
-	    0: "transfer_to_savings";
+	    0: 'transfer_to_savings';
 	    1: {
 	        amount: string | Asset;
 	        from: string;
@@ -1432,7 +1432,7 @@ declare module 'dsteem/chain/operation' {
 	 * (A.k.a. Powering Up)
 	 */
 	export interface TransferToVestingOperation extends Operation {
-	    0: "transfer_to_vesting";
+	    0: 'transfer_to_vesting';
 	    1: {
 	        from: string;
 	        to: string;
@@ -1443,7 +1443,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface VoteOperation extends Operation {
-	    0: "vote";
+	    0: 'vote';
 	    1: {
 	        voter: string;
 	        author: string;
@@ -1467,7 +1467,7 @@ declare module 'dsteem/chain/operation' {
 	 * (A.k.a. Powering Down)
 	 */
 	export interface WithdrawVestingOperation extends Operation {
-	    0: "withdraw_vesting";
+	    0: 'withdraw_vesting';
 	    1: {
 	        account: string;
 	        /**
@@ -1491,7 +1491,7 @@ declare module 'dsteem/chain/operation' {
 	 * producing blocks.
 	 */
 	export interface WitnessUpdateOperation extends Operation {
-	    0: "witness_update";
+	    0: 'witness_update';
 	    1: {
 	        owner: string;
 	        /**
@@ -1507,7 +1507,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface WitnessSetPropertiesOperation extends Operation {
-	    0: "witness_set_properties";
+	    0: 'witness_set_properties';
 	    1: {
 	        owner: string;
 	        props: [string, Buffer][];
@@ -1515,7 +1515,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface AccountUpdate2Operation extends Operation {
-	    0: "account_update2";
+	    0: 'account_update2';
 	    1: {
 	        account: string;
 	        owner?: AuthorityType;
@@ -1528,7 +1528,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface CreateProposalOperation extends Operation {
-	    0: "create_proposal";
+	    0: 'create_proposal';
 	    1: {
 	        creator: string;
 	        receiver: string;
@@ -1541,7 +1541,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface UpdateProposalVotesOperation extends Operation {
-	    0: "update_proposal_votes";
+	    0: 'update_proposal_votes';
 	    1: {
 	        voter: string;
 	        proposal_ids: number[];
@@ -1550,7 +1550,7 @@ declare module 'dsteem/chain/operation' {
 	    };
 	}
 	export interface RemoveProposalOperation extends Operation {
-	    0: "remove_proposal";
+	    0: 'remove_proposal';
 	    1: {
 	        proposal_owner: string;
 	        proposal_ids: number[];
@@ -1595,7 +1595,7 @@ declare module 'dsteem/chain/serializer' {
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
 	/// <reference types="node" />
-	import * as ByteBuffer from "bytebuffer";
+	import * as ByteBuffer from 'bytebuffer';
 	import { PublicKey } from 'dsteem/crypto';
 	import { Asset } from 'dsteem/chain/asset';
 	import { HexBuffer } from 'dsteem/chain/misc';
@@ -2181,7 +2181,7 @@ declare module 'dsteem/helpers/database' {
 	/**
 	 * Possible categories for `get_discussions_by_*`.
 	 */
-	export type DiscussionQueryCategory = "active" | "blog" | "cashout" | "children" | "comments" | "feed" | "hot" | "promoted" | "trending" | "votes" | "created";
+	export type DiscussionQueryCategory = 'active' | 'blog' | 'cashout' | 'children' | 'comments' | 'feed' | 'hot' | 'promoted' | 'trending' | 'votes' | 'created';
 	export interface DisqussionQuery {
 	    /**
 	     * Name of author or tag to fetch.
@@ -2540,7 +2540,7 @@ declare module 'dsteem/client' {
 	}
 
 }
-declare module 'dsteem' {
+declare module 'dsteem/index' {
 	/**
 	 * @file dsteem exports.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -2635,7 +2635,7 @@ declare module 'dsteem/index-browser' {
 	import "core-js/features/array/from";
 	import "core-js/features/symbol/async-iterator";
 	import "cross-fetch/polyfill";
-	export * from 'dsteem';
+	export * from 'dsteem/index';
 
 }
 declare module 'dsteem/index-node' {
@@ -2673,6 +2673,6 @@ declare module 'dsteem/index-node' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	export * from 'dsteem';
+	export * from 'dsteem/index';
 
 }
