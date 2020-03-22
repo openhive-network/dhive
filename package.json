@@ -1,6 +1,6 @@
 {
   "name": "@hivechain/dsteem",
-  "version": "0.12.12",
+  "version": "0.12.13",
   "description": "Steem blockchain RPC client library",
   "author": "Johan Nordberg",
   "license": "BSD-3-Clause",
@@ -37,6 +37,7 @@
     "cross-fetch": "^3.0.4",
     "node-fetch": "^2.6.0",
     "secp256k1": "^3.8.0",
+    "verror": "^1.10.0",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
@@ -73,7 +74,6 @@
     "typedoc": "^0.17.1",
     "typescript": "^3.8.3",
     "uglify-js": "^3.4.9",
-    "verror": "^1.10.0",
     "watchify": "^3.11.0"
   }
 }
