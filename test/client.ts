@@ -58,7 +58,7 @@ describe("client", function() {
   it("should retry and timeout", async function() {
     this.slow(2500);
     aclient.timeout = 1000;
-    aclient.address = "https://jnordberg.github.io/dsteem/FAIL";
+    aclient.address = "https://jnordberg.github.io/dhive/FAIL";
     const backoff = aclient.backoff;
     let seenBackoff = false;
     aclient.backoff = tries => {

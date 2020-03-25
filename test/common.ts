@@ -49,7 +49,7 @@ export async function createAccount(): Promise<{
   password: string;
 }> {
   const password = randomString(32);
-  const username = `dsteem-${randomString(9)}`;
+  const username = `dhive-${randomString(9)}`;
 
   // TESTNET URL NEEDED
   const response = await fetch("https://testnet.steem.vc/create", {

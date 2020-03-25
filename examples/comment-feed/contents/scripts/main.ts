@@ -1,9 +1,9 @@
 
-import {Client, BlockchainMode} from 'dsteem'
+import {Client, BlockchainMode} from '@hivechain/dhive'
 
 import * as removeMarkdown from 'remove-markdown'
 
-const client = new Client('https://api.steemit.com')
+const client = new Client('https://api.hive.blog')
 
 function sleep(ms: number): Promise<void> {
     return new Promise<void>((resolve) => {

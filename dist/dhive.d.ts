@@ -1,9 +1,9 @@
-declare module 'dsteem/version' {
+declare module 'dhive/version' {
 	 const _default: string;
 	export default _default;
 
 }
-declare module 'dsteem/chain/asset' {
+declare module 'dhive/chain/asset' {
 	/**
 	 * @file Hive asset type definitions and helpers.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -149,7 +149,7 @@ declare module 'dsteem/chain/asset' {
 	}
 
 }
-declare module 'dsteem/chain/account' {
+declare module 'dhive/chain/account' {
 	/**
 	 * @file Hive account type definitions.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -184,8 +184,8 @@ declare module 'dsteem/chain/account' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import { PublicKey } from 'dsteem/crypto';
-	import { Asset } from 'dsteem/chain/asset';
+	import { PublicKey } from 'dhive/crypto';
+	import { Asset } from 'dhive/chain/asset';
 	export interface AuthorityType {
 	    weight_threshold: number;
 	    account_auths: [string, number][];
@@ -296,7 +296,7 @@ declare module 'dsteem/chain/account' {
 	}
 
 }
-declare module 'dsteem/chain/misc' {
+declare module 'dhive/chain/misc' {
 	/// <reference types="node" />
 	/**
 	 * @file Misc hive type definitions.
@@ -332,8 +332,8 @@ declare module 'dsteem/chain/misc' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import { Account } from 'dsteem/chain/account';
-	import { Asset, Price } from 'dsteem/chain/asset';
+	import { Account } from 'dhive/chain/account';
+	import { Asset, Price } from 'dhive/chain/asset';
 	/**
 	 * Large number that may be unsafe to represent natively in JavaScript.
 	 */
@@ -515,7 +515,7 @@ declare module 'dsteem/chain/misc' {
 	export function getVests(account: Account, subtract_delegated?: boolean, add_received?: boolean): number;
 
 }
-declare module 'dsteem/chain/transaction' {
+declare module 'dhive/chain/transaction' {
 	/**
 	 * @file Hive transaction type definitions.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -550,7 +550,7 @@ declare module 'dsteem/chain/transaction' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import { Operation } from 'dsteem/chain/operation';
+	import { Operation } from 'dhive/chain/operation';
 	export interface Transaction {
 	    ref_block_num: number;
 	    ref_block_prefix: number;
@@ -569,7 +569,7 @@ declare module 'dsteem/chain/transaction' {
 	}
 
 }
-declare module 'dsteem/chain/block' {
+declare module 'dhive/chain/block' {
 	/**
 	 * @file Hive block type definitions.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -604,7 +604,7 @@ declare module 'dsteem/chain/block' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import { Transaction } from 'dsteem/chain/transaction';
+	import { Transaction } from 'dhive/chain/transaction';
 	/**
 	 * Unsigned block header.
 	 */
@@ -632,7 +632,7 @@ declare module 'dsteem/chain/block' {
 	}
 
 }
-declare module 'dsteem/chain/comment' {
+declare module 'dhive/chain/comment' {
 	/**
 	 * @file Hive type definitions related to comments and posting.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -667,7 +667,7 @@ declare module 'dsteem/chain/comment' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import { Asset } from 'dsteem/chain/asset';
+	import { Asset } from 'dhive/chain/asset';
 	export interface Comment {
 	    id: number;
 	    category: string;
@@ -727,7 +727,7 @@ declare module 'dsteem/chain/comment' {
 	}
 
 }
-declare module 'dsteem/chain/operation' {
+declare module 'dhive/chain/operation' {
 	/**
 	 * @file Hive operation type definitions.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -763,12 +763,12 @@ declare module 'dsteem/chain/operation' {
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
 	/// <reference types="node" />
-	import { PublicKey } from 'dsteem/crypto';
-	import { AuthorityType } from 'dsteem/chain/account';
-	import { Asset, PriceType } from 'dsteem/chain/asset';
-	import { SignedBlockHeader } from 'dsteem/chain/block';
-	import { BeneficiaryRoute } from 'dsteem/chain/comment';
-	import { ChainProperties, HexBuffer } from 'dsteem/chain/misc';
+	import { PublicKey } from 'dhive/crypto';
+	import { AuthorityType } from 'dhive/chain/account';
+	import { Asset, PriceType } from 'dhive/chain/asset';
+	import { SignedBlockHeader } from 'dhive/chain/block';
+	import { BeneficiaryRoute } from 'dhive/chain/comment';
+	import { ChainProperties, HexBuffer } from 'dhive/chain/misc';
 	/**
 	 * Operation name.
 	 */
@@ -1559,7 +1559,7 @@ declare module 'dsteem/chain/operation' {
 	}
 
 }
-declare module 'dsteem/chain/serializer' {
+declare module 'dhive/chain/serializer' {
 	/**
 	 * @file Hive protocol serialization.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -1596,10 +1596,10 @@ declare module 'dsteem/chain/serializer' {
 	 */
 	/// <reference types="node" />
 	import * as ByteBuffer from 'bytebuffer';
-	import { PublicKey } from 'dsteem/crypto';
-	import { Asset } from 'dsteem/chain/asset';
-	import { HexBuffer } from 'dsteem/chain/misc';
-	import { Operation } from 'dsteem/chain/operation';
+	import { PublicKey } from 'dhive/crypto';
+	import { Asset } from 'dhive/chain/asset';
+	import { HexBuffer } from 'dhive/chain/misc';
+	import { Operation } from 'dhive/chain/operation';
 	export type Serializer = (buffer: ByteBuffer, data: any) => void;
 	export const Types: {
 	    Array: (itemSerializer: Serializer) => (buffer: ByteBuffer, data: any[]) => void;
@@ -1637,7 +1637,7 @@ declare module 'dsteem/chain/serializer' {
 	};
 
 }
-declare module 'dsteem/crypto' {
+declare module 'dhive/crypto' {
 	/**
 	 * @file Hive crypto helpers.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -1673,7 +1673,7 @@ declare module 'dsteem/crypto' {
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
 	/// <reference types="node" />
-	import { SignedTransaction, Transaction } from 'dsteem/chain/transaction';
+	import { SignedTransaction, Transaction } from 'dhive/chain/transaction';
 	import * as util from "util";
 	/**
 	 * Network id used in WIF-encoding.
@@ -1787,7 +1787,7 @@ declare module 'dsteem/crypto' {
 	export {};
 
 }
-declare module 'dsteem/utils' {
+declare module 'dhive/utils' {
 	/**
 	 * @file Misc utility functions.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -1844,9 +1844,9 @@ declare module 'dsteem/utils' {
 	 * Fetch API wrapper that retries until timeout is reached.
 	 */
 	export function retryingFetch(url: string, opts: any, timeout: number, backoff: (tries: number) => number, fetchTimeout?: (tries: number) => number): Promise<any>;
-	import { PublicKey } from 'dsteem/crypto';
-	import { Asset, PriceType } from 'dsteem/chain/asset';
-	import { WitnessSetPropertiesOperation } from 'dsteem/chain/operation';
+	import { PublicKey } from 'dhive/crypto';
+	import { Asset, PriceType } from 'dhive/chain/asset';
+	import { WitnessSetPropertiesOperation } from 'dhive/chain/operation';
 	export interface WitnessProps {
 	    account_creation_fee?: string | Asset;
 	    account_subsidy_budget?: number;
@@ -1861,7 +1861,7 @@ declare module 'dsteem/utils' {
 	export function buildWitnessUpdateOp(owner: string, props: WitnessProps): WitnessSetPropertiesOperation;
 
 }
-declare module 'dsteem/helpers/blockchain' {
+declare module 'dhive/helpers/blockchain' {
 	/**
 	 * @file Hive blockchain helpers.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -1897,7 +1897,7 @@ declare module 'dsteem/helpers/blockchain' {
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
 	/// <reference types="node" />
-	import { Client } from 'dsteem/client';
+	import { Client } from 'dhive/client';
 	export enum BlockchainMode {
 	    /**
 	     * Only get irreversible blocks.
@@ -1966,7 +1966,7 @@ declare module 'dsteem/helpers/blockchain' {
 	}
 
 }
-declare module 'dsteem/helpers/broadcast' {
+declare module 'dhive/helpers/broadcast' {
 	/**
 	 * @file Broadcast API helpers.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -2001,12 +2001,12 @@ declare module 'dsteem/helpers/broadcast' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import { AuthorityType } from 'dsteem/chain/account';
-	import { Asset } from 'dsteem/chain/asset';
-	import { AccountUpdateOperation, CommentOperation, CommentOptionsOperation, CustomJsonOperation, DelegateVestingSharesOperation, Operation, TransferOperation, VoteOperation } from 'dsteem/chain/operation';
-	import { SignedTransaction, Transaction, TransactionConfirmation } from 'dsteem/chain/transaction';
-	import { PrivateKey, PublicKey } from 'dsteem/crypto';
-	import { Client } from 'dsteem/client';
+	import { AuthorityType } from 'dhive/chain/account';
+	import { Asset } from 'dhive/chain/asset';
+	import { AccountUpdateOperation, CommentOperation, CommentOptionsOperation, CustomJsonOperation, DelegateVestingSharesOperation, Operation, TransferOperation, VoteOperation } from 'dhive/chain/operation';
+	import { SignedTransaction, Transaction, TransactionConfirmation } from 'dhive/chain/transaction';
+	import { PrivateKey, PublicKey } from 'dhive/crypto';
+	import { Client } from 'dhive/client';
 	export interface CreateAccountOptions {
 	    /**
 	     * Username for the new account.
@@ -2134,7 +2134,7 @@ declare module 'dsteem/helpers/broadcast' {
 	}
 
 }
-declare module 'dsteem/helpers/database' {
+declare module 'dhive/helpers/database' {
 	/**
 	 * @file Database API helpers.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -2169,15 +2169,15 @@ declare module 'dsteem/helpers/database' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import { ExtendedAccount } from 'dsteem/chain/account';
-	import { Price } from 'dsteem/chain/asset';
-	import { BlockHeader, SignedBlock } from 'dsteem/chain/block';
-	import { Discussion } from 'dsteem/chain/comment';
-	import { DynamicGlobalProperties } from 'dsteem/chain/misc';
-	import { ChainProperties, VestingDelegation } from 'dsteem/chain/misc';
-	import { AppliedOperation } from 'dsteem/chain/operation';
-	import { SignedTransaction, TransactionConfirmation } from 'dsteem/chain/transaction';
-	import { Client } from 'dsteem/client';
+	import { ExtendedAccount } from 'dhive/chain/account';
+	import { Price } from 'dhive/chain/asset';
+	import { BlockHeader, SignedBlock } from 'dhive/chain/block';
+	import { Discussion } from 'dhive/chain/comment';
+	import { DynamicGlobalProperties } from 'dhive/chain/misc';
+	import { ChainProperties, VestingDelegation } from 'dhive/chain/misc';
+	import { AppliedOperation } from 'dhive/chain/operation';
+	import { SignedTransaction, TransactionConfirmation } from 'dhive/chain/transaction';
+	import { Client } from 'dhive/client';
 	/**
 	 * Possible categories for `get_discussions_by_*`.
 	 */
@@ -2289,9 +2289,9 @@ declare module 'dsteem/helpers/database' {
 	}
 
 }
-declare module 'dsteem/chain/rc' {
-	import { SMTAsset } from 'dsteem/chain/asset';
-	import { Bignum } from 'dsteem/chain/misc';
+declare module 'dhive/chain/rc' {
+	import { SMTAsset } from 'dhive/chain/asset';
+	import { Bignum } from 'dhive/chain/misc';
 	export interface RCParams {
 	    resource_history_bytes: Resource;
 	    resource_new_accounts: Resource;
@@ -2345,10 +2345,10 @@ declare module 'dsteem/chain/rc' {
 	}
 
 }
-declare module 'dsteem/helpers/rc' {
-	import { Account } from 'dsteem/chain/account';
-	import { Manabar, RCAccount, RCParams, RCPool } from 'dsteem/chain/rc';
-	import { Client } from 'dsteem/client';
+declare module 'dhive/helpers/rc' {
+	import { Account } from 'dhive/chain/account';
+	import { Manabar, RCAccount, RCParams, RCPool } from 'dhive/chain/rc';
+	import { Client } from 'dhive/client';
 	export class RCAPI {
 	    readonly client: Client;
 	    constructor(client: Client);
@@ -2391,7 +2391,7 @@ declare module 'dsteem/helpers/rc' {
 	}
 
 }
-declare module 'dsteem/client' {
+declare module 'dhive/client' {
 	/**
 	 * @file Steem RPC client implementation.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -2427,10 +2427,10 @@ declare module 'dsteem/client' {
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
 	/// <reference types="node" />
-	import { Blockchain } from 'dsteem/helpers/blockchain';
-	import { BroadcastAPI } from 'dsteem/helpers/broadcast';
-	import { DatabaseAPI } from 'dsteem/helpers/database';
-	import { RCAPI } from 'dsteem/helpers/rc';
+	import { Blockchain } from 'dhive/helpers/blockchain';
+	import { BroadcastAPI } from 'dhive/helpers/broadcast';
+	import { DatabaseAPI } from 'dhive/helpers/database';
+	import { RCAPI } from 'dhive/helpers/rc';
 	/**
 	 * Library version.
 	 */
@@ -2540,9 +2540,9 @@ declare module 'dsteem/client' {
 	}
 
 }
-declare module 'dsteem/index' {
+declare module 'dhive/index' {
 	/**
-	 * @file dsteem exports.
+	 * @file dhive exports.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -2575,26 +2575,26 @@ declare module 'dsteem/index' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import * as utils from 'dsteem/utils';
+	import * as utils from 'dhive/utils';
 	export { utils };
-	export * from 'dsteem/helpers/blockchain';
-	export * from 'dsteem/helpers/database';
-	export * from 'dsteem/helpers/rc';
-	export * from 'dsteem/chain/account';
-	export * from 'dsteem/chain/asset';
-	export * from 'dsteem/chain/block';
-	export * from 'dsteem/chain/comment';
-	export * from 'dsteem/chain/misc';
-	export * from 'dsteem/chain/operation';
-	export * from 'dsteem/chain/serializer';
-	export * from 'dsteem/chain/transaction';
-	export * from 'dsteem/client';
-	export * from 'dsteem/crypto';
+	export * from 'dhive/helpers/blockchain';
+	export * from 'dhive/helpers/database';
+	export * from 'dhive/helpers/rc';
+	export * from 'dhive/chain/account';
+	export * from 'dhive/chain/asset';
+	export * from 'dhive/chain/block';
+	export * from 'dhive/chain/comment';
+	export * from 'dhive/chain/misc';
+	export * from 'dhive/chain/operation';
+	export * from 'dhive/chain/serializer';
+	export * from 'dhive/chain/transaction';
+	export * from 'dhive/client';
+	export * from 'dhive/crypto';
 
 }
-declare module 'dsteem/index-browser' {
+declare module 'dhive/index-browser' {
 	/**
-	 * @file dsteem entry point for browsers.
+	 * @file dhive entry point for browsers.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -2635,12 +2635,12 @@ declare module 'dsteem/index-browser' {
 	import "core-js/features/array/from";
 	import "core-js/features/symbol/async-iterator";
 	import "cross-fetch/polyfill";
-	export * from 'dsteem/index';
+	export * from 'dhive/index';
 
 }
-declare module 'dsteem/index-node' {
+declare module 'dhive/index-node' {
 	/**
-	 * @file dsteem entry point for node.js.
+	 * @file dhive entry point for node.js.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -2673,6 +2673,6 @@ declare module 'dsteem/index-node' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	export * from 'dsteem/index';
+	export * from 'dhive/index';
 
 }

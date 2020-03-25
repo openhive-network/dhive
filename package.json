@@ -1,14 +1,14 @@
 {
-  "name": "@hivechain/dsteem",
-  "version": "0.12.13",
-  "description": "Steem blockchain RPC client library",
-  "author": "Johan Nordberg",
+  "name": "@hivechain/dhive",
+  "version": "0.13.0",
+  "description": "Hive blockchain RPC client library",
+  "author": "hive-network",
   "license": "BSD-3-Clause",
   "main": "./lib/index-node",
   "typings": "./lib/index",
   "browser": {
-    "./lib/index-node": "./dist/dsteem.js",
-    "./src/index-node": "./dist/dsteem.js",
+    "./lib/index-node": "./dist/dhive.js",
+    "./src/index-node": "./dist/dhive.js",
     "./src/version": "./lib/version.js"
   },
   "files": [
@@ -17,7 +17,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/jnordberg/dsteem"
+    "url": "https://github.com"
   },
   "scripts": {
     "test": "make ci-test",
@@ -27,8 +27,7 @@
     "blockchain",
     "client",
     "rpc",
-    "steem",
-    "steemit"
+    "hive"
   ],
   "dependencies": {
     "bs58": "^4.0.1",

@@ -264,7 +264,7 @@ export class Client {
     const opts: any = {
       body,
       cache: "no-cache",
-      headers: { "User-Agent": `dsteem/${packageVersion}` },
+      headers: { "User-Agent": `dhive/${packageVersion}` },
       method: "POST",
       mode: "cors"
     };
