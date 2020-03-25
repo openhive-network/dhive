@@ -1,5 +1,5 @@
 
-dsteem comment feed example
+dhive comment feed example
 ===========================
 
 Running on: <https://comments.steem.vc>

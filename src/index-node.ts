@@ -1,5 +1,5 @@
 /**
- * @file dsteem entry point for node.js.
+ * @file dhive entry point for node.js.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -33,7 +33,4 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import 'core-js/modules/es7.symbol.async-iterator'
-global['fetch'] = require('node-fetch') // tslint:disable-line:no-string-literal
-
-export * from './index'
+export * from "./index";

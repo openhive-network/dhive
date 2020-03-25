@@ -1,6 +1,6 @@
 {
   "private": true,
   "dependencies": {
-    "dsteem": "^0.8.1"
+    "@hivechain/dhive": "^0.8.1"
   }
 }

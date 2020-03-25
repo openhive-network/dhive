@@ -1,5 +1,5 @@
 /**
- * @file Steem type definitions related to comments and posting.
+ * @file Hive type definitions related to comments and posting.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -33,7 +33,7 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import {Asset} from './asset'
+import { Asset } from './asset'
 
 export interface Comment {
     id: number // comment_id_type
@@ -65,7 +65,7 @@ export interface Comment {
     net_votes: number // int32_t
     root_comment: number // comment_id_type
     max_accepted_payout: string // asset
-    percent_steem_dollars: number // uint16_t
+    percent_hive_dollars: number // uint16_t
     allow_replies: boolean
     allow_votes: boolean
     allow_curation_rewards: boolean
@@ -81,7 +81,7 @@ export interface Discussion extends Comment {
     pending_payout_value: Asset | string
     total_pending_payout_value: Asset | string
     active_votes: any[] // vote_state[]
-    replies: string[] /// author/slug mapping
+    replies: string[] // / author/slug mapping
     author_reputation: number // share_type
     promoted: Asset | string
     body_length: string // Bignum

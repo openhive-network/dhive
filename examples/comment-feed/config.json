@@ -15,7 +15,7 @@
     "watchify": false,
     "extensions": [".ts"],
     "plugins": ["tsify"],
-    "staticLibs": ["dsteem"],
+    "staticLibs": ["@hivechain/dsteem"],
     "staticLibsBundle": true
   },
   "stylus": {
