@@ -1,6 +1,6 @@
 {
   "name": "@hivechain/dhive",
-  "version": "0.13.1",
+  "version": "0.13.2",
   "description": "Hive blockchain RPC client library",
   "author": "hive-network",
   "license": "BSD-3-Clause",
@@ -17,7 +17,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://gitlab.syncad.com/hive/dsteem"
+    "url": "https://gitlab.syncad.com/hive/dhive"
   },
   "scripts": {
     "test": "make ci-test",
