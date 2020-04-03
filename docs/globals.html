@@ -206,6 +206,7 @@
 								<li class="tsd-kind-variable"><a href="globals.html#transactionserializer" class="tsd-kind-icon">Transaction<wbr>Serializer</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#version" class="tsd-kind-icon">VERSION</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#variablebinaryserializer" class="tsd-kind-icon">Variable<wbr>Binary<wbr>Serializer</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#timeouterrors" class="tsd-kind-icon">timeout<wbr>Errors</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -241,6 +242,7 @@
 								<li class="tsd-kind-function"><a href="globals.html#doublesha256" class="tsd-kind-icon">double<wbr>Sha256</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#encodeprivate" class="tsd-kind-icon">encode<wbr>Private</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#encodepublic" class="tsd-kind-icon">encode<wbr>Public</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#failover" class="tsd-kind-icon">failover</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#getvestingshareprice" class="tsd-kind-icon">get<wbr>Vesting<wbr>Share<wbr>Price</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#getvests" class="tsd-kind-icon">get<wbr>Vests</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#iscanonicalsignature" class="tsd-kind-icon">is<wbr>Canonical<wbr>Signature</a></li>
@@ -544,6 +546,16 @@
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in chain/serializer.ts:149</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="timeouterrors" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> timeout<wbr>Errors</h3>
+					<div class="tsd-signature tsd-kind-icon">timeout<wbr>Errors<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [&#x27;request-timeout&#x27;, &#x27;ENOTFOUND&#x27;, &#x27;ECONNREFUSED&#x27;]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in utils.ts:41</li>
 						</ul>
 					</aside>
 				</section>
@@ -1125,7 +1137,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:152</li>
+									<li>Defined in utils.ts:193</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1151,7 +1163,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:90</li>
+									<li>Defined in utils.ts:92</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1249,7 +1261,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in client.ts:334</li>
+									<li>Defined in client.ts:357</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1356,6 +1368,32 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="failover" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> failover</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">failover<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, urls<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in utils.ts:160</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>url: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>urls: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="getvestingshareprice" class="tsd-anchor"></a>
 					<h3>get<wbr>Vesting<wbr>Share<wbr>Price</h3>
 					<ul class="tsd-signatures tsd-kind-function">
@@ -1455,7 +1493,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:65</li>
+									<li>Defined in utils.ts:67</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1483,13 +1521,13 @@
 					<a name="retryingfetch" class="tsd-anchor"></a>
 					<h3>retrying<wbr>Fetch</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">retrying<wbr>Fetch<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, opts<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, timeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, backoff<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>tries<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span>, fetchTimeout<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>tries<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">retrying<wbr>Fetch<span class="tsd-signature-symbol">(</span>currentAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, allAddresses<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, opts<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, timeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, failoverThreshold<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, backoff<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>tries<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span>, fetchTimeout<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>tries<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>currentAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>response<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:97</li>
+									<li>Defined in utils.ts:100</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1500,13 +1538,19 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>url: <span class="tsd-signature-type">string</span></h5>
+									<h5>currentAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>allAddresses: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 								<li>
 									<h5>opts: <span class="tsd-signature-type">any</span></h5>
 								</li>
 								<li>
 									<h5>timeout: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>failoverThreshold: <span class="tsd-signature-type">number</span></h5>
 								</li>
 								<li>
 									<h5>backoff: <span class="tsd-signature-symbol">(</span>tries<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span></h5>
@@ -1533,7 +1577,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> fetchTimeout: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>tries<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>currentAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>response<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1575,7 +1619,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:143</li>
+									<li>Defined in utils.ts:184</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1669,7 +1713,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:56</li>
+									<li>Defined in utils.ts:58</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1731,7 +1775,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:44</li>
+									<li>Defined in utils.ts:46</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2476,6 +2520,9 @@
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#variablebinaryserializer" class="tsd-kind-icon">Variable<wbr>Binary<wbr>Serializer</a>
 					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#timeouterrors" class="tsd-kind-icon">timeout<wbr>Errors</a>
+					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#arrayserializer" class="tsd-kind-icon">Array<wbr>Serializer</a>
 					</li>
@@ -2565,6 +2612,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#encodepublic" class="tsd-kind-icon">encode<wbr>Public</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#failover" class="tsd-kind-icon">failover</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#getvestingshareprice" class="tsd-kind-icon">get<wbr>Vesting<wbr>Share<wbr>Price</a>

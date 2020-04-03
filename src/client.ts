@@ -1,5 +1,5 @@
 /**
- * @file Steem RPC client implementation.
+ * @file Hive RPC client implementation.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -49,7 +49,7 @@ import { copy, retryingFetch, waitForEvent } from "./utils";
 export const VERSION = packageVersion;
 
 /**
- * Main steem network chain id.
+ * Main Hive network chain id.
  */
 export const DEFAULT_CHAIN_ID = Buffer.from(
   "0000000000000000000000000000000000000000000000000000000000000000",
@@ -57,7 +57,7 @@ export const DEFAULT_CHAIN_ID = Buffer.from(
 );
 
 /**
- * Main steem network address prefix.
+ * Main Hive network address prefix.
  */
 export const DEFAULT_ADDRESS_PREFIX = "STM";
 
@@ -135,6 +135,15 @@ export interface ClientOptions {
    * Can be set to 0 to retry forever. Defaults to 60 * 1000 ms.
    */
   timeout?: number;
+
+  /**
+   * Specifies the amount of times the urls (RPC nodes) should be
+   * iterated and retried in case of timeout errors.
+   * (important) Requires url parameter to be an array (string[])!
+   * Can be set to 0 to iterate and retry forever. Defaults to 3 rounds.
+  */
+  failoverThreshold?: number
+
   /**
    * Retry backoff function, returns milliseconds. Default = {@link defaultBackoff}.
    */
@@ -159,9 +168,10 @@ export class Client {
   public readonly options: ClientOptions;
 
   /**
-   * Address to Hive RPC server, *read-only*.
-   */
-  public readonly address: string;
+   * Address to Hive RPC server.
+   * String or String[] *read-only*
+  */
+  public address: string | string[];
 
   /**
    * Database API helper.
@@ -196,12 +206,17 @@ export class Client {
   private timeout: number;
   private backoff: typeof defaultBackoff;
 
+  private failoverThreshold: number;
+    
+  private currentAddress: string;
+
   /**
-   * @param address The address to the Steem RPC server, e.g. `https://api.hive.blog`.
+   * @param address The address to the Hive RPC server, e.g. `https://api.hive.blog`. or [`https://api.hive.blog`, `https://another.api.com`]
    * @param options Client options.
    */
-  constructor(address: string, options: ClientOptions = {}) {
-    this.address = address;
+  constructor(address: string | string[], options: ClientOptions = {}) {
+    this.currentAddress = Array.isArray(address) ? address[0] : address;
+    this.address = address
     this.options = options;
 
     this.chainId = options.chainId
@@ -212,6 +227,7 @@ export class Client {
 
     this.timeout = options.timeout || 60 * 1000;
     this.backoff = options.backoff || defaultBackoff;
+    this.failoverThreshold = options.failoverThreshold || 3;
 
     this.database = new DatabaseAPI(this);
     this.broadcast = new BroadcastAPI(this);
@@ -280,13 +296,20 @@ export class Client {
       // only effective in node.js (until timeout spec lands in browsers)
       fetchTimeout = tries => (tries + 1) * 500;
     }
-    const response: RPCResponse = await retryingFetch(
-      this.address,
-      opts,
-      this.timeout,
-      this.backoff,
-      fetchTimeout
-    );
+
+    const {response, currentAddress}: {response: RPCResponse, currentAddress: string} =
+      await retryingFetch(
+        this.currentAddress,
+        this.address,
+        opts,
+        this.timeout,
+        this.failoverThreshold,
+        this.backoff,
+        fetchTimeout
+      )
+
+  // After failover, change the currently active address
+  if(currentAddress !== this.currentAddress) this.currentAddress = currentAddress
     // resolve FC error messages into something more readable
     if (response.error) {
       const formatValue = (value: any) => {

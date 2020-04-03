@@ -11,6 +11,14 @@ describe("client", function() {
   const client = Client.testnet();
   const aclient = client as any;
 
+  // TODO: change api.hive.blog to testnet
+  it('should handle failover', async () => {
+    const bclient = new Client(['https://wrongapi.hive.blog', 'https://api.hive.blog'], {timeout: 1000})
+    const result = await bclient.call('condenser_api', 'get_accounts', [['initminer']])
+    assert.equal(result.length, 1);
+    assert.equal(result[0].name, "initminer");
+  })
+
   it("should make rpc call", async function() {
     const result = (await client.call("condenser_api", "get_accounts", [
       ["initminer"]

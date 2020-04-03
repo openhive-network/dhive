@@ -103,7 +103,9 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="client.html#blockchain" class="tsd-kind-icon">blockchain</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="client.html#broadcast" class="tsd-kind-icon">broadcast</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="client.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="client.html#currentaddress" class="tsd-kind-icon">current<wbr>Address</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="client.html#database" class="tsd-kind-icon">database</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="client.html#failoverthreshold" class="tsd-kind-icon">failover<wbr>Threshold</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="client.html#options" class="tsd-kind-icon">options</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="client.html#rc" class="tsd-kind-icon">rc</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="client.html#timeout" class="tsd-kind-icon">timeout</a></li>
@@ -125,13 +127,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Client<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/clientoptions.html" class="tsd-signature-type">ClientOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="client.html" class="tsd-signature-type">Client</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Client<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/clientoptions.html" class="tsd-signature-type">ClientOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="client.html" class="tsd-signature-type">Client</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in client.ts:197</li>
+									<li>Defined in client.ts:211</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -139,10 +141,10 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>address: <span class="tsd-signature-type">string</span></h5>
+									<h5>address: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>The address to the Steem RPC server, e.g. <code>https://api.hive.blog</code>.</p>
+											<p>The address to the Steem RPC server, e.g. <code>https://api.hive.blog</code>. or [<code>https://api.hive.blog</code>, <code>https://another.api.com</code>]</p>
 										</div>
 									</div>
 								</li>
@@ -165,15 +167,16 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="address" class="tsd-anchor"></a>
 					<h3>address</h3>
-					<div class="tsd-signature tsd-kind-icon">address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<div class="tsd-signature tsd-kind-icon">address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:164</li>
+							<li>Defined in client.ts:174</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Address to Hive RPC server, <em>read-only</em>.</p>
+							<p>Address to Steem RPC server.
+							String or String[] <em>read-only</em></p>
 						</div>
 					</div>
 				</section>
@@ -183,7 +186,7 @@
 					<div class="tsd-signature tsd-kind-icon">address<wbr>Prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:194</li>
+							<li>Defined in client.ts:204</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -198,7 +201,7 @@
 					<div class="tsd-signature tsd-kind-icon">backoff<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">typeof </span><a href="../globals.html#defaultbackoff" class="tsd-signature-type">defaultBackoff</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:197</li>
+							<li>Defined in client.ts:207</li>
 						</ul>
 					</aside>
 				</section>
@@ -208,7 +211,7 @@
 					<div class="tsd-signature tsd-kind-icon">blockchain<span class="tsd-signature-symbol">:</span> <a href="blockchain.html" class="tsd-signature-type">Blockchain</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:184</li>
+							<li>Defined in client.ts:194</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -223,7 +226,7 @@
 					<div class="tsd-signature tsd-kind-icon">broadcast<span class="tsd-signature-symbol">:</span> <a href="broadcastapi.html" class="tsd-signature-type">BroadcastAPI</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:179</li>
+							<li>Defined in client.ts:189</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -238,7 +241,7 @@
 					<div class="tsd-signature tsd-kind-icon">chain<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:189</li>
+							<li>Defined in client.ts:199</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -247,13 +250,23 @@
 						</div>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="currentaddress" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> current<wbr>Address</h3>
+					<div class="tsd-signature tsd-kind-icon">current<wbr>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in client.ts:211</li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="database" class="tsd-anchor"></a>
 					<h3>database</h3>
 					<div class="tsd-signature tsd-kind-icon">database<span class="tsd-signature-symbol">:</span> <a href="databaseapi.html" class="tsd-signature-type">DatabaseAPI</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:169</li>
+							<li>Defined in client.ts:179</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -262,13 +275,23 @@
 						</div>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="failoverthreshold" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> failover<wbr>Threshold</h3>
+					<div class="tsd-signature tsd-kind-icon">failover<wbr>Threshold<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in client.ts:209</li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="options" class="tsd-anchor"></a>
 					<h3>options</h3>
 					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/clientoptions.html" class="tsd-signature-type">ClientOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:159</li>
+							<li>Defined in client.ts:168</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -283,7 +306,7 @@
 					<div class="tsd-signature tsd-kind-icon">rc<span class="tsd-signature-symbol">:</span> <a href="rcapi.html" class="tsd-signature-type">RCAPI</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:174</li>
+							<li>Defined in client.ts:184</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -298,7 +321,7 @@
 					<div class="tsd-signature tsd-kind-icon">timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:196</li>
+							<li>Defined in client.ts:206</li>
 						</ul>
 					</aside>
 				</section>
@@ -315,7 +338,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in client.ts:246</li>
+									<li>Defined in client.ts:262</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -358,7 +381,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in client.ts:225</li>
+									<li>Defined in client.ts:241</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -414,8 +437,14 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="client.html#chainid" class="tsd-kind-icon">chain<wbr>Id</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="client.html#currentaddress" class="tsd-kind-icon">current<wbr>Address</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="client.html#database" class="tsd-kind-icon">database</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="client.html#failoverthreshold" class="tsd-kind-icon">failover<wbr>Threshold</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="client.html#options" class="tsd-kind-icon">options</a>

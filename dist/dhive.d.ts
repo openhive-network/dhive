@@ -1843,7 +1843,10 @@ declare module 'dhive/utils' {
 	/**
 	 * Fetch API wrapper that retries until timeout is reached.
 	 */
-	export function retryingFetch(url: string, opts: any, timeout: number, backoff: (tries: number) => number, fetchTimeout?: (tries: number) => number): Promise<any>;
+	export function retryingFetch(currentAddress: string, allAddresses: string | string[], opts: any, timeout: number, failoverThreshold: number, backoff: (tries: number) => number, fetchTimeout?: (tries: number) => number): Promise<{
+	    response: any;
+	    currentAddress: string;
+	}>;
 	import { PublicKey } from 'dhive/crypto';
 	import { Asset, PriceType } from 'dhive/chain/asset';
 	import { WitnessSetPropertiesOperation } from 'dhive/chain/operation';
@@ -2393,7 +2396,7 @@ declare module 'dhive/helpers/rc' {
 }
 declare module 'dhive/client' {
 	/**
-	 * @file Steem RPC client implementation.
+	 * @file Hive RPC client implementation.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -2436,11 +2439,11 @@ declare module 'dhive/client' {
 	 */
 	export const VERSION: string;
 	/**
-	 * Main steem network chain id.
+	 * Main Hive network chain id.
 	 */
 	export const DEFAULT_CHAIN_ID: Buffer;
 	/**
-	 * Main steem network address prefix.
+	 * Main Hive network address prefix.
 	 */
 	export const DEFAULT_ADDRESS_PREFIX = "STM";
 	/**
@@ -2469,6 +2472,13 @@ declare module 'dhive/client' {
 	     */
 	    timeout?: number;
 	    /**
+	     * Specifies the amount of times the urls (RPC nodes) should be
+	     * iterated and retried in case of timeout errors.
+	     * (important) Requires url parameter to be an array (string[])!
+	     * Can be set to 0 to iterate and retry forever. Defaults to 3 rounds.
+	    */
+	    failoverThreshold?: number;
+	    /**
 	     * Retry backoff function, returns milliseconds. Default = {@link defaultBackoff}.
 	     */
 	    backoff?: (tries: number) => number;
@@ -2490,9 +2500,10 @@ declare module 'dhive/client' {
 	     */
 	    readonly options: ClientOptions;
 	    /**
-	     * Address to Hive RPC server, *read-only*.
-	     */
-	    readonly address: string;
+	     * Address to Hive RPC server.
+	     * String or String[] *read-only*
+	    */
+	    address: string | string[];
 	    /**
 	     * Database API helper.
 	     */
@@ -2519,11 +2530,13 @@ declare module 'dhive/client' {
 	    readonly addressPrefix: string;
 	    private timeout;
 	    private backoff;
+	    private failoverThreshold;
+	    private currentAddress;
 	    /**
-	     * @param address The address to the Steem RPC server, e.g. `https://api.hive.blog`.
+	     * @param address The address to the Hive RPC server, e.g. `https://api.hive.blog`. or [`https://api.hive.blog`, `https://another.api.com`]
 	     * @param options Client options.
 	     */
-	    constructor(address: string, options?: ClientOptions);
+	    constructor(address: string | string[], options?: ClientOptions);
 	    /**
 	     * Create a new client instance configured for the testnet.
 	     */
