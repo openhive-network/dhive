@@ -1,5 +1,5 @@
 /**
- * @file Steem RPC client implementation.
+ * @file Hive RPC client implementation.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -49,7 +49,7 @@ import { copy, retryingFetch, waitForEvent } from "./utils";
 export const VERSION = packageVersion;
 
 /**
- * Main steem network chain id.
+ * Main Hive network chain id.
  */
 export const DEFAULT_CHAIN_ID = Buffer.from(
   "0000000000000000000000000000000000000000000000000000000000000000",
@@ -57,7 +57,7 @@ export const DEFAULT_CHAIN_ID = Buffer.from(
 );
 
 /**
- * Main steem network address prefix.
+ * Main Hive network address prefix.
  */
 export const DEFAULT_ADDRESS_PREFIX = "STM";
 
@@ -168,7 +168,7 @@ export class Client {
   public readonly options: ClientOptions;
 
   /**
-   * Address to Steem RPC server.
+   * Address to Hive RPC server.
    * String or String[] *read-only*
   */
   public address: string | string[];
@@ -211,7 +211,7 @@ export class Client {
   private currentAddress: string;
 
   /**
-   * @param address The address to the Steem RPC server, e.g. `https://api.hive.blog`. or [`https://api.hive.blog`, `https://another.api.com`]
+   * @param address The address to the Hive RPC server, e.g. `https://api.hive.blog`. or [`https://api.hive.blog`, `https://another.api.com`]
    * @param options Client options.
    */
   constructor(address: string | string[], options: ClientOptions = {}) {

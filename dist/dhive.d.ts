@@ -2396,7 +2396,7 @@ declare module 'dhive/helpers/rc' {
 }
 declare module 'dhive/client' {
 	/**
-	 * @file Steem RPC client implementation.
+	 * @file Hive RPC client implementation.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -2439,11 +2439,11 @@ declare module 'dhive/client' {
 	 */
 	export const VERSION: string;
 	/**
-	 * Main steem network chain id.
+	 * Main Hive network chain id.
 	 */
 	export const DEFAULT_CHAIN_ID: Buffer;
 	/**
-	 * Main steem network address prefix.
+	 * Main Hive network address prefix.
 	 */
 	export const DEFAULT_ADDRESS_PREFIX = "STM";
 	/**
@@ -2500,7 +2500,7 @@ declare module 'dhive/client' {
 	     */
 	    readonly options: ClientOptions;
 	    /**
-	     * Address to Steem RPC server.
+	     * Address to Hive RPC server.
 	     * String or String[] *read-only*
 	    */
 	    address: string | string[];
@@ -2533,7 +2533,7 @@ declare module 'dhive/client' {
 	    private failoverThreshold;
 	    private currentAddress;
 	    /**
-	     * @param address The address to the Steem RPC server, e.g. `https://api.hive.blog`. or [`https://api.hive.blog`, `https://another.api.com`]
+	     * @param address The address to the Hive RPC server, e.g. `https://api.hive.blog`. or [`https://api.hive.blog`, `https://another.api.com`]
 	     * @param options Client options.
 	     */
 	    constructor(address: string | string[], options?: ClientOptions);
