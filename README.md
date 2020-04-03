@@ -47,7 +47,7 @@ Make sure to set the version you want when including from the cdn, you can also 
 ```html
 <script src="https://unpkg.com/dhive@latest/dist/dhive.js"></script>
 <script>
-  var client = new dhive.Client("https://api.hive.blog");
+  var client = new dhive.Client(["https://api.hive.blog", "https://api.hivekings.com", "https://anyx.io", "https://api.openhive.network"]);
   client.database
     .getDiscussions("trending", { tag: "writing", limit: 1 })
     .then(function(discussions) {
@@ -68,7 +68,7 @@ With TypeScript:
 ```typescript
 import { Client } from "@hivechain/dhive";
 
-const client = new Client("https://api.hive.blog");
+const client = new Client(["https://api.hive.blog", "https://api.hivekings.com", "https://anyx.io", "https://api.openhive.network"]);
 
 for await (const block of client.blockchain.getBlocks()) {
   console.log(`New block, id: ${block.block_id}`);
@@ -80,7 +80,7 @@ With JavaScript:
 ```javascript
 var dhive = require("@hivechain/dhive");
 
-var client = new dhive.Client("https://api.hive.blog");
+var client = new dhive.Client(["https://api.hive.blog", "https://api.hivekings.com", "https://anyx.io", "https://api.openhive.network"]);
 var key = dhive.PrivateKey.fromLogin("username", "password", "posting");
 
 client.broadcast
@@ -108,7 +108,7 @@ With ES2016 (node.js 7+):
 ```javascript
 const { Client } = require("@hivechain/dhive");
 
-const client = new Client("https://api.hive.blog");
+const client = new Client(["https://api.hive.blog", "https://api.hivekings.com", "https://anyx.io", "https://api.openhive.network"]);
 
 async function main() {
   const props = await client.database.getChainProperties();
@@ -126,7 +126,7 @@ var dhive = require("@hivechain/dhive");
 var es = require("event-stream"); // npm install event-stream
 var util = require("util");
 
-var client = new dhive.Client("https://api.hive.blog");
+var client = new dhive.Client(["https://api.hive.blog", "https://api.hivekings.com", "https://anyx.io", "https://api.openhive.network"]);
 
 var stream = client.blockchain.getBlockStream();
 
