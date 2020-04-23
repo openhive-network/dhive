@@ -217,6 +217,17 @@ export class DatabaseAPI {
   }
 
   /**
+   * Returns one or more account history objects for account operations
+   *
+   * @param username The account to fetch
+   * @param from The starting index
+   * @param limit The maximum number of results to return
+   */
+  public getAccountHistory(username: string, from: number, limit: number): Promise<[[number, AppliedOperation]]> {
+    return this.call('get_account_history', [username, from, limit])
+  }
+
+  /**
    * Verify signed transaction.
    */
   public async verifyAuthority(stx: SignedTransaction): Promise<boolean> {
