@@ -40,6 +40,6 @@ import "core-js/features/promise";
 import "core-js/features/symbol";
 import "core-js/features/array/from";
 import "core-js/features/symbol/async-iterator";
-import "cross-fetch/polyfill";
+import 'whatwg-fetch';
 
 export * from "./index";
