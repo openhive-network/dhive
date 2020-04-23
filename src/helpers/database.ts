@@ -205,7 +205,7 @@ export class DatabaseAPI {
    */
   public async getTransaction(
     txc: TransactionConfirmation | { block_num: number; id: string }
-  ) {
+  ): Promise<SignedTransaction> {
     const block = await this.client.database.getBlock(txc.block_num)
     const idx = block.transaction_ids.indexOf(txc.id)
     if (idx === -1) {
