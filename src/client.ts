@@ -280,10 +280,18 @@ export class Client {
     const opts: any = {
       body,
       cache: "no-cache",
-      headers: { "User-Agent": `dhive/${packageVersion}` },
       method: "POST",
       mode: "cors"
     };
+
+    // Self is not defined within Node environments
+    // This check is needed because the user agent cannot be set in a browser
+    if (typeof self === undefined) {
+      opts.headers = {
+        "User-Agent": `dhive/${packageVersion}`
+      };
+    }
+
     if (this.options.agent) {
       opts.agent = this.options.agent;
     }
