@@ -205,7 +205,7 @@ export class DatabaseAPI {
    */
   public async getTransaction(
     txc: TransactionConfirmation | { block_num: number; id: string }
-  ) {
+  ): Promise<SignedTransaction> {
     const block = await this.client.database.getBlock(txc.block_num)
     const idx = block.transaction_ids.indexOf(txc.id)
     if (idx === -1) {
@@ -214,6 +214,17 @@ export class DatabaseAPI {
       )
     }
     return block.transactions[idx] as SignedTransaction
+  }
+
+  /**
+   * Returns one or more account history objects for account operations
+   *
+   * @param account The account to fetch
+   * @param from The starting index
+   * @param limit The maximum number of results to return
+   */
+  public getAccountHistory(account: string, from: number, limit: number): Promise<[[number, AppliedOperation]]> {
+    return this.call('get_account_history', [account, from, limit])
   }
 
   /**
