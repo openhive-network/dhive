@@ -138,6 +138,23 @@ function isCanonicalSignature(signature: Buffer): boolean {
 }
 
 /**
+ * Return true if string is wif, otherwise false.
+ */
+function isWif(privWif: string | Buffer): boolean {
+  try {
+      const bufWif = new Buffer(bs58.decode(privWif))
+      const privKey = bufWif.slice(0, -4)
+      const checksum = bufWif.slice(-4)
+      let newChecksum = sha256(privKey)
+      newChecksum = sha256(newChecksum)
+      newChecksum = newChecksum.slice(0, 4)
+      return (checksum.toString() === newChecksum.toString())
+  } catch (e) {
+      return false
+  }
+}
+
+/**
  * ECDSA (secp256k1) public key.
  */
 export class PublicKey {
@@ -388,6 +405,7 @@ export const cryptoUtils = {
   encodePrivate,
   encodePublic,
   isCanonicalSignature,
+  isWif,
   ripemd160,
   sha256,
   signTransaction,

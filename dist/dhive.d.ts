@@ -1678,7 +1678,7 @@ declare module 'dhive/crypto' {
 	/**
 	 * Network id used in WIF-encoding.
 	 */
-	export const NETWORK_ID: Buffer; function ripemd160(input: Buffer | string): Buffer; function sha256(input: Buffer | string): Buffer; function doubleSha256(input: Buffer | string): Buffer; function encodePublic(key: Buffer, prefix: string): string; function encodePrivate(key: Buffer): string; function decodePrivate(encodedKey: string): Buffer; function isCanonicalSignature(signature: Buffer): boolean;
+	export const NETWORK_ID: Buffer; function ripemd160(input: Buffer | string): Buffer; function sha256(input: Buffer | string): Buffer; function doubleSha256(input: Buffer | string): Buffer; function encodePublic(key: Buffer, prefix: string): string; function encodePrivate(key: Buffer): string; function decodePrivate(encodedKey: string): Buffer; function isCanonicalSignature(signature: Buffer): boolean; function isWif(privWif: string | Buffer): boolean;
 	/**
 	 * ECDSA (secp256k1) public key.
 	 */
@@ -1779,6 +1779,7 @@ declare module 'dhive/crypto' {
 	    encodePrivate: typeof encodePrivate;
 	    encodePublic: typeof encodePublic;
 	    isCanonicalSignature: typeof isCanonicalSignature;
+	    isWif: typeof isWif;
 	    ripemd160: typeof ripemd160;
 	    sha256: typeof sha256;
 	    signTransaction: typeof signTransaction;
@@ -2553,7 +2554,7 @@ declare module 'dhive/client' {
 	}
 
 }
-declare module 'dhive/index' {
+declare module 'dhive' {
 	/**
 	 * @file dhive exports.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -2647,8 +2648,8 @@ declare module 'dhive/index-browser' {
 	import "core-js/features/symbol";
 	import "core-js/features/array/from";
 	import "core-js/features/symbol/async-iterator";
-	import "cross-fetch/polyfill";
-	export * from 'dhive/index';
+	import 'whatwg-fetch';
+	export * from 'dhive';
 
 }
 declare module 'dhive/index-node' {
@@ -2686,6 +2687,6 @@ declare module 'dhive/index-node' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	export * from 'dhive/index';
+	export * from 'dhive';
 
 }
