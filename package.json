@@ -21,13 +21,14 @@
   },
   "scripts": {
     "test": "make ci-test",
-    "prepublishOnly": "make all"
+    "prepublish": "make all"
   },
   "keywords": [
     "blockchain",
     "client",
     "rpc",
-    "hive"
+    "hive",
+    "dhive"
   ],
   "dependencies": {
     "bs58": "^4.0.1",

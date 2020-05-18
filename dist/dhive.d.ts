@@ -2287,6 +2287,14 @@ declare module 'dhive/helpers/database' {
 	        id: string;
 	    }): Promise<SignedTransaction>;
 	    /**
+	     * Returns one or more account history objects for account operations
+	     *
+	     * @param account The account to fetch
+	     * @param from The starting index
+	     * @param limit The maximum number of results to return
+	     */
+	    getAccountHistory(account: string, from: number, limit: number): Promise<[[number, AppliedOperation]]>;
+	    /**
 	     * Verify signed transaction.
 	     */
 	    verifyAuthority(stx: SignedTransaction): Promise<boolean>;
@@ -2395,6 +2403,123 @@ declare module 'dhive/helpers/rc' {
 	}
 
 }
+declare module 'dhive/chain/hivemind' {
+	export interface CommunityDetail {
+	    id: number;
+	    name: string;
+	    title: string;
+	    about: string;
+	    lang: string;
+	    type_id: number;
+	    is_nsfw: false;
+	    subscribers: number;
+	    sum_pending: number;
+	    num_pending: number;
+	    num_authors: number;
+	    created_at: string;
+	    avatar_url: string;
+	    context: object;
+	    description: string;
+	    flag_text: string;
+	    settings: {};
+	    team?: string[];
+	    admins?: string[];
+	}
+	export interface Notifications {
+	    id: number;
+	    type: string;
+	    score: number;
+	    date: string;
+	    msg: string;
+	    url: string;
+	}
+
+}
+declare module 'dhive/helpers/hivemind' {
+	/**
+	 * Hivemind database query wrapper
+	*/
+	import { Discussion } from 'dhive/chain/comment';
+	import { Account } from 'dhive/chain/account';
+	import { CommunityDetail, Notifications } from 'dhive/chain/hivemind';
+	import { Client } from 'dhive/client';
+	interface PostsQuery {
+	    /**
+	     * Number of posts to fetch
+	     */
+	    limit?: number;
+	    /**
+	     * Sorting posts
+	     */
+	    sort: 'trending' | 'hot' | 'created' | 'promoted' | 'payout' | 'payout_comments' | 'muted';
+	    /**
+	     * Filtering with tags
+	     */
+	    tag?: string[] | string;
+	    /**
+	     * Observer account
+	     */
+	    observer?: string;
+	    /**
+	     * Paginating last post author
+	     */
+	    start_author?: string;
+	    /**
+	     * Paginating last post permlink
+	     */
+	    start_permlink?: string;
+	}
+	/**
+	 * Omitting sort extended from BridgeParam
+	 * */
+	interface AccountPostsQuery extends Omit<PostsQuery, 'sort'> {
+	    account: string;
+	    sort: 'posts';
+	}
+	interface CommunityQuery {
+	    name: string;
+	    observer: string;
+	}
+	interface AccountNotifsQuery {
+	    account: Account['name'];
+	    limit: number;
+	    type?: 'new_community' | 'pin_post';
+	}
+	interface ListCommunitiesQuery {
+	    /**
+	     * Paginating last
+	     */
+	    last?: string;
+	    /**
+	     * Number of communities to fetch
+	     */
+	    limit: number;
+	    /**
+	     * To be developed, not ready yet
+	     */
+	    query?: string | any;
+	    /**
+	     * Observer account
+	     */
+	    observer?: Account['name'];
+	}
+	export class HivemindAPI {
+	    readonly client: Client;
+	    constructor(client: Client);
+	    /**
+	   * Convenience for calling `hivemindAPI`.
+	   */
+	    call(method: string, params?: any): Promise<any>;
+	    getRankedPosts(options: PostsQuery): Promise<Discussion[]>;
+	    getAccountPosts(options: AccountPostsQuery): Promise<Discussion[]>;
+	    getCommunity(options: CommunityQuery): Promise<CommunityDetail[]>;
+	    listAllSubscriptions(account: Account['name'] | object): Promise<Discussion[]>;
+	    getAccountNotifications(options?: AccountNotifsQuery): Promise<Notifications[]>;
+	    listCommunities(options: ListCommunitiesQuery): Promise<CommunityDetail[]>;
+	}
+	export {};
+
+}
 declare module 'dhive/client' {
 	/**
 	 * @file Hive RPC client implementation.
@@ -2435,6 +2560,7 @@ declare module 'dhive/client' {
 	import { BroadcastAPI } from 'dhive/helpers/broadcast';
 	import { DatabaseAPI } from 'dhive/helpers/database';
 	import { RCAPI } from 'dhive/helpers/rc';
+	import { HivemindAPI } from 'dhive/helpers/hivemind';
 	/**
 	 * Library version.
 	 */
@@ -2521,6 +2647,10 @@ declare module 'dhive/client' {
 	     * Blockchain helper.
 	     */
 	    readonly blockchain: Blockchain;
+	    /**
+	     * Blockchain helper.
+	     */
+	    readonly hivemind: HivemindAPI;
 	    /**
 	     * Chain ID for current network.
 	     */
