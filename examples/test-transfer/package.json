@@ -9,6 +9,6 @@
   "author": "pjt",
   "license": "ISC",
   "dependencies": {
-    "dsteem": "file:../.."
+    "@hiveio/dhive": "file:../.."
   }
 }

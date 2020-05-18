@@ -1,5 +1,5 @@
 
-import {Client, BlockchainMode} from '@hivechain/dhive'
+import {Client, BlockchainMode} from '@hiveio/dhive'
 
 import * as removeMarkdown from 'remove-markdown'
 

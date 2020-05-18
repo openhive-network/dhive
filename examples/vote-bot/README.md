@@ -2,7 +2,7 @@
 vote-vot
 ========
 
-Simple steemit copycat votebot.
+Simple Hive copycat votebot.
 
 Usage
 -----

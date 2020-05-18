@@ -5,10 +5,11 @@
     "build": "ts-node bin/build.ts"
   },
   "dependencies": {
+    "@hiveio/dhive": "^0.13.5",
     "@types/node": "^8.0.28",
     "@types/shelljs": "^0.7.4",
     "core-js": "^2.5.1",
-    "remove-markdown": "^0.2.2",
+    "remove-markdown": "^0.3.0",
     "shelljs": "^0.7.8",
     "ts-node": "^3.3.0",
     "tsify": "^3.0.3",

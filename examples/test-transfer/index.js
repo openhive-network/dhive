@@ -1,15 +1,15 @@
-const dsteem = require("dsteem");
+const dhive = require("@hiveio/dhive");
 
 const tx = {
   amount: "0.001 HIVE",
   from: "petertag",
   to: "mahdiyari",
-  memo: "test dsteem hivekings"
+  memo: "test dhive hivekings"
 };
 const privkey = "KEY HERE";
 
-const client = new dsteem.Client("https://api.hivekings.com");
-const key = dsteem.PrivateKey.fromString(privkey);
+const client = new dhive.Client("https://api.hivekings.com");
+const key = dhive.PrivateKey.fromString(privkey);
 console.log(key);
 const op = ["transfer", tx];
 console.log(op);
