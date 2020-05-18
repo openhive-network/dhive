@@ -100,7 +100,7 @@
 				</a>
 				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://unpkg.com/dhive@latest/dist/dhive.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
-  <span class="hljs-keyword">var</span> client = <span class="hljs-keyword">new</span> dhive.Client(<span class="hljs-string">"https://api.hive.blog"</span>);
+  <span class="hljs-keyword">var</span> client = <span class="hljs-keyword">new</span> dhive.Client([<span class="hljs-string">"https://api.hive.blog"</span>, <span class="hljs-string">"https://api.hivekings.com"</span>, <span class="hljs-string">"https://anyx.io"</span>, <span class="hljs-string">"https://api.openhive.network"</span>]);
   client.database
     .getDiscussions(<span class="hljs-string">"trending"</span>, { <span class="hljs-attr">tag</span>: <span class="hljs-string">"writing"</span>, <span class="hljs-attr">limit</span>: <span class="hljs-number">1</span> })
     .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">discussions</span>) </span>{
@@ -117,7 +117,7 @@
 				<p>With TypeScript:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Client } <span class="hljs-keyword">from</span> <span class="hljs-string">"@hivechain/dhive"</span>;
 
-<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(<span class="hljs-string">"https://api.hive.blog"</span>);
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client([<span class="hljs-string">"https://api.hive.blog"</span>, <span class="hljs-string">"https://api.hivekings.com"</span>, <span class="hljs-string">"https://anyx.io"</span>, <span class="hljs-string">"https://api.openhive.network"</span>]);
 
 <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> block of client.blockchain.getBlocks()) {
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`New block, id: <span class="hljs-subst">${block.block_id}</span>`</span>);
@@ -125,7 +125,7 @@
 				<p>With JavaScript:</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">var</span> dhive = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@hivechain/dhive"</span>);
 
-<span class="hljs-keyword">var</span> client = <span class="hljs-keyword">new</span> dhive.Client(<span class="hljs-string">"https://api.hive.blog"</span>);
+<span class="hljs-keyword">var</span> client = <span class="hljs-keyword">new</span> dhive.Client([<span class="hljs-string">"https://api.hive.blog"</span>, <span class="hljs-string">"https://api.hivekings.com"</span>, <span class="hljs-string">"https://anyx.io"</span>, <span class="hljs-string">"https://api.openhive.network"</span>]);
 <span class="hljs-keyword">var</span> key = dhive.PrivateKey.fromLogin(<span class="hljs-string">"username"</span>, <span class="hljs-string">"password"</span>, <span class="hljs-string">"posting"</span>);
 
 client.broadcast
@@ -149,7 +149,7 @@ client.broadcast
 				<p>With ES2016 (node.js 7+):</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> { Client } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@hivechain/dhive"</span>);
 
-<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(<span class="hljs-string">"https://api.hive.blog"</span>);
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client([<span class="hljs-string">"https://api.hive.blog"</span>, <span class="hljs-string">"https://api.hivekings.com"</span>, <span class="hljs-string">"https://anyx.io"</span>, <span class="hljs-string">"https://api.openhive.network"</span>]);
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">await</span> client.database.getChainProperties();
@@ -163,7 +163,7 @@ main().catch(<span class="hljs-built_in">console</span>.error);</code></pre>
 <span class="hljs-keyword">var</span> es = <span class="hljs-built_in">require</span>(<span class="hljs-string">"event-stream"</span>); <span class="hljs-comment">// npm install event-stream</span>
 <span class="hljs-keyword">var</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">"util"</span>);
 
-<span class="hljs-keyword">var</span> client = <span class="hljs-keyword">new</span> dhive.Client(<span class="hljs-string">"https://api.hive.blog"</span>);
+<span class="hljs-keyword">var</span> client = <span class="hljs-keyword">new</span> dhive.Client([<span class="hljs-string">"https://api.hive.blog"</span>, <span class="hljs-string">"https://api.hivekings.com"</span>, <span class="hljs-string">"https://anyx.io"</span>, <span class="hljs-string">"https://api.openhive.network"</span>]);
 
 <span class="hljs-keyword">var</span> stream = client.blockchain.getBlockStream();
 
@@ -645,6 +645,9 @@ stream
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#iscanonicalsignature" class="tsd-kind-icon">is<wbr>Canonical<wbr>Signature</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#iswif" class="tsd-kind-icon">is<wbr>Wif</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#iteratorstream" class="tsd-kind-icon">iterator<wbr>Stream</a>

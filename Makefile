@@ -32,7 +32,7 @@ dist/dhive.js: src/index-browser.ts
 
 dist/dhive.d.ts: $(SRC_FILES) node_modules
 	dts-generator --name dhive --project . --out dist/dhive.d.ts
-	sed "s@'dhive/index'@'dhive'@g" -i dist/dhive.d.ts
+	sed -e "s@'dhive/index'@'dhive'@g" -i '' dist/dhive.d.ts
 
 dist/%.gz: dist/dhive.js
 	gzip -9 -f -c $(basename $@) > $(basename $@).gz
@@ -70,7 +70,7 @@ node_modules:
 
 docs: $(SRC_FILES) node_modules
 	typedoc --gitRevision master --target ES6 --mode file --out docs src
-	find docs -name "*.html" | xargs sed -i 's~$(shell pwd)~.~g'
+	find docs -name "*.html" | xargs sed -i '' 's~$(shell pwd)~.~g'
 	echo "Served at <https://jnordberg.github.io/dhive/>" > docs/README.md
 	touch docs
 

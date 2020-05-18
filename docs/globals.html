@@ -246,6 +246,7 @@
 								<li class="tsd-kind-function"><a href="globals.html#getvestingshareprice" class="tsd-kind-icon">get<wbr>Vesting<wbr>Share<wbr>Price</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#getvests" class="tsd-kind-icon">get<wbr>Vests</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#iscanonicalsignature" class="tsd-kind-icon">is<wbr>Canonical<wbr>Signature</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#iswif" class="tsd-kind-icon">is<wbr>Wif</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#iteratorstream" class="tsd-kind-icon">iterator<wbr>Stream</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#retryingfetch" class="tsd-kind-icon">retrying<wbr>Fetch</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#ripemd160" class="tsd-kind-icon">ripemd160</a></li>
@@ -320,7 +321,7 @@
 					<div class="tsd-signature tsd-kind-icon">Key<wbr>Role<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"owner"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"active"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"posting"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"memo"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in crypto.ts:201</li>
+							<li>Defined in crypto.ts:218</li>
 						</ul>
 					</aside>
 				</section>
@@ -442,7 +443,7 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Main steem network address prefix.</p>
+							<p>Main Hive network address prefix.</p>
 						</div>
 					</div>
 				</section>
@@ -457,7 +458,7 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Main steem network chain id.</p>
+							<p>Main Hive network chain id.</p>
 						</div>
 					</div>
 				</section>
@@ -1261,7 +1262,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in client.ts:357</li>
+									<li>Defined in client.ts:365</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1483,6 +1484,34 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="iswif" class="tsd-anchor"></a>
+					<h3>is<wbr>Wif</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Wif<span class="tsd-signature-symbol">(</span>privWif<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in crypto.ts:143</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return true if string is wif, otherwise false.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>privWif: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
 					<a name="iteratorstream" class="tsd-anchor"></a>
 					<h3>iterator<wbr>Stream</h3>
@@ -1673,7 +1702,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in crypto.ts:362</li>
+									<li>Defined in crypto.ts:379</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1741,7 +1770,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in crypto.ts:333</li>
+									<li>Defined in crypto.ts:350</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2061,7 +2090,7 @@
 					<div class="tsd-signature tsd-kind-icon">crypto<wbr>Utils<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in crypto.ts:385</li>
+							<li>Defined in crypto.ts:402</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -2075,7 +2104,7 @@
 						<div class="tsd-signature tsd-kind-icon">decode<wbr>Private<span class="tsd-signature-symbol">:</span> <a href="globals.html#decodeprivate" class="tsd-signature-type">decodePrivate</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:386</li>
+								<li>Defined in crypto.ts:403</li>
 							</ul>
 						</aside>
 					</section>
@@ -2085,7 +2114,7 @@
 						<div class="tsd-signature tsd-kind-icon">double<wbr>Sha256<span class="tsd-signature-symbol">:</span> <a href="globals.html#doublesha256" class="tsd-signature-type">doubleSha256</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:387</li>
+								<li>Defined in crypto.ts:404</li>
 							</ul>
 						</aside>
 					</section>
@@ -2095,7 +2124,7 @@
 						<div class="tsd-signature tsd-kind-icon">encode<wbr>Private<span class="tsd-signature-symbol">:</span> <a href="globals.html#encodeprivate" class="tsd-signature-type">encodePrivate</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:388</li>
+								<li>Defined in crypto.ts:405</li>
 							</ul>
 						</aside>
 					</section>
@@ -2105,7 +2134,7 @@
 						<div class="tsd-signature tsd-kind-icon">encode<wbr>Public<span class="tsd-signature-symbol">:</span> <a href="globals.html#encodepublic" class="tsd-signature-type">encodePublic</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:389</li>
+								<li>Defined in crypto.ts:406</li>
 							</ul>
 						</aside>
 					</section>
@@ -2115,7 +2144,17 @@
 						<div class="tsd-signature tsd-kind-icon">is<wbr>Canonical<wbr>Signature<span class="tsd-signature-symbol">:</span> <a href="globals.html#iscanonicalsignature" class="tsd-signature-type">isCanonicalSignature</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:390</li>
+								<li>Defined in crypto.ts:407</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="cryptoutils.iswif" class="tsd-anchor"></a>
+						<h3>is<wbr>Wif</h3>
+						<div class="tsd-signature tsd-kind-icon">is<wbr>Wif<span class="tsd-signature-symbol">:</span> <a href="globals.html#iswif" class="tsd-signature-type">isWif</a></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in crypto.ts:408</li>
 							</ul>
 						</aside>
 					</section>
@@ -2125,7 +2164,7 @@
 						<div class="tsd-signature tsd-kind-icon">ripemd160<span class="tsd-signature-symbol">:</span> <a href="globals.html#ripemd160" class="tsd-signature-type">ripemd160</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:391</li>
+								<li>Defined in crypto.ts:409</li>
 							</ul>
 						</aside>
 					</section>
@@ -2135,7 +2174,7 @@
 						<div class="tsd-signature tsd-kind-icon">sha256<span class="tsd-signature-symbol">:</span> <a href="globals.html#sha256" class="tsd-signature-type">sha256</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:392</li>
+								<li>Defined in crypto.ts:410</li>
 							</ul>
 						</aside>
 					</section>
@@ -2145,7 +2184,7 @@
 						<div class="tsd-signature tsd-kind-icon">sign<wbr>Transaction<span class="tsd-signature-symbol">:</span> <a href="globals.html#signtransaction" class="tsd-signature-type">signTransaction</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:393</li>
+								<li>Defined in crypto.ts:411</li>
 							</ul>
 						</aside>
 					</section>
@@ -2155,7 +2194,7 @@
 						<div class="tsd-signature tsd-kind-icon">transaction<wbr>Digest<span class="tsd-signature-symbol">:</span> <a href="globals.html#transactiondigest" class="tsd-signature-type">transactionDigest</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:394</li>
+								<li>Defined in crypto.ts:412</li>
 							</ul>
 						</aside>
 					</section>
@@ -2624,6 +2663,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#iscanonicalsignature" class="tsd-kind-icon">is<wbr>Canonical<wbr>Signature</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#iswif" class="tsd-kind-icon">is<wbr>Wif</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#iteratorstream" class="tsd-kind-icon">iterator<wbr>Stream</a>
