@@ -21,7 +21,7 @@ Needs test net urls, chain id
 For node.js or the browser with [browserify](https://github.com/substack/node-browserify) or [webpack](https://github.com/webpack/webpack).
 
 ```
-npm install dhive
+npm install @hiveio/dhive
 ```
 
 ### From cdn or self-hosted script
