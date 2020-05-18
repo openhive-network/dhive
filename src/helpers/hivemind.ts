@@ -2,17 +2,35 @@
  * Hivemind database query wrapper
 */
 
-import { Client } from './../client'
 import { Discussion } from '../chain/comment'
 import { Account } from '../chain/account'
-import { communityDetail, Notifications } from '../chain/hivemind'
+import { CommunityDetail, Notifications } from '../chain/hivemind'
+import { Client } from './../client'
 
 interface PostsQuery {
-    limit?: number, // Return how many posts from api
-    sort: "trending" | "hot" | "created" | "promoted" | "payout" | "payout_comments" | "muted",
-    tag?: string[] | string,
-    observer?: string,
-    start_author?: string,
+    /**
+     * Number of posts to fetch
+     */
+    limit?: number
+    /**
+     * Sorting posts
+     */
+    sort: 'trending' | 'hot' | 'created' | 'promoted' | 'payout' | 'payout_comments' | 'muted'
+    /**
+     * Filtering with tags
+     */
+    tag?: string[] | string
+    /**
+     * Observer account
+     */
+    observer?: string
+    /**
+     * Paginating last post author
+     */
+    start_author?: string
+    /**
+     * Paginating last post permlink
+     */
     start_permlink?: string
 }
 
@@ -20,12 +38,12 @@ interface PostsQuery {
  * Omitting sort extended from BridgeParam
  * */
 interface AccountPostsQuery extends Omit<PostsQuery, 'sort'> {
-    account: string,
-    sort: "posts"
+    account: string
+    sort: 'posts'
 }
 
 interface CommunityQuery {
-    name: string,
+    name: string
     observer: string
 }
 
@@ -34,15 +52,27 @@ interface CommunityRolesQuery {
 }
 
 interface AccountNotifsQuery {
-    account: Account['name'],
-    limit: number,
-    type?: "new_community" | "pin_post"
+    account: Account['name']
+    limit: number
+    type?: 'new_community' | 'pin_post'
 }
 
 interface ListCommunitiesQuery {
-    last?: string,
-    limit: number,
-    query?: string | any, //To be developed, not ready yet
+    /**
+     * Paginating last
+     */
+    last?: string
+    /**
+     * Number of communities to fetch
+     */
+    limit: number
+    /**
+     * To be developed, not ready yet
+     */
+    query?: string | any
+    /**
+     * Observer account
+     */
     observer?: Account['name']
 }
 
@@ -64,7 +94,7 @@ export class HivemindAPI {
         return this.call('get_account_posts', options)
     }
 
-    public getCommunity(options: CommunityQuery): Promise<communityDetail[]> {
+    public getCommunity(options: CommunityQuery): Promise<CommunityDetail[]> {
         return this.call('get_community', options)
     }
 
@@ -76,8 +106,7 @@ export class HivemindAPI {
         return this.call('account_notifications', options)
     }
 
-    public listCommunities(options: ListCommunitiesQuery): Promise<communityDetail[]> {
+    public listCommunities(options: ListCommunitiesQuery): Promise<CommunityDetail[]> {
         return this.call('list_communities', options)
     }
-
 }
