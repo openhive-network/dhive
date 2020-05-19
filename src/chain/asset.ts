@@ -152,10 +152,6 @@ export class Asset {
    */
   public steem_symbols(): Asset {
     switch (this.symbol) {
-      case 'STEEM':
-        return Asset.from(this.amount, 'STEEM')
-      case 'SBD':
-        return Asset.from(this.amount, 'SBD')
       case 'HIVE':
         return Asset.from(this.amount, 'STEEM')
       case 'HBD':
