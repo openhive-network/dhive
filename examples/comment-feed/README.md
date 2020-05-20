@@ -2,7 +2,7 @@
 dhive comment feed example
 ===========================
 
-Running on: <https://comments.steem.vc>
+Running on: <https://comments.esteem.app>
 
 
 Developing

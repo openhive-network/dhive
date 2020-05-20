@@ -3,7 +3,16 @@ import {Client, BlockchainMode} from '@hiveio/dhive'
 
 import * as removeMarkdown from 'remove-markdown'
 
-const client = new Client('https://api.hive.blog')
+const DEFAULT_SERVER = [
+    'https://rpc.esteem.app',
+    'https://anyx.io',
+    'https://api.pharesim.me',
+    'https://api.hive.blog',
+    'https://api.hivekings.com',
+  ];
+const client = new Client(DEFAULT_SERVER, {
+    timeout: 5000,
+  })
 
 function sleep(ms: number): Promise<void> {
     return new Promise<void>((resolve) => {
@@ -28,7 +37,7 @@ function buildComment(comment: any): HTMLDivElement {
 
     rv.innerHTML += `
         <span class="author">
-            <a href="https://steemit.com/@${ author }" target="_blank">@${ author }</a>
+            <a href="https://hive.blog/@${ author }" target="_blank">@${ author }</a>
         </span>
         <span class="body">${ shortBody(body) }</span>
     `
@@ -37,7 +46,7 @@ function buildComment(comment: any): HTMLDivElement {
 }
 
 async function *getComments() {
-    for await (const operation of client.blockchain.getOperations({mode: BlockchainMode.Latest})) {
+    for await (const operation of client.blockchain.getOperations({mode: BlockchainMode.Irreversible})) {
         if (operation.op[0] === 'comment') {
             const comment = operation.op[1]
             if (comment.body.slice(0, 2) == '@@') {
