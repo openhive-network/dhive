@@ -1,6 +1,6 @@
 {
   "private": true,
   "dependencies": {
-    "@hiveio/dhive": "^0.13.5"
+    "@hiveio/dhive": "file:../.."
   }
 }

@@ -12,7 +12,7 @@ Needs test net urls, chain id
 
 ## Browser compatibility
 
-[![Build Status](https://saucelabs.com/browser-matrix/jnordberg-dhive.svg)](https://saucelabs.com/open_sauce/user/jnordberg-dhive)
+[![Build Status](https://saucelabs.com/browser-matrix/feruzm-dhive.svg)](https://saucelabs.com/open_sauce/user/feruzm-dhive)
 
 ## Installation
 
@@ -26,7 +26,7 @@ npm install @hiveio/dhive
 
 ### From cdn or self-hosted script
 
-Grab `dist/dhive.js` from a [release](https://github.com/jnordberg/dhive/releases) and include in your html:
+Grab `dist/dhive.js` from git and include in your html:
 
 ```html
 <script src="@hiveio/dhive.js"></script>
@@ -35,7 +35,7 @@ Grab `dist/dhive.js` from a [release](https://github.com/jnordberg/dhive/release
 Or from the [unpkg](https://unpkg.com) cdn:
 
 ```html
-<script src="https://unpkg.com/@hiveio/dhive@^0.13.5/dist/dhive.js"></script>
+<script src="https://unpkg.com/@hiveio/dhive@latest/dist/dhive.js"></script>
 ```
 
 Make sure to set the version you want when including from the cdn, you can also use `dhive@latest` but that is not always desirable. See [unpkg.com](https://unpkg.com) for more information.
@@ -59,7 +59,7 @@ Make sure to set the version you want when including from the cdn, you can also 
 </script>
 ```
 
-See the [demo source](https://github.com/jnordberg/dhive/tree/master/examples/comment-feed) for an example on how to setup a livereloading TypeScript pipeline with [wintersmith](https://github.com/jnordberg/wintersmith) and [browserify](https://github.com/substack/node-browserify).
+See the [demo source](https://github.com/openhive-network/dhive/tree/master/examples/comment-feed) for an example on how to setup a livereloading TypeScript pipeline with [wintersmith](https://github.com/jnordberg/wintersmith) and [browserify](https://github.com/substack/node-browserify).
 
 ### In node.js
 

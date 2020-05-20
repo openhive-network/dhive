@@ -8,7 +8,7 @@ const tx = {
 };
 const privkey = "KEY HERE";
 
-const client = new dhive.Client("https://api.hivekings.com");
+const client = new dhive.Client("https://api.hive.blog");
 const key = dhive.PrivateKey.fromString(privkey);
 console.log(key);
 const op = ["transfer", tx];

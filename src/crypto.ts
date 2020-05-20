@@ -210,8 +210,8 @@ export class PublicKey {
   /**
    * Used by `utils.inspect` and `console.log` in node.js.
    */
-  [util.inspect.custom](depth?: number, opts?: any): string {
-    return `PublicKey: ${this.toString()}`;
+  public inspect() {
+    return `PublicKey: ${ this.toString() }`
   }
 }
 
@@ -296,9 +296,9 @@ export class PrivateKey {
    * Used by `utils.inspect` and `console.log` in node.js. Does not show the full key
    * to get the full encoded key you need to explicitly call {@link toString}.
    */
-  [util.inspect.custom](depth?: number, opts?: any): string {
-    const key = this.toString();
-    return `PrivateKey: ${key.slice(0, 6)}...${key.slice(-6)}`;
+  public inspect() {
+    const key = this.toString()
+    return `PrivateKey: ${ key.slice(0, 6) }...${ key.slice(-6) }`
   }
 }
 

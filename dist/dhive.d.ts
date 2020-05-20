@@ -1674,7 +1674,6 @@ declare module 'dhive/crypto' {
 	 */
 	/// <reference types="node" />
 	import { SignedTransaction, Transaction } from 'dhive/chain/transaction';
-	import * as util from "util";
 	/**
 	 * Network id used in WIF-encoding.
 	 */
@@ -1711,7 +1710,7 @@ declare module 'dhive/crypto' {
 	    /**
 	     * Used by `utils.inspect` and `console.log` in node.js.
 	     */
-	    [util.inspect.custom](depth?: number, opts?: any): string;
+	    inspect(): string;
 	}
 	export type KeyRole = "owner" | "active" | "posting" | "memo";
 	/**
@@ -1753,7 +1752,7 @@ declare module 'dhive/crypto' {
 	     * Used by `utils.inspect` and `console.log` in node.js. Does not show the full key
 	     * to get the full encoded key you need to explicitly call {@link toString}.
 	     */
-	    [util.inspect.custom](depth?: number, opts?: any): string;
+	    inspect(): string;
 	}
 	/**
 	 * ECDSA (secp256k1) signature.
