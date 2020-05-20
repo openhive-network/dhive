@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@hiveio/dhive@^0.13.5":
-  version "0.13.5"
-  resolved "https://registry.yarnpkg.com/@hiveio/dhive/-/dhive-0.13.5.tgz#02a615d167c35a5bf07b6528d0f5e76fd4d1f7ce"
-  integrity sha512-JYkGnNYmafQCURD+Cq4UaDFY7TdiYDc0q6vKmQsT+EyuarT57t95lmxbM2D32sS+ngY+60C85PDFMiKKi5Z6fg==
+"@hiveio/dhive@^0.13.6":
+  version "0.13.6"
+  resolved "https://registry.yarnpkg.com/@hiveio/dhive/-/dhive-0.13.6.tgz#515b4332a464b34d757a6a496f0a5a81ba5a58d0"
+  integrity sha512-gaSN9+N44SFViuMa+tKVmh1T2Jz7A36oYV2prrIcdrHnll92lESctMDxEnOpoi9WM1PjeOlAp1QjLQ/rJavk/Q==
   dependencies:
     bs58 "^4.0.1"
     bytebuffer "^5.0.1"
