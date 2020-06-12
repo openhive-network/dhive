@@ -66,7 +66,7 @@ export async function createAccount(): Promise<{
   await client.broadcast.sendOperations([[
     'transfer_to_vesting',
     {
-      amount: '10000.000 TESTS',
+      amount: '100000.000 TESTS',
       from: 'initminer',
       to: username
     }
