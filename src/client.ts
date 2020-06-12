@@ -53,7 +53,7 @@ export const VERSION = packageVersion;
  * Main Hive network chain id.
  */
 export const DEFAULT_CHAIN_ID = Buffer.from(
-    "0000000000000000000000000000000000000000000000000000000000000000",
+    "beeab0de00000000000000000000000000000000000000000000000000000000",
     "hex"
 );
 
@@ -120,7 +120,7 @@ export interface ClientOptions {
     /**
      * Hive chain id. Defaults to main hive network:
      * need the new id?
-     * `0000000000000000000000000000000000000000000000000000000000000000`
+     * `beeab0de00000000000000000000000000000000000000000000000000000000`
      *
      */
     chainId?: string;
@@ -203,7 +203,7 @@ export class Client {
     /**
      * Chain ID for current network.
      */
-    public readonly chainId: Buffer;
+    public chainId: Buffer; // TODO: make it readonly after HF24
 
     /**
      * Address prefix for current network.
