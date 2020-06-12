@@ -52,7 +52,7 @@ export async function createAccount(): Promise<{
   const username = `dhive-${randomString(9)}`;
 
   // TESTNET URL NEEDED
-  const response = await fetch("https://testnet.steem.vc/create", {
+  const response = await fetch("https://hive-test-beeabode.roelandp.nl", {
     method: "POST",
     body: `username=${username}&password=${password}`,
     headers: { "Content-Type": "application/x-www-form-urlencoded" }
