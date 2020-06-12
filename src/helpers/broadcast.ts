@@ -317,9 +317,9 @@ export class BroadcastAPI {
     const props = await this.client.database.getDynamicGlobalProperties()
     const HFV = await this.client.database.call('get_hardfork_version')
     if (HFV === '0.23.0') {
-      this.client.chainId = Buffer.from(HF23_CHAIN_ID, "hex")
+      this.client.chainId = Buffer.from(HF23_CHAIN_ID, 'hex')
     } else {
-      this.client.chainId = Buffer.from(HF24_CHAIN_ID, "hex")
+      this.client.chainId = Buffer.from(HF24_CHAIN_ID, 'hex')
     }
 
     const ref_block_num = props.head_block_number & 0xffff
