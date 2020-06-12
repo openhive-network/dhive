@@ -136,7 +136,7 @@ describe("operations", function() {
         author: username,
         allow_votes: false,
         allow_curation_rewards: false,
-        percent_hive_dollars: 0,
+        percent_steem_dollars: 0,
         max_accepted_payout: Asset.from(10, "TBD"),
         extensions: [
           [0, { beneficiaries: [{ weight: 10000, account: acc1.username }] }]
@@ -153,7 +153,7 @@ describe("operations", function() {
       { account: acc1.username, weight: 10000 }
     ]);
     assert.equal(post.max_accepted_payout, "10.000 TBD");
-    assert.equal(post.percent_hive_dollars, 0);
+    assert.equal(post.percent_steem_dollars, 0);
     assert.equal(post.allow_votes, false);
   });
 
