@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as https from "https";
 import { randomBytes } from "crypto";
 import fetch from "cross-fetch";
+import { Client, PrivateKey } from './../src'
 
 export const NUM_TEST_ACCOUNTS = 2;
 export const IS_BROWSER = global["isBrowser"] === true;
@@ -51,34 +52,51 @@ export async function createAccount(): Promise<{
   const password = randomString(32);
   const username = `dhive-${randomString(9)}`;
 
-  // TESTNET URL NEEDED
-  const response = await fetch("https://hive-test-beeabode.roelandp.nl", {
-    method: "POST",
-    body: `username=${username}&password=${password}`,
-    headers: { "Content-Type": "application/x-www-form-urlencoded" }
-  });
-  const text = await response.text();
-  if (response.status !== 200) {
-    throw new Error(`Unable to create user: ${text}`);
+  // Create testnet account and delegate to it
+  const client = Client.testnet({ agent });
+  const ops = {
+    creator: 'initminer',
+    username,
+    password
   }
+  const key = PrivateKey.from('5JNHfZYKGaomSFvd4NUdQ9qMcEAC43kujbfjueTHpVapX1Kzq2n')
+  await client.broadcast.createTestAccount(ops, key)
+  await client.broadcast.sendOperations([[
+    'transfer_to_vesting',
+    {
+      amount: '100.000 TESTS',
+      from: 'initminer',
+      to: username
+    }
+  ]], key)
+  // TESTNET URL NEEDED
+  // const response = await fetch("https://hive-test-beeabode.roelandp.nl", {
+  //   method: "POST",
+  //   body: `username=${username}&password=${password}`,
+  //   headers: { "Content-Type": "application/x-www-form-urlencoded" }
+  // });
+  // const text = await response.text();
+  // if (response.status !== 200) {
+  //   throw new Error(`Unable to create user: ${text}`);
+  // }
   return { username, password };
 }
 
 export async function getTestnetAccounts(): Promise<
   { username: string; password: string }[]
 > {
-  if (!IS_BROWSER) {
-    try {
-      const data = await readFile(".testnetrc");
-      return JSON.parse(data.toString());
-    } catch (error) {
-      if (error.code !== "ENOENT") {
-        throw error;
-      }
-    }
-  } else if (global["__testnet_accounts"]) {
-    return global["__testnet_accounts"];
-  }
+  // if (!IS_BROWSER) {
+  //   try {
+  //     const data = await readFile(".testnetrc");
+  //     return JSON.parse(data.toString());
+  //   } catch (error) {
+  //     if (error.code !== "ENOENT") {
+  //       throw error;
+  //     }
+  //   }
+  // } else if (global["__testnet_accounts"]) {
+  //   return global["__testnet_accounts"];
+  // }
   let rv: { username: string; password: string }[] = [];
   while (rv.length < NUM_TEST_ACCOUNTS) {
     rv.push(await createAccount());
@@ -86,10 +104,10 @@ export async function getTestnetAccounts(): Promise<
   if (console && console.log) {
     console.log(`CREATED TESTNET ACCOUNTS: ${rv.map(i => i.username)}`);
   }
-  if (!IS_BROWSER) {
-    await writeFile(".testnetrc", Buffer.from(JSON.stringify(rv)));
-  } else {
-    global["__testnet_accounts"] = rv;
-  }
+  // if (!IS_BROWSER) {
+  //   await writeFile(".testnetrc", Buffer.from(JSON.stringify(rv)));
+  // } else {
+  //   global["__testnet_accounts"] = rv;
+  // }
   return rv;
 }
