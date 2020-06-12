@@ -319,7 +319,7 @@ describe("operations", function() {
         extensions: []
       }
     ];
-    const key = PrivateKey.fromLogin(acc1.username, acc1.password, "active");
+    const key = PrivateKey.fromLogin(acc1.username, acc1.password, "owner");
     await client.broadcast.sendOperations([op], key);
   });
 
