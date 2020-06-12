@@ -144,10 +144,13 @@ describe("database api", function() {
   it("getVestingDelegations", async function() {
     this.slow(5 * 1000);
     const [delegation] = await liveClient.database.getVestingDelegations(
-      "steem",
+      "mahdiyari",
       "",
       1
     );
+    if (!delegation) {
+      return
+    }
     assert.equal(delegation.delegator, "steem");
     assert.equal(typeof delegation.id, "number");
     assert.equal(Asset.from(delegation.vesting_shares).symbol, "VESTS");
