@@ -134,8 +134,8 @@ describe("operations", function() {
       {
         permlink,
         author: username,
-        allow_votes: false,
-        allow_curation_rewards: false,
+        allow_votes: true,
+        allow_curation_rewards: true,
         percent_steem_dollars: 0,
         max_accepted_payout: Asset.from(10, "TBD"),
         extensions: [
@@ -154,7 +154,7 @@ describe("operations", function() {
     ]);
     assert.equal(post.max_accepted_payout, "10.000 TBD");
     assert.equal(post.percent_steem_dollars, 0);
-    assert.equal(post.allow_votes, false);
+    assert.equal(post.allow_votes, true);
   });
 
   it("should update account", async function() {
