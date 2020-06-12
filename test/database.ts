@@ -151,7 +151,7 @@ describe("database api", function() {
     if (!delegation) {
       return
     }
-    assert.equal(delegation.delegator, "steem");
+    assert.equal(delegation.delegator, "mahdiyari");
     assert.equal(typeof delegation.id, "number");
     assert.equal(Asset.from(delegation.vesting_shares).symbol, "VESTS");
   });
