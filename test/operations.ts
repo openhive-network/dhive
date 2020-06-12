@@ -26,7 +26,7 @@ describe("operations", function() {
     const [user1] = await client.database.getAccounts([acc1.username]);
     const currentDelegation = Asset.from(user1.received_vesting_shares);
     const newDelegation = Asset.from(
-      currentDelegation.amount >= 1000 ? 0 : 1000 + Math.random() * 1000,
+      currentDelegation.amount >= 100 ? 0 : 100 + Math.random() * 100,
       "VESTS"
     );
     const result = await client.broadcast.delegateVestingShares(
