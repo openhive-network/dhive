@@ -101,7 +101,6 @@ describe("database api", function() {
       start_author: "almost-digital",
       start_permlink:
         "re-pal-re-almost-digital-dsteem-a-strongly-typed-steem-client-library-20170702t131034262z",
-      tag: "almost-digital",
       limit: 1
     });
     assert.equal(r1.length, 1);

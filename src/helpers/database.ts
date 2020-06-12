@@ -66,7 +66,7 @@ export interface DisqussionQuery {
   /**
    * Name of author or tag to fetch.
    */
-  tag: string
+  tag?: string
   /**
    * Number of results, max 100.
    */
