@@ -117,7 +117,7 @@ export interface Account {
   reward_sbd_balance: string | Asset
   reward_steem_balance: string | Asset
   reward_vesting_balance: string | Asset
-  reward_vesting_hive: string | Asset
+  reward_vesting_steem: string | Asset
   curation_rewards: number | string // share_type
   posting_rewards: number | string // share_type
   vesting_shares: string | Asset
