@@ -27,7 +27,7 @@ describe("operations", function() {
     const currentDelegation = Asset.from(user1.received_vesting_shares);
     const newDelegation = Asset.from(
       currentDelegation.amount >= 100 ? 0 : 100 + Math.random() * 100,
-      "VESTS"
+      "TESTS"
     );
     const result = await client.broadcast.delegateVestingShares(
       {
