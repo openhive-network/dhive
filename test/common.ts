@@ -13,6 +13,8 @@ export const agent = IS_BROWSER
   ? undefined
   : new https.Agent({ keepAlive: true });
 
+let testAccounts
+
 async function readFile(filename: string) {
   return new Promise<Buffer>((resolve, reject) => {
     fs.readFile(filename, (error, result) => {
@@ -109,10 +111,14 @@ export async function getTestnetAccounts(): Promise<
   // } else if (global["__testnet_accounts"]) {
   //   return global["__testnet_accounts"];
   // }
+  if (testAccounts) {
+    return testAccounts
+  }
   let rv: { username: string; password: string }[] = [];
   while (rv.length < NUM_TEST_ACCOUNTS) {
     rv.push(await createAccount());
   }
+  testAccounts = rv
   if (console && console.log) {
     console.log(`CREATED TESTNET ACCOUNTS: ${rv.map(i => i.username)}`);
   }
