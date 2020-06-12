@@ -153,7 +153,7 @@ describe("operations", function() {
       postingWif
     );
 
-    const [post] = await client.call("condenser_api", "get_content", [
+    const post = await client.call("condenser_api", "get_content", [
       username,
       permlink
     ]);
@@ -239,11 +239,12 @@ describe("operations", function() {
     const metadata = { my_password_is: password };
     const creator = acc1.username;
 
+    // TODO: uncomment and fix after HF24
     // ensure not testing accounts on mainnet
-    assert(
-      client.chainId.toString("hex") !==
-        "0000000000000000000000000000000000000000000000000000000000000000"
-    );
+    // assert(
+    //   client.chainId.toString("hex") !==
+    //     "0000000000000000000000000000000000000000000000000000000000000000"
+    // );
 
     const chainProps = await client.database.getChainProperties();
     const creationFee = Asset.from(chainProps.account_creation_fee);
