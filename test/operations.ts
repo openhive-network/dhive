@@ -92,10 +92,11 @@ describe("operations", function() {
 
   it("should create account and post with options", async function() {
     // ensure not testing accounts on mainnet
-    assert(
-      client.chainId.toString("hex") !==
-        "0000000000000000000000000000000000000000000000000000000000000000"
-    );
+    // TODO: uncomment after HF24
+    // assert(
+    //   client.chainId.toString("hex") !==
+    //     "0000000000000000000000000000000000000000000000000000000000000000"
+    // );
 
     const username = "ds-" + randomString(12);
     const password = randomString(32);

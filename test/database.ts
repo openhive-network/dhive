@@ -75,7 +75,8 @@ describe("database api", function() {
     assert.equal(r("1_PERCENT"), 100);
 
     const version = await client.call("database_api", "get_version", {});
-    assert.equal(version["chain_id"], client.options.chainId);
+    // TODO: uncomment after HF24
+    // assert.equal(version["chain_id"], client.options.chainId);
   });
 
   it("getBlockHeader", async function() {
