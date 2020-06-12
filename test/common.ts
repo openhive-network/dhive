@@ -69,6 +69,18 @@ export async function createAccount(): Promise<{
       to: username
     }
   ]], key)
+  await client.broadcast.transfer({
+    from: 'initminer',
+    to: username,
+    amount: '1000.000 TESTS',
+    memo: 'test acc'
+  }, key)
+  await client.broadcast.transfer({
+    from: 'initminer',
+    to: username,
+    amount: '1000.000 TBD',
+    memo: 'test acc'
+  }, key)
   // TESTNET URL NEEDED
   // const response = await fetch("https://hive-test-beeabode.roelandp.nl", {
   //   method: "POST",
