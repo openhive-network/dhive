@@ -109,7 +109,14 @@ describe("operations", function() {
       },
       acc1Key
     );
-
+    await client.broadcast.sendOperations([[
+      'transfer_to_vesting',
+      {
+        amount: '100.000 TESTS',
+        from: acc1.username,
+        to: username
+      }
+    ]], acc1Key)
     const [newAcc] = await client.database.getAccounts([username]);
     assert.equal(newAcc.name, username);
     // not sure why but on the testnet the recovery account is always 'steem'
