@@ -253,10 +253,11 @@ export class Client {
             opts.agent = options.agent;
         }
 
-        opts.addressPrefix = "STX";
+        // Testnet details: https://gitlab.syncad.com/hive/hive/-/issues/36
+        opts.addressPrefix = "STM";
         opts.chainId =
-            "79276aea5d4877d9a25892eaa01b0adf019d3e5cb12a97478df3298ccdd01673";
-        return new Client("https://testnet.steem.vc", opts);
+            "beeab0de00000000000000000000000000000000000000000000000000000000";
+        return new Client("https://hive-test-beeabode.roelandp.nl", opts);
     }
 
     /**
