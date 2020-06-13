@@ -64,7 +64,7 @@ describe("database api", function() {
 
   it("getConfig", async function() {
     const result = await client.database.getConfig();
-    // STEEM/HIVE_ config stuff here
+    // HIVE_ config stuff here
     const r = (key: string) => result["HIVE_" + key];
     serverConfig = result;
     // also test some assumptions made throughout the code

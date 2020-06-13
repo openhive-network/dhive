@@ -126,7 +126,7 @@ export class DatabaseAPI {
   }
 
   /**
-   * Return median price in SBD for 1 STEEM as reported by the witnesses.
+   * Return median price in HBD for 1 HIVE as reported by the witnesses.
    */
   public async getCurrentMedianHistoryPrice(): Promise<Price> {
     return Price.from(await this.call('get_current_median_history_price'))

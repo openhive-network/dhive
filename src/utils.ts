@@ -164,7 +164,7 @@ const failover = (url: string, urls: string[]) => {
 
 
 // Hack to be able to generate a valid witness_set_properties op
-// Can hopefully be removed when steemd's JSON representation is fixed
+// Can hopefully be removed when hived's JSON representation is fixed
 import * as ByteBuffer from "bytebuffer";
 import { PublicKey } from "./crypto";
 import { Asset, PriceType } from "./chain/asset";

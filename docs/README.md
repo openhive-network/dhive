@@ -1,1 +1,1 @@
-Served at <https://jnordberg.github.io/dhive/>
+Served at <https://openhive-network.github.io/dhive>

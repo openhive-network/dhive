@@ -73,7 +73,7 @@ describe("operations", function() {
     assert.deepEqual(JSON.parse(tx.operations[0][1].json), data);
   });
 
-  it("should transfer steem", async function() {
+  it("should transfer hive", async function() {
     const [acc2bf] = await client.database.getAccounts([acc2.username]);
     await client.broadcast.transfer(
       {
