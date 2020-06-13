@@ -3,6 +3,7 @@ import * as assert from "assert";
 import * as ByteBuffer from "bytebuffer";
 import { inspect } from "util";
 import { randomBytes, createHash } from "crypto";
+import { agent } from './common'
 
 import {
   DEFAULT_ADDRESS_PREFIX,
@@ -13,7 +14,8 @@ import {
   Signature,
   cryptoUtils,
   Transaction,
-  Types
+  Types,
+  Client
 } from "./../src";
 
 describe("crypto", function() {
@@ -134,14 +136,23 @@ describe("crypto", function() {
     const digest = createHash("sha256")
       .update(Buffer.concat([DEFAULT_CHAIN_ID, data]))
       .digest();
-    const signed = cryptoUtils.signTransaction(tx, key);
-    const pkey = key.createPublic();
-    const sig = Signature.fromString(signed.signatures[0]);
-    assert(pkey.verify(digest, sig));
-    assert.equal(
-      sig.recover(digest).toString(),
-      "STM7s4VJuYFfHq8HCPpgC649Lu7CjA1V9oXgPfv8f3fszKMk3Kny9"
-    );
+    
+    // remove chainId after hf24
+    const client = Client.testnet({ agent })
+    client.database.call('get_hardfork_version').then(HFV => {
+      let chainId = Buffer.from('beeab0de00000000000000000000000000000000000000000000000000000000', 'hex')
+      if (HFV === '0.23.0') {
+        chainId = Buffer.from('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
+      }
+      const signed = cryptoUtils.signTransaction(tx, key, chainId);
+      const pkey = key.createPublic();
+      const sig = Signature.fromString(signed.signatures[0]);
+      assert(pkey.verify(digest, sig));
+      assert.equal(
+        sig.recover(digest).toString(),
+        "STM7s4VJuYFfHq8HCPpgC649Lu7CjA1V9oXgPfv8f3fszKMk3Kny9"
+      );
+    })
   });
 
   it("should handle serialization errors", function() {
