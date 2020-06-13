@@ -52,10 +52,18 @@ export const VERSION = packageVersion;
 /**
  * Main Hive network chain id.
  */
-export const DEFAULT_CHAIN_ID = Buffer.from(
+export let DEFAULT_CHAIN_ID = Buffer.from(
     "beeab0de00000000000000000000000000000000000000000000000000000000",
     "hex"
 );
+
+// TODO: remove after hf24
+this.client.database.call('get_hardfork_version').then(HFV => {
+    if (HFV === '0.23.0') {
+        DEFAULT_CHAIN_ID = Buffer.from('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
+    }
+})
+
 
 /**
  * Main Hive network address prefix.
