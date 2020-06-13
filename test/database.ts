@@ -176,7 +176,14 @@ describe("database api", function() {
       extensions: []
     };
     const key = PrivateKey.fromLogin(acc.username, acc.password, "posting");
-    const stx = client.broadcast.sign(tx, key);
+
+    // remove chainId after hf24
+    const HFV = await client.database.call('get_hardfork_version')
+    if (HFV === '0.23.0') {
+      client.chainId = Buffer.from('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
+    }
+
+    const stx = client.broadcast.sign(tx, key, chainId);
     const rv = await client.database.verifyAuthority(stx);
     assert(rv === true);
     // const bogusKey = PrivateKey.fromSeed("ogus");
