@@ -224,15 +224,6 @@ export class Client {
      * @param options Client options.
      */
     constructor(address: string | string[], options: ClientOptions = {}) {
-        // TODO: remove after hf24
-        this.database.call('get_hardfork_version').then(HFV => {
-            if (HFV === '0.23.0') {
-                DEFAULT_CHAIN_ID = Buffer.from('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
-                this.chainId = options.chainId
-                    ? Buffer.from(options.chainId, "hex")
-                    : DEFAULT_CHAIN_ID;
-            }
-        })
         this.currentAddress = Array.isArray(address) ? address[0] : address;
         this.address = address
         this.options = options;
@@ -252,6 +243,16 @@ export class Client {
         this.blockchain = new Blockchain(this);
         this.rc = new RCAPI(this);
         this.hivemind = new HivemindAPI(this);
+
+        // TODO: remove after hf24
+        this.database.call('get_hardfork_version').then(HFV => {
+            if (HFV === '0.23.0') {
+                DEFAULT_CHAIN_ID = Buffer.from('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
+                this.chainId = options.chainId
+                    ? Buffer.from(options.chainId, "hex")
+                    : DEFAULT_CHAIN_ID;
+            }
+        })
     }
 
     /**
