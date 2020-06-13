@@ -245,14 +245,11 @@ export class Client {
         this.hivemind = new HivemindAPI(this);
 
         // TODO: remove after hf24
-        // this.database.call('get_hardfork_version').then(HFV => {
-        //     if (HFV === '0.23.0') {
-        //         DEFAULT_CHAIN_ID = Buffer.from('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
-        //         this.chainId = options.chainId
-        //             ? Buffer.from(options.chainId, "hex")
-        //             : DEFAULT_CHAIN_ID;
-        //     }
-        // })
+        this.database.call('get_hardfork_version').then(HFV => {
+            if (HFV === '0.23.0') {
+                DEFAULT_CHAIN_ID = Buffer.from('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
+            }
+        })
     }
 
     /**
