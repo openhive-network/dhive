@@ -3,7 +3,6 @@ import * as assert from "assert";
 import * as ByteBuffer from "bytebuffer";
 import { inspect } from "util";
 import { randomBytes, createHash } from "crypto";
-import { agent } from './common'
 
 import {
   DEFAULT_ADDRESS_PREFIX,
@@ -14,8 +13,7 @@ import {
   Signature,
   cryptoUtils,
   Transaction,
-  Types,
-  Client
+  Types
 } from "./../src";
 
 describe("crypto", function() {
@@ -136,15 +134,7 @@ describe("crypto", function() {
     const digest = createHash("sha256")
       .update(Buffer.concat([DEFAULT_CHAIN_ID, data]))
       .digest();
-    
-    // remove chainId after hf24
-    const client = Client.testnet({ agent })
-    const HFV = await client.database.call('get_hardfork_version')
-    let chainId = Buffer.from('beeab0de00000000000000000000000000000000000000000000000000000000', 'hex')
-    if (HFV === '0.23.0') {
-      chainId = Buffer.from('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
-    }
-    const signed = cryptoUtils.signTransaction(tx, key, chainId);
+    const signed = cryptoUtils.signTransaction(tx, key);
     const pkey = key.createPublic();
     const sig = Signature.fromString(signed.signatures[0]);
     assert(pkey.verify(digest, sig));
