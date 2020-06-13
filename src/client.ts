@@ -52,7 +52,7 @@ export const VERSION = packageVersion;
 /**
  * Main Hive network chain id.
  */
-export let DEFAULT_CHAIN_ID = Buffer.from(
+export const DEFAULT_CHAIN_ID = Buffer.from(
     "beeab0de00000000000000000000000000000000000000000000000000000000",
     "hex"
 );
@@ -243,13 +243,6 @@ export class Client {
         this.blockchain = new Blockchain(this);
         this.rc = new RCAPI(this);
         this.hivemind = new HivemindAPI(this);
-
-        // TODO: remove after hf24
-        this.database.call('get_hardfork_version').then(HFV => {
-            if (HFV === '0.23.0') {
-                DEFAULT_CHAIN_ID = Buffer.from('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
-            }
-        })
     }
 
     /**
