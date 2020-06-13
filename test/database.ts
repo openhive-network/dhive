@@ -183,7 +183,7 @@ describe("database api", function() {
       client.chainId = Buffer.from('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
     }
 
-    const stx = client.broadcast.sign(tx, key, chainId);
+    const stx = client.broadcast.sign(tx, key);
     const rv = await client.database.verifyAuthority(stx);
     assert(rv === true);
     // const bogusKey = PrivateKey.fromSeed("ogus");
