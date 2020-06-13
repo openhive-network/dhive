@@ -112,7 +112,7 @@ describe("crypto", function() {
     );
   });
 
-  it("should sign and verify transaction", function() {
+  it("should sign and verify transaction", async function() {
     const tx: Transaction = {
       ref_block_num: 1234,
       ref_block_prefix: 1122334455,
@@ -139,20 +139,19 @@ describe("crypto", function() {
     
     // remove chainId after hf24
     const client = Client.testnet({ agent })
-    client.database.call('get_hardfork_version').then(HFV => {
-      let chainId = Buffer.from('beeab0de00000000000000000000000000000000000000000000000000000000', 'hex')
-      if (HFV === '0.23.0') {
-        chainId = Buffer.from('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
-      }
-      const signed = cryptoUtils.signTransaction(tx, key, chainId);
-      const pkey = key.createPublic();
-      const sig = Signature.fromString(signed.signatures[0]);
-      assert(pkey.verify(digest, sig));
-      assert.equal(
-        sig.recover(digest).toString(),
-        "STM7s4VJuYFfHq8HCPpgC649Lu7CjA1V9oXgPfv8f3fszKMk3Kny9"
-      );
-    })
+    const HFV = await client.database.call('get_hardfork_version')
+    let chainId = Buffer.from('beeab0de00000000000000000000000000000000000000000000000000000000', 'hex')
+    if (HFV === '0.23.0') {
+      chainId = Buffer.from('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
+    }
+    const signed = cryptoUtils.signTransaction(tx, key, chainId);
+    const pkey = key.createPublic();
+    const sig = Signature.fromString(signed.signatures[0]);
+    assert(pkey.verify(digest, sig));
+    assert.equal(
+      sig.recover(digest).toString(),
+      "STM7s4VJuYFfHq8HCPpgC649Lu7CjA1V9oXgPfv8f3fszKMk3Kny9"
+    );
   });
 
   it("should handle serialization errors", function() {
