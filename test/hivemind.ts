@@ -21,24 +21,24 @@ describe("HivemindAPI", function () {
 
     it('getCommunity', async () => {
         const r = await liveClient.hivemind.getCommunity({ name: 'hive-148441', observer: '' })
-        console.log('community', r)
+        // console.log('community', r)
         //assert.equal(r.length, 1)
     })
 
     it('getAccountNotifications', async () => {
         const r = await liveClient.hivemind.getAccountNotifications({ account: 'acidyo', limit: 2 })
-        console.log('notifies', r)
+        // console.log('notifies', r)
         //assert.equal(r.length, 1)
     })
 
     it('listCommunities', async () => {
         const r = await liveClient.hivemind.listCommunities({ limit: 2 })
-        console.log('communities', r)
+        // console.log('communities', r)
     })
 
     it('listAllSubscriptions', async () => {
         const r = await liveClient.hivemind.listAllSubscriptions({ account: 'acidyo' })
-        console.log('subscriptions', r)
+        // console.log('subscriptions', r)
         //assert.equal(r.length, 1)
     })
 });

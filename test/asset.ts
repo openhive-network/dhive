@@ -5,9 +5,9 @@ import { Asset, Price, getVestingSharePrice } from "./../src";
 
 describe("asset", function() {
   it("should create from string", function() {
-    const oneSteem = Asset.fromString("1.000 HIVE");
-    assert.equal(oneSteem.amount, 1);
-    assert.equal(oneSteem.symbol, "HIVE");
+    const oneHive = Asset.fromString("1.000 HIVE");
+    assert.equal(oneHive.amount, 1);
+    assert.equal(oneHive.symbol, "HIVE");
     const vests = Asset.fromString("0.123456 VESTS");
     assert.equal(vests.amount, 0.123456);
     assert.equal(vests.symbol, "VESTS");
@@ -17,8 +17,8 @@ describe("asset", function() {
   });
 
   it("should convert to string", function() {
-    const steem = new Asset(44.999999, "HIVE");
-    assert.equal(steem.toString(), "45.000 HIVE");
+    const hive = new Asset(44.999999, "HIVE");
+    assert.equal(hive.toString(), "45.000 HIVE");
     const vests = new Asset(44.999999, "VESTS");
     assert.equal(vests.toString(), "44.999999 VESTS");
   });

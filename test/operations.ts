@@ -26,7 +26,7 @@ describe("operations", function() {
     const [user1] = await client.database.getAccounts([acc1.username]);
     const currentDelegation = Asset.from(user1.received_vesting_shares);
     const newDelegation = Asset.from(
-      currentDelegation.amount >= 1000 ? 0 : 1000 + Math.random() * 1000,
+      currentDelegation.amount >= 100 ? 0 : 100 + Math.random() * 100,
       "VESTS"
     );
     const result = await client.broadcast.delegateVestingShares(
@@ -73,7 +73,7 @@ describe("operations", function() {
     assert.deepEqual(JSON.parse(tx.operations[0][1].json), data);
   });
 
-  it("should transfer steem", async function() {
+  it("should transfer hive", async function() {
     const [acc2bf] = await client.database.getAccounts([acc2.username]);
     await client.broadcast.transfer(
       {
@@ -92,10 +92,11 @@ describe("operations", function() {
 
   it("should create account and post with options", async function() {
     // ensure not testing accounts on mainnet
-    assert(
-      client.chainId.toString("hex") !==
-        "0000000000000000000000000000000000000000000000000000000000000000"
-    );
+    // TODO: uncomment after HF24
+    // assert(
+    //   client.chainId.toString("hex") !==
+    //     "0000000000000000000000000000000000000000000000000000000000000000"
+    // );
 
     const username = "ds-" + randomString(12);
     const password = randomString(32);
@@ -108,7 +109,14 @@ describe("operations", function() {
       },
       acc1Key
     );
-
+    await client.broadcast.sendOperations([[
+      'transfer_to_vesting',
+      {
+        amount: '100.000 TESTS',
+        from: acc1.username,
+        to: username
+      }
+    ]], acc1Key)
     const [newAcc] = await client.database.getAccounts([username]);
     assert.equal(newAcc.name, username);
     // not sure why but on the testnet the recovery account is always 'steem'
@@ -134,9 +142,9 @@ describe("operations", function() {
       {
         permlink,
         author: username,
-        allow_votes: false,
-        allow_curation_rewards: false,
-        percent_hive_dollars: 0,
+        allow_votes: true,
+        allow_curation_rewards: true,
+        percent_steem_dollars: 0,
         max_accepted_payout: Asset.from(10, "TBD"),
         extensions: [
           [0, { beneficiaries: [{ weight: 10000, account: acc1.username }] }]
@@ -145,7 +153,7 @@ describe("operations", function() {
       postingWif
     );
 
-    const [post] = await client.call("condenser_api", "get_content", [
+    const post = await client.call("condenser_api", "get_content", [
       username,
       permlink
     ]);
@@ -153,8 +161,8 @@ describe("operations", function() {
       { account: acc1.username, weight: 10000 }
     ]);
     assert.equal(post.max_accepted_payout, "10.000 TBD");
-    assert.equal(post.percent_hive_dollars, 0);
-    assert.equal(post.allow_votes, false);
+    assert.equal(post.percent_steem_dollars, 0);
+    assert.equal(post.allow_votes, true);
   });
 
   it("should update account", async function() {
@@ -231,11 +239,12 @@ describe("operations", function() {
     const metadata = { my_password_is: password };
     const creator = acc1.username;
 
+    // TODO: uncomment and fix after HF24
     // ensure not testing accounts on mainnet
-    assert(
-      client.chainId.toString("hex") !==
-        "0000000000000000000000000000000000000000000000000000000000000000"
-    );
+    // assert(
+    //   client.chainId.toString("hex") !==
+    //     "0000000000000000000000000000000000000000000000000000000000000000"
+    // );
 
     const chainProps = await client.database.getChainProperties();
     const creationFee = Asset.from(chainProps.account_creation_fee);
@@ -310,7 +319,7 @@ describe("operations", function() {
         extensions: []
       }
     ];
-    const key = PrivateKey.fromLogin(acc1.username, acc1.password, "active");
+    const key = PrivateKey.fromLogin(acc1.username, acc1.password, "owner");
     await client.broadcast.sendOperations([op], key);
   });
 

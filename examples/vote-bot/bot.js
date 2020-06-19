@@ -24,7 +24,7 @@ const stream = client.blockchain.getOperationsStream({mode: dhive.BlockchainMode
 
 console.log(`Following ${ FOLLOW_USER } with ${ VOTE_WEIGHT / 100 }% vote weight`)
 
-// the stream will emit one data event for every operatio that happens on the steem blockchain
+// the stream will emit one data event for every operatio that happens on the hive blockchain
 stream.on('data', (operation) => {
 
     // we only care about vote operations made by the user we follow

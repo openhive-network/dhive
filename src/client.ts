@@ -53,9 +53,11 @@ export const VERSION = packageVersion;
  * Main Hive network chain id.
  */
 export const DEFAULT_CHAIN_ID = Buffer.from(
-    "0000000000000000000000000000000000000000000000000000000000000000",
+    "beeab0de00000000000000000000000000000000000000000000000000000000",
     "hex"
 );
+
+
 
 /**
  * Main Hive network address prefix.
@@ -120,7 +122,7 @@ export interface ClientOptions {
     /**
      * Hive chain id. Defaults to main hive network:
      * need the new id?
-     * `0000000000000000000000000000000000000000000000000000000000000000`
+     * `beeab0de00000000000000000000000000000000000000000000000000000000`
      *
      */
     chainId?: string;
@@ -203,7 +205,7 @@ export class Client {
     /**
      * Chain ID for current network.
      */
-    public readonly chainId: Buffer;
+    public chainId: Buffer; // TODO: make it readonly after HF24
 
     /**
      * Address prefix for current network.
@@ -253,10 +255,11 @@ export class Client {
             opts.agent = options.agent;
         }
 
-        opts.addressPrefix = "STX";
+        // Testnet details: https://gitlab.syncad.com/hive/hive/-/issues/36
+        opts.addressPrefix = "STM";
         opts.chainId =
-            "79276aea5d4877d9a25892eaa01b0adf019d3e5cb12a97478df3298ccdd01673";
-        return new Client("https://testnet.steem.vc", opts);
+            "beeab0de00000000000000000000000000000000000000000000000000000000";
+        return new Client("https://hive-test-beeabode.roelandp.nl", opts);
     }
 
     /**
