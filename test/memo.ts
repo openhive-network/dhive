@@ -1,6 +1,7 @@
 import "mocha";
 import * as assert from "assert";
-import { encode, decode } from "../src/memo"
+import { memo } from "../src/memo"
+const {encode, decode} = memo
 
 import {
     DEFAULT_ADDRESS_PREFIX,
