@@ -5,7 +5,7 @@ import { Types } from "./chain/serializer";
 import * as Aes from "./helpers/aes";
 import { types } from './chain/deserializer'
 
-export function encode(private_key: PrivateKey | string, public_key: PublicKey | string, memo: string, testNonce?: number) {
+function encode(private_key: PrivateKey | string, public_key: PublicKey | string, memo: string, testNonce?: number) {
     if (!/^#/.test(memo)) return memo
     memo = memo.substring(1)
 
@@ -27,7 +27,7 @@ export function encode(private_key: PrivateKey | string, public_key: PublicKey |
     return '#' + bs58.encode(data);
 }
 
-export function decode(private_key: PrivateKey | string, memo: any) {
+function decode(private_key: PrivateKey | string, memo: any) {
     if (!/^#/.test(memo)) return memo
     memo = memo.substring(1)
     // checkEncryption()
@@ -58,21 +58,7 @@ export function decode(private_key: PrivateKey | string, memo: any) {
 const toPrivateObj = o => (o ? o.key ? o : PrivateKey.fromString(o) : o/*null or undefined*/)
 const toPublicObj = o => (o ? o.key ? o : PublicKey.fromString(o) : o/*null or undefined*/)
 
-//function checkEncryption() {
-//    if (encodeTest === undefined) {
-//        let plaintext;
-//        encodeTest = true // prevent infinate looping
-//        try {
-//            const wif = '5JdeC9P7Pbd1uGdFVEsJ41EkEnADbbHGq6p1BwFxm6txNBsQnsw'
-//            const pubkey = 'STM8m5UgaFAAYQRuaNejYdS8FVLVp9Ss3K1qAVk5de6F8s3HnVbvA'
-//            const cyphertext = encode(wif, pubkey, '#memo?')
-//            plaintext = decode(wif, cyphertext)
-//        } catch (e) {
-//            console.error(e);
-//        } finally {
-//            encodeTest = plaintext === '#memo?'
-//        }
-//    }
-//    if (encodeTest === false)
-//        throw new Error('This environment does not support encryption.')
-//}
+export const memo = {
+    encode,
+    decode
+}
