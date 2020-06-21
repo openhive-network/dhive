@@ -5,6 +5,13 @@ import { Types } from "./chain/serializer";
 import * as Aes from "./helpers/aes";
 import { types } from './chain/deserializer'
 
+/**
+ * Memo/Any message encoding using AES (aes-cbc algorithm)
+ * @param {Buffer|String} private_key Privatekey of sender
+ * @param {Buffer|String}public_key publickey of recipient
+ * @param {String}memo message to be encrypted
+ * @param {Number}testNonce nonce with high entropy
+ */
 function encode(private_key: PrivateKey | string, public_key: PublicKey | string, memo: string, testNonce?: number) {
     if (!/^#/.test(memo)) return memo
     memo = memo.substring(1)
@@ -27,6 +34,11 @@ function encode(private_key: PrivateKey | string, public_key: PublicKey | string
     return '#' + bs58.encode(data);
 }
 
+/**
+ * Encrypted memo/message decryption
+ * @param {Buffer|string}private_key Privatekey of recipient
+ * @param {any}memo Encrypted message/memo
+ */
 function decode(private_key: PrivateKey | string, memo: any) {
     if (!/^#/.test(memo)) return memo
     memo = memo.substring(1)
