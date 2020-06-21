@@ -226,6 +226,14 @@ const ChainPropertiesSerializer = ObjectSerializer([
   ['sbd_interest_rate', UInt16Serializer]
 ])
 
+const EncryptedMemoSerializer = ObjectSerializer([
+    ['from', PublicKeySerializer],
+    ['to', PublicKeySerializer],
+    ['nonce', UInt64Serializer],
+    ['check', UInt32Serializer],
+    ['encrypted', BinarySerializer()]
+]);
+
 const OperationDataSerializer = (
   operationId: number,
   definitions: [string, Serializer][]
