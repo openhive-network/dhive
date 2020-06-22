@@ -37,7 +37,6 @@ import { EventEmitter } from "events";
 import { PassThrough } from "stream";
 import fetch from "cross-fetch";
 import { VError } from "verror";
-
 const timeoutErrors = ['request-timeout', 'ENOTFOUND', 'ECONNREFUSED']
 
 /**
@@ -47,7 +46,7 @@ export function waitForEvent<T>(
   emitter: EventEmitter,
   eventName: string | symbol
 ): Promise<T> {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     emitter.once(eventName, resolve);
   });
 }
@@ -85,7 +84,6 @@ export function iteratorStream<T>(
     });
   return stream;
 }
-
 /**
  * Return a deep copy of a JSON-serializable object.
  */
@@ -118,7 +116,7 @@ export async function retryingFetch(
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
-      return {response: await response.json(), currentAddress}
+      return { response: await response.json(), currentAddress }
     } catch (error) {
       if (timeout !== 0 && Date.now() - start > timeout) {
         if (
@@ -140,9 +138,9 @@ export async function retryingFetch(
             ) {
               error.message = `[${
                 error.code
-              }] tried ${failoverThreshold} times with ${allAddresses.join(
-                ','
-              )}`
+                }] tried ${failoverThreshold} times with ${allAddresses.join(
+                  ','
+                )}`
               throw error
             } else {
               throw error
@@ -170,6 +168,7 @@ import { PublicKey } from "./crypto";
 import { Asset, PriceType } from "./chain/asset";
 import { WitnessSetPropertiesOperation } from "./chain/operation";
 import { Serializer, Types } from "./chain/serializer";
+
 export interface WitnessProps {
   account_creation_fee?: string | Asset;
   account_subsidy_budget?: number; // uint32_t
@@ -181,7 +180,8 @@ export interface WitnessProps {
   sbd_interest_rate?: number; // uint16_t
   url?: string;
 }
-function serialize(serializer: Serializer, data: any) {
+
+const serialize = (serializer: Serializer, data: any) => {
   const buffer = new ByteBuffer(
     ByteBuffer.DEFAULT_CAPACITY,
     ByteBuffer.LITTLE_ENDIAN
@@ -190,19 +190,20 @@ function serialize(serializer: Serializer, data: any) {
   buffer.flip();
   return Buffer.from(buffer.toBuffer());
 }
-export function buildWitnessUpdateOp(
+
+export const buildWitnessUpdateOp = (
   owner: string,
   props: WitnessProps
-): WitnessSetPropertiesOperation {
+): WitnessSetPropertiesOperation => {
   const data: WitnessSetPropertiesOperation[1] = {
     extensions: [],
     owner,
     props: []
-  };
+  }
   for (const key of Object.keys(props)) {
     let type: Serializer;
     switch (key) {
-      case "key":
+case "key":
       case "new_signing_key":
         type = Types.PublicKey;
         break;
