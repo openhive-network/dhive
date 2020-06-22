@@ -1,9 +1,9 @@
-import * as ByteBuffer from "bytebuffer";
-import { PrivateKey, PublicKey } from "./crypto";
-import * as bs58 from "bs58";
-import { Types } from "./chain/serializer";
-import * as Aes from "./helpers/aes";
+import { PrivateKey, PublicKey } from './crypto'
+import { Types } from './chain/serializer'
+import * as Aes from './helpers/aes'
 import { types } from './chain/deserializer'
+import * as bs58 from 'bs58'
+import * as ByteBuffer from 'bytebuffer'
 
 /**
  * Memo/Any message encoding using AES (aes-cbc algorithm)
@@ -13,25 +13,25 @@ import { types } from './chain/deserializer'
  * @param {Number}testNonce nonce with high entropy
  */
 function encode(private_key: PrivateKey | string, public_key: PublicKey | string, memo: string, testNonce?: number) {
-    if (!/^#/.test(memo)) return memo
+    if (!memo.startsWith('#')) {return memo}
     memo = memo.substring(1)
 
     private_key = toPrivateObj(private_key) as PrivateKey
     public_key = toPublicObj(public_key) as PublicKey
 
-    const { nonce, message, checksum } = Aes.encrypt(private_key, public_key, memo, testNonce);
+    const { nonce, message, checksum } = Aes.encrypt(private_key, public_key, memo, testNonce)
 
-    let mbuf = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN)
+    const mbuf = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN)
     Types.EncryptedMemo(mbuf, {
-        from: private_key.createPublic(),
-        to: public_key,
-        nonce,
         check: checksum,
-        encrypted: message
-    });
-    mbuf.flip();
-    const data = Buffer.from(mbuf.toBuffer());
-    return '#' + bs58.encode(data);
+        encrypted: message,
+        from: private_key.createPublic(),
+        nonce,
+        to: public_key
+    })
+    mbuf.flip()
+    const data = Buffer.from(mbuf.toBuffer())
+    return '#' + bs58.encode(data)
 }
 
 /**
@@ -40,7 +40,7 @@ function encode(private_key: PrivateKey | string, public_key: PublicKey | string
  * @param {any}memo Encrypted message/memo
  */
 function decode(private_key: PrivateKey | string, memo: any) {
-    if (!/^#/.test(memo)) return memo
+    if (!memo.startsWith('#')) {return memo}
     memo = memo.substring(1)
     // checkEncryption()
 
@@ -67,10 +67,10 @@ function decode(private_key: PrivateKey | string, memo: any) {
     }
 }
 
-const toPrivateObj = o => (o ? o.key ? o : PrivateKey.fromString(o) : o/*null or undefined*/)
-const toPublicObj = o => (o ? o.key ? o : PublicKey.fromString(o) : o/*null or undefined*/)
+const toPrivateObj = o => (o ? o.key ? o : PrivateKey.fromString(o) : o/* null or undefined*/)
+const toPublicObj = o => (o ? o.key ? o : PublicKey.fromString(o) : o/* null or undefined*/)
 
-export const memo = {
-    encode,
-    decode
+export const Memo = {
+    decode,
+    encode
 }

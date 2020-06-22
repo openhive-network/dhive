@@ -1,7 +1,7 @@
+import { createCipheriv, createDecipheriv, randomBytes, createHash } from 'crypto'
+import * as assert from 'assert'
+import { PrivateKey, PublicKey } from '../crypto'
 const ByteBuffer = require('bytebuffer')
-import { createCipheriv, createDecipheriv, randomBytes, createHash, createHmac } from "crypto";
-import * as assert from 'assert';
-import { PrivateKey, PublicKey } from '../crypto';
 const Long = ByteBuffer.Long
 /**
     Spec: http://localhost:3002/steem/@dantheman/how-to-encrypt-a-memo-when-transferring-steem
@@ -15,13 +15,13 @@ const Long = ByteBuffer.Long
     @property {Buffer} message - Plain text message
     @property {number} checksum - shared secret checksum
 */
-export function encrypt(private_key: PrivateKey, public_key: PublicKey, message: any, nonce) {
+export function encrypt(private_key: PrivateKey, public_key: PublicKey, message: any, nonce): any {
     // Change message to varint32 prefixed encoded string
-    let mbuf = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN)
+    const mbuf = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN)
     mbuf.writeVString(message)
-    message = Buffer.from(mbuf.flip().toBinary());
+    message = Buffer.from(mbuf.flip().toBinary())
 
-    let aesKey = private_key.encapsulate(public_key);
+    const aesKey = private_key.encapsulate(public_key)
     return crypt(aesKey, uniqueNonce(), message)
 }
 
@@ -35,10 +35,10 @@ export function encrypt(private_key: PrivateKey, public_key: PublicKey, message:
     @throws {Error|TypeError} - "Invalid Key, ..."
     @return {Buffer} - message
 */
-export function decrypt(private_key: PrivateKey, public_key: PublicKey, nonce, message: any, checksum: number) {
-    let aesKey = public_key.decapsulate(private_key);
+export function decrypt(private_key: PrivateKey, public_key: PublicKey, nonce, message: any, checksum: number): string {
+    const aesKey = public_key.decapsulate(private_key)
 
-    return crypt(aesKey, nonce, message, checksum).message
+    return crypt(aesKey, nonce, message, checksum).message as string
 }
 
 /**
@@ -52,7 +52,7 @@ function crypt(aesKey: Buffer, nonce: number | Buffer, message: ByteBuffer | str
     let ebuf: any = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN)
     ebuf.writeUint64(nonce)
     ebuf.append(aesKey.toString('binary'), 'binary')
-    ebuf.flip();
+    ebuf.flip()
     ebuf = Buffer.from(ebuf.toBinary(), 'binary')
     const encryption_key = createHash('sha512').update(ebuf).digest()
 
@@ -63,11 +63,10 @@ function crypt(aesKey: Buffer, nonce: number | Buffer, message: ByteBuffer | str
     let check: Buffer | Number = createHash('sha256').update(encryption_key).digest()
     check = check.slice(0, 4)
     const cbuf: any = ByteBuffer.fromBinary(check.toString('binary'), ByteBuffer.LITTLE_ENDIAN)
-    check = <Number>cbuf.readUint32()
+    check = cbuf.readUint32() as Number
 
     if (checksum) {
-        if (check !== checksum)
-            throw new Error('Invalid nonce')
+        if (check !== checksum) {throw new Error('Invalid nonce')}
         message = cryptoJsDecrypt(message, tag, iv)
     } else {
         message = cryptoJsEncrypt(message, tag, iv)
@@ -80,7 +79,7 @@ function crypt(aesKey: Buffer, nonce: number | Buffer, message: ByteBuffer | str
     @return {Buffer}
 */
 function cryptoJsDecrypt(message, tag, iv) {
-    assert(message, "Missing cipher text")
+    assert(message, 'Missing cipher text')
     message = toBinaryBuffer(message)
     const decipher = createDecipheriv('aes-256-cbc', tag, iv)
     message = Buffer.concat([decipher.update(message), decipher.final()])
@@ -92,26 +91,28 @@ function cryptoJsDecrypt(message, tag, iv) {
     @return {Buffer} binary
 */
 function cryptoJsEncrypt(message, tag, iv) {
-    assert(message, "Missing plain text")
+    assert(message, 'Missing plain text')
     message = toBinaryBuffer(message)
     const cipher = createCipheriv('aes-256-cbc', tag, iv)
     message = Buffer.concat([cipher.update(message), cipher.final()])
     return message
 }
 
-/** @return {string} unique 64 bit unsigned number string.  Being time based, this is careful to never choose the same nonce twice.  This value could be recorded in the blockchain for a long time.
+/** @return {string} unique 64 bit unsigned number string.  Being time based,
+ * this is careful to never choose the same nonce twice.  This value could
+ * clsbe recorded in the blockchain for a long time.
 */
-let unique_nonce_entropy: any = null;
+let unique_nonce_entropy: any = null
 
 function uniqueNonce() {
     if (unique_nonce_entropy === null) {
-        var uint8randomArr = new Uint8Array(2)
-        for (var i = 0; i < 2; ++i) { uint8randomArr[i] = randomBytes(2).readUInt8(i) }
+        const uint8randomArr = new Uint8Array(2)
+        for (let i = 0; i < 2; ++i) { uint8randomArr[i] = randomBytes(2).readUInt8(i) }
         unique_nonce_entropy = uint8randomArr[0] << 8 | uint8randomArr[1]
     }
     let long = Long.fromNumber(Date.now())
     const entropy = ++unique_nonce_entropy % 0xFFFF
-    long = long.shiftLeft(16).or(Long.fromNumber(entropy));
+    long = long.shiftLeft(16).or(Long.fromNumber(entropy))
     return long.toString()
 }
 

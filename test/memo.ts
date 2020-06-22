@@ -1,7 +1,7 @@
 import "mocha";
 import * as assert from "assert";
-import { memo } from "../src/memo"
-const {encode, decode} = memo
+import { Memo } from "../src/memo"
+const { encode, decode } = Memo
 
 import {
     DEFAULT_ADDRESS_PREFIX,
@@ -18,7 +18,7 @@ import {
 const private_key = PrivateKey.fromSeed("")
 const public_key = private_key.createPublic()
 
-describe("memo encryption", function () {
+describe("memo", function () {
     it('encrypt/decrypt memo', () => {
         const nonce = 1462976530069648
         const text = '#tngflx9099'
