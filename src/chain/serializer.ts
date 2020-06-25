@@ -555,7 +555,7 @@ OperationSerializers.witness_update = OperationDataSerializer(11, [
 
 OperationSerializers.witness_set_properties = OperationDataSerializer(42, [
   ['owner', StringSerializer],
-  ['props', FlatMapSerializer(StringSerializer, StringSerializer)],
+  ['props', FlatMapSerializer(StringSerializer, VariableBinarySerializer)],
   ['extensions', ArraySerializer(VoidSerializer)]
 ])
 
