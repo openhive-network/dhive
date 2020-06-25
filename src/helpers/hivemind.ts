@@ -2,8 +2,8 @@
  * Hivemind database query wrapper
  */
 
-import { Discussion } from '../chain/comment'
 import { Account } from '../chain/account'
+import { Discussion } from '../chain/comment'
 import { CommunityDetail, Notifications } from '../chain/hivemind'
 import { Client } from './../client'
 

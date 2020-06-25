@@ -515,6 +515,84 @@ declare module 'dhive/chain/misc' {
 	export function getVests(account: Account, subtract_delegated?: boolean, add_received?: boolean): number;
 
 }
+declare module 'dhive/chain/serializer' {
+	/**
+	 * @file Hive protocol serialization.
+	 * @author Johan Nordberg <code@johan-nordberg.com>
+	 * @license
+	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
+	 *
+	 * Redistribution and use in source and binary forms, with or without modification,
+	 * are permitted provided that the following conditions are met:
+	 *
+	 *  1. Redistribution of source code must retain the above copyright notice, this
+	 *     list of conditions and the following disclaimer.
+	 *
+	 *  2. Redistribution in binary form must reproduce the above copyright notice,
+	 *     this list of conditions and the following disclaimer in the documentation
+	 *     and/or other materials provided with the distribution.
+	 *
+	 *  3. Neither the name of the copyright holder nor the names of its contributors
+	 *     may be used to endorse or promote products derived from this software without
+	 *     specific prior written permission.
+	 *
+	 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+	 * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+	 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+	 * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+	 * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+	 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+	 * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+	 * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+	 * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+	 * OF THE POSSIBILITY OF SUCH DAMAGE.
+	 *
+	 * You acknowledge that this software is not designed, licensed or intended for use
+	 * in the design, construction, operation or maintenance of any military facility.
+	 */
+	/// <reference types="node" />
+	import * as ByteBuffer from 'bytebuffer';
+	import { PublicKey } from 'dhive/crypto';
+	import { Asset } from 'dhive/chain/asset';
+	import { HexBuffer } from 'dhive/chain/misc';
+	import { Operation } from 'dhive/chain/operation';
+	export type Serializer = (buffer: ByteBuffer, data: any) => void;
+	export const Types: {
+	    Array: (itemSerializer: Serializer) => (buffer: ByteBuffer, data: any[]) => void;
+	    Asset: (buffer: ByteBuffer, data: string | number | Asset) => void;
+	    Authority: (buffer: ByteBuffer, data: {
+	        [key: string]: any;
+	    }) => void;
+	    Binary: (size?: number | undefined) => (buffer: ByteBuffer, data: HexBuffer | Buffer) => void;
+	    Boolean: (buffer: ByteBuffer, data: boolean) => void;
+	    Date: (buffer: ByteBuffer, data: string) => void;
+	    FlatMap: (keySerializer: Serializer, valueSerializer: Serializer) => (buffer: ByteBuffer, data: [any, any][]) => void;
+	    Int16: (buffer: ByteBuffer, data: number) => void;
+	    Int32: (buffer: ByteBuffer, data: number) => void;
+	    Int64: (buffer: ByteBuffer, data: number) => void;
+	    Int8: (buffer: ByteBuffer, data: number) => void;
+	    Object: (keySerializers: [string, Serializer][]) => (buffer: ByteBuffer, data: {
+	        [key: string]: any;
+	    }) => void;
+	    Operation: (buffer: ByteBuffer, operation: Operation) => void;
+	    Optional: (valueSerializer: Serializer) => (buffer: ByteBuffer, data: any) => void;
+	    Price: (buffer: ByteBuffer, data: {
+	        [key: string]: any;
+	    }) => void;
+	    PublicKey: (buffer: ByteBuffer, data: string | PublicKey | null) => void;
+	    StaticVariant: (itemSerializers: Serializer[]) => (buffer: ByteBuffer, data: [number, any]) => void;
+	    String: (buffer: ByteBuffer, data: string) => void;
+	    Transaction: (buffer: ByteBuffer, data: {
+	        [key: string]: any;
+	    }) => void;
+	    UInt16: (buffer: ByteBuffer, data: number) => void;
+	    UInt32: (buffer: ByteBuffer, data: number) => void;
+	    UInt64: (buffer: ByteBuffer, data: number) => void;
+	    UInt8: (buffer: ByteBuffer, data: number) => void;
+	    Void: (buffer: ByteBuffer) => never;
+	};
+
+}
 declare module 'dhive/chain/transaction' {
 	/**
 	 * @file Hive transaction type definitions.
@@ -567,6 +645,156 @@ declare module 'dhive/chain/transaction' {
 	    trx_num: number;
 	    expired: boolean;
 	}
+
+}
+declare module 'dhive/crypto' {
+	/**
+	 * @file Hive crypto helpers.
+	 * @author Johan Nordberg <code@johan-nordberg.com>
+	 * @license
+	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
+	 *
+	 * Redistribution and use in source and binary forms, with or without modification,
+	 * are permitted provided that the following conditions are met:
+	 *
+	 *  1. Redistribution of source code must retain the above copyright notice, this
+	 *     list of conditions and the following disclaimer.
+	 *
+	 *  2. Redistribution in binary form must reproduce the above copyright notice,
+	 *     this list of conditions and the following disclaimer in the documentation
+	 *     and/or other materials provided with the distribution.
+	 *
+	 *  3. Neither the name of the copyright holder nor the names of its contributors
+	 *     may be used to endorse or promote products derived from this software without
+	 *     specific prior written permission.
+	 *
+	 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+	 * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+	 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+	 * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+	 * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+	 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+	 * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+	 * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+	 * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+	 * OF THE POSSIBILITY OF SUCH DAMAGE.
+	 *
+	 * You acknowledge that this software is not designed, licensed or intended for use
+	 * in the design, construction, operation or maintenance of any military facility.
+	 */
+	/// <reference types="node" />
+	import { SignedTransaction, Transaction } from 'dhive/chain/transaction';
+	/**
+	 * Network id used in WIF-encoding.
+	 */
+	export const NETWORK_ID: Buffer; function ripemd160(input: Buffer | string): Buffer; function sha256(input: Buffer | string): Buffer; function doubleSha256(input: Buffer | string): Buffer; function encodePublic(key: Buffer, prefix: string): string; function encodePrivate(key: Buffer): string; function decodePrivate(encodedKey: string): Buffer; function isCanonicalSignature(signature: Buffer): boolean; function isWif(privWif: string | Buffer): boolean;
+	/**
+	 * ECDSA (secp256k1) public key.
+	 */
+	export class PublicKey {
+	    readonly key: Buffer;
+	    readonly prefix: string;
+	    constructor(key: Buffer, prefix?: string);
+	    /**
+	     * Create a new instance from a WIF-encoded key.
+	     */
+	    static fromString(wif: string): PublicKey;
+	    /**
+	     * Create a new instance.
+	     */
+	    static from(value: string | PublicKey): PublicKey;
+	    /**
+	     * Verify a 32-byte signature.
+	     * @param message 32-byte message to verify.
+	     * @param signature Signature to verify.
+	     */
+	    verify(message: Buffer, signature: Signature): boolean;
+	    /**
+	     * Return a WIF-encoded representation of the key.
+	     */
+	    toString(): string;
+	    /**
+	     * Return JSON representation of this key, same as toString().
+	     */
+	    toJSON(): string;
+	    /**
+	     * Used by `utils.inspect` and `console.log` in node.js.
+	     */
+	    inspect(): string;
+	}
+	export type KeyRole = 'owner' | 'active' | 'posting' | 'memo';
+	/**
+	 * ECDSA (secp256k1) private key.
+	 */
+	export class PrivateKey {
+	    private key;
+	    constructor(key: Buffer);
+	    /**
+	     * Convenience to create a new instance from WIF string or buffer.
+	     */
+	    static from(value: string | Buffer): PrivateKey;
+	    /**
+	     * Create a new instance from a WIF-encoded key.
+	     */
+	    static fromString(wif: string): PrivateKey;
+	    /**
+	     * Create a new instance from a seed.
+	     */
+	    static fromSeed(seed: string): PrivateKey;
+	    /**
+	     * Create key from username and password.
+	     */
+	    static fromLogin(username: string, password: string, role?: KeyRole): PrivateKey;
+	    /**
+	     * Sign message.
+	     * @param message 32-byte message.
+	     */
+	    sign(message: Buffer): Signature;
+	    /**
+	     * Derive the public key for this private key.
+	     */
+	    createPublic(prefix?: string): PublicKey;
+	    /**
+	     * Return a WIF-encoded representation of the key.
+	     */
+	    toString(): string;
+	    /**
+	     * Used by `utils.inspect` and `console.log` in node.js. Does not show the full key
+	     * to get the full encoded key you need to explicitly call {@link toString}.
+	     */
+	    inspect(): string;
+	}
+	/**
+	 * ECDSA (secp256k1) signature.
+	 */
+	export class Signature {
+	    data: Buffer;
+	    recovery: number;
+	    constructor(data: Buffer, recovery: number);
+	    static fromBuffer(buffer: Buffer): Signature;
+	    static fromString(string: string): Signature;
+	    /**
+	     * Recover public key from signature by providing original signed message.
+	     * @param message 32-byte message that was used to create the signature.
+	     */
+	    recover(message: Buffer, prefix?: string): PublicKey;
+	    toBuffer(): Buffer;
+	    toString(): string;
+	} function transactionDigest(transaction: Transaction | SignedTransaction, chainId?: Buffer): Buffer; function signTransaction(transaction: Transaction, keys: PrivateKey | PrivateKey[], chainId?: Buffer): SignedTransaction;
+	/** Misc crypto utility functions. */
+	export const cryptoUtils: {
+	    decodePrivate: typeof decodePrivate;
+	    doubleSha256: typeof doubleSha256;
+	    encodePrivate: typeof encodePrivate;
+	    encodePublic: typeof encodePublic;
+	    isCanonicalSignature: typeof isCanonicalSignature;
+	    isWif: typeof isWif;
+	    ripemd160: typeof ripemd160;
+	    sha256: typeof sha256;
+	    signTransaction: typeof signTransaction;
+	    transactionDigest: typeof transactionDigest;
+	};
+	export {};
 
 }
 declare module 'dhive/chain/block' {
@@ -1559,234 +1787,6 @@ declare module 'dhive/chain/operation' {
 	}
 
 }
-declare module 'dhive/chain/serializer' {
-	/**
-	 * @file Hive protocol serialization.
-	 * @author Johan Nordberg <code@johan-nordberg.com>
-	 * @license
-	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
-	 *
-	 * Redistribution and use in source and binary forms, with or without modification,
-	 * are permitted provided that the following conditions are met:
-	 *
-	 *  1. Redistribution of source code must retain the above copyright notice, this
-	 *     list of conditions and the following disclaimer.
-	 *
-	 *  2. Redistribution in binary form must reproduce the above copyright notice,
-	 *     this list of conditions and the following disclaimer in the documentation
-	 *     and/or other materials provided with the distribution.
-	 *
-	 *  3. Neither the name of the copyright holder nor the names of its contributors
-	 *     may be used to endorse or promote products derived from this software without
-	 *     specific prior written permission.
-	 *
-	 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-	 * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-	 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-	 * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-	 * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-	 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-	 * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-	 * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-	 * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-	 * OF THE POSSIBILITY OF SUCH DAMAGE.
-	 *
-	 * You acknowledge that this software is not designed, licensed or intended for use
-	 * in the design, construction, operation or maintenance of any military facility.
-	 */
-	/// <reference types="node" />
-	import * as ByteBuffer from 'bytebuffer';
-	import { PublicKey } from 'dhive/crypto';
-	import { Asset } from 'dhive/chain/asset';
-	import { HexBuffer } from 'dhive/chain/misc';
-	import { Operation } from 'dhive/chain/operation';
-	export type Serializer = (buffer: ByteBuffer, data: any) => void;
-	export const Types: {
-	    Array: (itemSerializer: Serializer) => (buffer: ByteBuffer, data: any[]) => void;
-	    Asset: (buffer: ByteBuffer, data: string | number | Asset) => void;
-	    Authority: (buffer: ByteBuffer, data: {
-	        [key: string]: any;
-	    }) => void;
-	    Binary: (size?: number | undefined) => (buffer: ByteBuffer, data: HexBuffer | Buffer) => void;
-	    Boolean: (buffer: ByteBuffer, data: boolean) => void;
-	    Date: (buffer: ByteBuffer, data: string) => void;
-	    FlatMap: (keySerializer: Serializer, valueSerializer: Serializer) => (buffer: ByteBuffer, data: [any, any][]) => void;
-	    Int16: (buffer: ByteBuffer, data: number) => void;
-	    Int32: (buffer: ByteBuffer, data: number) => void;
-	    Int64: (buffer: ByteBuffer, data: number) => void;
-	    Int8: (buffer: ByteBuffer, data: number) => void;
-	    Object: (keySerializers: [string, Serializer][]) => (buffer: ByteBuffer, data: {
-	        [key: string]: any;
-	    }) => void;
-	    Operation: (buffer: ByteBuffer, operation: Operation) => void;
-	    Optional: (valueSerializer: Serializer) => (buffer: ByteBuffer, data: any) => void;
-	    Price: (buffer: ByteBuffer, data: {
-	        [key: string]: any;
-	    }) => void;
-	    PublicKey: (buffer: ByteBuffer, data: string | PublicKey | null) => void;
-	    StaticVariant: (itemSerializers: Serializer[]) => (buffer: ByteBuffer, data: [number, any]) => void;
-	    String: (buffer: ByteBuffer, data: string) => void;
-	    Transaction: (buffer: ByteBuffer, data: {
-	        [key: string]: any;
-	    }) => void;
-	    UInt16: (buffer: ByteBuffer, data: number) => void;
-	    UInt32: (buffer: ByteBuffer, data: number) => void;
-	    UInt64: (buffer: ByteBuffer, data: number) => void;
-	    UInt8: (buffer: ByteBuffer, data: number) => void;
-	    Void: (buffer: ByteBuffer) => never;
-	};
-
-}
-declare module 'dhive/crypto' {
-	/**
-	 * @file Hive crypto helpers.
-	 * @author Johan Nordberg <code@johan-nordberg.com>
-	 * @license
-	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
-	 *
-	 * Redistribution and use in source and binary forms, with or without modification,
-	 * are permitted provided that the following conditions are met:
-	 *
-	 *  1. Redistribution of source code must retain the above copyright notice, this
-	 *     list of conditions and the following disclaimer.
-	 *
-	 *  2. Redistribution in binary form must reproduce the above copyright notice,
-	 *     this list of conditions and the following disclaimer in the documentation
-	 *     and/or other materials provided with the distribution.
-	 *
-	 *  3. Neither the name of the copyright holder nor the names of its contributors
-	 *     may be used to endorse or promote products derived from this software without
-	 *     specific prior written permission.
-	 *
-	 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-	 * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-	 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-	 * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-	 * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-	 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-	 * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-	 * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-	 * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-	 * OF THE POSSIBILITY OF SUCH DAMAGE.
-	 *
-	 * You acknowledge that this software is not designed, licensed or intended for use
-	 * in the design, construction, operation or maintenance of any military facility.
-	 */
-	/// <reference types="node" />
-	import { SignedTransaction, Transaction } from 'dhive/chain/transaction';
-	/**
-	 * Network id used in WIF-encoding.
-	 */
-	export const NETWORK_ID: Buffer; function ripemd160(input: Buffer | string): Buffer; function sha256(input: Buffer | string): Buffer; function doubleSha256(input: Buffer | string): Buffer; function encodePublic(key: Buffer, prefix: string): string; function encodePrivate(key: Buffer): string; function decodePrivate(encodedKey: string): Buffer; function isCanonicalSignature(signature: Buffer): boolean; function isWif(privWif: string | Buffer): boolean;
-	/**
-	 * ECDSA (secp256k1) public key.
-	 */
-	export class PublicKey {
-	    readonly key: Buffer;
-	    readonly prefix: string;
-	    constructor(key: Buffer, prefix?: string);
-	    /**
-	     * Create a new instance from a WIF-encoded key.
-	     */
-	    static fromString(wif: string): PublicKey;
-	    /**
-	     * Create a new instance.
-	     */
-	    static from(value: string | PublicKey): PublicKey;
-	    /**
-	     * Verify a 32-byte signature.
-	     * @param message 32-byte message to verify.
-	     * @param signature Signature to verify.
-	     */
-	    verify(message: Buffer, signature: Signature): boolean;
-	    /**
-	     * Return a WIF-encoded representation of the key.
-	     */
-	    toString(): string;
-	    /**
-	     * Return JSON representation of this key, same as toString().
-	     */
-	    toJSON(): string;
-	    /**
-	     * Used by `utils.inspect` and `console.log` in node.js.
-	     */
-	    inspect(): string;
-	}
-	export type KeyRole = 'owner' | 'active' | 'posting' | 'memo';
-	/**
-	 * ECDSA (secp256k1) private key.
-	 */
-	export class PrivateKey {
-	    private key;
-	    constructor(key: Buffer);
-	    /**
-	     * Convenience to create a new instance from WIF string or buffer.
-	     */
-	    static from(value: string | Buffer): PrivateKey;
-	    /**
-	     * Create a new instance from a WIF-encoded key.
-	     */
-	    static fromString(wif: string): PrivateKey;
-	    /**
-	     * Create a new instance from a seed.
-	     */
-	    static fromSeed(seed: string): PrivateKey;
-	    /**
-	     * Create key from username and password.
-	     */
-	    static fromLogin(username: string, password: string, role?: KeyRole): PrivateKey;
-	    /**
-	     * Sign message.
-	     * @param message 32-byte message.
-	     */
-	    sign(message: Buffer): Signature;
-	    /**
-	     * Derive the public key for this private key.
-	     */
-	    createPublic(prefix?: string): PublicKey;
-	    /**
-	     * Return a WIF-encoded representation of the key.
-	     */
-	    toString(): string;
-	    /**
-	     * Used by `utils.inspect` and `console.log` in node.js. Does not show the full key
-	     * to get the full encoded key you need to explicitly call {@link toString}.
-	     */
-	    inspect(): string;
-	}
-	/**
-	 * ECDSA (secp256k1) signature.
-	 */
-	export class Signature {
-	    data: Buffer;
-	    recovery: number;
-	    constructor(data: Buffer, recovery: number);
-	    static fromBuffer(buffer: Buffer): Signature;
-	    static fromString(string: string): Signature;
-	    /**
-	     * Recover public key from signature by providing original signed message.
-	     * @param message 32-byte message that was used to create the signature.
-	     */
-	    recover(message: Buffer, prefix?: string): PublicKey;
-	    toBuffer(): Buffer;
-	    toString(): string;
-	} function transactionDigest(transaction: Transaction | SignedTransaction, chainId?: Buffer): Buffer; function signTransaction(transaction: Transaction, keys: PrivateKey | PrivateKey[], chainId?: Buffer): SignedTransaction;
-	/** Misc crypto utility functions. */
-	export const cryptoUtils: {
-	    decodePrivate: typeof decodePrivate;
-	    doubleSha256: typeof doubleSha256;
-	    encodePrivate: typeof encodePrivate;
-	    encodePublic: typeof encodePublic;
-	    isCanonicalSignature: typeof isCanonicalSignature;
-	    isWif: typeof isWif;
-	    ripemd160: typeof ripemd160;
-	    sha256: typeof sha256;
-	    signTransaction: typeof signTransaction;
-	    transactionDigest: typeof transactionDigest;
-	};
-	export {};
-
-}
 declare module 'dhive/utils' {
 	/**
 	 * @file Misc utility functions.
@@ -1847,9 +1847,9 @@ declare module 'dhive/utils' {
 	    response: any;
 	    currentAddress: string;
 	}>;
-	import { PublicKey } from 'dhive/crypto';
 	import { Asset, PriceType } from 'dhive/chain/asset';
 	import { WitnessSetPropertiesOperation } from 'dhive/chain/operation';
+	import { PublicKey } from 'dhive/crypto';
 	export interface WitnessProps {
 	    account_creation_fee?: string | Asset;
 	    account_subsidy_budget?: number;
@@ -2008,8 +2008,8 @@ declare module 'dhive/helpers/broadcast' {
 	import { Asset } from 'dhive/chain/asset';
 	import { AccountUpdateOperation, CommentOperation, CommentOptionsOperation, CustomJsonOperation, DelegateVestingSharesOperation, Operation, TransferOperation, VoteOperation } from 'dhive/chain/operation';
 	import { SignedTransaction, Transaction, TransactionConfirmation } from 'dhive/chain/transaction';
-	import { PrivateKey, PublicKey } from 'dhive/crypto';
 	import { Client } from 'dhive/client';
+	import { PrivateKey, PublicKey } from 'dhive/crypto';
 	export interface CreateAccountOptions {
 	    /**
 	     * Username for the new account.
@@ -2300,108 +2300,6 @@ declare module 'dhive/helpers/database' {
 	}
 
 }
-declare module 'dhive/chain/rc' {
-	import { SMTAsset } from 'dhive/chain/asset';
-	import { Bignum } from 'dhive/chain/misc';
-	export interface RCParams {
-	    resource_history_bytes: Resource;
-	    resource_new_accounts: Resource;
-	    resource_market_bytes: Resource;
-	    resource_state_bytes: Resource;
-	    resource_execution_time: Resource;
-	}
-	export interface Resource {
-	    resource_dynamics_params: DynamicParam;
-	    price_curve_params: PriceCurveParam;
-	}
-	export interface DynamicParam {
-	    resource_unit: number;
-	    budget_per_time_unit: number;
-	    pool_eq: Bignum;
-	    max_pool_size: Bignum;
-	    decay_params: {
-	        decay_per_time_unit: Bignum;
-	        decay_per_time_unit_denom_shift: number;
-	    };
-	    min_decay: number;
-	}
-	export interface PriceCurveParam {
-	    coeff_a: Bignum;
-	    coeff_b: Bignum;
-	    shift: number;
-	}
-	export interface RCPool {
-	    resource_history_bytes: Pool;
-	    resource_new_accounts: Pool;
-	    resource_market_bytes: Pool;
-	    resource_state_bytes: Pool;
-	    resource_execution_time: Pool;
-	}
-	export interface Pool {
-	    pool: Bignum;
-	}
-	export interface RCAccount {
-	    account: string;
-	    rc_manabar: {
-	        current_mana: Bignum;
-	        last_update_time: number;
-	    };
-	    max_rc_creation_adjustment: SMTAsset | string;
-	    max_rc: Bignum;
-	}
-	export interface Manabar {
-	    current_mana: number;
-	    max_mana: number;
-	    percentage: number;
-	}
-
-}
-declare module 'dhive/helpers/rc' {
-	import { Account } from 'dhive/chain/account';
-	import { Manabar, RCAccount, RCParams, RCPool } from 'dhive/chain/rc';
-	import { Client } from 'dhive/client';
-	export class RCAPI {
-	    readonly client: Client;
-	    constructor(client: Client);
-	    /**
-	     * Convenience for calling `rc_api`.
-	     */
-	    call(method: string, params?: any): Promise<any>;
-	    /**
-	     * Returns RC data for array of usernames
-	     */
-	    findRCAccounts(usernames: string[]): Promise<RCAccount[]>;
-	    /**
-	     * Returns the global resource params
-	     */
-	    getResourceParams(): Promise<RCParams>;
-	    /**
-	     * Returns the global resource pool
-	     */
-	    getResourcePool(): Promise<RCPool>;
-	    /**
-	     * Makes a API call and returns the RC mana-data for a specified username
-	     */
-	    getRCMana(username: string): Promise<Manabar>;
-	    /**
-	     * Makes a API call and returns the VP mana-data for a specified username
-	     */
-	    getVPMana(username: string): Promise<Manabar>;
-	    /**
-	     * Calculates the RC mana-data based on an RCAccount - findRCAccounts()
-	     */
-	    calculateRCMana(rc_account: RCAccount): Manabar;
-	    /**
-	     * Calculates the RC mana-data based on an Account - getAccounts()
-	     */
-	    calculateVPMana(account: Account): Manabar;
-	    /**
-	     * Internal convenience method to reduce redundant code
-	     */
-	    private _calculateManabar;
-	}
-
-}
 declare module 'dhive/chain/hivemind' {
 	export interface CommunityDetail {
 	    id: number;
@@ -2438,8 +2336,8 @@ declare module 'dhive/helpers/hivemind' {
 	/**
 	 * Hivemind database query wrapper
 	 */
-	import { Discussion } from 'dhive/chain/comment';
 	import { Account } from 'dhive/chain/account';
+	import { Discussion } from 'dhive/chain/comment';
 	import { CommunityDetail, Notifications } from 'dhive/chain/hivemind';
 	import { Client } from 'dhive/client';
 	interface PostsQuery {
@@ -2547,6 +2445,108 @@ declare module 'dhive/helpers/hivemind' {
 	export {};
 
 }
+declare module 'dhive/chain/rc' {
+	import { SMTAsset } from 'dhive/chain/asset';
+	import { Bignum } from 'dhive/chain/misc';
+	export interface RCParams {
+	    resource_history_bytes: Resource;
+	    resource_new_accounts: Resource;
+	    resource_market_bytes: Resource;
+	    resource_state_bytes: Resource;
+	    resource_execution_time: Resource;
+	}
+	export interface Resource {
+	    resource_dynamics_params: DynamicParam;
+	    price_curve_params: PriceCurveParam;
+	}
+	export interface DynamicParam {
+	    resource_unit: number;
+	    budget_per_time_unit: number;
+	    pool_eq: Bignum;
+	    max_pool_size: Bignum;
+	    decay_params: {
+	        decay_per_time_unit: Bignum;
+	        decay_per_time_unit_denom_shift: number;
+	    };
+	    min_decay: number;
+	}
+	export interface PriceCurveParam {
+	    coeff_a: Bignum;
+	    coeff_b: Bignum;
+	    shift: number;
+	}
+	export interface RCPool {
+	    resource_history_bytes: Pool;
+	    resource_new_accounts: Pool;
+	    resource_market_bytes: Pool;
+	    resource_state_bytes: Pool;
+	    resource_execution_time: Pool;
+	}
+	export interface Pool {
+	    pool: Bignum;
+	}
+	export interface RCAccount {
+	    account: string;
+	    rc_manabar: {
+	        current_mana: Bignum;
+	        last_update_time: number;
+	    };
+	    max_rc_creation_adjustment: SMTAsset | string;
+	    max_rc: Bignum;
+	}
+	export interface Manabar {
+	    current_mana: number;
+	    max_mana: number;
+	    percentage: number;
+	}
+
+}
+declare module 'dhive/helpers/rc' {
+	import { Account } from 'dhive/chain/account';
+	import { Manabar, RCAccount, RCParams, RCPool } from 'dhive/chain/rc';
+	import { Client } from 'dhive/client';
+	export class RCAPI {
+	    readonly client: Client;
+	    constructor(client: Client);
+	    /**
+	     * Convenience for calling `rc_api`.
+	     */
+	    call(method: string, params?: any): Promise<any>;
+	    /**
+	     * Returns RC data for array of usernames
+	     */
+	    findRCAccounts(usernames: string[]): Promise<RCAccount[]>;
+	    /**
+	     * Returns the global resource params
+	     */
+	    getResourceParams(): Promise<RCParams>;
+	    /**
+	     * Returns the global resource pool
+	     */
+	    getResourcePool(): Promise<RCPool>;
+	    /**
+	     * Makes a API call and returns the RC mana-data for a specified username
+	     */
+	    getRCMana(username: string): Promise<Manabar>;
+	    /**
+	     * Makes a API call and returns the VP mana-data for a specified username
+	     */
+	    getVPMana(username: string): Promise<Manabar>;
+	    /**
+	     * Calculates the RC mana-data based on an RCAccount - findRCAccounts()
+	     */
+	    calculateRCMana(rc_account: RCAccount): Manabar;
+	    /**
+	     * Calculates the RC mana-data based on an Account - getAccounts()
+	     */
+	    calculateVPMana(account: Account): Manabar;
+	    /**
+	     * Internal convenience method to reduce redundant code
+	     */
+	    private _calculateManabar;
+	}
+
+}
 declare module 'dhive/client' {
 	/**
 	 * @file Hive RPC client implementation.
@@ -2586,8 +2586,8 @@ declare module 'dhive/client' {
 	import { Blockchain } from 'dhive/helpers/blockchain';
 	import { BroadcastAPI } from 'dhive/helpers/broadcast';
 	import { DatabaseAPI } from 'dhive/helpers/database';
-	import { RCAPI } from 'dhive/helpers/rc';
 	import { HivemindAPI } from 'dhive/helpers/hivemind';
+	import { RCAPI } from 'dhive/helpers/rc';
 	/**
 	 * Library version.
 	 */
@@ -2691,7 +2691,8 @@ declare module 'dhive/client' {
 	    private failoverThreshold;
 	    private currentAddress;
 	    /**
-	     * @param address The address to the Hive RPC server, e.g. `https://api.hive.blog`. or [`https://api.hive.blog`, `https://another.api.com`]
+	     * @param address The address to the Hive RPC server,
+	     * e.g. `https://api.hive.blog`. or [`https://api.hive.blog`, `https://another.api.com`]
 	     * @param options Client options.
 	     */
 	    constructor(address: string | string[], options?: ClientOptions);
@@ -2798,13 +2799,13 @@ declare module 'dhive/index-browser' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import 'regenerator-runtime/runtime';
+	import 'core-js/features/array/from';
 	import 'core-js/features/map';
 	import 'core-js/features/number';
 	import 'core-js/features/promise';
 	import 'core-js/features/symbol';
-	import 'core-js/features/array/from';
 	import 'core-js/features/symbol/async-iterator';
+	import 'regenerator-runtime/runtime';
 	import 'whatwg-fetch';
 	export * from 'dhive';
 

@@ -40,8 +40,8 @@ import packageVersion from './version'
 import { Blockchain } from './helpers/blockchain'
 import { BroadcastAPI } from './helpers/broadcast'
 import { DatabaseAPI } from './helpers/database'
-import { RCAPI } from './helpers/rc'
 import { HivemindAPI } from './helpers/hivemind'
+import { RCAPI } from './helpers/rc'
 import { copy, retryingFetch, waitForEvent } from './utils'
 
 /**
@@ -56,8 +56,6 @@ export const DEFAULT_CHAIN_ID = Buffer.from(
     'beeab0de00000000000000000000000000000000000000000000000000000000',
     'hex'
 )
-
-
 
 /**
  * Main Hive network address prefix.
@@ -90,7 +88,6 @@ interface RPCCall extends RPCRequest {
      */
     params: [number | string, string, any[]]
 }
-
 
 interface RPCError {
     code: number
@@ -220,7 +217,7 @@ export class Client {
     private currentAddress: string
 
     /**
-     * @param address The address to the Hive RPC server, 
+     * @param address The address to the Hive RPC server,
      * e.g. `https://api.hive.blog`. or [`https://api.hive.blog`, `https://another.api.com`]
      * @param options Client options.
      */
@@ -324,7 +321,7 @@ export class Client {
         ) {
             // bit of a hack to work around some nodes high error rates
             // only effective in node.js (until timeout spec lands in browsers)
-            fetchTimeout = tries => (tries + 1) * 500
+            fetchTimeout = (tries) => (tries + 1) * 500
         }
 
         const { response, currentAddress }: { response: RPCResponse, currentAddress: string } =
@@ -339,7 +336,7 @@ export class Client {
             )
 
         // After failover, change the currently active address
-        if (currentAddress !== this.currentAddress) this.currentAddress = currentAddress
+        if (currentAddress !== this.currentAddress) { this.currentAddress = currentAddress }
         // resolve FC error messages into something more readable
         if (response.error) {
             const formatValue = (value: any) => {
@@ -367,8 +364,8 @@ export class Client {
                     }
                 )
                 const unformattedData = Object.keys(topData)
-                    .map(key => ({ key, value: formatValue(topData[key]) }))
-                    .map(item => `${item.key}=${item.value}`)
+                    .map((key) => ({ key, value: formatValue(topData[key]) }))
+                    .map((item) => `${item.key}=${item.value}`)
                 if (unformattedData.length > 0) {
                     message += ' ' + unformattedData.join(' ')
                 }

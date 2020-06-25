@@ -34,17 +34,17 @@
  */
 
 import * as assert from 'assert'
-import { createHash } from 'crypto'
 import * as bs58 from 'bs58'
 import * as ByteBuffer from 'bytebuffer'
+import { createHash } from 'crypto'
 import * as secp256k1 from 'secp256k1'
 import { VError } from 'verror'
 
-import { DEFAULT_ADDRESS_PREFIX, DEFAULT_CHAIN_ID } from './client'
+import * as util from 'util'
 import { Types } from './chain/serializer'
 import { SignedTransaction, Transaction } from './chain/transaction'
+import { DEFAULT_ADDRESS_PREFIX, DEFAULT_CHAIN_ID } from './client'
 import { copy } from './utils'
-import * as util from 'util'
 
 /**
  * Network id used in WIF-encoding.

@@ -33,9 +33,9 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
+import fetch from 'cross-fetch'
 import { EventEmitter } from 'events'
 import { PassThrough } from 'stream'
-import fetch from 'cross-fetch'
 import { VError } from 'verror'
 
 const timeoutErrors = ['request-timeout', 'ENOTFOUND', 'ECONNREFUSED']
@@ -56,7 +56,7 @@ export function waitForEvent<T>(
  * Sleep for N milliseconds.
  */
 export function sleep(ms: number): Promise<void> {
-  return new Promise<void>(resolve => {
+  return new Promise<void>((resolve) => {
     setTimeout(resolve, ms)
   })
 }
@@ -79,7 +79,7 @@ export function iteratorStream<T>(
     .then(() => {
       stream.end()
     })
-    .catch(error => {
+    .catch((error) => {
       stream.emit('error', error)
       stream.end()
     })
@@ -92,7 +92,6 @@ export function iteratorStream<T>(
 export function copy<T>(object: T): T {
   return JSON.parse(JSON.stringify(object))
 }
-
 
 /**
  * Fetch API wrapper that retries until timeout is reached.
@@ -162,14 +161,13 @@ const failover = (url: string, urls: string[]) => {
   return urls.length === index + 1 ? urls[0] : urls[index + 1]
 }
 
-
 // Hack to be able to generate a valid witness_set_properties op
 // Can hopefully be removed when hived's JSON representation is fixed
 import * as ByteBuffer from 'bytebuffer'
-import { PublicKey } from './crypto'
 import { Asset, PriceType } from './chain/asset'
 import { WitnessSetPropertiesOperation } from './chain/operation'
 import { Serializer, Types } from './chain/serializer'
+import { PublicKey } from './crypto'
 export interface WitnessProps {
   account_creation_fee?: string | Asset
   account_subsidy_budget?: number // uint32_t
