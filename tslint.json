@@ -2,6 +2,8 @@
     "defaultSeverity": "error",
     "extends": ["tslint:recommended"],
     "rules": {
+      "array-type": [true, "array"],
+      "member-ordering": [true, {"order": "fields-first"}],
       "ban-types": false,
       "indent": [true, "spaces", 4],
       "interface-name": [true, "never-prefix"],

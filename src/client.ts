@@ -220,7 +220,8 @@ export class Client {
     private currentAddress: string
 
     /**
-     * @param address The address to the Hive RPC server, e.g. `https://api.hive.blog`. or [`https://api.hive.blog`, `https://another.api.com`]
+     * @param address The address to the Hive RPC server, 
+     * e.g. `https://api.hive.blog`. or [`https://api.hive.blog`, `https://another.api.com`]
      * @param options Client options.
      */
     constructor(address: string | string[], options: ClientOptions = {}) {
