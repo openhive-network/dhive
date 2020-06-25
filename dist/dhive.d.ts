@@ -1510,7 +1510,7 @@ declare module 'dhive/chain/operation' {
 	    0: 'witness_set_properties';
 	    1: {
 	        owner: string;
-	        props: [string, Buffer][];
+	        props: [string, string][];
 	        extensions: any[];
 	    };
 	}
@@ -1712,7 +1712,7 @@ declare module 'dhive/crypto' {
 	     */
 	    inspect(): string;
 	}
-	export type KeyRole = "owner" | "active" | "posting" | "memo";
+	export type KeyRole = 'owner' | 'active' | 'posting' | 'memo';
 	/**
 	 * ECDSA (secp256k1) private key.
 	 */
@@ -1823,7 +1823,7 @@ declare module 'dhive/utils' {
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
 	/// <reference types="node" />
-	import { EventEmitter } from "events";
+	import { EventEmitter } from 'events';
 	/**
 	 * Return a promise that will resove when a specific event is emitted.
 	 */
@@ -2364,40 +2364,40 @@ declare module 'dhive/helpers/rc' {
 	    readonly client: Client;
 	    constructor(client: Client);
 	    /**
-	   * Convenience for calling `rc_api`.
-	   */
+	     * Convenience for calling `rc_api`.
+	     */
 	    call(method: string, params?: any): Promise<any>;
 	    /**
-	   * Returns RC data for array of usernames
-	   */
+	     * Returns RC data for array of usernames
+	     */
 	    findRCAccounts(usernames: string[]): Promise<RCAccount[]>;
 	    /**
-	   * Returns the global resource params
-	   */
+	     * Returns the global resource params
+	     */
 	    getResourceParams(): Promise<RCParams>;
 	    /**
-	   * Returns the global resource pool
-	   */
+	     * Returns the global resource pool
+	     */
 	    getResourcePool(): Promise<RCPool>;
 	    /**
-	   * Makes a API call and returns the RC mana-data for a specified username
-	   */
+	     * Makes a API call and returns the RC mana-data for a specified username
+	     */
 	    getRCMana(username: string): Promise<Manabar>;
 	    /**
-	   * Makes a API call and returns the VP mana-data for a specified username
-	   */
+	     * Makes a API call and returns the VP mana-data for a specified username
+	     */
 	    getVPMana(username: string): Promise<Manabar>;
 	    /**
-	   * Calculates the RC mana-data based on an RCAccount - findRCAccounts()
-	   */
+	     * Calculates the RC mana-data based on an RCAccount - findRCAccounts()
+	     */
 	    calculateRCMana(rc_account: RCAccount): Manabar;
 	    /**
-	   * Calculates the RC mana-data based on an Account - getAccounts()
-	   */
+	     * Calculates the RC mana-data based on an Account - getAccounts()
+	     */
 	    calculateVPMana(account: Account): Manabar;
 	    /**
-	   * Internal convenience method to reduce redundant code
-	   */
+	     * Internal convenience method to reduce redundant code
+	     */
 	    private _calculateManabar;
 	}
 
@@ -2437,7 +2437,7 @@ declare module 'dhive/chain/hivemind' {
 declare module 'dhive/helpers/hivemind' {
 	/**
 	 * Hivemind database query wrapper
-	*/
+	 */
 	import { Discussion } from 'dhive/chain/comment';
 	import { Account } from 'dhive/chain/account';
 	import { CommunityDetail, Notifications } from 'dhive/chain/hivemind';
@@ -2470,7 +2470,7 @@ declare module 'dhive/helpers/hivemind' {
 	}
 	/**
 	 * Omitting sort extended from BridgeParam
-	 * */
+	 */
 	interface AccountPostsQuery extends Omit<PostsQuery, 'sort'> {
 	    account: string;
 	    sort: 'posts';
@@ -2506,14 +2506,42 @@ declare module 'dhive/helpers/hivemind' {
 	    readonly client: Client;
 	    constructor(client: Client);
 	    /**
-	   * Convenience for calling `hivemindAPI`.
-	   */
+	     * Convenience of calling hivemind api
+	     * @param method
+	     * @param params
+	     */
 	    call(method: string, params?: any): Promise<any>;
+	    /**
+	     * Get trending, hot, recent community posts from Hivemind
+	     * @param options
+	     */
 	    getRankedPosts(options: PostsQuery): Promise<Discussion[]>;
+	    /**
+	     * Get posts by particular account from Hivemind
+	     * @param options
+	     */
 	    getAccountPosts(options: AccountPostsQuery): Promise<Discussion[]>;
+	    /**
+	     * Get community details such as who are the admin,
+	     * moderators, how many subscribers, etc..
+	     * @param options
+	     */
 	    getCommunity(options: CommunityQuery): Promise<CommunityDetail[]>;
+	    /**
+	     * List all subscriptions by particular account
+	     * @param account the account you want to query
+	     * @returns {Array} return role, what community the account joined
+	     */
 	    listAllSubscriptions(account: Account['name'] | object): Promise<Discussion[]>;
+	    /**
+	     * Get particular account notifications feed
+	     * @param options
+	     */
 	    getAccountNotifications(options?: AccountNotifsQuery): Promise<Notifications[]>;
+	    /**
+	     * List all available communities on hivemind
+	     * @param options
+	     */
 	    listCommunities(options: ListCommunitiesQuery): Promise<CommunityDetail[]>;
 	}
 	export {};
@@ -2602,7 +2630,7 @@ declare module 'dhive/client' {
 	     * iterated and retried in case of timeout errors.
 	     * (important) Requires url parameter to be an array (string[])!
 	     * Can be set to 0 to iterate and retry forever. Defaults to 3 rounds.
-	    */
+	     */
 	    failoverThreshold?: number;
 	    /**
 	     * Retry backoff function, returns milliseconds. Default = {@link defaultBackoff}.
@@ -2628,7 +2656,7 @@ declare module 'dhive/client' {
 	    /**
 	     * Address to Hive RPC server.
 	     * String or String[] *read-only*
-	    */
+	     */
 	    address: string | string[];
 	    /**
 	     * Database API helper.
@@ -2770,13 +2798,13 @@ declare module 'dhive/index-browser' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import "regenerator-runtime/runtime";
-	import "core-js/features/map";
-	import "core-js/features/number";
-	import "core-js/features/promise";
-	import "core-js/features/symbol";
-	import "core-js/features/array/from";
-	import "core-js/features/symbol/async-iterator";
+	import 'regenerator-runtime/runtime';
+	import 'core-js/features/map';
+	import 'core-js/features/number';
+	import 'core-js/features/promise';
+	import 'core-js/features/symbol';
+	import 'core-js/features/array/from';
+	import 'core-js/features/symbol/async-iterator';
 	import 'whatwg-fetch';
 	export * from 'dhive';
 

@@ -33,4 +33,4 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-export * from "./index";
+export * from './index'

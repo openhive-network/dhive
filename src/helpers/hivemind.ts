@@ -1,6 +1,6 @@
 /**
  * Hivemind database query wrapper
-*/
+ */
 
 import { Discussion } from '../chain/comment'
 import { Account } from '../chain/account'
@@ -36,7 +36,7 @@ interface PostsQuery {
 
 /**
  * Omitting sort extended from BridgeParam
- * */
+ */
 interface AccountPostsQuery extends Omit<PostsQuery, 'sort'> {
     account: string
     sort: 'posts'
@@ -81,8 +81,8 @@ export class HivemindAPI {
 
     /**
      * Convenience of calling hivemind api
-     * @param method 
-     * @param params 
+     * @param method
+     * @param params
      */
     public call(method: string, params?: any) {
         return this.client.call('bridge', method, params)
@@ -90,7 +90,7 @@ export class HivemindAPI {
 
     /**
      * Get trending, hot, recent community posts from Hivemind
-     * @param options 
+     * @param options
      */
     public getRankedPosts(options: PostsQuery): Promise<Discussion[]> {
         return this.call('get_ranked_posts', options)
@@ -98,14 +98,14 @@ export class HivemindAPI {
 
     /**
      * Get posts by particular account from Hivemind
-     * @param options 
+     * @param options
      */
     public getAccountPosts(options: AccountPostsQuery): Promise<Discussion[]> {
         return this.call('get_account_posts', options)
     }
 
     /**
-     * Get community details such as who are the admin, 
+     * Get community details such as who are the admin,
      * moderators, how many subscribers, etc..
      * @param options
      */
@@ -124,7 +124,7 @@ export class HivemindAPI {
 
     /**
      * Get particular account notifications feed
-     * @param options 
+     * @param options
      */
     public getAccountNotifications(options?: AccountNotifsQuery): Promise<Notifications[]> {
         return this.call('account_notifications', options)
@@ -132,7 +132,7 @@ export class HivemindAPI {
 
     /**
      * List all available communities on hivemind
-     * @param options 
+     * @param options
      */
     public listCommunities(options: ListCommunitiesQuery): Promise<CommunityDetail[]> {
         return this.call('list_communities', options)
