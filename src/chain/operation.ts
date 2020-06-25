@@ -884,7 +884,7 @@ export interface WitnessSetPropertiesOperation extends Operation {
   0: 'witness_set_properties' // 42
   1: {
     owner: string
-    props: Array<[string, Buffer | HexBuffer | number[]]>
+    props: [string, Buffer | HexBuffer | number[]][]
     extensions: any[]
   }
 }
