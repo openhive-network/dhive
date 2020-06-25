@@ -188,7 +188,9 @@ function serialize(serializer: Serializer, data: any) {
   );
   serializer(buffer, data);
   buffer.flip();
-  return Buffer.from(buffer.toBuffer());
+  // `props` values must be hex
+  return buffer.toString('hex');
+  // return Buffer.from(buffer.toBuffer());
 }
 export function buildWitnessUpdateOp(
   owner: string,
