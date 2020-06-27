@@ -33,10 +33,10 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import { EventEmitter } from "events";
-import { PassThrough } from "stream";
-import fetch from "cross-fetch";
-import { VError } from "verror";
+import fetch from 'cross-fetch'
+import { EventEmitter } from 'events'
+import { PassThrough } from 'stream'
+import { VError } from 'verror'
 
 const timeoutErrors = ['request-timeout', 'ENOTFOUND', 'ECONNREFUSED']
 
@@ -48,17 +48,17 @@ export function waitForEvent<T>(
   eventName: string | symbol
 ): Promise<T> {
   return new Promise((resolve, reject) => {
-    emitter.once(eventName, resolve);
-  });
+    emitter.once(eventName, resolve)
+  })
 }
 
 /**
  * Sleep for N milliseconds.
  */
 export function sleep(ms: number): Promise<void> {
-  return new Promise<void>(resolve => {
-    setTimeout(resolve, ms);
-  });
+  return new Promise<void>((resolve) => {
+    setTimeout(resolve, ms)
+  })
 }
 
 /**
@@ -67,32 +67,31 @@ export function sleep(ms: number): Promise<void> {
 export function iteratorStream<T>(
   iterator: AsyncIterableIterator<T>
 ): NodeJS.ReadableStream {
-  const stream = new PassThrough({ objectMode: true });
+  const stream = new PassThrough({ objectMode: true })
   const iterate = async () => {
     for await (const item of iterator) {
       if (!stream.write(item)) {
-        await waitForEvent(stream, "drain");
+        await waitForEvent(stream, 'drain')
       }
     }
-  };
+  }
   iterate()
     .then(() => {
-      stream.end();
+      stream.end()
     })
-    .catch(error => {
-      stream.emit("error", error);
-      stream.end();
-    });
-  return stream;
+    .catch((error) => {
+      stream.emit('error', error)
+      stream.end()
+    })
+  return stream
 }
 
 /**
  * Return a deep copy of a JSON-serializable object.
  */
 export function copy<T>(object: T): T {
-  return JSON.parse(JSON.stringify(object));
+  return JSON.parse(JSON.stringify(object))
 }
-
 
 /**
  * Fetch API wrapper that retries until timeout is reached.
@@ -162,34 +161,33 @@ const failover = (url: string, urls: string[]) => {
   return urls.length === index + 1 ? urls[0] : urls[index + 1]
 }
 
-
 // Hack to be able to generate a valid witness_set_properties op
 // Can hopefully be removed when hived's JSON representation is fixed
-import * as ByteBuffer from "bytebuffer";
-import { PublicKey } from "./crypto";
-import { Asset, PriceType } from "./chain/asset";
-import { WitnessSetPropertiesOperation } from "./chain/operation";
-import { Serializer, Types } from "./chain/serializer";
+import * as ByteBuffer from 'bytebuffer'
+import { Asset, PriceType } from './chain/asset'
+import { WitnessSetPropertiesOperation } from './chain/operation'
+import { Serializer, Types } from './chain/serializer'
+import { PublicKey } from './crypto'
 export interface WitnessProps {
-  account_creation_fee?: string | Asset;
-  account_subsidy_budget?: number; // uint32_t
-  account_subsidy_decay?: number; // uint32_t
-  key: PublicKey | string;
-  maximum_block_size?: number; // uint32_t
-  new_signing_key?: PublicKey | string | null;
-  sbd_exchange_rate?: PriceType;
-  sbd_interest_rate?: number; // uint16_t
-  url?: string;
+  account_creation_fee?: string | Asset
+  account_subsidy_budget?: number // uint32_t
+  account_subsidy_decay?: number // uint32_t
+  key: PublicKey | string
+  maximum_block_size?: number // uint32_t
+  new_signing_key?: PublicKey | string | null
+  sbd_exchange_rate?: PriceType
+  sbd_interest_rate?: number // uint16_t
+  url?: string
 }
 function serialize(serializer: Serializer, data: any) {
   const buffer = new ByteBuffer(
     ByteBuffer.DEFAULT_CAPACITY,
     ByteBuffer.LITTLE_ENDIAN
-  );
-  serializer(buffer, data);
-  buffer.flip();
+  )
+  serializer(buffer, data)
+  buffer.flip()
   // `props` values must be hex
-  return buffer.toString('hex');
+  return buffer.toString('hex')
   // return Buffer.from(buffer.toBuffer());
 }
 export function buildWitnessUpdateOp(
@@ -200,36 +198,36 @@ export function buildWitnessUpdateOp(
     extensions: [],
     owner,
     props: []
-  };
-  for (const key of Object.keys(props)) {
-    let type: Serializer;
-    switch (key) {
-      case "key":
-      case "new_signing_key":
-        type = Types.PublicKey;
-        break;
-      case "account_subsidy_budget":
-      case "account_subsidy_decay":
-      case "maximum_block_size":
-        type = Types.UInt32;
-        break;
-      case "sbd_interest_rate":
-        type = Types.UInt16;
-        break;
-      case "url":
-        type = Types.String;
-        break;
-      case "sbd_exchange_rate":
-        type = Types.Price;
-        break;
-      case "account_creation_fee":
-        type = Types.Asset;
-        break;
-      default:
-        throw new Error(`Unknown witness prop: ${key}`);
-    }
-    data.props.push([key, serialize(type, props[key])]);
   }
-  data.props.sort((a, b) => a[0].localeCompare(b[0]));
-  return ["witness_set_properties", data];
+  for (const key of Object.keys(props)) {
+    let type: Serializer
+    switch (key) {
+      case 'key':
+      case 'new_signing_key':
+        type = Types.PublicKey
+        break
+      case 'account_subsidy_budget':
+      case 'account_subsidy_decay':
+      case 'maximum_block_size':
+        type = Types.UInt32
+        break
+      case 'sbd_interest_rate':
+        type = Types.UInt16
+        break
+      case 'url':
+        type = Types.String
+        break
+      case 'sbd_exchange_rate':
+        type = Types.Price
+        break
+      case 'account_creation_fee':
+        type = Types.Asset
+        break
+      default:
+        throw new Error(`Unknown witness prop: ${key}`)
+    }
+    data.props.push([key, serialize(type, props[key])])
+  }
+  data.props.sort((a, b) => a[0].localeCompare(b[0]))
+  return ['witness_set_properties', data]
 }

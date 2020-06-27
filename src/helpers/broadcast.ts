@@ -54,8 +54,8 @@ import {
   Transaction,
   TransactionConfirmation
 } from '../chain/transaction'
-import { cryptoUtils, PrivateKey, PublicKey } from './../crypto'
 import { Client } from './../client'
+import { cryptoUtils, PrivateKey, PublicKey } from './../crypto'
 
 const HF23_CHAIN_ID = '0000000000000000000000000000000000000000000000000000000000000000'
 const HF24_CHAIN_ID = 'beeab0de00000000000000000000000000000000000000000000000000000000'

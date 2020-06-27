@@ -20,6 +20,7 @@
     "url": "https://gitlab.syncad.com/hive/dhive"
   },
   "scripts": {
+    "lint": "make lint",
     "test": "make ci-test",
     "prepublish": "make all"
   },
