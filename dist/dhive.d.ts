@@ -576,12 +576,13 @@ declare module 'dhive/chain/serializer' {
 	import { HexBuffer } from 'dhive/chain/misc';
 	import { Operation } from 'dhive/chain/operation';
 	export type Serializer = (buffer: ByteBuffer, data: any) => void;
+	export const updateOperations: () => void;
 	export const Types: {
 	    Array: (itemSerializer: Serializer) => (buffer: ByteBuffer, data: any[]) => void;
 	    Asset: (buffer: ByteBuffer, data: string | number | Asset) => void;
 	    Authority: (buffer: ByteBuffer, data: {
 	        [key: string]: any;
-	    }, rebrandedApi?: boolean) => void;
+	    }) => void;
 	    Binary: (size?: number | undefined) => (buffer: ByteBuffer, data: HexBuffer | Buffer) => void;
 	    Boolean: (buffer: ByteBuffer, data: boolean) => void;
 	    Date: (buffer: ByteBuffer, data: string) => void;
@@ -592,18 +593,18 @@ declare module 'dhive/chain/serializer' {
 	    Int8: (buffer: ByteBuffer, data: number) => void;
 	    Object: (keySerializers: [string, Serializer][]) => (buffer: ByteBuffer, data: {
 	        [key: string]: any;
-	    }, rebrandedApi?: boolean) => void;
+	    }) => void;
 	    Operation: (buffer: ByteBuffer, operation: Operation) => void;
 	    Optional: (valueSerializer: Serializer) => (buffer: ByteBuffer, data: any) => void;
 	    Price: (buffer: ByteBuffer, data: {
 	        [key: string]: any;
-	    }, rebrandedApi?: boolean) => void;
+	    }) => void;
 	    PublicKey: (buffer: ByteBuffer, data: string | PublicKey | null) => void;
 	    StaticVariant: (itemSerializers: Serializer[]) => (buffer: ByteBuffer, data: [number, any]) => void;
 	    String: (buffer: ByteBuffer, data: string) => void;
 	    Transaction: (buffer: ByteBuffer, data: {
 	        [key: string]: any;
-	    }, rebrandedApi?: boolean) => void;
+	    }) => void;
 	    UInt16: (buffer: ByteBuffer, data: number) => void;
 	    UInt32: (buffer: ByteBuffer, data: number) => void;
 	    UInt64: (buffer: ByteBuffer, data: number) => void;
@@ -799,7 +800,7 @@ declare module 'dhive/crypto' {
 	    recover(message: Buffer, prefix?: string): PublicKey;
 	    toBuffer(): Buffer;
 	    toString(): string;
-	} function transactionDigest(transaction: Transaction | SignedTransaction, chainId?: Buffer, rebrandedApi?: boolean): Buffer; function signTransaction(transaction: Transaction, keys: PrivateKey | PrivateKey[], chainId?: Buffer, rebrandedApi?: boolean): SignedTransaction;
+	} function transactionDigest(transaction: Transaction | SignedTransaction, chainId?: Buffer): Buffer; function signTransaction(transaction: Transaction, keys: PrivateKey | PrivateKey[], chainId?: Buffer): SignedTransaction;
 	/** Misc crypto utility functions. */
 	export const cryptoUtils: {
 	    decodePrivate: typeof decodePrivate;
@@ -2617,6 +2618,7 @@ declare module 'dhive/client' {
 	import { DatabaseAPI } from 'dhive/helpers/database';
 	import { HivemindAPI } from 'dhive/helpers/hivemind';
 	import { RCAPI } from 'dhive/helpers/rc';
+	export let rebrandedApiGlobal: any;
 	/**
 	 * Library version.
 	 */
