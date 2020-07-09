@@ -355,7 +355,7 @@ export class BroadcastAPI {
     transaction: Transaction,
     key: PrivateKey | PrivateKey[]
   ): SignedTransaction {
-    return cryptoUtils.signTransaction(transaction, key, this.client.chainId)
+    return cryptoUtils.signTransaction(transaction, key, this.client.chainId, this.client.options.rebrandedApi || false)
   }
 
   /**
