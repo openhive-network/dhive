@@ -41,7 +41,7 @@ import * as secp256k1 from 'secp256k1'
 import { VError } from 'verror'
 
 import * as util from 'util'
-// import { Types } from './chain/serializer'
+import { Types } from './chain/serializer'
 import { SignedTransaction, Transaction } from './chain/transaction'
 import { DEFAULT_ADDRESS_PREFIX, DEFAULT_CHAIN_ID } from './client'
 import { copy } from './utils'
@@ -356,7 +356,6 @@ function transactionDigest(
     ByteBuffer.LITTLE_ENDIAN
   )
   try {
-    const Types = require('./chain/serializer')
     Types.Transaction(buffer, transaction)
   } catch (cause) {
     throw new VError(

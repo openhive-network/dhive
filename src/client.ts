@@ -44,6 +44,8 @@ import { HivemindAPI } from './helpers/hivemind'
 import { RCAPI } from './helpers/rc'
 import { copy, retryingFetch, waitForEvent } from './utils'
 
+import { updateOperations } from './chain/serializer'
+
 export let rebrandedApiGlobal
 
 /**
@@ -229,6 +231,7 @@ export class Client {
      */
     constructor(address: string | string[], options: ClientOptions = {}) {
         rebrandedApiGlobal = options.rebrandedApi || false
+        updateOperations()
         this.currentAddress = Array.isArray(address) ? address[0] : address
         this.address = address
         this.options = options
