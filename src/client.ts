@@ -44,6 +44,8 @@ import { HivemindAPI } from './helpers/hivemind'
 import { RCAPI } from './helpers/rc'
 import { copy, retryingFetch, waitForEvent } from './utils'
 
+export let rebrandedApiGlobal
+
 /**
  * Library version.
  */
@@ -226,6 +228,7 @@ export class Client {
      * @param options Client options.
      */
     constructor(address: string | string[], options: ClientOptions = {}) {
+        rebrandedApiGlobal = options.rebrandedApi || false
         this.currentAddress = Array.isArray(address) ? address[0] : address
         this.address = address
         this.options = options

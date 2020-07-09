@@ -34,12 +34,11 @@
  */
 
 import * as ByteBuffer from 'bytebuffer'
+import { rebrandedApiGlobal } from '../client'
 import { PublicKey } from '../crypto'
 import { Asset } from './asset'
 import { HexBuffer } from './misc'
 import { Operation } from './operation'
-
-let rebrandedApiGlobal = false
 
 export type Serializer = (buffer: ByteBuffer, data: any) => void
 
@@ -173,10 +172,8 @@ const ArraySerializer = (itemSerializer: Serializer) => (
 
 const ObjectSerializer = (keySerializers: [string, Serializer][]) => (
   buffer: ByteBuffer,
-  data: { [key: string]: any },
-  rebrandedApi = false
+  data: { [key: string]: any }
 ) => {
-  rebrandedApiGlobal = rebrandedApi
   for (const [key, serializer] of keySerializers) {
     try {
       serializer(buffer, data[key])
