@@ -155,6 +155,10 @@ export interface ClientOptions {
      * @see https://nodejs.org/api/http.html#http_new_agent_options.
      */
     agent?: any // https.Agent
+    /**
+     * Must be true for using new eclipse rpc nodes - Default: false
+     */
+    rebrandedApi?: boolean
 }
 
 /**
