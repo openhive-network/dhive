@@ -349,14 +349,15 @@ export class Signature {
  */
 function transactionDigest(
   transaction: Transaction | SignedTransaction,
-  chainId: Buffer = DEFAULT_CHAIN_ID
+  chainId: Buffer = DEFAULT_CHAIN_ID,
+  rebrandedApi: boolean = false
 ) {
   const buffer = new ByteBuffer(
     ByteBuffer.DEFAULT_CAPACITY,
     ByteBuffer.LITTLE_ENDIAN
   )
   try {
-    Types.Transaction(buffer, transaction)
+    Types.Transaction(buffer, transaction, rebrandedApi)
   } catch (cause) {
     throw new VError(
       { cause, name: 'SerializationError' },
@@ -379,9 +380,10 @@ function transactionDigest(
 function signTransaction(
   transaction: Transaction,
   keys: PrivateKey | PrivateKey[],
-  chainId: Buffer = DEFAULT_CHAIN_ID
+  chainId: Buffer = DEFAULT_CHAIN_ID,
+  rebrandedApi: boolean = false
 ) {
-  const digest = transactionDigest(transaction, chainId)
+  const digest = transactionDigest(transaction, chainId, rebrandedApi)
   const signedTransaction = copy(transaction) as SignedTransaction
   if (!signedTransaction.signatures) {
     signedTransaction.signatures = []
