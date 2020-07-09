@@ -39,6 +39,8 @@ import { Asset } from './asset'
 import { HexBuffer } from './misc'
 import { Operation } from './operation'
 
+let rebrandedApiGlobal = false
+
 export type Serializer = (buffer: ByteBuffer, data: any) => void
 
 const VoidSerializer = (buffer: ByteBuffer) => {
@@ -171,8 +173,10 @@ const ArraySerializer = (itemSerializer: Serializer) => (
 
 const ObjectSerializer = (keySerializers: [string, Serializer][]) => (
   buffer: ByteBuffer,
-  data: { [key: string]: any }
+  data: { [key: string]: any },
+  rebrandedApi: boolean = false
 ) => {
+  rebrandedApiGlobal = rebrandedApi
   for (const [key, serializer] of keySerializers) {
     try {
       serializer(buffer, data[key])
@@ -223,7 +227,7 @@ const SignedBlockHeaderSerializer = ObjectSerializer([
 const ChainPropertiesSerializer = ObjectSerializer([
   ['account_creation_fee', AssetSerializer],
   ['maximum_block_size', UInt32Serializer],
-  ['sbd_interest_rate', UInt16Serializer]
+  [rebrandedApiGlobal ? 'hbd' : 'sbd' + '_interest_rate', UInt16Serializer]
 ])
 
 const OperationDataSerializer = (
@@ -308,8 +312,8 @@ OperationSerializers.claim_account = OperationDataSerializer(22, [
 
 OperationSerializers.claim_reward_balance = OperationDataSerializer(39, [
   ['account', StringSerializer],
-  ['reward_steem', AssetSerializer],
-  ['reward_sbd', AssetSerializer],
+  ['reward_' + rebrandedApiGlobal ? 'hive' : 'steem', AssetSerializer],
+  ['reward_' + rebrandedApiGlobal ? 'hbd' : 'sbd', AssetSerializer],
   ['reward_vests', AssetSerializer]
 ])
 
@@ -327,7 +331,7 @@ OperationSerializers.comment_options = OperationDataSerializer(19, [
   ['author', StringSerializer],
   ['permlink', StringSerializer],
   ['max_accepted_payout', AssetSerializer],
-  ['percent_steem_dollars', UInt16Serializer],
+  ['percent_' + rebrandedApiGlobal ? 'hbd' : 'steem_dollars', UInt16Serializer],
   ['allow_votes', BooleanSerializer],
   ['allow_curation_rewards', BooleanSerializer],
   [
@@ -421,8 +425,8 @@ OperationSerializers.escrow_release = OperationDataSerializer(29, [
   ['who', StringSerializer],
   ['receiver', StringSerializer],
   ['escrow_id', UInt32Serializer],
-  ['sbd_amount', AssetSerializer],
-  ['steem_amount', AssetSerializer]
+  [rebrandedApiGlobal ? 'hbd' : 'sbd' + '_amount', AssetSerializer],
+  [rebrandedApiGlobal ? 'hive' : 'steem' + '_amount', AssetSerializer]
 ])
 
 OperationSerializers.escrow_transfer = OperationDataSerializer(27, [
@@ -430,8 +434,8 @@ OperationSerializers.escrow_transfer = OperationDataSerializer(27, [
   ['to', StringSerializer],
   ['agent', StringSerializer],
   ['escrow_id', UInt32Serializer],
-  ['sbd_amount', AssetSerializer],
-  ['steem_amount', AssetSerializer],
+  [rebrandedApiGlobal ? 'hbd' : 'sbd' + '_amount', AssetSerializer],
+  [rebrandedApiGlobal ? 'hive' : 'steem' + '_amount', AssetSerializer],
   ['fee', AssetSerializer],
   ['ratification_deadline', DateSerializer],
   ['escrow_expiration', DateSerializer],
