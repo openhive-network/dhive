@@ -175,8 +175,10 @@ export interface WitnessProps {
   key: PublicKey | string
   maximum_block_size?: number // uint32_t
   new_signing_key?: PublicKey | string | null
-  sbd_exchange_rate?: PriceType
-  sbd_interest_rate?: number // uint16_t
+  hbd_exchange_rate?: PriceType
+  hbd_interest_rate?: number // uint16_t
+  sbd_exchange_rate?: PriceType // remove after hf24
+  sbd_interest_rate?: number // uint16_t // remove after hf24
   url?: string
 }
 function serialize(serializer: Serializer, data: any) {
@@ -211,13 +213,15 @@ export function buildWitnessUpdateOp(
       case 'maximum_block_size':
         type = Types.UInt32
         break
-      case 'sbd_interest_rate':
+      case 'hbd_interest_rate':
+      case 'sbd_interest_rate': // remove after hf24
         type = Types.UInt16
         break
       case 'url':
         type = Types.String
         break
-      case 'sbd_exchange_rate':
+      case 'hbd_exchange_rate':
+      case 'sbd_exchange_rate': // remove after hf24
         type = Types.Price
         break
       case 'account_creation_fee':
