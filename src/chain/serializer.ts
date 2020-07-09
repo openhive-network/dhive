@@ -174,7 +174,7 @@ const ArraySerializer = (itemSerializer: Serializer) => (
 const ObjectSerializer = (keySerializers: [string, Serializer][]) => (
   buffer: ByteBuffer,
   data: { [key: string]: any },
-  rebrandedApi: boolean = false
+  rebrandedApi = false
 ) => {
   rebrandedApiGlobal = rebrandedApi
   for (const [key, serializer] of keySerializers) {
