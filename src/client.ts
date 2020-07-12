@@ -385,6 +385,11 @@ export class Client {
         assert.equal(response.id, request.id, 'got invalid response id')
         return response.result
     }
+
+    public updateOperations(rebrandedApi) {
+        rebrandedApiGlobal = rebrandedApi || false
+        updateOperations()
+    }
 }
 
 /**

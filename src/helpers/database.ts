@@ -233,4 +233,9 @@ export class DatabaseAPI {
   public async verifyAuthority(stx: SignedTransaction): Promise<boolean> {
     return this.call('verify_authority', [stx])
   }
+
+  /** return rpc node version */
+  public async getVersion(): Promise<object> {
+    return this.call('get_version', [])
+  }
 }
