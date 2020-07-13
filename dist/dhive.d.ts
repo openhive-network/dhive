@@ -2327,6 +2327,8 @@ declare module 'dhive/helpers/database' {
 	     * Verify signed transaction.
 	     */
 	    verifyAuthority(stx: SignedTransaction): Promise<boolean>;
+	    /** return rpc node version */
+	    getVersion(): Promise<object>;
 	}
 
 }
@@ -2744,6 +2746,7 @@ declare module 'dhive/client' {
 	     *
 	     */
 	    call(api: string, method: string, params?: any): Promise<any>;
+	    updateOperations(rebrandedApi: any): void;
 	}
 
 }
