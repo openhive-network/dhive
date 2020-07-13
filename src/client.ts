@@ -44,6 +44,10 @@ import { HivemindAPI } from './helpers/hivemind'
 import { RCAPI } from './helpers/rc'
 import { copy, retryingFetch, waitForEvent } from './utils'
 
+import { updateOperations } from './chain/serializer'
+
+export let rebrandedApiGlobal
+
 /**
  * Library version.
  */
@@ -155,6 +159,10 @@ export interface ClientOptions {
      * @see https://nodejs.org/api/http.html#http_new_agent_options.
      */
     agent?: any // https.Agent
+    /**
+     * Must be true for using new eclipse rpc nodes - Default: false
+     */
+    rebrandedApi?: boolean
 }
 
 /**
@@ -222,6 +230,8 @@ export class Client {
      * @param options Client options.
      */
     constructor(address: string | string[], options: ClientOptions = {}) {
+        rebrandedApiGlobal = options.rebrandedApi || false
+        updateOperations()
         this.currentAddress = Array.isArray(address) ? address[0] : address
         this.address = address
         this.options = options
@@ -374,6 +384,11 @@ export class Client {
         }
         assert.equal(response.id, request.id, 'got invalid response id')
         return response.result
+    }
+
+    public updateOperations(rebrandedApi) {
+        rebrandedApiGlobal = rebrandedApi || false
+        updateOperations()
     }
 }
 

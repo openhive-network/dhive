@@ -11,9 +11,9 @@ describe("asset", function() {
     const vests = Asset.fromString("0.123456 VESTS");
     assert.equal(vests.amount, 0.123456);
     assert.equal(vests.symbol, "VESTS");
-    const sbd = Asset.from("0.444 HBD");
-    assert.equal(sbd.amount, 0.444);
-    assert.equal(sbd.symbol, "HBD");
+    const hbd = Asset.from("0.444 HBD");
+    assert.equal(hbd.amount, 0.444);
+    assert.equal(hbd.symbol, "HBD");
   });
 
   it("should convert to string", function() {

@@ -105,19 +105,30 @@ export interface Account {
   }
   balance: string | Asset
   savings_balance: string | Asset
-  sbd_balance: string | Asset
-  sbd_seconds: string // uint128_t
-  sbd_seconds_last_update: string // time_point_sec
-  sbd_last_interest_payment: string // time_point_sec
-  savings_sbd_balance: string | Asset // asset
-  savings_sbd_seconds: string // uint128_t
-  savings_sbd_seconds_last_update: string // time_point_sec
-  savings_sbd_last_interest_payment: string // time_point_sec
+  hbd_balance?: string | Asset
+  hbd_seconds?: string // uint128_t
+  hbd_seconds_last_update?: string // time_point_sec
+  hbd_last_interest_payment?: string // time_point_sec
+  savings_hbd_balance?: string | Asset // asset
+  savings_hbd_seconds?: string // uint128_t
+  savings_hbd_seconds_last_update?: string // time_point_sec
+  savings_hbd_last_interest_payment?: string // time_point_sec
+  sbd_balance?: string | Asset // remove after hf24
+  sbd_seconds?: string // uint128_t // remove after hf24
+  sbd_seconds_last_update?: string // time_point_sec // remove after hf24
+  sbd_last_interest_payment?: string // time_point_sec // remove after hf24
+  savings_sbd_balance?: string | Asset // asset // remove after hf24
+  savings_sbd_seconds?: string // uint128_t // remove after hf24
+  savings_sbd_seconds_last_update?: string // time_point_sec // remove after hf24
+  savings_sbd_last_interest_payment?: string // time_point_sec // remove after hf24
   savings_withdraw_requests: number // uint8_t
-  reward_sbd_balance: string | Asset
-  reward_steem_balance: string | Asset
+  reward_hbd_balance?: string | Asset
+  reward_hive_balance?: string | Asset
+  reward_sbd_balance?: string | Asset // remove after hf24
+  reward_steem_balance?: string | Asset // remove after hf24
   reward_vesting_balance: string | Asset
-  reward_vesting_steem: string | Asset
+  reward_vesting_hive?: string | Asset
+  reward_vesting_steem?: string | Asset // remove after hf24
   curation_rewards: number | string // share_type
   posting_rewards: number | string // share_type
   vesting_shares: string | Asset

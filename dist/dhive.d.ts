@@ -233,19 +233,30 @@ declare module 'dhive/chain/account' {
 	    };
 	    balance: string | Asset;
 	    savings_balance: string | Asset;
-	    sbd_balance: string | Asset;
-	    sbd_seconds: string;
-	    sbd_seconds_last_update: string;
-	    sbd_last_interest_payment: string;
-	    savings_sbd_balance: string | Asset;
-	    savings_sbd_seconds: string;
-	    savings_sbd_seconds_last_update: string;
-	    savings_sbd_last_interest_payment: string;
+	    hbd_balance?: string | Asset;
+	    hbd_seconds?: string;
+	    hbd_seconds_last_update?: string;
+	    hbd_last_interest_payment?: string;
+	    savings_hbd_balance?: string | Asset;
+	    savings_hbd_seconds?: string;
+	    savings_hbd_seconds_last_update?: string;
+	    savings_hbd_last_interest_payment?: string;
+	    sbd_balance?: string | Asset;
+	    sbd_seconds?: string;
+	    sbd_seconds_last_update?: string;
+	    sbd_last_interest_payment?: string;
+	    savings_sbd_balance?: string | Asset;
+	    savings_sbd_seconds?: string;
+	    savings_sbd_seconds_last_update?: string;
+	    savings_sbd_last_interest_payment?: string;
 	    savings_withdraw_requests: number;
-	    reward_sbd_balance: string | Asset;
-	    reward_steem_balance: string | Asset;
+	    reward_hbd_balance?: string | Asset;
+	    reward_hive_balance?: string | Asset;
+	    reward_sbd_balance?: string | Asset;
+	    reward_steem_balance?: string | Asset;
 	    reward_vesting_balance: string | Asset;
-	    reward_vesting_steem: string | Asset;
+	    reward_vesting_hive?: string | Asset;
+	    reward_vesting_steem?: string | Asset;
 	    curation_rewards: number | string;
 	    posting_rewards: number | string;
 	    vesting_shares: string | Asset;
@@ -374,7 +385,8 @@ declare module 'dhive/chain/misc' {
 	    /**
 	     * The SBD interest percentage rate decided by witnesses, expressed 0 to 10000.
 	     */
-	    sbd_interest_rate: number;
+	    hbd_interest_rate?: number;
+	    sbd_interest_rate?: number;
 	}
 	export interface VestingDelegation {
 	    /**
@@ -432,25 +444,32 @@ declare module 'dhive/chain/misc' {
 	     * Total asset held in confidential balances.
 	     */
 	    confidential_supply: Asset | string;
-	    current_sbd_supply: Asset | string;
+	    current_hbd_supply?: Asset | string;
+	    current_sbd_supply?: Asset | string;
 	    /**
 	     * Total asset held in confidential balances.
 	     */
-	    confidential_sbd_supply: Asset | string;
-	    total_vesting_fund_steem: Asset | string;
+	    confidential_hbd_supply?: Asset | string;
+	    confidential_sbd_supply?: Asset | string;
+	    total_vesting_fund_hive?: Asset | string;
+	    total_vesting_fund_steem?: Asset | string;
 	    total_vesting_shares: Asset | string;
-	    total_reward_fund_steem: Asset | string;
+	    total_reward_fund_hive?: Asset | string;
+	    total_reward_fund_steem?: Asset | string;
 	    /**
 	     * The running total of REWARD^2.
 	     */
 	    total_reward_shares2: string;
 	    pending_rewarded_vesting_shares: Asset | string;
-	    pending_rewarded_vesting_steem: Asset | string;
+	    pending_rewarded_vesting_hive?: Asset | string;
+	    pending_rewarded_vesting_steem?: Asset | string;
 	    /**
 	     * This property defines the interest rate that HBD deposits receive.
 	     */
-	    sbd_interest_rate: number;
-	    sbd_print_rate: number;
+	    hbd_interest_rate?: number;
+	    hbd_print_rate?: number;
+	    sbd_interest_rate?: number;
+	    sbd_print_rate?: number;
 	    /**
 	     *  Average block size is updated every block to be:
 	     *
@@ -557,6 +576,7 @@ declare module 'dhive/chain/serializer' {
 	import { HexBuffer } from 'dhive/chain/misc';
 	import { Operation } from 'dhive/chain/operation';
 	export type Serializer = (buffer: ByteBuffer, data: any) => void;
+	export const updateOperations: () => void;
 	export const Types: {
 	    Array: (itemSerializer: Serializer) => (buffer: ByteBuffer, data: any[]) => void;
 	    Asset: (buffer: ByteBuffer, data: string | number | Asset) => void;
@@ -926,7 +946,8 @@ declare module 'dhive/chain/comment' {
 	    net_votes: number;
 	    root_comment: number;
 	    max_accepted_payout: string;
-	    percent_steem_dollars: number;
+	    percent_hbd?: number;
+	    percent_steem_dollars?: number;
 	    allow_replies: boolean;
 	    allow_votes: boolean;
 	    allow_curation_rewards: boolean;
@@ -1126,8 +1147,10 @@ declare module 'dhive/chain/operation' {
 	    0: 'claim_reward_balance';
 	    1: {
 	        account: string;
-	        reward_steem: string | Asset;
-	        reward_sbd: string | Asset;
+	        reward_hive?: string | Asset;
+	        reward_hbd?: string | Asset;
+	        reward_steem?: string | Asset;
+	        reward_sbd?: string | Asset;
 	        reward_vests: string | Asset;
 	    };
 	}
@@ -1162,7 +1185,8 @@ declare module 'dhive/chain/operation' {
 	        /** HBD value of the maximum payout this post will receive. */
 	        max_accepted_payout: Asset | string;
 	        /** The percent of Hive Dollars to key, unkept amounts will be received as Hive Power. */
-	        percent_steem_dollars: number;
+	        percent_steem_dollars?: number;
+	        percent_hbd?: number;
 	        /** Whether to allow post to receive votes. */
 	        allow_votes: boolean;
 	        /** Whether to allow post to recieve curation rewards. */
@@ -1329,11 +1353,13 @@ declare module 'dhive/chain/operation' {
 	        /**
 	         * The amount of hbd to release.
 	         */
-	        sbd_amount: Asset | string;
+	        hbd_amount?: Asset | string;
 	        /**
 	         * The amount of hive to release.
 	         */
-	        steem_amount: Asset | string;
+	        hive_amount?: Asset | string;
+	        steem_amount?: Asset | string;
+	        sbd_amount?: Asset | string;
 	    };
 	}
 	/**
@@ -1361,8 +1387,10 @@ declare module 'dhive/chain/operation' {
 	        to: string;
 	        agent: string;
 	        escrow_id: number;
-	        sbd_amount: Asset | string;
-	        steem_amount: Asset | string;
+	        hbd_amount?: Asset | string;
+	        hive_amount?: Asset | string;
+	        steem_amount?: Asset | string;
+	        sbd_amount?: Asset | string;
 	        fee: Asset | string;
 	        ratification_deadline: string;
 	        escrow_expiration: string;
@@ -1857,6 +1885,8 @@ declare module 'dhive/utils' {
 	    key: PublicKey | string;
 	    maximum_block_size?: number;
 	    new_signing_key?: PublicKey | string | null;
+	    hbd_exchange_rate?: PriceType;
+	    hbd_interest_rate?: number;
 	    sbd_exchange_rate?: PriceType;
 	    sbd_interest_rate?: number;
 	    url?: string;
@@ -2297,6 +2327,8 @@ declare module 'dhive/helpers/database' {
 	     * Verify signed transaction.
 	     */
 	    verifyAuthority(stx: SignedTransaction): Promise<boolean>;
+	    /** return rpc node version */
+	    getVersion(): Promise<object>;
 	}
 
 }
@@ -2588,6 +2620,7 @@ declare module 'dhive/client' {
 	import { DatabaseAPI } from 'dhive/helpers/database';
 	import { HivemindAPI } from 'dhive/helpers/hivemind';
 	import { RCAPI } from 'dhive/helpers/rc';
+	export let rebrandedApiGlobal: any;
 	/**
 	 * Library version.
 	 */
@@ -2642,6 +2675,10 @@ declare module 'dhive/client' {
 	     * @see https://nodejs.org/api/http.html#http_new_agent_options.
 	     */
 	    agent?: any;
+	    /**
+	     * Must be true for using new eclipse rpc nodes - Default: false
+	     */
+	    rebrandedApi?: boolean;
 	}
 	/**
 	 * RPC Client
@@ -2709,6 +2746,7 @@ declare module 'dhive/client' {
 	     *
 	     */
 	    call(api: string, method: string, params?: any): Promise<any>;
+	    updateOperations(rebrandedApi: any): void;
 	}
 
 }
