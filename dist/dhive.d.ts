@@ -2209,7 +2209,7 @@ declare module 'dhive/helpers/database' {
 	import { DynamicGlobalProperties } from 'dhive/chain/misc';
 	import { ChainProperties, VestingDelegation } from 'dhive/chain/misc';
 	import { AppliedOperation } from 'dhive/chain/operation';
-	import { SignedTransaction, TransactionConfirmation } from 'dhive/chain/transaction';
+	import { SignedTransaction } from 'dhive/chain/transaction';
 	import { Client } from 'dhive/client';
 	/**
 	 * Possible categories for `get_discussions_by_*`.
@@ -2309,12 +2309,9 @@ declare module 'dhive/helpers/database' {
 	     */
 	    getAccounts(usernames: string[]): Promise<ExtendedAccount[]>;
 	    /**
-	     * Convenience to fetch a block and return a specific transaction.
+	     * Returns the details of a transaction based on a transaction id.
 	     */
-	    getTransaction(txc: TransactionConfirmation | {
-	        block_num: number;
-	        id: string;
-	    }): Promise<SignedTransaction>;
+	    getTransaction(txId: string): Promise<SignedTransaction>;
 	    /**
 	     * Returns one or more account history objects for account operations
 	     *

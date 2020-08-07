@@ -201,19 +201,12 @@ export class DatabaseAPI {
   }
 
   /**
-   * Convenience to fetch a block and return a specific transaction.
+   * Returns the details of a transaction based on a transaction id.
    */
   public async getTransaction(
-    txc: TransactionConfirmation | { block_num: number; id: string }
+    txId: string
   ): Promise<SignedTransaction> {
-    const block = await this.client.database.getBlock(txc.block_num)
-    const idx = block.transaction_ids.indexOf(txc.id)
-    if (idx === -1) {
-      throw new Error(
-        `Unable to find transaction ${txc.id} in block ${txc.block_num}`
-      )
-    }
-    return block.transactions[idx] as SignedTransaction
+    return this.call('get_transaction', [txId])
   }
 
   /**

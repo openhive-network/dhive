@@ -38,7 +38,7 @@ import { EventEmitter } from 'events'
 import { PassThrough } from 'stream'
 import { VError } from 'verror'
 
-const timeoutErrors = ['request-timeout', 'ENOTFOUND', 'ECONNREFUSED']
+const timeoutErrors = ['request-timeout', 'ENOTFOUND', 'ECONNREFUSED', 'Unable to acquire database lock']
 
 /**
  * Return a promise that will resove when a specific event is emitted.
