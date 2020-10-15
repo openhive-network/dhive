@@ -38,7 +38,8 @@ import { EventEmitter } from 'events'
 import { PassThrough } from 'stream'
 import { VError } from 'verror'
 
-const timeoutErrors = ['request-timeout', 'ENOTFOUND', 'ECONNREFUSED', 'Unable to acquire database lock']
+// TODO: Add errors that shouldn't trigger a failover
+const timeoutErrorsIgnore = ['']
 
 /**
  * Return a promise that will resove when a specific event is emitted.
@@ -121,7 +122,7 @@ export async function retryingFetch(
     } catch (error) {
       if (timeout !== 0 && Date.now() - start > timeout) {
         if (
-          timeoutErrors.includes(error.code) &&
+          !timeoutErrorsIgnore.includes(error.code) &&
           Array.isArray(allAddresses) &&
           allAddresses.length > 1
         ) {
@@ -134,7 +135,7 @@ export async function retryingFetch(
             currentAddress = failover(currentAddress, allAddresses)
           } else {
             if (
-              timeoutErrors.includes(error.code) &&
+              !timeoutErrorsIgnore.includes(error.code) &&
               Array.isArray(allAddresses)
             ) {
               error.message = `[${
