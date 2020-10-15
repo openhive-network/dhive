@@ -103,8 +103,9 @@ export async function retryingFetch(
   opts: any,
   timeout: number,
   failoverThreshold: number,
+  consoleOnFailover: boolean,
   backoff: (tries: number) => number,
-  fetchTimeout?: (tries: number) => number
+  fetchTimeout?: (tries: number) => number,
 ) {
   let start = Date.now()
   let tries = 0
@@ -123,7 +124,7 @@ export async function retryingFetch(
       if (timeout !== 0 && Date.now() - start > timeout) {
         if((!error || !error.code) && Array.isArray(allAddresses)) {
           // If error is empty or not code is present, it means rpc is down => switch
-          currentAddress = failover(currentAddress, allAddresses)
+          currentAddress = failover(currentAddress, allAddresses, currentAddress, consoleOnFailover)
         } else {
           const isFailoverError = timeoutErrors.filter(fe => error && error.code && error.code.includes(fe)).length > 0
           if (
@@ -137,7 +138,7 @@ export async function retryingFetch(
               if (failoverThreshold > 0) {
                 round++
               }
-              currentAddress = failover(currentAddress, allAddresses)
+              currentAddress = failover(currentAddress, allAddresses, currentAddress, consoleOnFailover)
             } else {
               error.message = `[${
                 error.code
@@ -157,9 +158,11 @@ export async function retryingFetch(
   } while (true)
 }
 
-const failover = (url: string, urls: string[]) => {
+const failover = (url: string, urls: string[], currentAddress: string, consoleOnFailover: boolean,) => {
   const index = urls.indexOf(url)
-  return urls.length === index + 1 ? urls[0] : urls[index + 1]
+  const targetUrl = urls.length === index + 1 ? urls[0] : urls[index + 1]
+  if(consoleOnFailover) console.log(`Switched Hive RPC: ${targetUrl} (previous: ${currentAddress})`)
+  return targetUrl
 }
 
 // Hack to be able to generate a valid witness_set_properties op
