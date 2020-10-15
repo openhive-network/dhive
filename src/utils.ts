@@ -121,30 +121,35 @@ export async function retryingFetch(
       return {response: await response.json(), currentAddress}
     } catch (error) {
       if (timeout !== 0 && Date.now() - start > timeout) {
-        const isFailoverError = timeoutErrors.filter(fe => error && error.code && error.code.includes(fe)).length > 0
-        if (
-          isFailoverError &&
-          Array.isArray(allAddresses) &&
-          allAddresses.length > 1
-        ) {
-          if (round < failoverThreshold) {
-            start = Date.now()
-            tries = -1
-            if (failoverThreshold > 0) {
-              round++
+        if(!error && Array.isArray(allAddresses)) {
+          // If error is empty, it means rpc is down => switch
+          currentAddress = failover(currentAddress, allAddresses)
+        } else {
+          const isFailoverError = timeoutErrors.filter(fe => error && error.code && error.code.includes(fe)).length > 0
+          if (
+            isFailoverError &&
+            Array.isArray(allAddresses) &&
+            allAddresses.length > 1
+          ) {
+            if (round < failoverThreshold) {
+              start = Date.now()
+              tries = -1
+              if (failoverThreshold > 0) {
+                round++
+              }
+              currentAddress = failover(currentAddress, allAddresses)
+            } else {
+              error.message = `[${
+                error.code
+              }] tried ${failoverThreshold} times with ${allAddresses.join(
+              ','
+              )}`
+              throw error
             }
-            currentAddress = failover(currentAddress, allAddresses)
           } else {
-            error.message = `[${
-              error.code
-            }] tried ${failoverThreshold} times with ${allAddresses.join(
-             ','
-            )}`
+            console.error(`Didn't failover for error ${error.code ? 'code' : 'message'}: [${error.code || error.message}]`)
             throw error
           }
-        } else {
-          console.error(`Didn't failover for error ${error.code ? 'code' : 'message'}: [${error.code || error.message}]`)
-          throw error
         }
       }
       await sleep(backoff(tries++))
