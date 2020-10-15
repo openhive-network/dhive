@@ -121,7 +121,7 @@ export async function retryingFetch(
       return {response: await response.json(), currentAddress}
     } catch (error) {
       if (timeout !== 0 && Date.now() - start > timeout) {
-        const isFailoverError = timeoutErrors.filter(fe => error.code.includes(fe)).length > 0
+        const isFailoverError = timeoutErrors.filter(fe => error && error.code && error.code.includes(fe)).length > 0
         if (
           isFailoverError &&
           Array.isArray(allAddresses) &&
@@ -143,7 +143,7 @@ export async function retryingFetch(
             throw error
           }
         } else {
-          console.error(`Didn't failover for error code: [${error.code}]`)
+          console.error(`Didn't failover for error ${error.code ? 'code' : 'message'}: [${error.code || error.message}]`)
           throw error
         }
       }
