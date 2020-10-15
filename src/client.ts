@@ -150,6 +150,11 @@ export interface ClientOptions {
     failoverThreshold?: number
 
     /**
+     * Whether a console.log should be made when RPC failed over to another one
+     */
+    consoleOnFailover?: boolean
+
+    /**
      * Retry backoff function, returns milliseconds. Default = {@link defaultBackoff}.
      */
     backoff?: (tries: number) => number
@@ -222,6 +227,8 @@ export class Client {
 
     private failoverThreshold: number
 
+    private consoleOnFailover: boolean 
+
     private currentAddress: string
 
     /**
@@ -245,6 +252,7 @@ export class Client {
         this.timeout = options.timeout || 60 * 1000
         this.backoff = options.backoff || defaultBackoff
         this.failoverThreshold = options.failoverThreshold || 3
+        this.consoleOnFailover = options.consoleOnFailover || false
 
         this.database = new DatabaseAPI(this)
         this.broadcast = new BroadcastAPI(this)
@@ -342,7 +350,8 @@ export class Client {
                 this.timeout,
                 this.failoverThreshold,
                 this.backoff,
-                fetchTimeout
+                fetchTimeout,
+                this.consoleOnFailover
             )
 
         // After failover, change the currently active address
