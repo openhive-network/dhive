@@ -121,8 +121,8 @@ export async function retryingFetch(
       return {response: await response.json(), currentAddress}
     } catch (error) {
       if (timeout !== 0 && Date.now() - start > timeout) {
-        if(!error && Array.isArray(allAddresses)) {
-          // If error is empty, it means rpc is down => switch
+        if((!error || !error.code) && Array.isArray(allAddresses)) {
+          // If error is empty or not code is present, it means rpc is down => switch
           currentAddress = failover(currentAddress, allAddresses)
         } else {
           const isFailoverError = timeoutErrors.filter(fe => error && error.code && error.code.includes(fe)).length > 0
