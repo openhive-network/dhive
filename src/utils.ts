@@ -103,9 +103,9 @@ export async function retryingFetch(
   opts: any,
   timeout: number,
   failoverThreshold: number,
+  consoleOnFailover: boolean,
   backoff: (tries: number) => number,
   fetchTimeout?: (tries: number) => number,
-  consoleOnFailover?: boolean
 ) {
   let start = Date.now()
   let tries = 0
@@ -158,7 +158,7 @@ export async function retryingFetch(
   } while (true)
 }
 
-const failover = (url: string, urls: string[], currentAddress: boolean, consoleOnFailover?: boolean,) => {
+const failover = (url: string, urls: string[], currentAddress: string, consoleOnFailover: boolean,) => {
   const index = urls.indexOf(url)
   const targetUrl = urls.length === index + 1 ? urls[0] : urls[index + 1]
   if(consoleOnFailover) console.log(`Switched Hive RPC: ${targetUrl} (previous: ${currentAddress})`)

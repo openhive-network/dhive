@@ -349,9 +349,9 @@ export class Client {
                 opts,
                 this.timeout,
                 this.failoverThreshold,
+                this.consoleOnFailover,
                 this.backoff,
-                fetchTimeout,
-                this.consoleOnFailover
+                fetchTimeout
             )
 
         // After failover, change the currently active address
