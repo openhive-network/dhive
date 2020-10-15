@@ -143,7 +143,7 @@ export async function retryingFetch(
             throw error
           }
         } else {
-          console.error(`Didn't failover for error code: [${error.code}]`)
+          console.error(`Didn't failover for error ${error.code ? 'code' : 'message'}: [${error.code || error.message}]`)
           throw error
         }
       }
