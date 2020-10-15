@@ -38,8 +38,8 @@ import { EventEmitter } from 'events'
 import { PassThrough } from 'stream'
 import { VError } from 'verror'
 
-// TODO: Add errors that shouldn't trigger a failover
-const timeoutErrorsIgnore = ['']
+// TODO: Add more errors that should trigger a failover
+const timeoutErrors = ['timeout', 'ENOTFOUND', 'ECONNREFUSED', 'database lock']
 
 /**
  * Return a promise that will resove when a specific event is emitted.
@@ -121,8 +121,9 @@ export async function retryingFetch(
       return {response: await response.json(), currentAddress}
     } catch (error) {
       if (timeout !== 0 && Date.now() - start > timeout) {
+        const isFailoverError = timeoutErrors.filter(fe => error.code.includes(fe)).length > 0
         if (
-          !timeoutErrorsIgnore.includes(error.code) &&
+          isFailoverError &&
           Array.isArray(allAddresses) &&
           allAddresses.length > 1
         ) {
@@ -134,21 +135,15 @@ export async function retryingFetch(
             }
             currentAddress = failover(currentAddress, allAddresses)
           } else {
-            if (
-              !timeoutErrorsIgnore.includes(error.code) &&
-              Array.isArray(allAddresses)
-            ) {
-              error.message = `[${
-                error.code
-              }] tried ${failoverThreshold} times with ${allAddresses.join(
-                ','
-              )}`
-              throw error
-            } else {
-              throw error
-            }
+            error.message = `[${
+              error.code
+            }] tried ${failoverThreshold} times with ${allAddresses.join(
+             ','
+            )}`
+            throw error
           }
         } else {
+          console.error(`Didn't failover for error code: [${error.code}]`)
           throw error
         }
       }
