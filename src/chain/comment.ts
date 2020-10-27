@@ -65,8 +65,7 @@ export interface Comment {
     net_votes: number // int32_t
     root_comment: number // comment_id_type
     max_accepted_payout: string // asset
-    percent_hbd?: number // uint16_t
-    percent_steem_dollars?: number // uint16_t // remove after hf24
+    percent_hbd: number // uint16_t
     allow_replies: boolean
     allow_votes: boolean
     allow_curation_rewards: boolean
