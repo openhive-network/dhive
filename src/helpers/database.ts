@@ -241,9 +241,9 @@ export class DatabaseAPI {
     ])
    */
   public getAccountHistory(account: string, from: number, limit: number, operations_bitmask?: {operation_filter_low: number, operation_filter_high: number}): Promise<[[number, AppliedOperation]]> {
-    let op = [account, from, limit]
-    if(operations_bitmask) op = op.concat[operations_bitmask.operation_filter_low, operations_bitmask.operation_filter_high]
-    return this.call('get_account_history', op)
+    let params = [account, from, limit]
+    if(operations_bitmask) params = params.concat[operations_bitmask.operation_filter_low, operations_bitmask.operation_filter_high]
+    return this.call('get_account_history', params)
   }
 
   /**
