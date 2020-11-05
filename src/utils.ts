@@ -341,29 +341,28 @@ export const operationOrders = {
 
 export function makeBitMaskFilter(allowedOperations: number[]) {
   return allowedOperations
-    .reduce(
-      ([low, high], allowedOperation) =>
-        allowedOperation < 64
-          ? [
-              JSBI.bitwiseOr(
-                low,
-                JSBI.leftShift(JSBI.BigInt(1), JSBI.BigInt(allowedOperation))
-              ),
-              high
-            ]
-          : [
-              low,
-              JSBI.bitwiseOr(
-                high,
-                JSBI.leftShift(
-                  JSBI.BigInt(1),
-                  JSBI.BigInt(allowedOperation - 64)
-                )
-              )
-            ],
-      [JSBI.BigInt(0), JSBI.BigInt(0)]
-    )
+    .reduce(redFunction, [JSBI.BigInt(0), JSBI.BigInt(0)])
     .map((value) =>
       JSBI.notEqual(value, JSBI.BigInt(0)) ? value.toString() : null
     )
+}
+
+const redFunction = ([low, high], allowedOperation) => {
+  if (allowedOperation < 64) {
+    return [
+      JSBI.bitwiseOr(
+        low,
+        JSBI.leftShift(JSBI.BigInt(1), JSBI.BigInt(allowedOperation))
+      ),
+      high
+    ]
+  } else {
+    return [
+      low,
+      JSBI.bitwiseOr(
+        high,
+        JSBI.leftShift(JSBI.BigInt(1), JSBI.BigInt(allowedOperation - 64))
+      )
+    ]
+  }
 }
