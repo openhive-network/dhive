@@ -223,7 +223,7 @@ export class Client {
 
     private failoverThreshold: number
 
-    private consoleOnFailover: boolean 
+    private consoleOnFailover: boolean
 
     private currentAddress: string
 
@@ -307,7 +307,7 @@ export class Client {
         }
         const body = JSON.stringify(request, (key, value) => {
             // encode Buffers as hex strings instead of an array of bytes
-            if (typeof value === 'object' && value.type === 'Buffer') {
+            if (value && typeof value === 'object' && value.type === 'Buffer') {
                 return Buffer.from(value.data).toString('hex')
             }
             return value

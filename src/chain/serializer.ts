@@ -238,7 +238,6 @@ const OperationDataSerializer = (
 }
 
 const OperationSerializers: { [name: string]: Serializer } = {}
-export const updateOperations = () => {}
 OperationSerializers.account_create = OperationDataSerializer(9, [
   ['fee', AssetSerializer],
   ['creator', StringSerializer],
