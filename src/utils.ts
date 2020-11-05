@@ -261,7 +261,7 @@ export function buildWitnessUpdateOp(
   return ['witness_set_properties', data]
 }
 
-import JSBI from 'jsbi'
+import JSBI from 'jsbi/dist/jsbi.mjs'
 export const operationOrders = {
   vote: 0,
   // tslint:disable-next-line: object-literal-sort-keys
