@@ -44,10 +44,6 @@ import { HivemindAPI } from './helpers/hivemind'
 import { RCAPI } from './helpers/rc'
 import { copy, retryingFetch, waitForEvent } from './utils'
 
-import { updateOperations } from './chain/serializer'
-
-export let rebrandedApiGlobal
-
 /**
  * Library version.
  */
@@ -165,7 +161,7 @@ export interface ClientOptions {
      */
     agent?: any // https.Agent
     /**
-     * Must be true for using new eclipse rpc nodes - Default: false
+     * Deprecated - don't use
      */
     rebrandedApi?: boolean
 }
@@ -237,8 +233,10 @@ export class Client {
      * @param options Client options.
      */
     constructor(address: string | string[], options: ClientOptions = {}) {
-        rebrandedApiGlobal = options.rebrandedApi || false
-        updateOperations()
+        if (options.rebrandedApi) {
+            // tslint:disable-next-line: no-console
+            console.log('Warning: rebrandedApi is deprecated and safely can be removed from client options')
+        }
         this.currentAddress = Array.isArray(address) ? address[0] : address
         this.address = address
         this.options = options
@@ -396,8 +394,8 @@ export class Client {
     }
 
     public updateOperations(rebrandedApi) {
-        rebrandedApiGlobal = rebrandedApi || false
-        updateOperations()
+        // tslint:disable-next-line: no-console
+        console.log('Warning: call to updateOperations() is deprecated and can safely be removed')
     }
 }
 

@@ -239,10 +239,8 @@ export interface ClaimRewardBalanceOperation extends Operation {
   0: 'claim_reward_balance' // 39
   1: {
     account: string // account_name_type
-    reward_hive?: string | Asset
-    reward_hbd?: string | Asset
-    reward_steem?: string | Asset // remove after hf24
-    reward_sbd?: string | Asset // remove after hf24
+    reward_hive: string | Asset
+    reward_hbd: string | Asset
     reward_vests: string | Asset
   }
 }
@@ -280,8 +278,7 @@ export interface CommentOptionsOperation extends Operation {
     /** HBD value of the maximum payout this post will receive. */
     max_accepted_payout: Asset | string
     /** The percent of Hive Dollars to key, unkept amounts will be received as Hive Power. */
-    percent_steem_dollars?: number // uint16_t - remove after hf24
-    percent_hbd?: number // uint16_t
+    percent_hbd: number // uint16_t
     /** Whether to allow post to receive votes. */
     allow_votes: boolean
     /** Whether to allow post to recieve curation rewards. */
@@ -457,13 +454,11 @@ export interface EscrowReleaseOperation extends Operation {
     /**
      * The amount of hbd to release.
      */
-    hbd_amount?: Asset | string
+    hbd_amount: Asset | string
     /**
      * The amount of hive to release.
      */
-    hive_amount?: Asset | string
-    steem_amount?: Asset | string // remove after hf24
-    sbd_amount?: Asset | string // remove after hf24
+    hive_amount: Asset | string
   }
 }
 
@@ -492,10 +487,8 @@ export interface EscrowTransferOperation extends Operation {
     to: string // account_name_type
     agent: string // account_name_type
     escrow_id: number // uint32_t
-    hbd_amount?: Asset | string
-    hive_amount?: Asset | string
-    steem_amount?: Asset | string // remove after hf24
-    sbd_amount?: Asset | string // remove after hf24
+    hbd_amount: Asset | string
+    hive_amount: Asset | string
     fee: Asset | string
     ratification_deadline: string // time_point_sec
     escrow_expiration: string // time_point_sec

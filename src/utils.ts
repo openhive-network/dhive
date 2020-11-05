@@ -181,8 +181,6 @@ export interface WitnessProps {
   new_signing_key?: PublicKey | string | null
   hbd_exchange_rate?: PriceType
   hbd_interest_rate?: number // uint16_t
-  sbd_exchange_rate?: PriceType // remove after hf24
-  sbd_interest_rate?: number // uint16_t // remove after hf24
   url?: string
 }
 function serialize(serializer: Serializer, data: any) {
@@ -218,14 +216,12 @@ export function buildWitnessUpdateOp(
         type = Types.UInt32
         break
       case 'hbd_interest_rate':
-      case 'sbd_interest_rate': // remove after hf24
         type = Types.UInt16
         break
       case 'url':
         type = Types.String
         break
       case 'hbd_exchange_rate':
-      case 'sbd_exchange_rate': // remove after hf24
         type = Types.Price
         break
       case 'account_creation_fee':
