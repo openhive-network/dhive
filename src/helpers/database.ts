@@ -215,9 +215,35 @@ export class DatabaseAPI {
    * @param account The account to fetch
    * @param from The starting index
    * @param limit The maximum number of results to return
+   * @param operations_bitmask Bitmask of operations that should be filtered by
+   * ---
+   * Example for operations_bitmask
+   * 
+   * import {ChainTypes,makeBitMaskFilter} from '@hiveio/hive-js/lib/auth/serializer'
+   * ---
+    const op = ChainTypes.operations
+    let wallet_operations_bitmask = makeBitMaskFilter([
+      op.transfer,
+      op.transfer_to_vesting,
+      op.withdraw_vesting,
+      op.interest,
+      op.liquidity_reward,
+      op.transfer_to_savings,
+      op.transfer_from_savings,
+      op.escrow_transfer,
+      op.cancel_transfer_from_savings,
+      op.escrow_approve,
+      op.escrow_dispute,
+      op.escrow_release,
+      op.fill_convert_request,
+      op.fill_order,
+      op.claim_reward_balance,
+    ])
    */
-  public getAccountHistory(account: string, from: number, limit: number): Promise<[[number, AppliedOperation]]> {
-    return this.call('get_account_history', [account, from, limit])
+  public getAccountHistory(account: string, from: number, limit: number, operations_bitmask?: {operation_filter_low: number, operation_filter_high: number}): Promise<[[number, AppliedOperation]]> {
+    let params = [account, from, limit]
+    if(operations_bitmask) params = params.concat[operations_bitmask.operation_filter_low, operations_bitmask.operation_filter_high]
+    return this.call('get_account_history', params)
   }
 
   /**
