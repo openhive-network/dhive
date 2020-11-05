@@ -36,7 +36,6 @@
 import fetch from 'cross-fetch'
 import { EventEmitter } from 'events'
 import { PassThrough } from 'stream'
-import { VError } from 'verror'
 
 // TODO: Add more errors that should trigger a failover
 const timeoutErrors = ['timeout', 'ENOTFOUND', 'ECONNREFUSED', 'database lock']
@@ -105,7 +104,7 @@ export async function retryingFetch(
   failoverThreshold: number,
   consoleOnFailover: boolean,
   backoff: (tries: number) => number,
-  fetchTimeout?: (tries: number) => number,
+  fetchTimeout?: (tries: number) => number
 ) {
   let start = Date.now()
   let tries = 0
@@ -119,14 +118,22 @@ export async function retryingFetch(
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
-      return {response: await response.json(), currentAddress}
+      return { response: await response.json(), currentAddress }
     } catch (error) {
       if (timeout !== 0 && Date.now() - start > timeout) {
-        if((!error || !error.code) && Array.isArray(allAddresses)) {
+        if ((!error || !error.code) && Array.isArray(allAddresses)) {
           // If error is empty or not code is present, it means rpc is down => switch
-          currentAddress = failover(currentAddress, allAddresses, currentAddress, consoleOnFailover)
+          currentAddress = failover(
+            currentAddress,
+            allAddresses,
+            currentAddress,
+            consoleOnFailover
+          )
         } else {
-          const isFailoverError = timeoutErrors.filter(fe => error && error.code && error.code.includes(fe)).length > 0
+          const isFailoverError =
+            timeoutErrors.filter(
+              (fe) => error && error.code && error.code.includes(fe)
+            ).length > 0
           if (
             isFailoverError &&
             Array.isArray(allAddresses) &&
@@ -138,17 +145,27 @@ export async function retryingFetch(
               if (failoverThreshold > 0) {
                 round++
               }
-              currentAddress = failover(currentAddress, allAddresses, currentAddress, consoleOnFailover)
+              currentAddress = failover(
+                currentAddress,
+                allAddresses,
+                currentAddress,
+                consoleOnFailover
+              )
             } else {
               error.message = `[${
                 error.code
               }] tried ${failoverThreshold} times with ${allAddresses.join(
-              ','
+                ','
               )}`
               throw error
             }
           } else {
-            console.error(`Didn't failover for error ${error.code ? 'code' : 'message'}: [${error.code || error.message}]`)
+            // tslint:disable-next-line: no-console
+            console.error(
+              `Didn't failover for error ${error.code ? 'code' : 'message'}: [${
+                error.code || error.message
+              }]`
+            )
             throw error
           }
         }
@@ -158,10 +175,18 @@ export async function retryingFetch(
   } while (true)
 }
 
-const failover = (url: string, urls: string[], currentAddress: string, consoleOnFailover: boolean,) => {
+const failover = (
+  url: string,
+  urls: string[],
+  currentAddress: string,
+  consoleOnFailover: boolean
+) => {
   const index = urls.indexOf(url)
   const targetUrl = urls.length === index + 1 ? urls[0] : urls[index + 1]
-  if(consoleOnFailover) console.log(`Switched Hive RPC: ${targetUrl} (previous: ${currentAddress})`)
+  if (consoleOnFailover) {
+    // tslint:disable-next-line: no-console
+    console.log(`Switched Hive RPC: ${targetUrl} (previous: ${currentAddress})`)
+  }
   return targetUrl
 }
 
@@ -234,4 +259,111 @@ export function buildWitnessUpdateOp(
   }
   data.props.sort((a, b) => a[0].localeCompare(b[0]))
   return ['witness_set_properties', data]
+}
+
+import JSBI from 'jsbi'
+export const operationOrders = {
+  vote: 0,
+  // tslint:disable-next-line: object-literal-sort-keys
+  comment: 1,
+  transfer: 2,
+  transfer_to_vesting: 3,
+  withdraw_vesting: 4,
+  limit_order_create: 5,
+  limit_order_cancel: 6,
+  feed_publish: 7,
+  convert: 8,
+  account_create: 9,
+  account_update: 10,
+  witness_update: 11,
+  account_witness_vote: 12,
+  account_witness_proxy: 13,
+  pow: 14,
+  custom: 15,
+  report_over_production: 16,
+  delete_comment: 17,
+  custom_json: 18,
+  comment_options: 19,
+  set_withdraw_vesting_route: 20,
+  limit_order_create2: 21,
+  claim_account: 22,
+  create_claimed_account: 23,
+  request_account_recovery: 24,
+  recover_account: 25,
+  change_recovery_account: 26,
+  escrow_transfer: 27,
+  escrow_dispute: 28,
+  escrow_release: 29,
+  pow2: 30,
+  escrow_approve: 31,
+  transfer_to_savings: 32,
+  transfer_from_savings: 33,
+  cancel_transfer_from_savings: 34,
+  custom_binary: 35,
+  decline_voting_rights: 36,
+  reset_account: 37,
+  set_reset_account: 38,
+  claim_reward_balance: 39,
+  delegate_vesting_shares: 40,
+  account_create_with_delegation: 41,
+  witness_set_properties: 42,
+  account_update2: 43,
+  create_proposal: 44,
+  update_proposal_votes: 45,
+  remove_proposal: 46,
+  update_proposal: 47,
+  fill_convert_request: 48,
+  author_reward: 49,
+  curation_reward: 50,
+  comment_reward: 51,
+  liquidity_reward: 52,
+  interest: 53,
+  fill_vesting_withdraw: 54,
+  fill_order: 55,
+  shutdown_witness: 56,
+  fill_transfer_from_savings: 57,
+  hardfork: 58,
+  comment_payout_update: 59,
+  return_vesting_delegation: 60,
+  comment_benefactor_reward: 61,
+  producer_reward: 62,
+  clear_null_account_balance: 63,
+  proposal_pay: 64,
+  sps_fund: 65,
+  hardfork_hive: 66,
+  hardfork_hive_restore: 67,
+  delayed_voting: 68,
+  consolidate_treasury_balance: 69,
+  effective_comment_vote: 70,
+  ineffective_delete_comment: 71,
+  sps_convert: 72
+}
+
+export function makeBitMaskFilter(allowedOperations: number[]) {
+  return allowedOperations
+    .reduce(
+      ([low, high], allowedOperation) =>
+        allowedOperation < 64
+          ? [
+              JSBI.bitwiseOr(
+                low,
+                JSBI.leftShift(JSBI.BigInt(1), JSBI.BigInt(allowedOperation))
+              ),
+              high
+            ]
+          : [
+              low,
+              JSBI.bitwiseOr(
+                high,
+                JSBI.leftShift(
+                  JSBI.BigInt(1),
+                  JSBI.BigInt(allowedOperation - 64)
+                )
+              )
+            ],
+      [JSBI.BigInt(0), JSBI.BigInt(0)]
+    )
+    .map((value) =>
+      JSBI.notEqual(value, JSBI.BigInt(0)) ? value.toString() : null
+    )
 }
