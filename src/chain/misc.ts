@@ -91,10 +91,9 @@ export interface ChainProperties {
    */
   maximum_block_size: number // uint32_t
   /**
-   * The SBD interest percentage rate decided by witnesses, expressed 0 to 10000.
+   * The HBD interest percentage rate decided by witnesses, expressed 0 to 10000.
    */
-  hbd_interest_rate?: number // uint16_t
-  sbd_interest_rate?: number // uint16_t // remove after hf24
+  hbd_interest_rate: number // uint16_t
 }
 
 export interface VestingDelegation {
@@ -154,32 +153,25 @@ export interface DynamicGlobalProperties {
    * Total asset held in confidential balances.
    */
   confidential_supply: Asset | string
-  current_hbd_supply?: Asset | string
-  current_sbd_supply?: Asset | string // remove after hf24
+  current_hbd_supply: Asset | string
   /**
    * Total asset held in confidential balances.
    */
-  confidential_hbd_supply?: Asset | string
-  confidential_sbd_supply?: Asset | string // remove after hf24
-  total_vesting_fund_hive?: Asset | string
-  total_vesting_fund_steem?: Asset | string // remove after hf24
+  confidential_hbd_supply: Asset | string
+  total_vesting_fund_hive: Asset | string
   total_vesting_shares: Asset | string
-  total_reward_fund_hive?: Asset | string
-  total_reward_fund_steem?: Asset | string // remove after hf24
+  total_reward_fund_hive: Asset | string
   /**
    * The running total of REWARD^2.
    */
   total_reward_shares2: string
   pending_rewarded_vesting_shares: Asset | string
-  pending_rewarded_vesting_hive?: Asset | string
-  pending_rewarded_vesting_steem?: Asset | string // remove after hf24
+  pending_rewarded_vesting_hive: Asset | string
   /**
    * This property defines the interest rate that HBD deposits receive.
    */
-  hbd_interest_rate?: number
-  hbd_print_rate?: number
-  sbd_interest_rate?: number // remove after hf24
-  sbd_print_rate?: number // remove after hf24
+  hbd_interest_rate: number
+  hbd_print_rate: number
   /**
    *  Average block size is updated every block to be:
    *
@@ -240,7 +232,7 @@ export interface DynamicGlobalProperties {
  */
 export function getVestingSharePrice(props: DynamicGlobalProperties): Price {
   // empty string is needed to skip the type check error
-  const totalVestingFund = Asset.from(props.total_vesting_fund_hive || props.total_vesting_fund_steem || '')
+  const totalVestingFund = Asset.from(props.total_vesting_fund_hive)
   const totalVestingShares = Asset.from(props.total_vesting_shares)
   if (totalVestingFund.amount === 0 || totalVestingShares.amount === 0) {
     return new Price(new Asset(1, 'VESTS'), new Asset(1, 'HIVE'))
