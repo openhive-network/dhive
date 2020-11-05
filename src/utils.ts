@@ -261,7 +261,6 @@ export function buildWitnessUpdateOp(
   return ['witness_set_properties', data]
 }
 
-// import JSBI from 'jsbi'
 const JSBI = require('jsbi')
 export const operationOrders = {
   vote: 0,
@@ -340,6 +339,10 @@ export const operationOrders = {
   sps_convert: 72
 }
 
+/**
+ * Make bitmask filter to be used with getAccountHistory call
+ * @param allowedOperations Array of operations index numbers
+ */
 export function makeBitMaskFilter(allowedOperations: number[]) {
   return allowedOperations
     .reduce(redFunction, [JSBI.BigInt(0), JSBI.BigInt(0)])
