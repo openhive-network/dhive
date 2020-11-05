@@ -36,6 +36,7 @@
     "bytebuffer": "^5.0.1",
     "core-js": "^3.6.4",
     "cross-fetch": "^3.0.4",
+    "jsbi": "^3.1.4",
     "node-fetch": "^2.6.0",
     "secp256k1": "^3.8.0",
     "verror": "^1.10.0",
