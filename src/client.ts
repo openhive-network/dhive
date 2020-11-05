@@ -223,7 +223,7 @@ export class Client {
 
     private failoverThreshold: number
 
-    private consoleOnFailover: boolean 
+    private consoleOnFailover: boolean
 
     private currentAddress: string
 
