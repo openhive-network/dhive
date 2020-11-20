@@ -233,30 +233,19 @@ declare module 'dhive/chain/account' {
 	    };
 	    balance: string | Asset;
 	    savings_balance: string | Asset;
-	    hbd_balance?: string | Asset;
-	    hbd_seconds?: string;
-	    hbd_seconds_last_update?: string;
-	    hbd_last_interest_payment?: string;
-	    savings_hbd_balance?: string | Asset;
-	    savings_hbd_seconds?: string;
-	    savings_hbd_seconds_last_update?: string;
-	    savings_hbd_last_interest_payment?: string;
-	    sbd_balance?: string | Asset;
-	    sbd_seconds?: string;
-	    sbd_seconds_last_update?: string;
-	    sbd_last_interest_payment?: string;
-	    savings_sbd_balance?: string | Asset;
-	    savings_sbd_seconds?: string;
-	    savings_sbd_seconds_last_update?: string;
-	    savings_sbd_last_interest_payment?: string;
+	    hbd_balance: string | Asset;
+	    hbd_seconds: string;
+	    hbd_seconds_last_update: string;
+	    hbd_last_interest_payment: string;
+	    savings_hbd_balance: string | Asset;
+	    savings_hbd_seconds: string;
+	    savings_hbd_seconds_last_update: string;
+	    savings_hbd_last_interest_payment: string;
 	    savings_withdraw_requests: number;
-	    reward_hbd_balance?: string | Asset;
-	    reward_hive_balance?: string | Asset;
-	    reward_sbd_balance?: string | Asset;
-	    reward_steem_balance?: string | Asset;
+	    reward_hbd_balance: string | Asset;
+	    reward_hive_balance: string | Asset;
 	    reward_vesting_balance: string | Asset;
-	    reward_vesting_hive?: string | Asset;
-	    reward_vesting_steem?: string | Asset;
+	    reward_vesting_hive: string | Asset;
 	    curation_rewards: number | string;
 	    posting_rewards: number | string;
 	    vesting_shares: string | Asset;
@@ -383,10 +372,9 @@ declare module 'dhive/chain/misc' {
 	     */
 	    maximum_block_size: number;
 	    /**
-	     * The SBD interest percentage rate decided by witnesses, expressed 0 to 10000.
+	     * The HBD interest percentage rate decided by witnesses, expressed 0 to 10000.
 	     */
-	    hbd_interest_rate?: number;
-	    sbd_interest_rate?: number;
+	    hbd_interest_rate: number;
 	}
 	export interface VestingDelegation {
 	    /**
@@ -444,32 +432,25 @@ declare module 'dhive/chain/misc' {
 	     * Total asset held in confidential balances.
 	     */
 	    confidential_supply: Asset | string;
-	    current_hbd_supply?: Asset | string;
-	    current_sbd_supply?: Asset | string;
+	    current_hbd_supply: Asset | string;
 	    /**
 	     * Total asset held in confidential balances.
 	     */
-	    confidential_hbd_supply?: Asset | string;
-	    confidential_sbd_supply?: Asset | string;
-	    total_vesting_fund_hive?: Asset | string;
-	    total_vesting_fund_steem?: Asset | string;
+	    confidential_hbd_supply: Asset | string;
+	    total_vesting_fund_hive: Asset | string;
 	    total_vesting_shares: Asset | string;
-	    total_reward_fund_hive?: Asset | string;
-	    total_reward_fund_steem?: Asset | string;
+	    total_reward_fund_hive: Asset | string;
 	    /**
 	     * The running total of REWARD^2.
 	     */
 	    total_reward_shares2: string;
 	    pending_rewarded_vesting_shares: Asset | string;
-	    pending_rewarded_vesting_hive?: Asset | string;
-	    pending_rewarded_vesting_steem?: Asset | string;
+	    pending_rewarded_vesting_hive: Asset | string;
 	    /**
 	     * This property defines the interest rate that HBD deposits receive.
 	     */
-	    hbd_interest_rate?: number;
-	    hbd_print_rate?: number;
-	    sbd_interest_rate?: number;
-	    sbd_print_rate?: number;
+	    hbd_interest_rate: number;
+	    hbd_print_rate: number;
 	    /**
 	     *  Average block size is updated every block to be:
 	     *
@@ -576,7 +557,6 @@ declare module 'dhive/chain/serializer' {
 	import { HexBuffer } from 'dhive/chain/misc';
 	import { Operation } from 'dhive/chain/operation';
 	export type Serializer = (buffer: ByteBuffer, data: any) => void;
-	export const updateOperations: () => void;
 	export const Types: {
 	    Array: (itemSerializer: Serializer) => (buffer: ByteBuffer, data: any[]) => void;
 	    Asset: (buffer: ByteBuffer, data: string | number | Asset) => void;
@@ -946,8 +926,7 @@ declare module 'dhive/chain/comment' {
 	    net_votes: number;
 	    root_comment: number;
 	    max_accepted_payout: string;
-	    percent_hbd?: number;
-	    percent_steem_dollars?: number;
+	    percent_hbd: number;
 	    allow_replies: boolean;
 	    allow_votes: boolean;
 	    allow_curation_rewards: boolean;
@@ -1147,10 +1126,8 @@ declare module 'dhive/chain/operation' {
 	    0: 'claim_reward_balance';
 	    1: {
 	        account: string;
-	        reward_hive?: string | Asset;
-	        reward_hbd?: string | Asset;
-	        reward_steem?: string | Asset;
-	        reward_sbd?: string | Asset;
+	        reward_hive: string | Asset;
+	        reward_hbd: string | Asset;
 	        reward_vests: string | Asset;
 	    };
 	}
@@ -1185,8 +1162,7 @@ declare module 'dhive/chain/operation' {
 	        /** HBD value of the maximum payout this post will receive. */
 	        max_accepted_payout: Asset | string;
 	        /** The percent of Hive Dollars to key, unkept amounts will be received as Hive Power. */
-	        percent_steem_dollars?: number;
-	        percent_hbd?: number;
+	        percent_hbd: number;
 	        /** Whether to allow post to receive votes. */
 	        allow_votes: boolean;
 	        /** Whether to allow post to recieve curation rewards. */
@@ -1353,13 +1329,11 @@ declare module 'dhive/chain/operation' {
 	        /**
 	         * The amount of hbd to release.
 	         */
-	        hbd_amount?: Asset | string;
+	        hbd_amount: Asset | string;
 	        /**
 	         * The amount of hive to release.
 	         */
-	        hive_amount?: Asset | string;
-	        steem_amount?: Asset | string;
-	        sbd_amount?: Asset | string;
+	        hive_amount: Asset | string;
 	    };
 	}
 	/**
@@ -1387,10 +1361,8 @@ declare module 'dhive/chain/operation' {
 	        to: string;
 	        agent: string;
 	        escrow_id: number;
-	        hbd_amount?: Asset | string;
-	        hive_amount?: Asset | string;
-	        steem_amount?: Asset | string;
-	        sbd_amount?: Asset | string;
+	        hbd_amount: Asset | string;
+	        hive_amount: Asset | string;
 	        fee: Asset | string;
 	        ratification_deadline: string;
 	        escrow_expiration: string;
@@ -1871,7 +1843,7 @@ declare module 'dhive/utils' {
 	/**
 	 * Fetch API wrapper that retries until timeout is reached.
 	 */
-	export function retryingFetch(currentAddress: string, allAddresses: string | string[], opts: any, timeout: number, failoverThreshold: number, backoff: (tries: number) => number, fetchTimeout?: (tries: number) => number): Promise<{
+	export function retryingFetch(currentAddress: string, allAddresses: string | string[], opts: any, timeout: number, failoverThreshold: number, consoleOnFailover: boolean, backoff: (tries: number) => number, fetchTimeout?: (tries: number) => number): Promise<{
 	    response: any;
 	    currentAddress: string;
 	}>;
@@ -1887,11 +1859,89 @@ declare module 'dhive/utils' {
 	    new_signing_key?: PublicKey | string | null;
 	    hbd_exchange_rate?: PriceType;
 	    hbd_interest_rate?: number;
-	    sbd_exchange_rate?: PriceType;
-	    sbd_interest_rate?: number;
 	    url?: string;
 	}
 	export function buildWitnessUpdateOp(owner: string, props: WitnessProps): WitnessSetPropertiesOperation;
+	export const operationOrders: {
+	    vote: number;
+	    comment: number;
+	    transfer: number;
+	    transfer_to_vesting: number;
+	    withdraw_vesting: number;
+	    limit_order_create: number;
+	    limit_order_cancel: number;
+	    feed_publish: number;
+	    convert: number;
+	    account_create: number;
+	    account_update: number;
+	    witness_update: number;
+	    account_witness_vote: number;
+	    account_witness_proxy: number;
+	    pow: number;
+	    custom: number;
+	    report_over_production: number;
+	    delete_comment: number;
+	    custom_json: number;
+	    comment_options: number;
+	    set_withdraw_vesting_route: number;
+	    limit_order_create2: number;
+	    claim_account: number;
+	    create_claimed_account: number;
+	    request_account_recovery: number;
+	    recover_account: number;
+	    change_recovery_account: number;
+	    escrow_transfer: number;
+	    escrow_dispute: number;
+	    escrow_release: number;
+	    pow2: number;
+	    escrow_approve: number;
+	    transfer_to_savings: number;
+	    transfer_from_savings: number;
+	    cancel_transfer_from_savings: number;
+	    custom_binary: number;
+	    decline_voting_rights: number;
+	    reset_account: number;
+	    set_reset_account: number;
+	    claim_reward_balance: number;
+	    delegate_vesting_shares: number;
+	    account_create_with_delegation: number;
+	    witness_set_properties: number;
+	    account_update2: number;
+	    create_proposal: number;
+	    update_proposal_votes: number;
+	    remove_proposal: number;
+	    update_proposal: number;
+	    fill_convert_request: number;
+	    author_reward: number;
+	    curation_reward: number;
+	    comment_reward: number;
+	    liquidity_reward: number;
+	    interest: number;
+	    fill_vesting_withdraw: number;
+	    fill_order: number;
+	    shutdown_witness: number;
+	    fill_transfer_from_savings: number;
+	    hardfork: number;
+	    comment_payout_update: number;
+	    return_vesting_delegation: number;
+	    comment_benefactor_reward: number;
+	    producer_reward: number;
+	    clear_null_account_balance: number;
+	    proposal_pay: number;
+	    sps_fund: number;
+	    hardfork_hive: number;
+	    hardfork_hive_restore: number;
+	    delayed_voting: number;
+	    consolidate_treasury_balance: number;
+	    effective_comment_vote: number;
+	    ineffective_delete_comment: number;
+	    sps_convert: number;
+	};
+	/**
+	 * Make bitmask filter to be used with getAccountHistory call
+	 * @param allowedOperations Array of operations index numbers
+	 */
+	export function makeBitMaskFilter(allowedOperations: number[]): any[];
 
 }
 declare module 'dhive/helpers/blockchain' {
@@ -2318,8 +2368,28 @@ declare module 'dhive/helpers/database' {
 	     * @param account The account to fetch
 	     * @param from The starting index
 	     * @param limit The maximum number of results to return
+	     * @param operations_bitmask Generated by dhive.utils.makeBitMaskFilter() - see example below
+	     * @example
+	     * const op = dhive.utils.operationOrders
+	     * const operationsBitmask = dhive.utils.makeBitMaskFilter([
+	     *   op.transfer,
+	     *   op.transfer_to_vesting,
+	     *   op.withdraw_vesting,
+	     *   op.interest,
+	     *   op.liquidity_reward,
+	     *   op.transfer_to_savings,
+	     *   op.transfer_from_savings,
+	     *   op.escrow_transfer,
+	     *   op.cancel_transfer_from_savings,
+	     *   op.escrow_approve,
+	     *   op.escrow_dispute,
+	     *   op.escrow_release,
+	     *   op.fill_convert_request,
+	     *   op.fill_order,
+	     *   op.claim_reward_balance,
+	     * ])
 	     */
-	    getAccountHistory(account: string, from: number, limit: number): Promise<[[number, AppliedOperation]]>;
+	    getAccountHistory(account: string, from: number, limit: number, operation_bitmask?: [number, number]): Promise<[[number, AppliedOperation]]>;
 	    /**
 	     * Verify signed transaction.
 	     */
@@ -2617,7 +2687,6 @@ declare module 'dhive/client' {
 	import { DatabaseAPI } from 'dhive/helpers/database';
 	import { HivemindAPI } from 'dhive/helpers/hivemind';
 	import { RCAPI } from 'dhive/helpers/rc';
-	export let rebrandedApiGlobal: any;
 	/**
 	 * Library version.
 	 */
@@ -2663,6 +2732,10 @@ declare module 'dhive/client' {
 	     */
 	    failoverThreshold?: number;
 	    /**
+	     * Whether a console.log should be made when RPC failed over to another one
+	     */
+	    consoleOnFailover?: boolean;
+	    /**
 	     * Retry backoff function, returns milliseconds. Default = {@link defaultBackoff}.
 	     */
 	    backoff?: (tries: number) => number;
@@ -2673,7 +2746,7 @@ declare module 'dhive/client' {
 	     */
 	    agent?: any;
 	    /**
-	     * Must be true for using new eclipse rpc nodes - Default: false
+	     * Deprecated - don't use
 	     */
 	    rebrandedApi?: boolean;
 	}
@@ -2723,6 +2796,7 @@ declare module 'dhive/client' {
 	    private timeout;
 	    private backoff;
 	    private failoverThreshold;
+	    private consoleOnFailover;
 	    private currentAddress;
 	    /**
 	     * @param address The address to the Hive RPC server,
