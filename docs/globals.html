@@ -208,8 +208,7 @@
 								<li class="tsd-kind-variable"><a href="globals.html#chainpropertiesserializer" class="tsd-kind-icon">Chain<wbr>Properties<wbr>Serializer</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#default_address_prefix" class="tsd-kind-icon">DEFAULT_<wbr>ADDRESS_<wbr>PREFIX</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#default_chain_id" class="tsd-kind-icon">DEFAULT_<wbr>CHAIN_<wbr>ID</a></li>
-								<li class="tsd-kind-variable"><a href="globals.html#hf23_chain_id" class="tsd-kind-icon">HF23_<wbr>CHAIN_<wbr>ID</a></li>
-								<li class="tsd-kind-variable"><a href="globals.html#hf24_chain_id" class="tsd-kind-icon">HF24_<wbr>CHAIN_<wbr>ID</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#jsbi" class="tsd-kind-icon">JSBI</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#network_id" class="tsd-kind-icon">NETWORK_<wbr>ID</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#operationserializers" class="tsd-kind-icon">Operation<wbr>Serializers</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#priceserializer" class="tsd-kind-icon">Price<wbr>Serializer</a></li>
@@ -217,7 +216,6 @@
 								<li class="tsd-kind-variable"><a href="globals.html#transactionserializer" class="tsd-kind-icon">Transaction<wbr>Serializer</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#version" class="tsd-kind-icon">VERSION</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#variablebinaryserializer" class="tsd-kind-icon">Variable<wbr>Binary<wbr>Serializer</a></li>
-								<li class="tsd-kind-variable"><a href="globals.html#rebrandedapiglobal" class="tsd-kind-icon">rebranded<wbr>Api<wbr>Global</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#timeouterrors" class="tsd-kind-icon">timeout<wbr>Errors</a></li>
 							</ul>
 						</section>
@@ -260,6 +258,8 @@
 								<li class="tsd-kind-function"><a href="globals.html#iscanonicalsignature" class="tsd-kind-icon">is<wbr>Canonical<wbr>Signature</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#iswif" class="tsd-kind-icon">is<wbr>Wif</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#iteratorstream" class="tsd-kind-icon">iterator<wbr>Stream</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#makebitmaskfilter" class="tsd-kind-icon">make<wbr>Bit<wbr>Mask<wbr>Filter</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#redfunction" class="tsd-kind-icon">red<wbr>Function</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#retryingfetch" class="tsd-kind-icon">retrying<wbr>Fetch</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#ripemd160" class="tsd-kind-icon">ripemd160</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#serialize" class="tsd-kind-icon">serialize</a></li>
@@ -267,7 +267,6 @@
 								<li class="tsd-kind-function"><a href="globals.html#signtransaction" class="tsd-kind-icon">sign<wbr>Transaction</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#sleep" class="tsd-kind-icon">sleep</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#transactiondigest" class="tsd-kind-icon">transaction<wbr>Digest</a></li>
-								<li class="tsd-kind-function"><a href="globals.html#updateoperations" class="tsd-kind-icon">update<wbr>Operations</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#waitforevent" class="tsd-kind-icon">wait<wbr>For<wbr>Event</a></li>
 							</ul>
 						</section>
@@ -276,6 +275,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-object-literal"><a href="globals.html#types" class="tsd-kind-icon">Types</a></li>
 								<li class="tsd-kind-object-literal"><a href="globals.html#cryptoutils" class="tsd-kind-icon">crypto<wbr>Utils</a></li>
+								<li class="tsd-kind-object-literal"><a href="globals.html#operationorders" class="tsd-kind-icon">operation<wbr>Orders</a></li>
 							</ul>
 						</section>
 					</div>
@@ -369,7 +369,7 @@
 					<div class="tsd-signature tsd-kind-icon">Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:43</li>
+							<li>Defined in chain/serializer.ts:42</li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -421,7 +421,7 @@
 					<div class="tsd-signature tsd-kind-icon">Authority<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;weight_threshold&#x27;, UInt32Serializer],[&#x27;account_auths&#x27;, FlatMapSerializer(StringSerializer, UInt16Serializer)],[&#x27;key_auths&#x27;, FlatMapSerializer(PublicKeySerializer, UInt16Serializer)]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:199</li>
+							<li>Defined in chain/serializer.ts:198</li>
 						</ul>
 					</aside>
 				</section>
@@ -431,17 +431,17 @@
 					<div class="tsd-signature tsd-kind-icon">Beneficiary<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;account&#x27;, StringSerializer],[&#x27;weight&#x27;, UInt16Serializer]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:205</li>
+							<li>Defined in chain/serializer.ts:204</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="chainpropertiesserializer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> Chain<wbr>Properties<wbr>Serializer</h3>
-					<div class="tsd-signature tsd-kind-icon">Chain<wbr>Properties<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;account_creation_fee&#x27;, AssetSerializer],[&#x27;maximum_block_size&#x27;, UInt32Serializer],[(rebrandedApiGlobal ? &#x27;hbd&#x27; : &#x27;sbd&#x27;) + &#x27;_interest_rate&#x27;, UInt16Serializer]])</span></div>
+					<div class="tsd-signature tsd-kind-icon">Chain<wbr>Properties<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;account_creation_fee&#x27;, AssetSerializer],[&#x27;maximum_block_size&#x27;, UInt32Serializer],[&#x27;hbd_interest_rate&#x27;, UInt16Serializer]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:224</li>
+							<li>Defined in chain/serializer.ts:223</li>
 						</ul>
 					</aside>
 				</section>
@@ -451,7 +451,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>ADDRESS_<wbr>PREFIX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"STM"</span><span class="tsd-signature-symbol"> = &quot;STM&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:67</li>
+							<li>Defined in client.ts:63</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -466,7 +466,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>CHAIN_<wbr>ID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol"> = Buffer.from(&#x27;beeab0de00000000000000000000000000000000000000000000000000000000&#x27;,&#x27;hex&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:59</li>
+							<li>Defined in client.ts:55</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -476,22 +476,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
-					<a name="hf23_chain_id" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> HF23_<wbr>CHAIN_<wbr>ID</h3>
-					<div class="tsd-signature tsd-kind-icon">HF23_<wbr>CHAIN_<wbr>ID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"0000000000000000000000000000000000000000000000000000000000000000"</span><span class="tsd-signature-symbol"> = &quot;0000000000000000000000000000000000000000000000000000000000000000&quot;</span></div>
+					<a name="jsbi" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> JSBI</h3>
+					<div class="tsd-signature tsd-kind-icon">JSBI<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = require(&#x27;jsbi&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in helpers/broadcast.ts:60</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable">
-					<a name="hf24_chain_id" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> HF24_<wbr>CHAIN_<wbr>ID</h3>
-					<div class="tsd-signature tsd-kind-icon">HF24_<wbr>CHAIN_<wbr>ID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"beeab0de00000000000000000000000000000000000000000000000000000000"</span><span class="tsd-signature-symbol"> = &quot;beeab0de00000000000000000000000000000000000000000000000000000000&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in helpers/broadcast.ts:61</li>
+							<li>Defined in utils.ts:264</li>
 						</ul>
 					</aside>
 				</section>
@@ -516,7 +506,7 @@
 					<div class="tsd-signature tsd-kind-icon">Operation<wbr>Serializers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:241</li>
+							<li>Defined in chain/serializer.ts:240</li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -534,7 +524,7 @@
 					<div class="tsd-signature tsd-kind-icon">Price<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;base&#x27;, AssetSerializer],[&#x27;quote&#x27;, AssetSerializer]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:210</li>
+							<li>Defined in chain/serializer.ts:209</li>
 						</ul>
 					</aside>
 				</section>
@@ -544,7 +534,7 @@
 					<div class="tsd-signature tsd-kind-icon">Signed<wbr>Block<wbr>Header<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;previous&#x27;, BinarySerializer(20)],[&#x27;timestamp&#x27;, DateSerializer],[&#x27;witness&#x27;, StringSerializer],[&#x27;transaction_merkle_root&#x27;, BinarySerializer(20)],[&#x27;extensions&#x27;, ArraySerializer(VoidSerializer)],[&#x27;witness_signature&#x27;, BinarySerializer(65)]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:215</li>
+							<li>Defined in chain/serializer.ts:214</li>
 						</ul>
 					</aside>
 				</section>
@@ -554,7 +544,7 @@
 					<div class="tsd-signature tsd-kind-icon">Transaction<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;ref_block_num&#x27;, UInt16Serializer],[&#x27;ref_block_prefix&#x27;, UInt32Serializer],[&#x27;expiration&#x27;, DateSerializer],[&#x27;operations&#x27;, ArraySerializer(OperationSerializer)],[&#x27;extensions&#x27;, ArraySerializer(StringSerializer)]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:613</li>
+							<li>Defined in chain/serializer.ts:609</li>
 						</ul>
 					</aside>
 				</section>
@@ -564,7 +554,7 @@
 					<div class="tsd-signature tsd-kind-icon">VERSION<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = packageVersion</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:54</li>
+							<li>Defined in client.ts:50</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -579,24 +569,14 @@
 					<div class="tsd-signature tsd-kind-icon">Variable<wbr>Binary<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = BinarySerializer()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:150</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable">
-					<a name="rebrandedapiglobal" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagLet">Let</span> rebranded<wbr>Api<wbr>Global</h3>
-					<div class="tsd-signature tsd-kind-icon">rebranded<wbr>Api<wbr>Global<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in client.ts:49</li>
+							<li>Defined in chain/serializer.ts:149</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="timeouterrors" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> timeout<wbr>Errors</h3>
-					<div class="tsd-signature tsd-kind-icon">timeout<wbr>Errors<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [&#x27;request-timeout&#x27;, &#x27;ENOTFOUND&#x27;, &#x27;ECONNREFUSED&#x27;, &#x27;Unable to acquire database lock&#x27;]</span></div>
+					<div class="tsd-signature tsd-kind-icon">timeout<wbr>Errors<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [&#x27;timeout&#x27;, &#x27;ENOTFOUND&#x27;, &#x27;ECONNREFUSED&#x27;, &#x27;database lock&#x27;]</span></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in utils.ts:41</li>
@@ -616,7 +596,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:163</li>
+									<li>Defined in chain/serializer.ts:162</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -639,7 +619,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:103</li>
+									<li>Defined in chain/serializer.ts:102</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -676,7 +656,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:132</li>
+									<li>Defined in chain/serializer.ts:131</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -699,7 +679,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:85</li>
+									<li>Defined in chain/serializer.ts:84</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -725,7 +705,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:113</li>
+									<li>Defined in chain/serializer.ts:112</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -751,7 +731,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:152</li>
+									<li>Defined in chain/serializer.ts:151</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -777,7 +757,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:57</li>
+									<li>Defined in chain/serializer.ts:56</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -803,7 +783,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:61</li>
+									<li>Defined in chain/serializer.ts:60</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -829,7 +809,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:65</li>
+									<li>Defined in chain/serializer.ts:64</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -855,7 +835,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:53</li>
+									<li>Defined in chain/serializer.ts:52</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -881,7 +861,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:173</li>
+									<li>Defined in chain/serializer.ts:172</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -904,7 +884,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:230</li>
+									<li>Defined in chain/serializer.ts:229</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -930,7 +910,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:600</li>
+									<li>Defined in chain/serializer.ts:596</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -956,7 +936,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:187</li>
+									<li>Defined in chain/serializer.ts:186</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -979,7 +959,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:117</li>
+									<li>Defined in chain/serializer.ts:116</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1005,7 +985,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:89</li>
+									<li>Defined in chain/serializer.ts:88</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1028,7 +1008,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:49</li>
+									<li>Defined in chain/serializer.ts:48</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1054,7 +1034,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:73</li>
+									<li>Defined in chain/serializer.ts:72</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1080,7 +1060,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:77</li>
+									<li>Defined in chain/serializer.ts:76</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1106,7 +1086,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:81</li>
+									<li>Defined in chain/serializer.ts:80</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1132,7 +1112,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:69</li>
+									<li>Defined in chain/serializer.ts:68</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1158,7 +1138,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:45</li>
+									<li>Defined in chain/serializer.ts:44</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1181,7 +1161,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:195</li>
+									<li>Defined in utils.ts:222</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1305,7 +1285,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in client.ts:399</li>
+									<li>Defined in client.ts:406</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1415,13 +1395,13 @@
 					<a name="failover" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> failover</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">failover<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, urls<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">failover<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, urls<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, currentAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, consoleOnFailover<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:159</li>
+									<li>Defined in utils.ts:178</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1431,6 +1411,12 @@
 								</li>
 								<li>
 									<h5>urls: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+								<li>
+									<h5>currentAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>consoleOnFailover: <span class="tsd-signature-type">boolean</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -1447,7 +1433,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/misc.ts:241</li>
+									<li>Defined in chain/misc.ts:233</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1475,7 +1461,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/misc.ts:254</li>
+									<li>Defined in chain/misc.ts:246</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1590,10 +1576,67 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="makebitmaskfilter" class="tsd-anchor"></a>
+					<h3>make<wbr>Bit<wbr>Mask<wbr>Filter</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">make<wbr>Bit<wbr>Mask<wbr>Filter<span class="tsd-signature-symbol">(</span>allowedOperations<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in utils.ts:346</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Make bitmask filter to be used with getAccountHistory call</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>allowedOperations: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array of operations index numbers</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="redfunction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> red<wbr>Function</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">red<wbr>Function<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span>, allowedOperation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in utils.ts:354</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>__namedParameters: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span></h5>
+								</li>
+								<li>
+									<h5>allowedOperation: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="retryingfetch" class="tsd-anchor"></a>
 					<h3>retrying<wbr>Fetch</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">retrying<wbr>Fetch<span class="tsd-signature-symbol">(</span>currentAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, allAddresses<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, opts<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, timeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, failoverThreshold<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, backoff<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>tries<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span>, fetchTimeout<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>tries<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>currentAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>response<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">retrying<wbr>Fetch<span class="tsd-signature-symbol">(</span>currentAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, allAddresses<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, opts<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, timeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, failoverThreshold<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, consoleOnFailover<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, backoff<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>tries<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span>, fetchTimeout<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>tries<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>currentAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>response<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1623,6 +1666,9 @@
 								</li>
 								<li>
 									<h5>failoverThreshold: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>consoleOnFailover: <span class="tsd-signature-type">boolean</span></h5>
 								</li>
 								<li>
 									<h5>backoff: <span class="tsd-signature-symbol">(</span>tries<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span></h5>
@@ -1691,7 +1737,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:184</li>
+									<li>Defined in utils.ts:211</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1837,23 +1883,6 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="updateoperations" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> update<wbr>Operations</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Operations<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in chain/serializer.ts:242</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
 					<a name="waitforevent" class="tsd-anchor"></a>
 					<h3>wait<wbr>For<wbr>Event</h3>
@@ -1900,7 +1929,7 @@
 					<div class="tsd-signature tsd-kind-icon">Types<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:621</li>
+							<li>Defined in chain/serializer.ts:617</li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -1909,7 +1938,7 @@
 						<div class="tsd-signature tsd-kind-icon">Array<span class="tsd-signature-symbol">:</span> <a href="globals.html#arrayserializer" class="tsd-signature-type">ArraySerializer</a><span class="tsd-signature-symbol"> = ArraySerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:622</li>
+								<li>Defined in chain/serializer.ts:618</li>
 							</ul>
 						</aside>
 					</section>
@@ -1919,7 +1948,7 @@
 						<div class="tsd-signature tsd-kind-icon">Asset<span class="tsd-signature-symbol">:</span> <a href="globals.html#assetserializer" class="tsd-signature-type">AssetSerializer</a><span class="tsd-signature-symbol"> = AssetSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:623</li>
+								<li>Defined in chain/serializer.ts:619</li>
 							</ul>
 						</aside>
 					</section>
@@ -1929,7 +1958,7 @@
 						<div class="tsd-signature tsd-kind-icon">Authority<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = AuthoritySerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:624</li>
+								<li>Defined in chain/serializer.ts:620</li>
 							</ul>
 						</aside>
 					</section>
@@ -1939,7 +1968,7 @@
 						<div class="tsd-signature tsd-kind-icon">Binary<span class="tsd-signature-symbol">:</span> <a href="globals.html#binaryserializer" class="tsd-signature-type">BinarySerializer</a><span class="tsd-signature-symbol"> = BinarySerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:625</li>
+								<li>Defined in chain/serializer.ts:621</li>
 							</ul>
 						</aside>
 					</section>
@@ -1949,7 +1978,7 @@
 						<div class="tsd-signature tsd-kind-icon">Boolean<span class="tsd-signature-symbol">:</span> <a href="globals.html#booleanserializer" class="tsd-signature-type">BooleanSerializer</a><span class="tsd-signature-symbol"> = BooleanSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:626</li>
+								<li>Defined in chain/serializer.ts:622</li>
 							</ul>
 						</aside>
 					</section>
@@ -1959,7 +1988,7 @@
 						<div class="tsd-signature tsd-kind-icon">Date<span class="tsd-signature-symbol">:</span> <a href="globals.html#dateserializer" class="tsd-signature-type">DateSerializer</a><span class="tsd-signature-symbol"> = DateSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:627</li>
+								<li>Defined in chain/serializer.ts:623</li>
 							</ul>
 						</aside>
 					</section>
@@ -1969,7 +1998,7 @@
 						<div class="tsd-signature tsd-kind-icon">Flat<wbr>Map<span class="tsd-signature-symbol">:</span> <a href="globals.html#flatmapserializer" class="tsd-signature-type">FlatMapSerializer</a><span class="tsd-signature-symbol"> = FlatMapSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:628</li>
+								<li>Defined in chain/serializer.ts:624</li>
 							</ul>
 						</aside>
 					</section>
@@ -1979,7 +2008,7 @@
 						<div class="tsd-signature tsd-kind-icon">Int16<span class="tsd-signature-symbol">:</span> <a href="globals.html#int16serializer" class="tsd-signature-type">Int16Serializer</a><span class="tsd-signature-symbol"> = Int16Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:629</li>
+								<li>Defined in chain/serializer.ts:625</li>
 							</ul>
 						</aside>
 					</section>
@@ -1989,7 +2018,7 @@
 						<div class="tsd-signature tsd-kind-icon">Int32<span class="tsd-signature-symbol">:</span> <a href="globals.html#int32serializer" class="tsd-signature-type">Int32Serializer</a><span class="tsd-signature-symbol"> = Int32Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:630</li>
+								<li>Defined in chain/serializer.ts:626</li>
 							</ul>
 						</aside>
 					</section>
@@ -1999,7 +2028,7 @@
 						<div class="tsd-signature tsd-kind-icon">Int64<span class="tsd-signature-symbol">:</span> <a href="globals.html#int64serializer" class="tsd-signature-type">Int64Serializer</a><span class="tsd-signature-symbol"> = Int64Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:631</li>
+								<li>Defined in chain/serializer.ts:627</li>
 							</ul>
 						</aside>
 					</section>
@@ -2009,7 +2038,7 @@
 						<div class="tsd-signature tsd-kind-icon">Int8<span class="tsd-signature-symbol">:</span> <a href="globals.html#int8serializer" class="tsd-signature-type">Int8Serializer</a><span class="tsd-signature-symbol"> = Int8Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:632</li>
+								<li>Defined in chain/serializer.ts:628</li>
 							</ul>
 						</aside>
 					</section>
@@ -2019,7 +2048,7 @@
 						<div class="tsd-signature tsd-kind-icon">Object<span class="tsd-signature-symbol">:</span> <a href="globals.html#objectserializer" class="tsd-signature-type">ObjectSerializer</a><span class="tsd-signature-symbol"> = ObjectSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:633</li>
+								<li>Defined in chain/serializer.ts:629</li>
 							</ul>
 						</aside>
 					</section>
@@ -2029,7 +2058,7 @@
 						<div class="tsd-signature tsd-kind-icon">Operation<span class="tsd-signature-symbol">:</span> <a href="globals.html#operationserializer" class="tsd-signature-type">OperationSerializer</a><span class="tsd-signature-symbol"> = OperationSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:634</li>
+								<li>Defined in chain/serializer.ts:630</li>
 							</ul>
 						</aside>
 					</section>
@@ -2039,7 +2068,7 @@
 						<div class="tsd-signature tsd-kind-icon">Optional<span class="tsd-signature-symbol">:</span> <a href="globals.html#optionalserializer" class="tsd-signature-type">OptionalSerializer</a><span class="tsd-signature-symbol"> = OptionalSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:635</li>
+								<li>Defined in chain/serializer.ts:631</li>
 							</ul>
 						</aside>
 					</section>
@@ -2049,7 +2078,7 @@
 						<div class="tsd-signature tsd-kind-icon">Price<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = PriceSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:636</li>
+								<li>Defined in chain/serializer.ts:632</li>
 							</ul>
 						</aside>
 					</section>
@@ -2059,7 +2088,7 @@
 						<div class="tsd-signature tsd-kind-icon">Public<wbr>Key<span class="tsd-signature-symbol">:</span> <a href="globals.html#publickeyserializer" class="tsd-signature-type">PublicKeySerializer</a><span class="tsd-signature-symbol"> = PublicKeySerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:637</li>
+								<li>Defined in chain/serializer.ts:633</li>
 							</ul>
 						</aside>
 					</section>
@@ -2069,7 +2098,7 @@
 						<div class="tsd-signature tsd-kind-icon">Static<wbr>Variant<span class="tsd-signature-symbol">:</span> <a href="globals.html#staticvariantserializer" class="tsd-signature-type">StaticVariantSerializer</a><span class="tsd-signature-symbol"> = StaticVariantSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:638</li>
+								<li>Defined in chain/serializer.ts:634</li>
 							</ul>
 						</aside>
 					</section>
@@ -2079,7 +2108,7 @@
 						<div class="tsd-signature tsd-kind-icon">String<span class="tsd-signature-symbol">:</span> <a href="globals.html#stringserializer" class="tsd-signature-type">StringSerializer</a><span class="tsd-signature-symbol"> = StringSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:639</li>
+								<li>Defined in chain/serializer.ts:635</li>
 							</ul>
 						</aside>
 					</section>
@@ -2089,7 +2118,7 @@
 						<div class="tsd-signature tsd-kind-icon">Transaction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = TransactionSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:640</li>
+								<li>Defined in chain/serializer.ts:636</li>
 							</ul>
 						</aside>
 					</section>
@@ -2099,7 +2128,7 @@
 						<div class="tsd-signature tsd-kind-icon">UInt16<span class="tsd-signature-symbol">:</span> <a href="globals.html#uint16serializer" class="tsd-signature-type">UInt16Serializer</a><span class="tsd-signature-symbol"> = UInt16Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:641</li>
+								<li>Defined in chain/serializer.ts:637</li>
 							</ul>
 						</aside>
 					</section>
@@ -2109,7 +2138,7 @@
 						<div class="tsd-signature tsd-kind-icon">UInt32<span class="tsd-signature-symbol">:</span> <a href="globals.html#uint32serializer" class="tsd-signature-type">UInt32Serializer</a><span class="tsd-signature-symbol"> = UInt32Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:642</li>
+								<li>Defined in chain/serializer.ts:638</li>
 							</ul>
 						</aside>
 					</section>
@@ -2119,7 +2148,7 @@
 						<div class="tsd-signature tsd-kind-icon">UInt64<span class="tsd-signature-symbol">:</span> <a href="globals.html#uint64serializer" class="tsd-signature-type">UInt64Serializer</a><span class="tsd-signature-symbol"> = UInt64Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:643</li>
+								<li>Defined in chain/serializer.ts:639</li>
 							</ul>
 						</aside>
 					</section>
@@ -2129,7 +2158,7 @@
 						<div class="tsd-signature tsd-kind-icon">UInt8<span class="tsd-signature-symbol">:</span> <a href="globals.html#uint8serializer" class="tsd-signature-type">UInt8Serializer</a><span class="tsd-signature-symbol"> = UInt8Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:644</li>
+								<li>Defined in chain/serializer.ts:640</li>
 							</ul>
 						</aside>
 					</section>
@@ -2139,7 +2168,7 @@
 						<div class="tsd-signature tsd-kind-icon">Void<span class="tsd-signature-symbol">:</span> <a href="globals.html#voidserializer" class="tsd-signature-type">VoidSerializer</a><span class="tsd-signature-symbol"> = VoidSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:645</li>
+								<li>Defined in chain/serializer.ts:641</li>
 							</ul>
 						</aside>
 					</section>
@@ -2255,6 +2284,746 @@
 						<aside class="tsd-sources">
 							<ul>
 								<li>Defined in crypto.ts:412</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal">
+					<a name="operationorders" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> operation<wbr>Orders</h3>
+					<div class="tsd-signature tsd-kind-icon">operation<wbr>Orders<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in utils.ts:265</li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.account_create" class="tsd-anchor"></a>
+						<h3>account_<wbr>create</h3>
+						<div class="tsd-signature tsd-kind-icon">account_<wbr>create<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 9</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:276</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.account_create_with_delegation" class="tsd-anchor"></a>
+						<h3>account_<wbr>create_<wbr>with_<wbr>delegation</h3>
+						<div class="tsd-signature tsd-kind-icon">account_<wbr>create_<wbr>with_<wbr>delegation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 41</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:308</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.account_update" class="tsd-anchor"></a>
+						<h3>account_<wbr>update</h3>
+						<div class="tsd-signature tsd-kind-icon">account_<wbr>update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 10</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:277</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.account_update2" class="tsd-anchor"></a>
+						<h3>account_<wbr>update2</h3>
+						<div class="tsd-signature tsd-kind-icon">account_<wbr>update2<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 43</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:310</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.account_witness_proxy" class="tsd-anchor"></a>
+						<h3>account_<wbr>witness_<wbr>proxy</h3>
+						<div class="tsd-signature tsd-kind-icon">account_<wbr>witness_<wbr>proxy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 13</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:280</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.account_witness_vote" class="tsd-anchor"></a>
+						<h3>account_<wbr>witness_<wbr>vote</h3>
+						<div class="tsd-signature tsd-kind-icon">account_<wbr>witness_<wbr>vote<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 12</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:279</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.author_reward" class="tsd-anchor"></a>
+						<h3>author_<wbr>reward</h3>
+						<div class="tsd-signature tsd-kind-icon">author_<wbr>reward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 49</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:316</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.cancel_transfer_from_savings" class="tsd-anchor"></a>
+						<h3>cancel_<wbr>transfer_<wbr>from_<wbr>savings</h3>
+						<div class="tsd-signature tsd-kind-icon">cancel_<wbr>transfer_<wbr>from_<wbr>savings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 34</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:301</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.change_recovery_account" class="tsd-anchor"></a>
+						<h3>change_<wbr>recovery_<wbr>account</h3>
+						<div class="tsd-signature tsd-kind-icon">change_<wbr>recovery_<wbr>account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 26</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:293</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.claim_account" class="tsd-anchor"></a>
+						<h3>claim_<wbr>account</h3>
+						<div class="tsd-signature tsd-kind-icon">claim_<wbr>account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 22</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:289</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.claim_reward_balance" class="tsd-anchor"></a>
+						<h3>claim_<wbr>reward_<wbr>balance</h3>
+						<div class="tsd-signature tsd-kind-icon">claim_<wbr>reward_<wbr>balance<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 39</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:306</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.clear_null_account_balance" class="tsd-anchor"></a>
+						<h3>clear_<wbr>null_<wbr>account_<wbr>balance</h3>
+						<div class="tsd-signature tsd-kind-icon">clear_<wbr>null_<wbr>account_<wbr>balance<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 63</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:330</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.comment" class="tsd-anchor"></a>
+						<h3>comment</h3>
+						<div class="tsd-signature tsd-kind-icon">comment<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:268</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.comment_benefactor_reward" class="tsd-anchor"></a>
+						<h3>comment_<wbr>benefactor_<wbr>reward</h3>
+						<div class="tsd-signature tsd-kind-icon">comment_<wbr>benefactor_<wbr>reward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 61</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:328</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.comment_options" class="tsd-anchor"></a>
+						<h3>comment_<wbr>options</h3>
+						<div class="tsd-signature tsd-kind-icon">comment_<wbr>options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 19</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:286</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.comment_payout_update" class="tsd-anchor"></a>
+						<h3>comment_<wbr>payout_<wbr>update</h3>
+						<div class="tsd-signature tsd-kind-icon">comment_<wbr>payout_<wbr>update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 59</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:326</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.comment_reward" class="tsd-anchor"></a>
+						<h3>comment_<wbr>reward</h3>
+						<div class="tsd-signature tsd-kind-icon">comment_<wbr>reward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 51</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:318</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.consolidate_treasury_balance" class="tsd-anchor"></a>
+						<h3>consolidate_<wbr>treasury_<wbr>balance</h3>
+						<div class="tsd-signature tsd-kind-icon">consolidate_<wbr>treasury_<wbr>balance<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 69</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:336</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.convert" class="tsd-anchor"></a>
+						<h3>convert</h3>
+						<div class="tsd-signature tsd-kind-icon">convert<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 8</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:275</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.create_claimed_account" class="tsd-anchor"></a>
+						<h3>create_<wbr>claimed_<wbr>account</h3>
+						<div class="tsd-signature tsd-kind-icon">create_<wbr>claimed_<wbr>account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 23</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:290</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.create_proposal" class="tsd-anchor"></a>
+						<h3>create_<wbr>proposal</h3>
+						<div class="tsd-signature tsd-kind-icon">create_<wbr>proposal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 44</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:311</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.curation_reward" class="tsd-anchor"></a>
+						<h3>curation_<wbr>reward</h3>
+						<div class="tsd-signature tsd-kind-icon">curation_<wbr>reward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 50</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:317</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.custom" class="tsd-anchor"></a>
+						<h3>custom</h3>
+						<div class="tsd-signature tsd-kind-icon">custom<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 15</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:282</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.custom_binary" class="tsd-anchor"></a>
+						<h3>custom_<wbr>binary</h3>
+						<div class="tsd-signature tsd-kind-icon">custom_<wbr>binary<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 35</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:302</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.custom_json" class="tsd-anchor"></a>
+						<h3>custom_<wbr>json</h3>
+						<div class="tsd-signature tsd-kind-icon">custom_<wbr>json<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 18</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:285</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.decline_voting_rights" class="tsd-anchor"></a>
+						<h3>decline_<wbr>voting_<wbr>rights</h3>
+						<div class="tsd-signature tsd-kind-icon">decline_<wbr>voting_<wbr>rights<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 36</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:303</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.delayed_voting" class="tsd-anchor"></a>
+						<h3>delayed_<wbr>voting</h3>
+						<div class="tsd-signature tsd-kind-icon">delayed_<wbr>voting<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 68</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:335</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.delegate_vesting_shares" class="tsd-anchor"></a>
+						<h3>delegate_<wbr>vesting_<wbr>shares</h3>
+						<div class="tsd-signature tsd-kind-icon">delegate_<wbr>vesting_<wbr>shares<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 40</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:307</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.delete_comment" class="tsd-anchor"></a>
+						<h3>delete_<wbr>comment</h3>
+						<div class="tsd-signature tsd-kind-icon">delete_<wbr>comment<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 17</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:284</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.effective_comment_vote" class="tsd-anchor"></a>
+						<h3>effective_<wbr>comment_<wbr>vote</h3>
+						<div class="tsd-signature tsd-kind-icon">effective_<wbr>comment_<wbr>vote<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 70</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:337</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.escrow_approve" class="tsd-anchor"></a>
+						<h3>escrow_<wbr>approve</h3>
+						<div class="tsd-signature tsd-kind-icon">escrow_<wbr>approve<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 31</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:298</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.escrow_dispute" class="tsd-anchor"></a>
+						<h3>escrow_<wbr>dispute</h3>
+						<div class="tsd-signature tsd-kind-icon">escrow_<wbr>dispute<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 28</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:295</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.escrow_release" class="tsd-anchor"></a>
+						<h3>escrow_<wbr>release</h3>
+						<div class="tsd-signature tsd-kind-icon">escrow_<wbr>release<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 29</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:296</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.escrow_transfer" class="tsd-anchor"></a>
+						<h3>escrow_<wbr>transfer</h3>
+						<div class="tsd-signature tsd-kind-icon">escrow_<wbr>transfer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 27</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:294</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.feed_publish" class="tsd-anchor"></a>
+						<h3>feed_<wbr>publish</h3>
+						<div class="tsd-signature tsd-kind-icon">feed_<wbr>publish<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 7</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:274</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.fill_convert_request" class="tsd-anchor"></a>
+						<h3>fill_<wbr>convert_<wbr>request</h3>
+						<div class="tsd-signature tsd-kind-icon">fill_<wbr>convert_<wbr>request<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 48</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:315</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.fill_order" class="tsd-anchor"></a>
+						<h3>fill_<wbr>order</h3>
+						<div class="tsd-signature tsd-kind-icon">fill_<wbr>order<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 55</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:322</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.fill_transfer_from_savings" class="tsd-anchor"></a>
+						<h3>fill_<wbr>transfer_<wbr>from_<wbr>savings</h3>
+						<div class="tsd-signature tsd-kind-icon">fill_<wbr>transfer_<wbr>from_<wbr>savings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 57</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:324</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.fill_vesting_withdraw" class="tsd-anchor"></a>
+						<h3>fill_<wbr>vesting_<wbr>withdraw</h3>
+						<div class="tsd-signature tsd-kind-icon">fill_<wbr>vesting_<wbr>withdraw<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 54</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:321</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.hardfork" class="tsd-anchor"></a>
+						<h3>hardfork</h3>
+						<div class="tsd-signature tsd-kind-icon">hardfork<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 58</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:325</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.hardfork_hive" class="tsd-anchor"></a>
+						<h3>hardfork_<wbr>hive</h3>
+						<div class="tsd-signature tsd-kind-icon">hardfork_<wbr>hive<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 66</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:333</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.hardfork_hive_restore" class="tsd-anchor"></a>
+						<h3>hardfork_<wbr>hive_<wbr>restore</h3>
+						<div class="tsd-signature tsd-kind-icon">hardfork_<wbr>hive_<wbr>restore<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 67</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:334</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.ineffective_delete_comment" class="tsd-anchor"></a>
+						<h3>ineffective_<wbr>delete_<wbr>comment</h3>
+						<div class="tsd-signature tsd-kind-icon">ineffective_<wbr>delete_<wbr>comment<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 71</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:338</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.interest" class="tsd-anchor"></a>
+						<h3>interest</h3>
+						<div class="tsd-signature tsd-kind-icon">interest<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 53</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:320</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.limit_order_cancel" class="tsd-anchor"></a>
+						<h3>limit_<wbr>order_<wbr>cancel</h3>
+						<div class="tsd-signature tsd-kind-icon">limit_<wbr>order_<wbr>cancel<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 6</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:273</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.limit_order_create" class="tsd-anchor"></a>
+						<h3>limit_<wbr>order_<wbr>create</h3>
+						<div class="tsd-signature tsd-kind-icon">limit_<wbr>order_<wbr>create<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 5</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:272</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.limit_order_create2" class="tsd-anchor"></a>
+						<h3>limit_<wbr>order_<wbr>create2</h3>
+						<div class="tsd-signature tsd-kind-icon">limit_<wbr>order_<wbr>create2<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 21</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:288</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.liquidity_reward" class="tsd-anchor"></a>
+						<h3>liquidity_<wbr>reward</h3>
+						<div class="tsd-signature tsd-kind-icon">liquidity_<wbr>reward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 52</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:319</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.pow" class="tsd-anchor"></a>
+						<h3>pow</h3>
+						<div class="tsd-signature tsd-kind-icon">pow<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 14</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:281</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.pow2" class="tsd-anchor"></a>
+						<h3>pow2</h3>
+						<div class="tsd-signature tsd-kind-icon">pow2<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 30</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:297</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.producer_reward" class="tsd-anchor"></a>
+						<h3>producer_<wbr>reward</h3>
+						<div class="tsd-signature tsd-kind-icon">producer_<wbr>reward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 62</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:329</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.proposal_pay" class="tsd-anchor"></a>
+						<h3>proposal_<wbr>pay</h3>
+						<div class="tsd-signature tsd-kind-icon">proposal_<wbr>pay<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 64</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:331</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.recover_account" class="tsd-anchor"></a>
+						<h3>recover_<wbr>account</h3>
+						<div class="tsd-signature tsd-kind-icon">recover_<wbr>account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 25</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:292</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.remove_proposal" class="tsd-anchor"></a>
+						<h3>remove_<wbr>proposal</h3>
+						<div class="tsd-signature tsd-kind-icon">remove_<wbr>proposal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 46</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:313</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.report_over_production" class="tsd-anchor"></a>
+						<h3>report_<wbr>over_<wbr>production</h3>
+						<div class="tsd-signature tsd-kind-icon">report_<wbr>over_<wbr>production<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 16</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:283</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.request_account_recovery" class="tsd-anchor"></a>
+						<h3>request_<wbr>account_<wbr>recovery</h3>
+						<div class="tsd-signature tsd-kind-icon">request_<wbr>account_<wbr>recovery<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 24</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:291</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.reset_account" class="tsd-anchor"></a>
+						<h3>reset_<wbr>account</h3>
+						<div class="tsd-signature tsd-kind-icon">reset_<wbr>account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 37</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:304</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.return_vesting_delegation" class="tsd-anchor"></a>
+						<h3>return_<wbr>vesting_<wbr>delegation</h3>
+						<div class="tsd-signature tsd-kind-icon">return_<wbr>vesting_<wbr>delegation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 60</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:327</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.set_reset_account" class="tsd-anchor"></a>
+						<h3>set_<wbr>reset_<wbr>account</h3>
+						<div class="tsd-signature tsd-kind-icon">set_<wbr>reset_<wbr>account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 38</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:305</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.set_withdraw_vesting_route" class="tsd-anchor"></a>
+						<h3>set_<wbr>withdraw_<wbr>vesting_<wbr>route</h3>
+						<div class="tsd-signature tsd-kind-icon">set_<wbr>withdraw_<wbr>vesting_<wbr>route<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 20</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:287</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.shutdown_witness" class="tsd-anchor"></a>
+						<h3>shutdown_<wbr>witness</h3>
+						<div class="tsd-signature tsd-kind-icon">shutdown_<wbr>witness<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 56</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:323</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.sps_convert" class="tsd-anchor"></a>
+						<h3>sps_<wbr>convert</h3>
+						<div class="tsd-signature tsd-kind-icon">sps_<wbr>convert<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 72</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:339</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.sps_fund" class="tsd-anchor"></a>
+						<h3>sps_<wbr>fund</h3>
+						<div class="tsd-signature tsd-kind-icon">sps_<wbr>fund<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 65</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:332</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.transfer" class="tsd-anchor"></a>
+						<h3>transfer</h3>
+						<div class="tsd-signature tsd-kind-icon">transfer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 2</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:269</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.transfer_from_savings" class="tsd-anchor"></a>
+						<h3>transfer_<wbr>from_<wbr>savings</h3>
+						<div class="tsd-signature tsd-kind-icon">transfer_<wbr>from_<wbr>savings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 33</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:300</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.transfer_to_savings" class="tsd-anchor"></a>
+						<h3>transfer_<wbr>to_<wbr>savings</h3>
+						<div class="tsd-signature tsd-kind-icon">transfer_<wbr>to_<wbr>savings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 32</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:299</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.transfer_to_vesting" class="tsd-anchor"></a>
+						<h3>transfer_<wbr>to_<wbr>vesting</h3>
+						<div class="tsd-signature tsd-kind-icon">transfer_<wbr>to_<wbr>vesting<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 3</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:270</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.update_proposal" class="tsd-anchor"></a>
+						<h3>update_<wbr>proposal</h3>
+						<div class="tsd-signature tsd-kind-icon">update_<wbr>proposal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 47</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:314</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.update_proposal_votes" class="tsd-anchor"></a>
+						<h3>update_<wbr>proposal_<wbr>votes</h3>
+						<div class="tsd-signature tsd-kind-icon">update_<wbr>proposal_<wbr>votes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 45</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:312</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.vote" class="tsd-anchor"></a>
+						<h3>vote</h3>
+						<div class="tsd-signature tsd-kind-icon">vote<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:266</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.withdraw_vesting" class="tsd-anchor"></a>
+						<h3>withdraw_<wbr>vesting</h3>
+						<div class="tsd-signature tsd-kind-icon">withdraw_<wbr>vesting<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 4</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:271</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.witness_set_properties" class="tsd-anchor"></a>
+						<h3>witness_<wbr>set_<wbr>properties</h3>
+						<div class="tsd-signature tsd-kind-icon">witness_<wbr>set_<wbr>properties<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 42</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:309</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="operationorders.witness_update" class="tsd-anchor"></a>
+						<h3>witness_<wbr>update</h3>
+						<div class="tsd-signature tsd-kind-icon">witness_<wbr>update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 11</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in utils.ts:278</li>
 							</ul>
 						</aside>
 					</section>
@@ -2626,10 +3395,7 @@
 						<a href="globals.html#default_chain_id" class="tsd-kind-icon">DEFAULT_<wbr>CHAIN_<wbr>ID</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#hf23_chain_id" class="tsd-kind-icon">HF23_<wbr>CHAIN_<wbr>ID</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#hf24_chain_id" class="tsd-kind-icon">HF24_<wbr>CHAIN_<wbr>ID</a>
+						<a href="globals.html#jsbi" class="tsd-kind-icon">JSBI</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#network_id" class="tsd-kind-icon">NETWORK_<wbr>ID</a>
@@ -2651,9 +3417,6 @@
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#variablebinaryserializer" class="tsd-kind-icon">Variable<wbr>Binary<wbr>Serializer</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#rebrandedapiglobal" class="tsd-kind-icon">rebranded<wbr>Api<wbr>Global</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#timeouterrors" class="tsd-kind-icon">timeout<wbr>Errors</a>
@@ -2767,6 +3530,12 @@
 						<a href="globals.html#iteratorstream" class="tsd-kind-icon">iterator<wbr>Stream</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#makebitmaskfilter" class="tsd-kind-icon">make<wbr>Bit<wbr>Mask<wbr>Filter</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#redfunction" class="tsd-kind-icon">red<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#retryingfetch" class="tsd-kind-icon">retrying<wbr>Fetch</a>
 					</li>
 					<li class=" tsd-kind-function">
@@ -2787,9 +3556,6 @@
 					<li class=" tsd-kind-function">
 						<a href="globals.html#transactiondigest" class="tsd-kind-icon">transaction<wbr>Digest</a>
 					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#updateoperations" class="tsd-kind-icon">update<wbr>Operations</a>
-					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#waitforevent" class="tsd-kind-icon">wait<wbr>For<wbr>Event</a>
 					</li>
@@ -2798,6 +3564,9 @@
 					</li>
 					<li class=" tsd-kind-object-literal">
 						<a href="globals.html#cryptoutils" class="tsd-kind-icon">crypto<wbr>Utils</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#operationorders" class="tsd-kind-icon">operation<wbr>Orders</a>
 					</li>
 				</ul>
 			</nav>

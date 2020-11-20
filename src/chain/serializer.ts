@@ -434,7 +434,7 @@ OperationSerializers.escrow_transfer = OperationDataSerializer(27, [
   ['fee', AssetSerializer],
   ['json_meta', StringSerializer],
   ['ratification_deadline', DateSerializer],
-  ['escrow_expiration', DateSerializer],
+  ['escrow_expiration', DateSerializer]
 ])
 
 OperationSerializers.feed_publish = OperationDataSerializer(7, [

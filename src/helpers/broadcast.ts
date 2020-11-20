@@ -57,9 +57,6 @@ import {
 import { Client } from './../client'
 import { cryptoUtils, PrivateKey, PublicKey } from './../crypto'
 
-const HF23_CHAIN_ID = '0000000000000000000000000000000000000000000000000000000000000000'
-const HF24_CHAIN_ID = 'beeab0de00000000000000000000000000000000000000000000000000000000'
-
 export interface CreateAccountOptions {
   /**
    * Username for the new account.
@@ -315,12 +312,6 @@ export class BroadcastAPI {
     key: PrivateKey | PrivateKey[]
   ): Promise<TransactionConfirmation> {
     const props = await this.client.database.getDynamicGlobalProperties()
-    const HFV = await this.client.database.call('get_hardfork_version')
-    if (HFV === '0.23.0') {
-      this.client.chainId = Buffer.from(HF23_CHAIN_ID, 'hex')
-    } else {
-      this.client.chainId = Buffer.from(HF24_CHAIN_ID, 'hex')
-    }
 
     const ref_block_num = props.head_block_number & 0xffff
     const ref_block_prefix = Buffer.from(
