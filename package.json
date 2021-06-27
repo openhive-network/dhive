@@ -1,6 +1,6 @@
 {
   "name": "@hiveio/dhive",
-  "version": "0.14.12",
+  "version": "0.14.13",
   "description": "Hive blockchain RPC client library",
   "author": "hive-network",
   "license": "BSD-3-Clause",

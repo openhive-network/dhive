@@ -273,7 +273,7 @@ export class Client {
         opts.addressPrefix = 'STM'
         opts.chainId =
             'beeab0de00000000000000000000000000000000000000000000000000000000'
-        return new Client('https://hive-test-beeabode.roelandp.nl', opts)
+        return new Client('https://testnet.openhive.network', opts)
     }
 
     /**
@@ -316,7 +316,11 @@ export class Client {
             body,
             cache: 'no-cache',
             method: 'POST',
-            mode: 'cors'
+            mode: 'cors',
+            headers: {
+                Accept: 'application/json, text/plain, */*',
+                'Content-Type': 'application/json',
+            },
         }
 
         // Self is not defined within Node environments

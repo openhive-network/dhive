@@ -171,12 +171,6 @@ describe("database api", function() {
     };
     const key = PrivateKey.fromLogin(acc.username, acc.password, "posting");
 
-    // remove chainId after hf24
-    const HFV = await client.database.call('get_hardfork_version')
-    if (HFV === '0.23.0') {
-      client.chainId = Buffer.from('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
-    }
-
     const stx = client.broadcast.sign(tx, key);
     const rv = await client.database.verifyAuthority(stx);
     assert(rv === true);
