@@ -211,6 +211,10 @@ const PriceSerializer = ObjectSerializer([
   ['quote', AssetSerializer]
 ])
 
+const PropsalUpdateSerializer = ObjectSerializer([
+  ['end_date', StringSerializer]
+])
+
 const SignedBlockHeaderSerializer = ObjectSerializer([
   ['previous', BinarySerializer(20)],
   ['timestamp', DateSerializer],
@@ -590,6 +594,32 @@ OperationSerializers.update_proposal_votes = OperationDataSerializer(45, [
 OperationSerializers.remove_proposal = OperationDataSerializer(46, [
   ['proposal_owner', StringSerializer],
   ['proposal_ids', ArraySerializer(Int64Serializer)],
+  ['extensions', ArraySerializer(VoidSerializer)]
+])
+
+OperationSerializers.update_proposal = OperationDataSerializer(47, [
+  ['proposal_id', UInt64Serializer],
+  ['creator', StringSerializer],
+  ['daily_pay', AssetSerializer],
+  ['subject', StringSerializer],
+  ['permlink', StringSerializer],
+  ['extensions', ArraySerializer(StaticVariantSerializer([VoidSerializer, PropsalUpdateSerializer]))]
+])
+
+
+OperationSerializers.collateralized_convert = OperationDataSerializer(48, [
+  ['owner', StringSerializer],
+  ['requestid', UInt32Serializer],
+  ['amount', AssetSerializer]
+])
+
+OperationSerializers.recurrent_transfer = OperationDataSerializer(49, [
+  ['from', StringSerializer],
+  ['to', StringSerializer],
+  ['amount', AssetSerializer],
+  ['memo', StringSerializer],
+  ['recurrency', UInt16Serializer],
+  ['executions', UInt16Serializer],
   ['extensions', ArraySerializer(VoidSerializer)]
 ])
 
