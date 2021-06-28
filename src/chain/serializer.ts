@@ -606,7 +606,6 @@ OperationSerializers.update_proposal = OperationDataSerializer(47, [
   ['extensions', ArraySerializer(StaticVariantSerializer([VoidSerializer, PropsalUpdateSerializer]))]
 ])
 
-
 OperationSerializers.collateralized_convert = OperationDataSerializer(48, [
   ['owner', StringSerializer],
   ['requestid', UInt32Serializer],

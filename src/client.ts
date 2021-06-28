@@ -315,12 +315,12 @@ export class Client {
         const opts: any = {
             body,
             cache: 'no-cache',
-            method: 'POST',
-            mode: 'cors',
             headers: {
-                Accept: 'application/json, text/plain, */*',
+                'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json',
             },
+            method: 'POST',
+            mode: 'cors',
         }
 
         // Self is not defined within Node environments

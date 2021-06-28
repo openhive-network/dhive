@@ -1943,6 +1943,8 @@ declare module 'dhive/utils' {
 	    update_proposal_votes: number;
 	    remove_proposal: number;
 	    update_proposal: number;
+	    collateralized_convert: number;
+	    recurrent_transfer: number;
 	    fill_convert_request: number;
 	    author_reward: number;
 	    curation_reward: number;
@@ -1968,6 +1970,16 @@ declare module 'dhive/utils' {
 	    effective_comment_vote: number;
 	    ineffective_delete_comment: number;
 	    sps_convert: number;
+	    expired_account_notification: number;
+	    changed_recovery_account: number;
+	    transfer_to_vesting_completed: number;
+	    pow_reward: number;
+	    vesting_shares_split: number;
+	    account_created: number;
+	    fill_collateralized_convert_request: number;
+	    system_warning: number;
+	    fill_recurrent_transfer: number;
+	    failed_recurrent_transfer: number;
 	};
 	/**
 	 * Make bitmask filter to be used with getAccountHistory call
