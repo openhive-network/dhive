@@ -114,6 +114,7 @@
 								<li class="tsd-kind-interface"><a href="interfaces/claimaccountoperation.html" class="tsd-kind-icon">Claim<wbr>Account<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/claimrewardbalanceoperation.html" class="tsd-kind-icon">Claim<wbr>Reward<wbr>Balance<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/clientoptions.html" class="tsd-kind-icon">Client<wbr>Options</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/collateralizedconvertoperation.html" class="tsd-kind-icon">Collateralized<wbr>Convert<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/comment.html" class="tsd-kind-icon">Comment</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/commentoperation.html" class="tsd-kind-icon">Comment<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/commentoptionsoperation.html" class="tsd-kind-icon">Comment<wbr>Options<wbr>Operation</a></li>
@@ -161,6 +162,7 @@
 								<li class="tsd-kind-interface"><a href="interfaces/rpcrequest.html" class="tsd-kind-icon">RPCRequest</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/rpcresponse.html" class="tsd-kind-icon">RPCResponse</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/recoveraccountoperation.html" class="tsd-kind-icon">Recover<wbr>Account<wbr>Operation</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/recurrenttransferoperation.html" class="tsd-kind-icon">Recurrent<wbr>Transfer<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/removeproposaloperation.html" class="tsd-kind-icon">Remove<wbr>Proposal<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/reportoverproductionoperation.html" class="tsd-kind-icon">Report<wbr>Over<wbr>Production<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/requestaccountrecoveryoperation.html" class="tsd-kind-icon">Request<wbr>Account<wbr>Recovery<wbr>Operation</a></li>
@@ -178,6 +180,7 @@
 								<li class="tsd-kind-interface"><a href="interfaces/transferoperation.html" class="tsd-kind-icon">Transfer<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/transfertosavingsoperation.html" class="tsd-kind-icon">Transfer<wbr>ToSavings<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/transfertovestingoperation.html" class="tsd-kind-icon">Transfer<wbr>ToVesting<wbr>Operation</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/updateproposaloperation.html" class="tsd-kind-icon">Update<wbr>Proposal<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/updateproposalvotesoperation.html" class="tsd-kind-icon">Update<wbr>Proposal<wbr>Votes<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/vestingdelegation.html" class="tsd-kind-icon">Vesting<wbr>Delegation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/voteoperation.html" class="tsd-kind-icon">Vote<wbr>Operation</a></li>
@@ -212,6 +215,7 @@
 								<li class="tsd-kind-variable"><a href="globals.html#network_id" class="tsd-kind-icon">NETWORK_<wbr>ID</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#operationserializers" class="tsd-kind-icon">Operation<wbr>Serializers</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#priceserializer" class="tsd-kind-icon">Price<wbr>Serializer</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#propsalupdateserializer" class="tsd-kind-icon">Propsal<wbr>Update<wbr>Serializer</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#signedblockheaderserializer" class="tsd-kind-icon">Signed<wbr>Block<wbr>Header<wbr>Serializer</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#transactionserializer" class="tsd-kind-icon">Transaction<wbr>Serializer</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#version" class="tsd-kind-icon">VERSION</a></li>
@@ -442,7 +446,7 @@
 					<div class="tsd-signature tsd-kind-icon">Chain<wbr>Properties<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;account_creation_fee&#x27;, AssetSerializer],[&#x27;maximum_block_size&#x27;, UInt32Serializer],[&#x27;hbd_interest_rate&#x27;, UInt16Serializer]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:223</li>
+							<li>Defined in chain/serializer.ts:227</li>
 						</ul>
 					</aside>
 				</section>
@@ -507,7 +511,7 @@
 					<div class="tsd-signature tsd-kind-icon">Operation<wbr>Serializers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:240</li>
+							<li>Defined in chain/serializer.ts:244</li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -530,12 +534,22 @@
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="propsalupdateserializer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Propsal<wbr>Update<wbr>Serializer</h3>
+					<div class="tsd-signature tsd-kind-icon">Propsal<wbr>Update<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;end_date&#x27;, StringSerializer]])</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in chain/serializer.ts:214</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="signedblockheaderserializer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> Signed<wbr>Block<wbr>Header<wbr>Serializer</h3>
 					<div class="tsd-signature tsd-kind-icon">Signed<wbr>Block<wbr>Header<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;previous&#x27;, BinarySerializer(20)],[&#x27;timestamp&#x27;, DateSerializer],[&#x27;witness&#x27;, StringSerializer],[&#x27;transaction_merkle_root&#x27;, BinarySerializer(20)],[&#x27;extensions&#x27;, ArraySerializer(VoidSerializer)],[&#x27;witness_signature&#x27;, BinarySerializer(65)]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:214</li>
+							<li>Defined in chain/serializer.ts:218</li>
 						</ul>
 					</aside>
 				</section>
@@ -545,7 +559,7 @@
 					<div class="tsd-signature tsd-kind-icon">Transaction<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;ref_block_num&#x27;, UInt16Serializer],[&#x27;ref_block_prefix&#x27;, UInt32Serializer],[&#x27;expiration&#x27;, DateSerializer],[&#x27;operations&#x27;, ArraySerializer(OperationSerializer)],[&#x27;extensions&#x27;, ArraySerializer(StringSerializer)]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:609</li>
+							<li>Defined in chain/serializer.ts:639</li>
 						</ul>
 					</aside>
 				</section>
@@ -885,7 +899,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:229</li>
+									<li>Defined in chain/serializer.ts:233</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -911,7 +925,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:596</li>
+									<li>Defined in chain/serializer.ts:626</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1930,7 +1944,7 @@
 					<div class="tsd-signature tsd-kind-icon">Types<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:617</li>
+							<li>Defined in chain/serializer.ts:647</li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -1939,7 +1953,7 @@
 						<div class="tsd-signature tsd-kind-icon">Array<span class="tsd-signature-symbol">:</span> <a href="globals.html#arrayserializer" class="tsd-signature-type">ArraySerializer</a><span class="tsd-signature-symbol"> = ArraySerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:618</li>
+								<li>Defined in chain/serializer.ts:648</li>
 							</ul>
 						</aside>
 					</section>
@@ -1949,7 +1963,7 @@
 						<div class="tsd-signature tsd-kind-icon">Asset<span class="tsd-signature-symbol">:</span> <a href="globals.html#assetserializer" class="tsd-signature-type">AssetSerializer</a><span class="tsd-signature-symbol"> = AssetSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:619</li>
+								<li>Defined in chain/serializer.ts:649</li>
 							</ul>
 						</aside>
 					</section>
@@ -1959,7 +1973,7 @@
 						<div class="tsd-signature tsd-kind-icon">Authority<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = AuthoritySerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:620</li>
+								<li>Defined in chain/serializer.ts:650</li>
 							</ul>
 						</aside>
 					</section>
@@ -1969,7 +1983,7 @@
 						<div class="tsd-signature tsd-kind-icon">Binary<span class="tsd-signature-symbol">:</span> <a href="globals.html#binaryserializer" class="tsd-signature-type">BinarySerializer</a><span class="tsd-signature-symbol"> = BinarySerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:621</li>
+								<li>Defined in chain/serializer.ts:651</li>
 							</ul>
 						</aside>
 					</section>
@@ -1979,7 +1993,7 @@
 						<div class="tsd-signature tsd-kind-icon">Boolean<span class="tsd-signature-symbol">:</span> <a href="globals.html#booleanserializer" class="tsd-signature-type">BooleanSerializer</a><span class="tsd-signature-symbol"> = BooleanSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:622</li>
+								<li>Defined in chain/serializer.ts:652</li>
 							</ul>
 						</aside>
 					</section>
@@ -1989,7 +2003,7 @@
 						<div class="tsd-signature tsd-kind-icon">Date<span class="tsd-signature-symbol">:</span> <a href="globals.html#dateserializer" class="tsd-signature-type">DateSerializer</a><span class="tsd-signature-symbol"> = DateSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:623</li>
+								<li>Defined in chain/serializer.ts:653</li>
 							</ul>
 						</aside>
 					</section>
@@ -1999,7 +2013,7 @@
 						<div class="tsd-signature tsd-kind-icon">Flat<wbr>Map<span class="tsd-signature-symbol">:</span> <a href="globals.html#flatmapserializer" class="tsd-signature-type">FlatMapSerializer</a><span class="tsd-signature-symbol"> = FlatMapSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:624</li>
+								<li>Defined in chain/serializer.ts:654</li>
 							</ul>
 						</aside>
 					</section>
@@ -2009,7 +2023,7 @@
 						<div class="tsd-signature tsd-kind-icon">Int16<span class="tsd-signature-symbol">:</span> <a href="globals.html#int16serializer" class="tsd-signature-type">Int16Serializer</a><span class="tsd-signature-symbol"> = Int16Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:625</li>
+								<li>Defined in chain/serializer.ts:655</li>
 							</ul>
 						</aside>
 					</section>
@@ -2019,7 +2033,7 @@
 						<div class="tsd-signature tsd-kind-icon">Int32<span class="tsd-signature-symbol">:</span> <a href="globals.html#int32serializer" class="tsd-signature-type">Int32Serializer</a><span class="tsd-signature-symbol"> = Int32Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:626</li>
+								<li>Defined in chain/serializer.ts:656</li>
 							</ul>
 						</aside>
 					</section>
@@ -2029,7 +2043,7 @@
 						<div class="tsd-signature tsd-kind-icon">Int64<span class="tsd-signature-symbol">:</span> <a href="globals.html#int64serializer" class="tsd-signature-type">Int64Serializer</a><span class="tsd-signature-symbol"> = Int64Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:627</li>
+								<li>Defined in chain/serializer.ts:657</li>
 							</ul>
 						</aside>
 					</section>
@@ -2039,7 +2053,7 @@
 						<div class="tsd-signature tsd-kind-icon">Int8<span class="tsd-signature-symbol">:</span> <a href="globals.html#int8serializer" class="tsd-signature-type">Int8Serializer</a><span class="tsd-signature-symbol"> = Int8Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:628</li>
+								<li>Defined in chain/serializer.ts:658</li>
 							</ul>
 						</aside>
 					</section>
@@ -2049,7 +2063,7 @@
 						<div class="tsd-signature tsd-kind-icon">Object<span class="tsd-signature-symbol">:</span> <a href="globals.html#objectserializer" class="tsd-signature-type">ObjectSerializer</a><span class="tsd-signature-symbol"> = ObjectSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:629</li>
+								<li>Defined in chain/serializer.ts:659</li>
 							</ul>
 						</aside>
 					</section>
@@ -2059,7 +2073,7 @@
 						<div class="tsd-signature tsd-kind-icon">Operation<span class="tsd-signature-symbol">:</span> <a href="globals.html#operationserializer" class="tsd-signature-type">OperationSerializer</a><span class="tsd-signature-symbol"> = OperationSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:630</li>
+								<li>Defined in chain/serializer.ts:660</li>
 							</ul>
 						</aside>
 					</section>
@@ -2069,7 +2083,7 @@
 						<div class="tsd-signature tsd-kind-icon">Optional<span class="tsd-signature-symbol">:</span> <a href="globals.html#optionalserializer" class="tsd-signature-type">OptionalSerializer</a><span class="tsd-signature-symbol"> = OptionalSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:631</li>
+								<li>Defined in chain/serializer.ts:661</li>
 							</ul>
 						</aside>
 					</section>
@@ -2079,7 +2093,7 @@
 						<div class="tsd-signature tsd-kind-icon">Price<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = PriceSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:632</li>
+								<li>Defined in chain/serializer.ts:662</li>
 							</ul>
 						</aside>
 					</section>
@@ -2089,7 +2103,7 @@
 						<div class="tsd-signature tsd-kind-icon">Public<wbr>Key<span class="tsd-signature-symbol">:</span> <a href="globals.html#publickeyserializer" class="tsd-signature-type">PublicKeySerializer</a><span class="tsd-signature-symbol"> = PublicKeySerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:633</li>
+								<li>Defined in chain/serializer.ts:663</li>
 							</ul>
 						</aside>
 					</section>
@@ -2099,7 +2113,7 @@
 						<div class="tsd-signature tsd-kind-icon">Static<wbr>Variant<span class="tsd-signature-symbol">:</span> <a href="globals.html#staticvariantserializer" class="tsd-signature-type">StaticVariantSerializer</a><span class="tsd-signature-symbol"> = StaticVariantSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:634</li>
+								<li>Defined in chain/serializer.ts:664</li>
 							</ul>
 						</aside>
 					</section>
@@ -2109,7 +2123,7 @@
 						<div class="tsd-signature tsd-kind-icon">String<span class="tsd-signature-symbol">:</span> <a href="globals.html#stringserializer" class="tsd-signature-type">StringSerializer</a><span class="tsd-signature-symbol"> = StringSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:635</li>
+								<li>Defined in chain/serializer.ts:665</li>
 							</ul>
 						</aside>
 					</section>
@@ -2119,7 +2133,7 @@
 						<div class="tsd-signature tsd-kind-icon">Transaction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = TransactionSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:636</li>
+								<li>Defined in chain/serializer.ts:666</li>
 							</ul>
 						</aside>
 					</section>
@@ -2129,7 +2143,7 @@
 						<div class="tsd-signature tsd-kind-icon">UInt16<span class="tsd-signature-symbol">:</span> <a href="globals.html#uint16serializer" class="tsd-signature-type">UInt16Serializer</a><span class="tsd-signature-symbol"> = UInt16Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:637</li>
+								<li>Defined in chain/serializer.ts:667</li>
 							</ul>
 						</aside>
 					</section>
@@ -2139,7 +2153,7 @@
 						<div class="tsd-signature tsd-kind-icon">UInt32<span class="tsd-signature-symbol">:</span> <a href="globals.html#uint32serializer" class="tsd-signature-type">UInt32Serializer</a><span class="tsd-signature-symbol"> = UInt32Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:638</li>
+								<li>Defined in chain/serializer.ts:668</li>
 							</ul>
 						</aside>
 					</section>
@@ -2149,7 +2163,7 @@
 						<div class="tsd-signature tsd-kind-icon">UInt64<span class="tsd-signature-symbol">:</span> <a href="globals.html#uint64serializer" class="tsd-signature-type">UInt64Serializer</a><span class="tsd-signature-symbol"> = UInt64Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:639</li>
+								<li>Defined in chain/serializer.ts:669</li>
 							</ul>
 						</aside>
 					</section>
@@ -2159,7 +2173,7 @@
 						<div class="tsd-signature tsd-kind-icon">UInt8<span class="tsd-signature-symbol">:</span> <a href="globals.html#uint8serializer" class="tsd-signature-type">UInt8Serializer</a><span class="tsd-signature-symbol"> = UInt8Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:640</li>
+								<li>Defined in chain/serializer.ts:670</li>
 							</ul>
 						</aside>
 					</section>
@@ -2169,7 +2183,7 @@
 						<div class="tsd-signature tsd-kind-icon">Void<span class="tsd-signature-symbol">:</span> <a href="globals.html#voidserializer" class="tsd-signature-type">VoidSerializer</a><span class="tsd-signature-symbol"> = VoidSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:641</li>
+								<li>Defined in chain/serializer.ts:671</li>
 							</ul>
 						</aside>
 					</section>
@@ -3144,6 +3158,9 @@
 						<a href="interfaces/clientoptions.html" class="tsd-kind-icon">Client<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="interfaces/collateralizedconvertoperation.html" class="tsd-kind-icon">Collateralized<wbr>Convert<wbr>Operation</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/comment.html" class="tsd-kind-icon">Comment</a>
 					</li>
 					<li class=" tsd-kind-interface">
@@ -3285,6 +3302,9 @@
 						<a href="interfaces/recoveraccountoperation.html" class="tsd-kind-icon">Recover<wbr>Account<wbr>Operation</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="interfaces/recurrenttransferoperation.html" class="tsd-kind-icon">Recurrent<wbr>Transfer<wbr>Operation</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/removeproposaloperation.html" class="tsd-kind-icon">Remove<wbr>Proposal<wbr>Operation</a>
 					</li>
 					<li class=" tsd-kind-interface">
@@ -3334,6 +3354,9 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/transfertovestingoperation.html" class="tsd-kind-icon">Transfer<wbr>ToVesting<wbr>Operation</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/updateproposaloperation.html" class="tsd-kind-icon">Update<wbr>Proposal<wbr>Operation</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/updateproposalvotesoperation.html" class="tsd-kind-icon">Update<wbr>Proposal<wbr>Votes<wbr>Operation</a>
@@ -3406,6 +3429,9 @@
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#priceserializer" class="tsd-kind-icon">Price<wbr>Serializer</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#propsalupdateserializer" class="tsd-kind-icon">Propsal<wbr>Update<wbr>Serializer</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#signedblockheaderserializer" class="tsd-kind-icon">Signed<wbr>Block<wbr>Header<wbr>Serializer</a>

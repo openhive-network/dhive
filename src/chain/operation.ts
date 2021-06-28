@@ -960,3 +960,37 @@ export interface RemoveProposalOperation extends Operation {
     extensions: any[]
   }
 }
+
+export interface UpdateProposalOperation extends Operation {
+  0: 'update_proposal' // 47
+  1: {
+    proposal_id: number
+    creator: string
+    daily_pay: Asset | string
+    subject: string
+    permlink: string
+    extensions: any[]
+  }
+}
+
+export interface CollateralizedConvertOperation extends Operation {
+  0: 'collateralized_convert' // 48
+  1: {
+    owner: string
+    requestid: number
+    amount: Asset | string
+  }
+}
+
+export interface RecurrentTransferOperation extends Operation {
+  0: 'recurrent_transfer' // 49
+  1: {
+    from: string
+    to: string
+    amount: Asset | string
+    memo: string
+    recurrency: number
+    executions: number
+    extensions: any[]
+  }
+}
