@@ -617,7 +617,7 @@ OperationSerializers.recurrent_transfer = OperationDataSerializer(49, [
   ['to', StringSerializer],
   ['amount', AssetSerializer],
   ['memo', StringSerializer],
-  ['recurrency', UInt16Serializer],
+  ['recurrence', UInt16Serializer],
   ['executions', UInt16Serializer],
   ['extensions', ArraySerializer(VoidSerializer)]
 ])

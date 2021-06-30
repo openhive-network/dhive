@@ -1812,7 +1812,7 @@ declare module 'dhive/chain/operation' {
 	        to: string;
 	        amount: Asset | string;
 	        memo: string;
-	        recurrency: number;
+	        recurrence: number;
 	        executions: number;
 	        extensions: any[];
 	    };
