@@ -999,12 +999,13 @@ declare module 'dhive/chain/operation' {
 	import { ChainProperties, HexBuffer } from 'dhive/chain/misc';
 	/**
 	 * Operation name.
+	 * Ref: https://gitlab.syncad.com/hive/hive/-/blob/master/libraries/protocol/include/hive/protocol/operations.hpp
 	 */
-	export type OperationName = 'account_create' | 'account_create_with_delegation' | 'account_update' | 'account_update2' | 'account_witness_proxy' | 'account_witness_vote' | 'cancel_transfer_from_savings' | 'change_recovery_account' | 'claim_account' | 'claim_reward_balance' | 'create_proposal' | 'comment' | 'comment_options' | 'convert' | 'create_claimed_account' | 'custom' | 'custom_binary' | 'custom_json' | 'decline_voting_rights' | 'delegate_vesting_shares' | 'delete_comment' | 'escrow_approve' | 'escrow_dispute' | 'escrow_release' | 'escrow_transfer' | 'feed_publish' | 'limit_order_cancel' | 'limit_order_create' | 'limit_order_create2' | 'pow' | 'pow2' | 'recover_account' | 'remove_proposal' | 'report_over_production' | 'request_account_recovery' | 'reset_account' | 'set_reset_account' | 'set_withdraw_vesting_route' | 'transfer' | 'transfer_from_savings' | 'transfer_to_savings' | 'transfer_to_vesting' | 'update_proposal_votes' | 'vote' | 'withdraw_vesting' | 'witness_set_properties' | 'witness_update';
+	export type OperationName = 'vote' | 'comment' | 'transfer' | 'transfer_to_vesting' | 'withdraw_vesting' | 'limit_order_create' | 'limit_order_cancel' | 'feed_publish' | 'convert' | 'account_create' | 'account_update' | 'witness_update' | 'account_witness_vote' | 'account_witness_proxy' | 'pow' | 'custom' | 'report_over_production' | 'delete_comment' | 'custom_json' | 'comment_options' | 'set_withdraw_vesting_route' | 'limit_order_create2' | 'claim_account' | 'create_claimed_account' | 'request_account_recovery' | 'recover_account' | 'change_recovery_account' | 'escrow_transfer' | 'escrow_dispute' | 'escrow_release' | 'pow2' | 'escrow_approve' | 'transfer_to_savings' | 'transfer_from_savings' | 'cancel_transfer_from_savings' | 'custom_binary' | 'decline_voting_rights' | 'reset_account' | 'set_reset_account' | 'claim_reward_balance' | 'delegate_vesting_shares' | 'account_create_with_delegation' | 'witness_set_properties' | 'account_update2' | 'create_proposal' | 'update_proposal_votes' | 'remove_proposal' | 'update_proposal' | 'collateralized_convert' | 'recurrent_transfer';
 	/**
 	 * Virtual operation name.
 	 */
-	export type VirtualOperationName = 'author_reward' | 'comment_benefactor_reward' | 'comment_payout_update' | 'comment_reward' | 'curation_reward' | 'fill_convert_request' | 'fill_order' | 'fill_transfer_from_savings' | 'fill_vesting_withdraw' | 'hardfork' | 'interest' | 'liquidity_reward' | 'return_vesting_delegation' | 'shutdown_witness';
+	export type VirtualOperationName = 'fill_convert_request' | 'author_reward' | 'curation_reward' | 'comment_reward' | 'liquidity_reward' | 'interest' | 'fill_vesting_withdraw' | 'fill_order' | 'shutdown_witness' | 'fill_transfer_from_savings' | 'hardfork' | 'comment_payout_update' | 'return_vesting_delegation' | 'comment_benefactor_reward' | 'producer_reward' | 'clear_null_account_balance' | 'proposal_pay' | 'sps_fund' | 'hardfork_hive' | 'hardfork_hive_restore' | 'delayed_voting' | 'consolidate_treasury_balance' | 'effective_comment_vote' | 'ineffective_delete_comment' | 'sps_convert' | 'expired_account_notification' | 'changed_recovery_account' | 'transfer_to_vesting_completed' | 'pow_reward' | 'vesting_shares_split' | 'account_created' | 'fill_collateralized_convert_request' | 'system_warning' | 'fill_recurrent_transfer' | 'failed_recurrent_transfer';
 	/**
 	 * Generic operation.
 	 */
@@ -1785,6 +1786,37 @@ declare module 'dhive/chain/operation' {
 	        extensions: any[];
 	    };
 	}
+	export interface UpdateProposalOperation extends Operation {
+	    0: 'update_proposal';
+	    1: {
+	        proposal_id: number;
+	        creator: string;
+	        daily_pay: Asset | string;
+	        subject: string;
+	        permlink: string;
+	        extensions: any[];
+	    };
+	}
+	export interface CollateralizedConvertOperation extends Operation {
+	    0: 'collateralized_convert';
+	    1: {
+	        owner: string;
+	        requestid: number;
+	        amount: Asset | string;
+	    };
+	}
+	export interface RecurrentTransferOperation extends Operation {
+	    0: 'recurrent_transfer';
+	    1: {
+	        from: string;
+	        to: string;
+	        amount: Asset | string;
+	        memo: string;
+	        recurrence: number;
+	        executions: number;
+	        extensions: any[];
+	    };
+	}
 
 }
 declare module 'dhive/utils' {
@@ -1911,6 +1943,8 @@ declare module 'dhive/utils' {
 	    update_proposal_votes: number;
 	    remove_proposal: number;
 	    update_proposal: number;
+	    collateralized_convert: number;
+	    recurrent_transfer: number;
 	    fill_convert_request: number;
 	    author_reward: number;
 	    curation_reward: number;
@@ -1936,6 +1970,16 @@ declare module 'dhive/utils' {
 	    effective_comment_vote: number;
 	    ineffective_delete_comment: number;
 	    sps_convert: number;
+	    expired_account_notification: number;
+	    changed_recovery_account: number;
+	    transfer_to_vesting_completed: number;
+	    pow_reward: number;
+	    vesting_shares_split: number;
+	    account_created: number;
+	    fill_collateralized_convert_request: number;
+	    system_warning: number;
+	    fill_recurrent_transfer: number;
+	    failed_recurrent_transfer: number;
 	};
 	/**
 	 * Make bitmask filter to be used with getAccountHistory call

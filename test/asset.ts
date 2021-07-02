@@ -84,7 +84,7 @@ describe("asset", function() {
 
   it("should get vesting share price", function() {
     const props: any = {
-      total_vesting_fund_steem: "5.000 HIVE",
+      total_vesting_fund_hive: "5.000 HIVE",
       total_vesting_shares: "12345.000000 VESTS"
     };
     const price1 = getVestingSharePrice(props);
@@ -93,7 +93,7 @@ describe("asset", function() {
     assert.equal(price1.quote.amount, 5);
     assert.equal(price1.quote.symbol, "HIVE");
     const badProps: any = {
-      total_vesting_fund_steem: "0.000 HIVE",
+      total_vesting_fund_hive: "0.000 HIVE",
       total_vesting_shares: "0.000000 VESTS"
     };
     const price2 = getVestingSharePrice(badProps);
