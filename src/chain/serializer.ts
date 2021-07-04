@@ -211,8 +211,8 @@ const PriceSerializer = ObjectSerializer([
   ['quote', AssetSerializer]
 ])
 
-const PropsalUpdateSerializer = ObjectSerializer([
-  ['end_date', StringSerializer]
+const ProposalUpdateSerializer = ObjectSerializer([
+  ['end_date', DateSerializer]
 ])
 
 const SignedBlockHeaderSerializer = ObjectSerializer([
@@ -603,7 +603,7 @@ OperationSerializers.update_proposal = OperationDataSerializer(47, [
   ['daily_pay', AssetSerializer],
   ['subject', StringSerializer],
   ['permlink', StringSerializer],
-  ['extensions', ArraySerializer(StaticVariantSerializer([VoidSerializer, PropsalUpdateSerializer]))]
+  ['extensions', ArraySerializer(StaticVariantSerializer([VoidSerializer, ProposalUpdateSerializer]))]
 ])
 
 OperationSerializers.collateralized_convert = OperationDataSerializer(48, [
