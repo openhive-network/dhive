@@ -398,6 +398,24 @@ function signTransaction(
   return signedTransaction
 }
 
+function generateTrxId(transaction: Transaction) {
+  const buffer = new ByteBuffer(
+    ByteBuffer.DEFAULT_CAPACITY,
+    ByteBuffer.LITTLE_ENDIAN
+  )
+  try {
+    Types.Transaction(buffer, transaction)
+  } catch (cause) {
+    throw new VError(
+      { cause, name: 'SerializationError' },
+      'Unable to serialize transaction'
+    )
+  }
+  buffer.flip()
+  const transactionData = Buffer.from(buffer.toBuffer())
+  return cryptoUtils.sha256(transactionData).toString('hex').slice(0, 40)
+}
+
 /** Misc crypto utility functions. */
 export const cryptoUtils = {
   decodePrivate,
@@ -409,5 +427,6 @@ export const cryptoUtils = {
   ripemd160,
   sha256,
   signTransaction,
-  transactionDigest
+  transactionDigest,
+  generateTrxId
 }

@@ -334,7 +334,7 @@ export class BroadcastAPI {
     }
 
     const result = await this.send(this.sign(tx, key))
-    assert(result.expired === false, 'transaction expired')
+    // assert(result.expired === false, 'transaction expired')
 
     return result
   }
@@ -355,7 +355,8 @@ export class BroadcastAPI {
   public async send(
     transaction: SignedTransaction
   ): Promise<TransactionConfirmation> {
-    return this.call('broadcast_transaction_synchronous', [transaction])
+    const trxId = cryptoUtils.generateTrxId(transaction)
+    return Object.assign({ id: trxId }, this.call('broadcast_transaction', [transaction]))
   }
 
   /**
