@@ -413,7 +413,7 @@ function generateTrxId(transaction: Transaction) {
   }
   buffer.flip()
   const transactionData = Buffer.from(buffer.toBuffer())
-  return cryptoUtils.sha256(transactionData).slice(0, 40)
+  return cryptoUtils.sha256(transactionData).toString('hex').slice(0, 40)
 }
 
 /** Misc crypto utility functions. */
