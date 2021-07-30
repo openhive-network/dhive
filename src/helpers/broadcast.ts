@@ -355,7 +355,7 @@ export class BroadcastAPI {
   public async send(
     transaction: SignedTransaction
   ): Promise<TransactionConfirmation> {
-    return this.call('broadcast_transaction_synchronous', [transaction])
+    return this.call('broadcast_transaction', [transaction])
   }
 
   /**
