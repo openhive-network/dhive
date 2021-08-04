@@ -356,7 +356,8 @@ export class BroadcastAPI {
     transaction: SignedTransaction
   ): Promise<TransactionConfirmation> {
     const trxId = cryptoUtils.generateTrxId(transaction)
-    return Object.assign({ id: trxId }, this.call('broadcast_transaction', [transaction]))
+    const result = await this.call('broadcast_transaction', [transaction])
+    return Object.assign({ id: trxId }, result)
   }
 
   /**
