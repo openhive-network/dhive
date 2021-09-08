@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>RPCRequest | @hiveio/dhive</title>
+	<title>AccountsByKey | @hiveio/dhive</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="rpcrequest.html">RPCRequest</a>
+					<a href="accountsbykey.html">AccountsByKey</a>
 				</li>
 			</ul>
-			<h1>Interface RPCRequest</h1>
+			<h1>Interface AccountsByKey</h1>
 		</div>
 	</div>
 </header>
@@ -70,12 +70,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">RPCRequest</span>
-						<ul class="tsd-hierarchy">
-							<li>
-								<a href="rpccall.html" class="tsd-signature-type">RPCCall</a>
-							</li>
-						</ul>
+						<span class="target">AccountsByKey</span>
 					</li>
 				</ul>
 			</section>
@@ -86,10 +81,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rpcrequest.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rpcrequest.html#jsonrpc" class="tsd-kind-icon">jsonrpc</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rpcrequest.html#method" class="tsd-kind-icon">method</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rpcrequest.html#params" class="tsd-kind-icon">params</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="accountsbykey.html#accounts" class="tsd-kind-icon">accounts</a></li>
 							</ul>
 						</section>
 					</div>
@@ -98,57 +90,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="id" class="tsd-anchor"></a>
-					<h3>id</h3>
-					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="accounts" class="tsd-anchor"></a>
+					<h3>accounts</h3>
+					<div class="tsd-signature tsd-kind-icon">accounts<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:70</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Request sequence number.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="jsonrpc" class="tsd-anchor"></a>
-					<h3>jsonrpc</h3>
-					<div class="tsd-signature tsd-kind-icon">jsonrpc<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"2.0"</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in client.ts:78</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Array of parameters to pass to the method.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="method" class="tsd-anchor"></a>
-					<h3>method</h3>
-					<div class="tsd-signature tsd-kind-icon">method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"call"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"notice"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"callback"</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in client.ts:74</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>RPC method.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="params" class="tsd-anchor"></a>
-					<h3>params</h3>
-					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in client.ts:79</li>
+							<li>Defined in helpers/key.ts:10</li>
 						</ul>
 					</aside>
 				</section>
@@ -167,19 +114,10 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="rpcrequest.html" class="tsd-kind-icon">RPCRequest</a>
+						<a href="accountsbykey.html" class="tsd-kind-icon">Accounts<wbr>ByKey</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="rpcrequest.html#id" class="tsd-kind-icon">id</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="rpcrequest.html#jsonrpc" class="tsd-kind-icon">jsonrpc</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="rpcrequest.html#method" class="tsd-kind-icon">method</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="rpcrequest.html#params" class="tsd-kind-icon">params</a>
+								<a href="accountsbykey.html#accounts" class="tsd-kind-icon">accounts</a>
 							</li>
 						</ul>
 					</li>

@@ -76,6 +76,7 @@
 						<section class="tsd-index-section ">
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-class"><a href="classes/accountbykeyapi.html" class="tsd-kind-icon">Account<wbr>ByKeyAPI</a></li>
 								<li class="tsd-kind-class"><a href="classes/asset.html" class="tsd-kind-icon">Asset</a></li>
 								<li class="tsd-kind-class"><a href="classes/authority.html" class="tsd-kind-icon">Authority</a></li>
 								<li class="tsd-kind-class"><a href="classes/blockchain.html" class="tsd-kind-icon">Blockchain</a></li>
@@ -103,6 +104,7 @@
 								<li class="tsd-kind-interface"><a href="interfaces/accountupdateoperation.html" class="tsd-kind-icon">Account<wbr>Update<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/accountwitnessproxyoperation.html" class="tsd-kind-icon">Account<wbr>Witness<wbr>Proxy<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/accountwitnessvoteoperation.html" class="tsd-kind-icon">Account<wbr>Witness<wbr>Vote<wbr>Operation</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/accountsbykey.html" class="tsd-kind-icon">Accounts<wbr>ByKey</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/appliedoperation.html" class="tsd-kind-icon">Applied<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/authoritytype.html" class="tsd-kind-icon">Authority<wbr>Type</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/beneficiaryroute.html" class="tsd-kind-icon">Beneficiary<wbr>Route</a></li>
@@ -215,7 +217,7 @@
 								<li class="tsd-kind-variable"><a href="globals.html#network_id" class="tsd-kind-icon">NETWORK_<wbr>ID</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#operationserializers" class="tsd-kind-icon">Operation<wbr>Serializers</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#priceserializer" class="tsd-kind-icon">Price<wbr>Serializer</a></li>
-								<li class="tsd-kind-variable"><a href="globals.html#propsalupdateserializer" class="tsd-kind-icon">Propsal<wbr>Update<wbr>Serializer</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#proposalupdateserializer" class="tsd-kind-icon">Proposal<wbr>Update<wbr>Serializer</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#signedblockheaderserializer" class="tsd-kind-icon">Signed<wbr>Block<wbr>Header<wbr>Serializer</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#transactionserializer" class="tsd-kind-icon">Transaction<wbr>Serializer</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#version" class="tsd-kind-icon">VERSION</a></li>
@@ -257,6 +259,7 @@
 								<li class="tsd-kind-function"><a href="globals.html#encodeprivate" class="tsd-kind-icon">encode<wbr>Private</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#encodepublic" class="tsd-kind-icon">encode<wbr>Public</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#failover" class="tsd-kind-icon">failover</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#generatetrxid" class="tsd-kind-icon">generate<wbr>Trx<wbr>Id</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#getvestingshareprice" class="tsd-kind-icon">get<wbr>Vesting<wbr>Share<wbr>Price</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#getvests" class="tsd-kind-icon">get<wbr>Vests</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#iscanonicalsignature" class="tsd-kind-icon">is<wbr>Canonical<wbr>Signature</a></li>
@@ -456,7 +459,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>ADDRESS_<wbr>PREFIX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"STM"</span><span class="tsd-signature-symbol"> = &quot;STM&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:63</li>
+							<li>Defined in client.ts:64</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -471,7 +474,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>CHAIN_<wbr>ID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol"> = Buffer.from(&#x27;beeab0de00000000000000000000000000000000000000000000000000000000&#x27;,&#x27;hex&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:55</li>
+							<li>Defined in client.ts:56</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -534,9 +537,9 @@
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
-					<a name="propsalupdateserializer" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> Propsal<wbr>Update<wbr>Serializer</h3>
-					<div class="tsd-signature tsd-kind-icon">Propsal<wbr>Update<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;end_date&#x27;, StringSerializer]])</span></div>
+					<a name="proposalupdateserializer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Proposal<wbr>Update<wbr>Serializer</h3>
+					<div class="tsd-signature tsd-kind-icon">Proposal<wbr>Update<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;end_date&#x27;, DateSerializer]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in chain/serializer.ts:214</li>
@@ -569,7 +572,7 @@
 					<div class="tsd-signature tsd-kind-icon">VERSION<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = packageVersion</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:50</li>
+							<li>Defined in client.ts:51</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1300,7 +1303,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in client.ts:410</li>
+									<li>Defined in client.ts:405</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1432,6 +1435,29 @@
 								</li>
 								<li>
 									<h5>consoleOnFailover: <span class="tsd-signature-type">boolean</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="generatetrxid" class="tsd-anchor"></a>
+					<h3>generate<wbr>Trx<wbr>Id</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">generate<wbr>Trx<wbr>Id<span class="tsd-signature-symbol">(</span>transaction<span class="tsd-signature-symbol">: </span><a href="interfaces/transaction.html" class="tsd-signature-type">Transaction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in crypto.ts:401</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>transaction: <a href="interfaces/transaction.html" class="tsd-signature-type">Transaction</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -2194,7 +2220,7 @@
 					<div class="tsd-signature tsd-kind-icon">crypto<wbr>Utils<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in crypto.ts:402</li>
+							<li>Defined in crypto.ts:420</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -2208,7 +2234,7 @@
 						<div class="tsd-signature tsd-kind-icon">decode<wbr>Private<span class="tsd-signature-symbol">:</span> <a href="globals.html#decodeprivate" class="tsd-signature-type">decodePrivate</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:403</li>
+								<li>Defined in crypto.ts:421</li>
 							</ul>
 						</aside>
 					</section>
@@ -2218,7 +2244,7 @@
 						<div class="tsd-signature tsd-kind-icon">double<wbr>Sha256<span class="tsd-signature-symbol">:</span> <a href="globals.html#doublesha256" class="tsd-signature-type">doubleSha256</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:404</li>
+								<li>Defined in crypto.ts:422</li>
 							</ul>
 						</aside>
 					</section>
@@ -2228,7 +2254,7 @@
 						<div class="tsd-signature tsd-kind-icon">encode<wbr>Private<span class="tsd-signature-symbol">:</span> <a href="globals.html#encodeprivate" class="tsd-signature-type">encodePrivate</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:405</li>
+								<li>Defined in crypto.ts:423</li>
 							</ul>
 						</aside>
 					</section>
@@ -2238,7 +2264,17 @@
 						<div class="tsd-signature tsd-kind-icon">encode<wbr>Public<span class="tsd-signature-symbol">:</span> <a href="globals.html#encodepublic" class="tsd-signature-type">encodePublic</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:406</li>
+								<li>Defined in crypto.ts:424</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="cryptoutils.generatetrxid" class="tsd-anchor"></a>
+						<h3>generate<wbr>Trx<wbr>Id</h3>
+						<div class="tsd-signature tsd-kind-icon">generate<wbr>Trx<wbr>Id<span class="tsd-signature-symbol">:</span> <a href="globals.html#generatetrxid" class="tsd-signature-type">generateTrxId</a></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in crypto.ts:431</li>
 							</ul>
 						</aside>
 					</section>
@@ -2248,7 +2284,7 @@
 						<div class="tsd-signature tsd-kind-icon">is<wbr>Canonical<wbr>Signature<span class="tsd-signature-symbol">:</span> <a href="globals.html#iscanonicalsignature" class="tsd-signature-type">isCanonicalSignature</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:407</li>
+								<li>Defined in crypto.ts:425</li>
 							</ul>
 						</aside>
 					</section>
@@ -2258,7 +2294,7 @@
 						<div class="tsd-signature tsd-kind-icon">is<wbr>Wif<span class="tsd-signature-symbol">:</span> <a href="globals.html#iswif" class="tsd-signature-type">isWif</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:408</li>
+								<li>Defined in crypto.ts:426</li>
 							</ul>
 						</aside>
 					</section>
@@ -2268,7 +2304,7 @@
 						<div class="tsd-signature tsd-kind-icon">ripemd160<span class="tsd-signature-symbol">:</span> <a href="globals.html#ripemd160" class="tsd-signature-type">ripemd160</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:409</li>
+								<li>Defined in crypto.ts:427</li>
 							</ul>
 						</aside>
 					</section>
@@ -2278,7 +2314,7 @@
 						<div class="tsd-signature tsd-kind-icon">sha256<span class="tsd-signature-symbol">:</span> <a href="globals.html#sha256" class="tsd-signature-type">sha256</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:410</li>
+								<li>Defined in crypto.ts:428</li>
 							</ul>
 						</aside>
 					</section>
@@ -2288,7 +2324,7 @@
 						<div class="tsd-signature tsd-kind-icon">sign<wbr>Transaction<span class="tsd-signature-symbol">:</span> <a href="globals.html#signtransaction" class="tsd-signature-type">signTransaction</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:411</li>
+								<li>Defined in crypto.ts:429</li>
 							</ul>
 						</aside>
 					</section>
@@ -2298,7 +2334,7 @@
 						<div class="tsd-signature tsd-kind-icon">transaction<wbr>Digest<span class="tsd-signature-symbol">:</span> <a href="globals.html#transactiondigest" class="tsd-signature-type">transactionDigest</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:412</li>
+								<li>Defined in crypto.ts:430</li>
 							</ul>
 						</aside>
 					</section>
@@ -3179,6 +3215,9 @@
 						<a href="enums/blockchainmode.html" class="tsd-kind-icon">Blockchain<wbr>Mode</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="classes/accountbykeyapi.html" class="tsd-kind-icon">Account<wbr>ByKeyAPI</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="classes/asset.html" class="tsd-kind-icon">Asset</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -3243,6 +3282,9 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/accountwitnessvoteoperation.html" class="tsd-kind-icon">Account<wbr>Witness<wbr>Vote<wbr>Operation</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/accountsbykey.html" class="tsd-kind-icon">Accounts<wbr>ByKey</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/appliedoperation.html" class="tsd-kind-icon">Applied<wbr>Operation</a>
@@ -3551,7 +3593,7 @@
 						<a href="globals.html#priceserializer" class="tsd-kind-icon">Price<wbr>Serializer</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#propsalupdateserializer" class="tsd-kind-icon">Propsal<wbr>Update<wbr>Serializer</a>
+						<a href="globals.html#proposalupdateserializer" class="tsd-kind-icon">Proposal<wbr>Update<wbr>Serializer</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#signedblockheaderserializer" class="tsd-kind-icon">Signed<wbr>Block<wbr>Header<wbr>Serializer</a>
@@ -3660,6 +3702,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#failover" class="tsd-kind-icon">failover</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#generatetrxid" class="tsd-kind-icon">generate<wbr>Trx<wbr>Id</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#getvestingshareprice" class="tsd-kind-icon">get<wbr>Vesting<wbr>Share<wbr>Price</a>

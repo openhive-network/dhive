@@ -780,7 +780,7 @@ declare module 'dhive/crypto' {
 	    recover(message: Buffer, prefix?: string): PublicKey;
 	    toBuffer(): Buffer;
 	    toString(): string;
-	} function transactionDigest(transaction: Transaction | SignedTransaction, chainId?: Buffer): Buffer; function signTransaction(transaction: Transaction, keys: PrivateKey | PrivateKey[], chainId?: Buffer): SignedTransaction;
+	} function transactionDigest(transaction: Transaction | SignedTransaction, chainId?: Buffer): Buffer; function signTransaction(transaction: Transaction, keys: PrivateKey | PrivateKey[], chainId?: Buffer): SignedTransaction; function generateTrxId(transaction: Transaction): string;
 	/** Misc crypto utility functions. */
 	export const cryptoUtils: {
 	    decodePrivate: typeof decodePrivate;
@@ -793,6 +793,7 @@ declare module 'dhive/crypto' {
 	    sha256: typeof sha256;
 	    signTransaction: typeof signTransaction;
 	    transactionDigest: typeof transactionDigest;
+	    generateTrxId: typeof generateTrxId;
 	};
 	export {};
 
@@ -2690,6 +2691,30 @@ declare module 'dhive/helpers/rc' {
 	}
 
 }
+declare module 'dhive/helpers/key' {
+	/**
+	 * @file Account by key API helpers.
+	 * @author Bartłomiej (@engrave) Górnicki
+	 */
+	import { PublicKey } from 'dhive/crypto';
+	import { Client } from 'dhive/client';
+	export interface AccountsByKey {
+	    accounts: [string[]];
+	}
+	export class AccountByKeyAPI {
+	    readonly client: Client;
+	    constructor(client: Client);
+	    /**
+	     * Convenience for calling `account_by_key_api`.
+	     */
+	    call(method: string, params?: any): Promise<any>;
+	    /**
+	     * Returns all accounts that have the key associated with their owner or active authorities.
+	     */
+	    getKeyReferences(keys: (PublicKey | string)[]): Promise<AccountsByKey>;
+	}
+
+}
 declare module 'dhive/client' {
 	/**
 	 * @file Hive RPC client implementation.
@@ -2731,6 +2756,7 @@ declare module 'dhive/client' {
 	import { DatabaseAPI } from 'dhive/helpers/database';
 	import { HivemindAPI } from 'dhive/helpers/hivemind';
 	import { RCAPI } from 'dhive/helpers/rc';
+	import { AccountByKeyAPI } from 'dhive/helpers/key';
 	/**
 	 * Library version.
 	 */
@@ -2826,13 +2852,17 @@ declare module 'dhive/client' {
 	     */
 	    readonly blockchain: Blockchain;
 	    /**
-	     * Blockchain helper.
+	     * Hivemind helper.
 	     */
 	    readonly hivemind: HivemindAPI;
 	    /**
+	     * Accounts by key API helper.
+	     */
+	    readonly keys: AccountByKeyAPI;
+	    /**
 	     * Chain ID for current network.
 	     */
-	    chainId: Buffer;
+	    readonly chainId: Buffer;
 	    /**
 	     * Address prefix for current network.
 	     */
@@ -2905,6 +2935,8 @@ declare module 'dhive' {
 	export * from 'dhive/helpers/blockchain';
 	export * from 'dhive/helpers/database';
 	export * from 'dhive/helpers/rc';
+	export * from 'dhive/helpers/key';
+	export * from 'dhive/helpers/hivemind';
 	export * from 'dhive/chain/account';
 	export * from 'dhive/chain/asset';
 	export * from 'dhive/chain/block';
