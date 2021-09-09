@@ -422,11 +422,11 @@ export const cryptoUtils = {
   doubleSha256,
   encodePrivate,
   encodePublic,
+  generateTrxId,
   isCanonicalSignature,
   isWif,
   ripemd160,
   sha256,
   signTransaction,
-  transactionDigest,
-  generateTrxId
+  transactionDigest
 }

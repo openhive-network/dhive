@@ -41,6 +41,7 @@ import { Blockchain } from './helpers/blockchain'
 import { BroadcastAPI } from './helpers/broadcast'
 import { DatabaseAPI } from './helpers/database'
 import { HivemindAPI } from './helpers/hivemind'
+import {AccountByKeyAPI} from './helpers/key'
 import { RCAPI } from './helpers/rc'
 import { copy, retryingFetch, waitForEvent } from './utils'
 
@@ -204,14 +205,19 @@ export class Client {
     public readonly blockchain: Blockchain
 
     /**
-     * Blockchain helper.
+     * Hivemind helper.
      */
     public readonly hivemind: HivemindAPI
 
     /**
+     * Accounts by key API helper.
+     */
+    public readonly keys: AccountByKeyAPI
+
+    /**
      * Chain ID for current network.
      */
-    public chainId: Buffer // TODO: make it readonly after HF24
+    public readonly chainId: Buffer
 
     /**
      * Address prefix for current network.
@@ -257,6 +263,7 @@ export class Client {
         this.blockchain = new Blockchain(this)
         this.rc = new RCAPI(this)
         this.hivemind = new HivemindAPI(this)
+        this.keys = new AccountByKeyAPI(this)
     }
 
     /**
@@ -269,10 +276,8 @@ export class Client {
             opts.agent = options.agent
         }
 
-        // Testnet details: https://gitlab.syncad.com/hive/hive/-/issues/36
-        opts.addressPrefix = 'STM'
-        opts.chainId =
-            'beeab0de00000000000000000000000000000000000000000000000000000000'
+        opts.addressPrefix = 'TST'
+        opts.chainId = '18dcf0a285365fc58b71f18b3d3fec954aa0c141c44e4e5cb4cf777b9eab274e'
         return new Client('https://testnet.openhive.network', opts)
     }
 
