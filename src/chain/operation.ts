@@ -565,8 +565,8 @@ export interface LimitOrderCreate2Operation extends Operation {
     owner: string // account_name_type
     orderid: number // uint32_t
     amount_to_sell: Asset | string
-    fill_or_kill: boolean
     exchange_rate: PriceType
+    fill_or_kill: boolean
     expiration: string // time_point_sec
   }
 }
