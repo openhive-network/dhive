@@ -464,8 +464,8 @@ OperationSerializers.limit_order_create2 = OperationDataSerializer(21, [
   ['owner', StringSerializer],
   ['orderid', UInt32Serializer],
   ['amount_to_sell', AssetSerializer],
-  ['fill_or_kill', BooleanSerializer],
   ['exchange_rate', PriceSerializer],
+  ['fill_or_kill', BooleanSerializer],
   ['expiration', DateSerializer]
 ])
 
