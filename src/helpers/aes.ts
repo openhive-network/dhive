@@ -20,9 +20,7 @@ export function encrypt(private_key: PrivateKey, public_key: PublicKey, message:
     const mbuf = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN)
     mbuf.writeVString(message)
     message = Buffer.from(mbuf.flip().toBinary())
-
-    const aesKey = private_key.encapsulate(public_key)
-    return crypt(aesKey, uniqueNonce(), message)
+    return crypt(private_key, public_key, uniqueNonce(), message)
 }
 
 /**
@@ -36,26 +34,28 @@ export function encrypt(private_key: PrivateKey, public_key: PublicKey, message:
     @return {Buffer} - message
 */
 export function decrypt(private_key: PrivateKey, public_key: PublicKey, nonce, message: any, checksum: number): string {
-    const aesKey = public_key.decapsulate(private_key)
-
-    return crypt(aesKey, nonce, message, checksum).message as string
+    return crypt(private_key, public_key, nonce, message, checksum).message as string
 }
 
 /**
     @arg {Buffer} message - Encrypted or plain text message (see checksum)
     @arg {number} checksum - shared secret checksum (null to encrypt, non-null to decrypt)
 */
-function crypt(aesKey: Buffer, nonce: number | Buffer, message: ByteBuffer | string, checksum?: number) {
-
+function crypt(
+    private_key: PrivateKey,
+    public_key: PublicKey,
+    nonce: number | Buffer,
+    message: ByteBuffer | string,
+    checksum?: number
+) {
     nonce = toLongObj(nonce)
     // Appending nonce to buffer "ebuf" and rehash with sha512
+    const S = private_key.get_shared_secret(public_key)
     let ebuf: any = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN)
     ebuf.writeUint64(nonce)
-    ebuf.append(aesKey.toString('binary'), 'binary')
-    ebuf.flip()
-    ebuf = Buffer.from(ebuf.toBinary(), 'binary')
+    ebuf.append(S.toString('binary'), 'binary')
+    ebuf = Buffer.from(ebuf.copy(0, ebuf.offset).toBinary(), 'binary')
     const encryption_key = createHash('sha512').update(ebuf).digest()
-
     const iv = encryption_key.slice(32, 48)
     const tag = encryption_key.slice(0, 32)
 

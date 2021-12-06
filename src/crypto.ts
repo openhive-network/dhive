@@ -39,12 +39,19 @@ import * as ByteBuffer from 'bytebuffer'
 import { createHash } from 'crypto'
 import * as secp256k1 from 'secp256k1'
 import { VError } from 'verror'
+import * as ecurve from 'ecurve'
+import * as bigInteger from 'bigi'
 
 import * as util from 'util'
 import { Types } from './chain/serializer'
 import { SignedTransaction, Transaction } from './chain/transaction'
 import { DEFAULT_ADDRESS_PREFIX, DEFAULT_CHAIN_ID } from './client'
 import { copy } from './utils'
+
+/**
+ * secp256k1 ecurve
+ */
+const secp256k1Curve = ecurve.getCurveByName('secp256k1')
 
 /**
  * Network id used in WIF-encoding.
@@ -65,6 +72,15 @@ function ripemd160(input: Buffer | string): Buffer {
  */
 function sha256(input: Buffer | string): Buffer {
   return createHash('sha256')
+    .update(input)
+    .digest()
+}
+
+/**
+ * Return sha512 hash of input
+ */
+function sha512(input: Buffer | string): Buffer {
+  return createHash('sha512')
     .update(input)
     .digest()
 }
@@ -164,6 +180,7 @@ export class PublicKey {
     public readonly prefix = DEFAULT_ADDRESS_PREFIX,
   ) {
     assert(secp256k1.publicKeyVerify(key), 'invalid public key')
+    this.uncompressed = Buffer.from(secp256k1.publicKeyConvert(key,false))
   }
 
   public static fromBuffer(key: ByteBuffer) {
@@ -211,16 +228,6 @@ export class PublicKey {
    */
   public toJSON() {
     return this.toString()
-  }
-
-  public decapsulate(priv: PrivateKey): Buffer {
-    const master = Buffer.concat([
-      this.uncompressed,
-      priv.multiply(this),
-    ]);
-    return hkdf(master, 64, {
-      hash: "SHA-512",
-    });
   }
 
   /**
@@ -280,20 +287,6 @@ export class PrivateKey {
     return PrivateKey.fromSeed(seed)
   }
 
-  /**
-   * HMAC based key derivation function
-   * @param pub recipient publickey
-   */
-  public encapsulate(pub: PublicKey): Buffer {
-    const master = Buffer.concat([
-      pub.uncompressed,
-      this.multiply(pub),
-    ]);
-    return hkdf(master, 64, {
-      hash: "SHA-512",
-    });
-  }
-
   public multiply(pub: any): Buffer {
     return Buffer.from(secp256k1.publicKeyTweakMul(pub.key, this.secret, false));
   }
@@ -335,6 +328,20 @@ export class PrivateKey {
   public inspect() {
     const key = this.toString()
     return `PrivateKey: ${ key.slice(0, 6) }...${ key.slice(-6) }`
+  }
+
+  /**
+   * Get shared secret for memo cryptography
+   */
+  public get_shared_secret(public_key: PublicKey): Buffer {
+    let KBP = ecurve.Point.fromAffine(
+      secp256k1Curve,
+      bigInteger.fromBuffer(public_key.uncompressed.slice(1,33)),
+      bigInteger.fromBuffer(public_key.uncompressed.slice(33,65))
+    )
+    let P = KBP.multiply(bigInteger.fromBuffer(this.key))
+    let S = P.affineX.toBuffer({size:32})
+    return sha512(S)
   }
 }
 

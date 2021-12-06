@@ -1,5 +1,5 @@
-import { PublicKey } from '../crypto'
 import * as ByteBuffer from 'bytebuffer'
+import { PublicKey } from '../crypto'
 
 export type Deserializer = (buffer: ByteBuffer) => void
 
