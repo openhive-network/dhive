@@ -54,11 +54,8 @@ import {
   Transaction,
   TransactionConfirmation
 } from '../chain/transaction'
-import { cryptoUtils, PrivateKey, PublicKey } from './../crypto'
 import { Client } from './../client'
-
-const HF23_CHAIN_ID = '0000000000000000000000000000000000000000000000000000000000000000'
-const HF24_CHAIN_ID = 'beeab0de00000000000000000000000000000000000000000000000000000000'
+import { cryptoUtils, PrivateKey, PublicKey } from './../crypto'
 
 export interface CreateAccountOptions {
   /**
@@ -315,12 +312,6 @@ export class BroadcastAPI {
     key: PrivateKey | PrivateKey[]
   ): Promise<TransactionConfirmation> {
     const props = await this.client.database.getDynamicGlobalProperties()
-    const HFV = await this.client.database.call('get_hardfork_version')
-    if (HFV === '0.23.0') {
-      this.client.chainId = Buffer.from(HF23_CHAIN_ID, 'hex')
-    } else {
-      this.client.chainId = Buffer.from(HF24_CHAIN_ID, 'hex')
-    }
 
     const ref_block_num = props.head_block_number & 0xffff
     const ref_block_prefix = Buffer.from(
@@ -343,7 +334,7 @@ export class BroadcastAPI {
     }
 
     const result = await this.send(this.sign(tx, key))
-    assert(result.expired === false, 'transaction expired')
+    // assert(result.expired === false, 'transaction expired')
 
     return result
   }
@@ -364,7 +355,9 @@ export class BroadcastAPI {
   public async send(
     transaction: SignedTransaction
   ): Promise<TransactionConfirmation> {
-    return this.call('broadcast_transaction_synchronous', [transaction])
+    const trxId = cryptoUtils.generateTrxId(transaction)
+    const result = await this.call('broadcast_transaction', [transaction])
+    return Object.assign({ id: trxId }, result)
   }
 
   /**

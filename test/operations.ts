@@ -52,7 +52,7 @@ describe("operations", function() {
       }
     ];
     const rv = await client.broadcast.sendOperations([op], acc1Key);
-    const tx = await client.database.getTransaction(rv);
+    const tx = await client.database.getTransaction(rv.id);
     const rop = tx.operations[0];
     assert.equal(rop[0], "custom");
     assert.equal(rop[1].data, HexBuffer.from(op[1].data).toString());
@@ -69,7 +69,7 @@ describe("operations", function() {
       },
       acc1Key
     );
-    const tx = await client.database.getTransaction(rv);
+    const tx = await client.database.getTransaction(rv.id);
     assert.deepEqual(JSON.parse(tx.operations[0][1].json), data);
   });
 
@@ -144,7 +144,7 @@ describe("operations", function() {
         author: username,
         allow_votes: true,
         allow_curation_rewards: true,
-        percent_steem_dollars: 0,
+        percent_hbd: 0,
         max_accepted_payout: Asset.from(10, "TBD"),
         extensions: [
           [0, { beneficiaries: [{ weight: 10000, account: acc1.username }] }]

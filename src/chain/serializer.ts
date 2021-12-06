@@ -210,6 +210,10 @@ const PriceSerializer = ObjectSerializer([
     ['quote', AssetSerializer]
 ])
 
+const ProposalUpdateSerializer = ObjectSerializer([
+  ['end_date', DateSerializer]
+])
+
 const SignedBlockHeaderSerializer = ObjectSerializer([
     ['previous', BinarySerializer(20)],
     ['timestamp', DateSerializer],
@@ -222,7 +226,7 @@ const SignedBlockHeaderSerializer = ObjectSerializer([
 const ChainPropertiesSerializer = ObjectSerializer([
     ['account_creation_fee', AssetSerializer],
     ['maximum_block_size', UInt32Serializer],
-    ['sbd_interest_rate', UInt16Serializer]
+    ['hbd_interest_rate', UInt16Serializer]
 ])
 
 const EncryptedMemoSerializer = ObjectSerializer([
@@ -245,7 +249,6 @@ const OperationDataSerializer = (
 }
 
 const OperationSerializers: { [name: string]: Serializer } = {}
-
 OperationSerializers.account_create = OperationDataSerializer(9, [
     ['fee', AssetSerializer],
     ['creator', StringSerializer],
@@ -314,10 +317,10 @@ OperationSerializers.claim_account = OperationDataSerializer(22, [
 ])
 
 OperationSerializers.claim_reward_balance = OperationDataSerializer(39, [
-    ['account', StringSerializer],
-    ['reward_steem', AssetSerializer],
-    ['reward_sbd', AssetSerializer],
-    ['reward_vests', AssetSerializer]
+  ['account', StringSerializer],
+  ['reward_hive', AssetSerializer],
+  ['reward_hbd', AssetSerializer],
+  ['reward_vests', AssetSerializer]
 ])
 
 OperationSerializers.comment = OperationDataSerializer(1, [
@@ -331,22 +334,22 @@ OperationSerializers.comment = OperationDataSerializer(1, [
 ])
 
 OperationSerializers.comment_options = OperationDataSerializer(19, [
-    ['author', StringSerializer],
-    ['permlink', StringSerializer],
-    ['max_accepted_payout', AssetSerializer],
-    ['percent_steem_dollars', UInt16Serializer],
-    ['allow_votes', BooleanSerializer],
-    ['allow_curation_rewards', BooleanSerializer],
-    [
-        'extensions',
-        ArraySerializer(
-            StaticVariantSerializer([
-                ObjectSerializer([
-                    ['beneficiaries', ArraySerializer(BeneficiarySerializer)]
-                ])
-            ])
-        )
-    ]
+  ['author', StringSerializer],
+  ['permlink', StringSerializer],
+  ['max_accepted_payout', AssetSerializer],
+  ['percent_hbd', UInt16Serializer],
+  ['allow_votes', BooleanSerializer],
+  ['allow_curation_rewards', BooleanSerializer],
+  [
+    'extensions',
+    ArraySerializer(
+      StaticVariantSerializer([
+        ObjectSerializer([
+          ['beneficiaries', ArraySerializer(BeneficiarySerializer)]
+        ])
+      ])
+    )
+  ]
 ])
 
 OperationSerializers.convert = OperationDataSerializer(8, [
@@ -422,27 +425,27 @@ OperationSerializers.escrow_dispute = OperationDataSerializer(28, [
 ])
 
 OperationSerializers.escrow_release = OperationDataSerializer(29, [
-    ['from', StringSerializer],
-    ['to', StringSerializer],
-    ['agent', StringSerializer],
-    ['who', StringSerializer],
-    ['receiver', StringSerializer],
-    ['escrow_id', UInt32Serializer],
-    ['sbd_amount', AssetSerializer],
-    ['steem_amount', AssetSerializer]
+  ['from', StringSerializer],
+  ['to', StringSerializer],
+  ['agent', StringSerializer],
+  ['who', StringSerializer],
+  ['receiver', StringSerializer],
+  ['escrow_id', UInt32Serializer],
+  ['hbd_amount', AssetSerializer],
+  ['hive_amount', AssetSerializer]
 ])
 
 OperationSerializers.escrow_transfer = OperationDataSerializer(27, [
-    ['from', StringSerializer],
-    ['to', StringSerializer],
-    ['agent', StringSerializer],
-    ['escrow_id', UInt32Serializer],
-    ['sbd_amount', AssetSerializer],
-    ['steem_amount', AssetSerializer],
-    ['fee', AssetSerializer],
-    ['ratification_deadline', DateSerializer],
-    ['escrow_expiration', DateSerializer],
-    ['json_meta', StringSerializer]
+  ['from', StringSerializer],
+  ['to', StringSerializer],
+  ['hbd_amount', AssetSerializer],
+  ['hive_amount', AssetSerializer],
+  ['escrow_id', UInt32Serializer],
+  ['agent', StringSerializer],
+  ['fee', AssetSerializer],
+  ['json_meta', StringSerializer],
+  ['ratification_deadline', DateSerializer],
+  ['escrow_expiration', DateSerializer]
 ])
 
 OperationSerializers.feed_publish = OperationDataSerializer(7, [
@@ -465,12 +468,12 @@ OperationSerializers.limit_order_create = OperationDataSerializer(5, [
 ])
 
 OperationSerializers.limit_order_create2 = OperationDataSerializer(21, [
-    ['owner', StringSerializer],
-    ['orderid', UInt32Serializer],
-    ['amount_to_sell', AssetSerializer],
-    ['fill_or_kill', BooleanSerializer],
-    ['exchange_rate', PriceSerializer],
-    ['expiration', DateSerializer]
+  ['owner', StringSerializer],
+  ['orderid', UInt32Serializer],
+  ['amount_to_sell', AssetSerializer],
+  ['exchange_rate', PriceSerializer],
+  ['fill_or_kill', BooleanSerializer],
+  ['expiration', DateSerializer]
 ])
 
 OperationSerializers.recover_account = OperationDataSerializer(25, [
@@ -599,6 +602,31 @@ OperationSerializers.remove_proposal = OperationDataSerializer(46, [
     ['proposal_owner', StringSerializer],
     ['proposal_ids', ArraySerializer(Int64Serializer)],
     ['extensions', ArraySerializer(VoidSerializer)]
+])
+
+OperationSerializers.update_proposal = OperationDataSerializer(47, [
+  ['proposal_id', UInt64Serializer],
+  ['creator', StringSerializer],
+  ['daily_pay', AssetSerializer],
+  ['subject', StringSerializer],
+  ['permlink', StringSerializer],
+  ['extensions', ArraySerializer(StaticVariantSerializer([VoidSerializer, ProposalUpdateSerializer]))]
+])
+
+OperationSerializers.collateralized_convert = OperationDataSerializer(48, [
+  ['owner', StringSerializer],
+  ['requestid', UInt32Serializer],
+  ['amount', AssetSerializer]
+])
+
+OperationSerializers.recurrent_transfer = OperationDataSerializer(49, [
+  ['from', StringSerializer],
+  ['to', StringSerializer],
+  ['amount', AssetSerializer],
+  ['memo', StringSerializer],
+  ['recurrence', UInt16Serializer],
+  ['executions', UInt16Serializer],
+  ['extensions', ArraySerializer(VoidSerializer)]
 ])
 
 const OperationSerializer = (buffer: ByteBuffer, operation: Operation) => {

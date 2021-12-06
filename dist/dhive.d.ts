@@ -233,19 +233,19 @@ declare module 'dhive/chain/account' {
 	    };
 	    balance: string | Asset;
 	    savings_balance: string | Asset;
-	    sbd_balance: string | Asset;
-	    sbd_seconds: string;
-	    sbd_seconds_last_update: string;
-	    sbd_last_interest_payment: string;
-	    savings_sbd_balance: string | Asset;
-	    savings_sbd_seconds: string;
-	    savings_sbd_seconds_last_update: string;
-	    savings_sbd_last_interest_payment: string;
+	    hbd_balance: string | Asset;
+	    hbd_seconds: string;
+	    hbd_seconds_last_update: string;
+	    hbd_last_interest_payment: string;
+	    savings_hbd_balance: string | Asset;
+	    savings_hbd_seconds: string;
+	    savings_hbd_seconds_last_update: string;
+	    savings_hbd_last_interest_payment: string;
 	    savings_withdraw_requests: number;
-	    reward_sbd_balance: string | Asset;
-	    reward_steem_balance: string | Asset;
+	    reward_hbd_balance: string | Asset;
+	    reward_hive_balance: string | Asset;
 	    reward_vesting_balance: string | Asset;
-	    reward_vesting_steem: string | Asset;
+	    reward_vesting_hive: string | Asset;
 	    curation_rewards: number | string;
 	    posting_rewards: number | string;
 	    vesting_shares: string | Asset;
@@ -372,9 +372,9 @@ declare module 'dhive/chain/misc' {
 	     */
 	    maximum_block_size: number;
 	    /**
-	     * The SBD interest percentage rate decided by witnesses, expressed 0 to 10000.
+	     * The HBD interest percentage rate decided by witnesses, expressed 0 to 10000.
 	     */
-	    sbd_interest_rate: number;
+	    hbd_interest_rate: number;
 	}
 	export interface VestingDelegation {
 	    /**
@@ -432,25 +432,25 @@ declare module 'dhive/chain/misc' {
 	     * Total asset held in confidential balances.
 	     */
 	    confidential_supply: Asset | string;
-	    current_sbd_supply: Asset | string;
+	    current_hbd_supply: Asset | string;
 	    /**
 	     * Total asset held in confidential balances.
 	     */
-	    confidential_sbd_supply: Asset | string;
-	    total_vesting_fund_steem: Asset | string;
+	    confidential_hbd_supply: Asset | string;
+	    total_vesting_fund_hive: Asset | string;
 	    total_vesting_shares: Asset | string;
-	    total_reward_fund_steem: Asset | string;
+	    total_reward_fund_hive: Asset | string;
 	    /**
 	     * The running total of REWARD^2.
 	     */
 	    total_reward_shares2: string;
 	    pending_rewarded_vesting_shares: Asset | string;
-	    pending_rewarded_vesting_steem: Asset | string;
+	    pending_rewarded_vesting_hive: Asset | string;
 	    /**
 	     * This property defines the interest rate that HBD deposits receive.
 	     */
-	    sbd_interest_rate: number;
-	    sbd_print_rate: number;
+	    hbd_interest_rate: number;
+	    hbd_print_rate: number;
 	    /**
 	     *  Average block size is updated every block to be:
 	     *
@@ -515,6 +515,84 @@ declare module 'dhive/chain/misc' {
 	export function getVests(account: Account, subtract_delegated?: boolean, add_received?: boolean): number;
 
 }
+declare module 'dhive/chain/serializer' {
+	/**
+	 * @file Hive protocol serialization.
+	 * @author Johan Nordberg <code@johan-nordberg.com>
+	 * @license
+	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
+	 *
+	 * Redistribution and use in source and binary forms, with or without modification,
+	 * are permitted provided that the following conditions are met:
+	 *
+	 *  1. Redistribution of source code must retain the above copyright notice, this
+	 *     list of conditions and the following disclaimer.
+	 *
+	 *  2. Redistribution in binary form must reproduce the above copyright notice,
+	 *     this list of conditions and the following disclaimer in the documentation
+	 *     and/or other materials provided with the distribution.
+	 *
+	 *  3. Neither the name of the copyright holder nor the names of its contributors
+	 *     may be used to endorse or promote products derived from this software without
+	 *     specific prior written permission.
+	 *
+	 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+	 * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+	 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+	 * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+	 * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+	 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+	 * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+	 * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+	 * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+	 * OF THE POSSIBILITY OF SUCH DAMAGE.
+	 *
+	 * You acknowledge that this software is not designed, licensed or intended for use
+	 * in the design, construction, operation or maintenance of any military facility.
+	 */
+	/// <reference types="node" />
+	import * as ByteBuffer from 'bytebuffer';
+	import { PublicKey } from 'dhive/crypto';
+	import { Asset } from 'dhive/chain/asset';
+	import { HexBuffer } from 'dhive/chain/misc';
+	import { Operation } from 'dhive/chain/operation';
+	export type Serializer = (buffer: ByteBuffer, data: any) => void;
+	export const Types: {
+	    Array: (itemSerializer: Serializer) => (buffer: ByteBuffer, data: any[]) => void;
+	    Asset: (buffer: ByteBuffer, data: string | number | Asset) => void;
+	    Authority: (buffer: ByteBuffer, data: {
+	        [key: string]: any;
+	    }) => void;
+	    Binary: (size?: number | undefined) => (buffer: ByteBuffer, data: HexBuffer | Buffer) => void;
+	    Boolean: (buffer: ByteBuffer, data: boolean) => void;
+	    Date: (buffer: ByteBuffer, data: string) => void;
+	    FlatMap: (keySerializer: Serializer, valueSerializer: Serializer) => (buffer: ByteBuffer, data: [any, any][]) => void;
+	    Int16: (buffer: ByteBuffer, data: number) => void;
+	    Int32: (buffer: ByteBuffer, data: number) => void;
+	    Int64: (buffer: ByteBuffer, data: number) => void;
+	    Int8: (buffer: ByteBuffer, data: number) => void;
+	    Object: (keySerializers: [string, Serializer][]) => (buffer: ByteBuffer, data: {
+	        [key: string]: any;
+	    }) => void;
+	    Operation: (buffer: ByteBuffer, operation: Operation) => void;
+	    Optional: (valueSerializer: Serializer) => (buffer: ByteBuffer, data: any) => void;
+	    Price: (buffer: ByteBuffer, data: {
+	        [key: string]: any;
+	    }) => void;
+	    PublicKey: (buffer: ByteBuffer, data: string | PublicKey | null) => void;
+	    StaticVariant: (itemSerializers: Serializer[]) => (buffer: ByteBuffer, data: [number, any]) => void;
+	    String: (buffer: ByteBuffer, data: string) => void;
+	    Transaction: (buffer: ByteBuffer, data: {
+	        [key: string]: any;
+	    }) => void;
+	    UInt16: (buffer: ByteBuffer, data: number) => void;
+	    UInt32: (buffer: ByteBuffer, data: number) => void;
+	    UInt64: (buffer: ByteBuffer, data: number) => void;
+	    UInt8: (buffer: ByteBuffer, data: number) => void;
+	    Void: (buffer: ByteBuffer) => never;
+	};
+
+}
 declare module 'dhive/chain/transaction' {
 	/**
 	 * @file Hive transaction type definitions.
@@ -567,6 +645,157 @@ declare module 'dhive/chain/transaction' {
 	    trx_num: number;
 	    expired: boolean;
 	}
+
+}
+declare module 'dhive/crypto' {
+	/**
+	 * @file Hive crypto helpers.
+	 * @author Johan Nordberg <code@johan-nordberg.com>
+	 * @license
+	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
+	 *
+	 * Redistribution and use in source and binary forms, with or without modification,
+	 * are permitted provided that the following conditions are met:
+	 *
+	 *  1. Redistribution of source code must retain the above copyright notice, this
+	 *     list of conditions and the following disclaimer.
+	 *
+	 *  2. Redistribution in binary form must reproduce the above copyright notice,
+	 *     this list of conditions and the following disclaimer in the documentation
+	 *     and/or other materials provided with the distribution.
+	 *
+	 *  3. Neither the name of the copyright holder nor the names of its contributors
+	 *     may be used to endorse or promote products derived from this software without
+	 *     specific prior written permission.
+	 *
+	 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+	 * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+	 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+	 * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+	 * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+	 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+	 * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+	 * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+	 * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+	 * OF THE POSSIBILITY OF SUCH DAMAGE.
+	 *
+	 * You acknowledge that this software is not designed, licensed or intended for use
+	 * in the design, construction, operation or maintenance of any military facility.
+	 */
+	/// <reference types="node" />
+	import { SignedTransaction, Transaction } from 'dhive/chain/transaction';
+	/**
+	 * Network id used in WIF-encoding.
+	 */
+	export const NETWORK_ID: Buffer; function ripemd160(input: Buffer | string): Buffer; function sha256(input: Buffer | string): Buffer; function doubleSha256(input: Buffer | string): Buffer; function encodePublic(key: Buffer, prefix: string): string; function encodePrivate(key: Buffer): string; function decodePrivate(encodedKey: string): Buffer; function isCanonicalSignature(signature: Buffer): boolean; function isWif(privWif: string | Buffer): boolean;
+	/**
+	 * ECDSA (secp256k1) public key.
+	 */
+	export class PublicKey {
+	    readonly key: Buffer;
+	    readonly prefix: string;
+	    constructor(key: Buffer, prefix?: string);
+	    /**
+	     * Create a new instance from a WIF-encoded key.
+	     */
+	    static fromString(wif: string): PublicKey;
+	    /**
+	     * Create a new instance.
+	     */
+	    static from(value: string | PublicKey): PublicKey;
+	    /**
+	     * Verify a 32-byte signature.
+	     * @param message 32-byte message to verify.
+	     * @param signature Signature to verify.
+	     */
+	    verify(message: Buffer, signature: Signature): boolean;
+	    /**
+	     * Return a WIF-encoded representation of the key.
+	     */
+	    toString(): string;
+	    /**
+	     * Return JSON representation of this key, same as toString().
+	     */
+	    toJSON(): string;
+	    /**
+	     * Used by `utils.inspect` and `console.log` in node.js.
+	     */
+	    inspect(): string;
+	}
+	export type KeyRole = 'owner' | 'active' | 'posting' | 'memo';
+	/**
+	 * ECDSA (secp256k1) private key.
+	 */
+	export class PrivateKey {
+	    private key;
+	    constructor(key: Buffer);
+	    /**
+	     * Convenience to create a new instance from WIF string or buffer.
+	     */
+	    static from(value: string | Buffer): PrivateKey;
+	    /**
+	     * Create a new instance from a WIF-encoded key.
+	     */
+	    static fromString(wif: string): PrivateKey;
+	    /**
+	     * Create a new instance from a seed.
+	     */
+	    static fromSeed(seed: string): PrivateKey;
+	    /**
+	     * Create key from username and password.
+	     */
+	    static fromLogin(username: string, password: string, role?: KeyRole): PrivateKey;
+	    /**
+	     * Sign message.
+	     * @param message 32-byte message.
+	     */
+	    sign(message: Buffer): Signature;
+	    /**
+	     * Derive the public key for this private key.
+	     */
+	    createPublic(prefix?: string): PublicKey;
+	    /**
+	     * Return a WIF-encoded representation of the key.
+	     */
+	    toString(): string;
+	    /**
+	     * Used by `utils.inspect` and `console.log` in node.js. Does not show the full key
+	     * to get the full encoded key you need to explicitly call {@link toString}.
+	     */
+	    inspect(): string;
+	}
+	/**
+	 * ECDSA (secp256k1) signature.
+	 */
+	export class Signature {
+	    data: Buffer;
+	    recovery: number;
+	    constructor(data: Buffer, recovery: number);
+	    static fromBuffer(buffer: Buffer): Signature;
+	    static fromString(string: string): Signature;
+	    /**
+	     * Recover public key from signature by providing original signed message.
+	     * @param message 32-byte message that was used to create the signature.
+	     */
+	    recover(message: Buffer, prefix?: string): PublicKey;
+	    toBuffer(): Buffer;
+	    toString(): string;
+	} function transactionDigest(transaction: Transaction | SignedTransaction, chainId?: Buffer): Buffer; function signTransaction(transaction: Transaction, keys: PrivateKey | PrivateKey[], chainId?: Buffer): SignedTransaction; function generateTrxId(transaction: Transaction): string;
+	/** Misc crypto utility functions. */
+	export const cryptoUtils: {
+	    decodePrivate: typeof decodePrivate;
+	    doubleSha256: typeof doubleSha256;
+	    encodePrivate: typeof encodePrivate;
+	    encodePublic: typeof encodePublic;
+	    isCanonicalSignature: typeof isCanonicalSignature;
+	    isWif: typeof isWif;
+	    ripemd160: typeof ripemd160;
+	    sha256: typeof sha256;
+	    signTransaction: typeof signTransaction;
+	    transactionDigest: typeof transactionDigest;
+	    generateTrxId: typeof generateTrxId;
+	};
+	export {};
 
 }
 declare module 'dhive/chain/block' {
@@ -698,7 +927,7 @@ declare module 'dhive/chain/comment' {
 	    net_votes: number;
 	    root_comment: number;
 	    max_accepted_payout: string;
-	    percent_steem_dollars: number;
+	    percent_hbd: number;
 	    allow_replies: boolean;
 	    allow_votes: boolean;
 	    allow_curation_rewards: boolean;
@@ -771,12 +1000,13 @@ declare module 'dhive/chain/operation' {
 	import { ChainProperties, HexBuffer } from 'dhive/chain/misc';
 	/**
 	 * Operation name.
+	 * Ref: https://gitlab.syncad.com/hive/hive/-/blob/master/libraries/protocol/include/hive/protocol/operations.hpp
 	 */
-	export type OperationName = 'account_create' | 'account_create_with_delegation' | 'account_update' | 'account_update2' | 'account_witness_proxy' | 'account_witness_vote' | 'cancel_transfer_from_savings' | 'change_recovery_account' | 'claim_account' | 'claim_reward_balance' | 'create_proposal' | 'comment' | 'comment_options' | 'convert' | 'create_claimed_account' | 'custom' | 'custom_binary' | 'custom_json' | 'decline_voting_rights' | 'delegate_vesting_shares' | 'delete_comment' | 'escrow_approve' | 'escrow_dispute' | 'escrow_release' | 'escrow_transfer' | 'feed_publish' | 'limit_order_cancel' | 'limit_order_create' | 'limit_order_create2' | 'pow' | 'pow2' | 'recover_account' | 'remove_proposal' | 'report_over_production' | 'request_account_recovery' | 'reset_account' | 'set_reset_account' | 'set_withdraw_vesting_route' | 'transfer' | 'transfer_from_savings' | 'transfer_to_savings' | 'transfer_to_vesting' | 'update_proposal_votes' | 'vote' | 'withdraw_vesting' | 'witness_set_properties' | 'witness_update';
+	export type OperationName = 'vote' | 'comment' | 'transfer' | 'transfer_to_vesting' | 'withdraw_vesting' | 'limit_order_create' | 'limit_order_cancel' | 'feed_publish' | 'convert' | 'account_create' | 'account_update' | 'witness_update' | 'account_witness_vote' | 'account_witness_proxy' | 'pow' | 'custom' | 'report_over_production' | 'delete_comment' | 'custom_json' | 'comment_options' | 'set_withdraw_vesting_route' | 'limit_order_create2' | 'claim_account' | 'create_claimed_account' | 'request_account_recovery' | 'recover_account' | 'change_recovery_account' | 'escrow_transfer' | 'escrow_dispute' | 'escrow_release' | 'pow2' | 'escrow_approve' | 'transfer_to_savings' | 'transfer_from_savings' | 'cancel_transfer_from_savings' | 'custom_binary' | 'decline_voting_rights' | 'reset_account' | 'set_reset_account' | 'claim_reward_balance' | 'delegate_vesting_shares' | 'account_create_with_delegation' | 'witness_set_properties' | 'account_update2' | 'create_proposal' | 'update_proposal_votes' | 'remove_proposal' | 'update_proposal' | 'collateralized_convert' | 'recurrent_transfer';
 	/**
 	 * Virtual operation name.
 	 */
-	export type VirtualOperationName = 'author_reward' | 'comment_benefactor_reward' | 'comment_payout_update' | 'comment_reward' | 'curation_reward' | 'fill_convert_request' | 'fill_order' | 'fill_transfer_from_savings' | 'fill_vesting_withdraw' | 'hardfork' | 'interest' | 'liquidity_reward' | 'return_vesting_delegation' | 'shutdown_witness';
+	export type VirtualOperationName = 'fill_convert_request' | 'author_reward' | 'curation_reward' | 'comment_reward' | 'liquidity_reward' | 'interest' | 'fill_vesting_withdraw' | 'fill_order' | 'shutdown_witness' | 'fill_transfer_from_savings' | 'hardfork' | 'comment_payout_update' | 'return_vesting_delegation' | 'comment_benefactor_reward' | 'producer_reward' | 'clear_null_account_balance' | 'proposal_pay' | 'sps_fund' | 'hardfork_hive' | 'hardfork_hive_restore' | 'delayed_voting' | 'consolidate_treasury_balance' | 'effective_comment_vote' | 'ineffective_delete_comment' | 'sps_convert' | 'expired_account_notification' | 'changed_recovery_account' | 'transfer_to_vesting_completed' | 'pow_reward' | 'vesting_shares_split' | 'account_created' | 'fill_collateralized_convert_request' | 'system_warning' | 'fill_recurrent_transfer' | 'failed_recurrent_transfer';
 	/**
 	 * Generic operation.
 	 */
@@ -898,8 +1128,8 @@ declare module 'dhive/chain/operation' {
 	    0: 'claim_reward_balance';
 	    1: {
 	        account: string;
-	        reward_steem: string | Asset;
-	        reward_sbd: string | Asset;
+	        reward_hive: string | Asset;
+	        reward_hbd: string | Asset;
 	        reward_vests: string | Asset;
 	    };
 	}
@@ -934,7 +1164,7 @@ declare module 'dhive/chain/operation' {
 	        /** HBD value of the maximum payout this post will receive. */
 	        max_accepted_payout: Asset | string;
 	        /** The percent of Hive Dollars to key, unkept amounts will be received as Hive Power. */
-	        percent_steem_dollars: number;
+	        percent_hbd: number;
 	        /** Whether to allow post to receive votes. */
 	        allow_votes: boolean;
 	        /** Whether to allow post to recieve curation rewards. */
@@ -1101,11 +1331,11 @@ declare module 'dhive/chain/operation' {
 	        /**
 	         * The amount of hbd to release.
 	         */
-	        sbd_amount: Asset | string;
+	        hbd_amount: Asset | string;
 	        /**
 	         * The amount of hive to release.
 	         */
-	        steem_amount: Asset | string;
+	        hive_amount: Asset | string;
 	    };
 	}
 	/**
@@ -1133,8 +1363,8 @@ declare module 'dhive/chain/operation' {
 	        to: string;
 	        agent: string;
 	        escrow_id: number;
-	        sbd_amount: Asset | string;
-	        steem_amount: Asset | string;
+	        hbd_amount: Asset | string;
+	        hive_amount: Asset | string;
 	        fee: Asset | string;
 	        ratification_deadline: string;
 	        escrow_expiration: string;
@@ -1510,7 +1740,7 @@ declare module 'dhive/chain/operation' {
 	    0: 'witness_set_properties';
 	    1: {
 	        owner: string;
-	        props: [string, Buffer][];
+	        props: [string, string][];
 	        extensions: any[];
 	    };
 	}
@@ -1557,234 +1787,37 @@ declare module 'dhive/chain/operation' {
 	        extensions: any[];
 	    };
 	}
-
-}
-declare module 'dhive/chain/serializer' {
-	/**
-	 * @file Hive protocol serialization.
-	 * @author Johan Nordberg <code@johan-nordberg.com>
-	 * @license
-	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
-	 *
-	 * Redistribution and use in source and binary forms, with or without modification,
-	 * are permitted provided that the following conditions are met:
-	 *
-	 *  1. Redistribution of source code must retain the above copyright notice, this
-	 *     list of conditions and the following disclaimer.
-	 *
-	 *  2. Redistribution in binary form must reproduce the above copyright notice,
-	 *     this list of conditions and the following disclaimer in the documentation
-	 *     and/or other materials provided with the distribution.
-	 *
-	 *  3. Neither the name of the copyright holder nor the names of its contributors
-	 *     may be used to endorse or promote products derived from this software without
-	 *     specific prior written permission.
-	 *
-	 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-	 * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-	 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-	 * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-	 * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-	 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-	 * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-	 * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-	 * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-	 * OF THE POSSIBILITY OF SUCH DAMAGE.
-	 *
-	 * You acknowledge that this software is not designed, licensed or intended for use
-	 * in the design, construction, operation or maintenance of any military facility.
-	 */
-	/// <reference types="node" />
-	import * as ByteBuffer from 'bytebuffer';
-	import { PublicKey } from 'dhive/crypto';
-	import { Asset } from 'dhive/chain/asset';
-	import { HexBuffer } from 'dhive/chain/misc';
-	import { Operation } from 'dhive/chain/operation';
-	export type Serializer = (buffer: ByteBuffer, data: any) => void;
-	export const Types: {
-	    Array: (itemSerializer: Serializer) => (buffer: ByteBuffer, data: any[]) => void;
-	    Asset: (buffer: ByteBuffer, data: string | number | Asset) => void;
-	    Authority: (buffer: ByteBuffer, data: {
-	        [key: string]: any;
-	    }) => void;
-	    Binary: (size?: number | undefined) => (buffer: ByteBuffer, data: HexBuffer | Buffer) => void;
-	    Boolean: (buffer: ByteBuffer, data: boolean) => void;
-	    Date: (buffer: ByteBuffer, data: string) => void;
-	    FlatMap: (keySerializer: Serializer, valueSerializer: Serializer) => (buffer: ByteBuffer, data: [any, any][]) => void;
-	    Int16: (buffer: ByteBuffer, data: number) => void;
-	    Int32: (buffer: ByteBuffer, data: number) => void;
-	    Int64: (buffer: ByteBuffer, data: number) => void;
-	    Int8: (buffer: ByteBuffer, data: number) => void;
-	    Object: (keySerializers: [string, Serializer][]) => (buffer: ByteBuffer, data: {
-	        [key: string]: any;
-	    }) => void;
-	    Operation: (buffer: ByteBuffer, operation: Operation) => void;
-	    Optional: (valueSerializer: Serializer) => (buffer: ByteBuffer, data: any) => void;
-	    Price: (buffer: ByteBuffer, data: {
-	        [key: string]: any;
-	    }) => void;
-	    PublicKey: (buffer: ByteBuffer, data: string | PublicKey | null) => void;
-	    StaticVariant: (itemSerializers: Serializer[]) => (buffer: ByteBuffer, data: [number, any]) => void;
-	    String: (buffer: ByteBuffer, data: string) => void;
-	    Transaction: (buffer: ByteBuffer, data: {
-	        [key: string]: any;
-	    }) => void;
-	    UInt16: (buffer: ByteBuffer, data: number) => void;
-	    UInt32: (buffer: ByteBuffer, data: number) => void;
-	    UInt64: (buffer: ByteBuffer, data: number) => void;
-	    UInt8: (buffer: ByteBuffer, data: number) => void;
-	    Void: (buffer: ByteBuffer) => never;
-	};
-
-}
-declare module 'dhive/crypto' {
-	/**
-	 * @file Hive crypto helpers.
-	 * @author Johan Nordberg <code@johan-nordberg.com>
-	 * @license
-	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
-	 *
-	 * Redistribution and use in source and binary forms, with or without modification,
-	 * are permitted provided that the following conditions are met:
-	 *
-	 *  1. Redistribution of source code must retain the above copyright notice, this
-	 *     list of conditions and the following disclaimer.
-	 *
-	 *  2. Redistribution in binary form must reproduce the above copyright notice,
-	 *     this list of conditions and the following disclaimer in the documentation
-	 *     and/or other materials provided with the distribution.
-	 *
-	 *  3. Neither the name of the copyright holder nor the names of its contributors
-	 *     may be used to endorse or promote products derived from this software without
-	 *     specific prior written permission.
-	 *
-	 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-	 * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-	 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-	 * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-	 * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-	 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-	 * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-	 * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-	 * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-	 * OF THE POSSIBILITY OF SUCH DAMAGE.
-	 *
-	 * You acknowledge that this software is not designed, licensed or intended for use
-	 * in the design, construction, operation or maintenance of any military facility.
-	 */
-	/// <reference types="node" />
-	import { SignedTransaction, Transaction } from 'dhive/chain/transaction';
-	/**
-	 * Network id used in WIF-encoding.
-	 */
-	export const NETWORK_ID: Buffer; function ripemd160(input: Buffer | string): Buffer; function sha256(input: Buffer | string): Buffer; function doubleSha256(input: Buffer | string): Buffer; function encodePublic(key: Buffer, prefix: string): string; function encodePrivate(key: Buffer): string; function decodePrivate(encodedKey: string): Buffer; function isCanonicalSignature(signature: Buffer): boolean; function isWif(privWif: string | Buffer): boolean;
-	/**
-	 * ECDSA (secp256k1) public key.
-	 */
-	export class PublicKey {
-	    readonly key: Buffer;
-	    readonly prefix: string;
-	    constructor(key: Buffer, prefix?: string);
-	    /**
-	     * Create a new instance from a WIF-encoded key.
-	     */
-	    static fromString(wif: string): PublicKey;
-	    /**
-	     * Create a new instance.
-	     */
-	    static from(value: string | PublicKey): PublicKey;
-	    /**
-	     * Verify a 32-byte signature.
-	     * @param message 32-byte message to verify.
-	     * @param signature Signature to verify.
-	     */
-	    verify(message: Buffer, signature: Signature): boolean;
-	    /**
-	     * Return a WIF-encoded representation of the key.
-	     */
-	    toString(): string;
-	    /**
-	     * Return JSON representation of this key, same as toString().
-	     */
-	    toJSON(): string;
-	    /**
-	     * Used by `utils.inspect` and `console.log` in node.js.
-	     */
-	    inspect(): string;
+	export interface UpdateProposalOperation extends Operation {
+	    0: 'update_proposal';
+	    1: {
+	        proposal_id: number;
+	        creator: string;
+	        daily_pay: Asset | string;
+	        subject: string;
+	        permlink: string;
+	        extensions: any[];
+	    };
 	}
-	export type KeyRole = "owner" | "active" | "posting" | "memo";
-	/**
-	 * ECDSA (secp256k1) private key.
-	 */
-	export class PrivateKey {
-	    private key;
-	    constructor(key: Buffer);
-	    /**
-	     * Convenience to create a new instance from WIF string or buffer.
-	     */
-	    static from(value: string | Buffer): PrivateKey;
-	    /**
-	     * Create a new instance from a WIF-encoded key.
-	     */
-	    static fromString(wif: string): PrivateKey;
-	    /**
-	     * Create a new instance from a seed.
-	     */
-	    static fromSeed(seed: string): PrivateKey;
-	    /**
-	     * Create key from username and password.
-	     */
-	    static fromLogin(username: string, password: string, role?: KeyRole): PrivateKey;
-	    /**
-	     * Sign message.
-	     * @param message 32-byte message.
-	     */
-	    sign(message: Buffer): Signature;
-	    /**
-	     * Derive the public key for this private key.
-	     */
-	    createPublic(prefix?: string): PublicKey;
-	    /**
-	     * Return a WIF-encoded representation of the key.
-	     */
-	    toString(): string;
-	    /**
-	     * Used by `utils.inspect` and `console.log` in node.js. Does not show the full key
-	     * to get the full encoded key you need to explicitly call {@link toString}.
-	     */
-	    inspect(): string;
+	export interface CollateralizedConvertOperation extends Operation {
+	    0: 'collateralized_convert';
+	    1: {
+	        owner: string;
+	        requestid: number;
+	        amount: Asset | string;
+	    };
 	}
-	/**
-	 * ECDSA (secp256k1) signature.
-	 */
-	export class Signature {
-	    data: Buffer;
-	    recovery: number;
-	    constructor(data: Buffer, recovery: number);
-	    static fromBuffer(buffer: Buffer): Signature;
-	    static fromString(string: string): Signature;
-	    /**
-	     * Recover public key from signature by providing original signed message.
-	     * @param message 32-byte message that was used to create the signature.
-	     */
-	    recover(message: Buffer, prefix?: string): PublicKey;
-	    toBuffer(): Buffer;
-	    toString(): string;
-	} function transactionDigest(transaction: Transaction | SignedTransaction, chainId?: Buffer): Buffer; function signTransaction(transaction: Transaction, keys: PrivateKey | PrivateKey[], chainId?: Buffer): SignedTransaction;
-	/** Misc crypto utility functions. */
-	export const cryptoUtils: {
-	    decodePrivate: typeof decodePrivate;
-	    doubleSha256: typeof doubleSha256;
-	    encodePrivate: typeof encodePrivate;
-	    encodePublic: typeof encodePublic;
-	    isCanonicalSignature: typeof isCanonicalSignature;
-	    isWif: typeof isWif;
-	    ripemd160: typeof ripemd160;
-	    sha256: typeof sha256;
-	    signTransaction: typeof signTransaction;
-	    transactionDigest: typeof transactionDigest;
-	};
-	export {};
+	export interface RecurrentTransferOperation extends Operation {
+	    0: 'recurrent_transfer';
+	    1: {
+	        from: string;
+	        to: string;
+	        amount: Asset | string;
+	        memo: string;
+	        recurrence: number;
+	        executions: number;
+	        extensions: any[];
+	    };
+	}
 
 }
 declare module 'dhive/utils' {
@@ -1823,7 +1856,7 @@ declare module 'dhive/utils' {
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
 	/// <reference types="node" />
-	import { EventEmitter } from "events";
+	import { EventEmitter } from 'events';
 	/**
 	 * Return a promise that will resove when a specific event is emitted.
 	 */
@@ -1843,13 +1876,13 @@ declare module 'dhive/utils' {
 	/**
 	 * Fetch API wrapper that retries until timeout is reached.
 	 */
-	export function retryingFetch(currentAddress: string, allAddresses: string | string[], opts: any, timeout: number, failoverThreshold: number, backoff: (tries: number) => number, fetchTimeout?: (tries: number) => number): Promise<{
+	export function retryingFetch(currentAddress: string, allAddresses: string | string[], opts: any, timeout: number, failoverThreshold: number, consoleOnFailover: boolean, backoff: (tries: number) => number, fetchTimeout?: (tries: number) => number): Promise<{
 	    response: any;
 	    currentAddress: string;
 	}>;
-	import { PublicKey } from 'dhive/crypto';
 	import { Asset, PriceType } from 'dhive/chain/asset';
 	import { WitnessSetPropertiesOperation } from 'dhive/chain/operation';
+	import { PublicKey } from 'dhive/crypto';
 	export interface WitnessProps {
 	    account_creation_fee?: string | Asset;
 	    account_subsidy_budget?: number;
@@ -1857,11 +1890,103 @@ declare module 'dhive/utils' {
 	    key: PublicKey | string;
 	    maximum_block_size?: number;
 	    new_signing_key?: PublicKey | string | null;
-	    sbd_exchange_rate?: PriceType;
-	    sbd_interest_rate?: number;
+	    hbd_exchange_rate?: PriceType;
+	    hbd_interest_rate?: number;
 	    url?: string;
 	}
 	export function buildWitnessUpdateOp(owner: string, props: WitnessProps): WitnessSetPropertiesOperation;
+	export const operationOrders: {
+	    vote: number;
+	    comment: number;
+	    transfer: number;
+	    transfer_to_vesting: number;
+	    withdraw_vesting: number;
+	    limit_order_create: number;
+	    limit_order_cancel: number;
+	    feed_publish: number;
+	    convert: number;
+	    account_create: number;
+	    account_update: number;
+	    witness_update: number;
+	    account_witness_vote: number;
+	    account_witness_proxy: number;
+	    pow: number;
+	    custom: number;
+	    report_over_production: number;
+	    delete_comment: number;
+	    custom_json: number;
+	    comment_options: number;
+	    set_withdraw_vesting_route: number;
+	    limit_order_create2: number;
+	    claim_account: number;
+	    create_claimed_account: number;
+	    request_account_recovery: number;
+	    recover_account: number;
+	    change_recovery_account: number;
+	    escrow_transfer: number;
+	    escrow_dispute: number;
+	    escrow_release: number;
+	    pow2: number;
+	    escrow_approve: number;
+	    transfer_to_savings: number;
+	    transfer_from_savings: number;
+	    cancel_transfer_from_savings: number;
+	    custom_binary: number;
+	    decline_voting_rights: number;
+	    reset_account: number;
+	    set_reset_account: number;
+	    claim_reward_balance: number;
+	    delegate_vesting_shares: number;
+	    account_create_with_delegation: number;
+	    witness_set_properties: number;
+	    account_update2: number;
+	    create_proposal: number;
+	    update_proposal_votes: number;
+	    remove_proposal: number;
+	    update_proposal: number;
+	    collateralized_convert: number;
+	    recurrent_transfer: number;
+	    fill_convert_request: number;
+	    author_reward: number;
+	    curation_reward: number;
+	    comment_reward: number;
+	    liquidity_reward: number;
+	    interest: number;
+	    fill_vesting_withdraw: number;
+	    fill_order: number;
+	    shutdown_witness: number;
+	    fill_transfer_from_savings: number;
+	    hardfork: number;
+	    comment_payout_update: number;
+	    return_vesting_delegation: number;
+	    comment_benefactor_reward: number;
+	    producer_reward: number;
+	    clear_null_account_balance: number;
+	    proposal_pay: number;
+	    sps_fund: number;
+	    hardfork_hive: number;
+	    hardfork_hive_restore: number;
+	    delayed_voting: number;
+	    consolidate_treasury_balance: number;
+	    effective_comment_vote: number;
+	    ineffective_delete_comment: number;
+	    sps_convert: number;
+	    expired_account_notification: number;
+	    changed_recovery_account: number;
+	    transfer_to_vesting_completed: number;
+	    pow_reward: number;
+	    vesting_shares_split: number;
+	    account_created: number;
+	    fill_collateralized_convert_request: number;
+	    system_warning: number;
+	    fill_recurrent_transfer: number;
+	    failed_recurrent_transfer: number;
+	};
+	/**
+	 * Make bitmask filter to be used with getAccountHistory call
+	 * @param allowedOperations Array of operations index numbers
+	 */
+	export function makeBitMaskFilter(allowedOperations: number[]): any[];
 
 }
 declare module 'dhive/helpers/blockchain' {
@@ -2008,8 +2133,8 @@ declare module 'dhive/helpers/broadcast' {
 	import { Asset } from 'dhive/chain/asset';
 	import { AccountUpdateOperation, CommentOperation, CommentOptionsOperation, CustomJsonOperation, DelegateVestingSharesOperation, Operation, TransferOperation, VoteOperation } from 'dhive/chain/operation';
 	import { SignedTransaction, Transaction, TransactionConfirmation } from 'dhive/chain/transaction';
-	import { PrivateKey, PublicKey } from 'dhive/crypto';
 	import { Client } from 'dhive/client';
+	import { PrivateKey, PublicKey } from 'dhive/crypto';
 	export interface CreateAccountOptions {
 	    /**
 	     * Username for the new account.
@@ -2179,7 +2304,7 @@ declare module 'dhive/helpers/database' {
 	import { DynamicGlobalProperties } from 'dhive/chain/misc';
 	import { ChainProperties, VestingDelegation } from 'dhive/chain/misc';
 	import { AppliedOperation } from 'dhive/chain/operation';
-	import { SignedTransaction, TransactionConfirmation } from 'dhive/chain/transaction';
+	import { SignedTransaction } from 'dhive/chain/transaction';
 	import { Client } from 'dhive/client';
 	/**
 	 * Possible categories for `get_discussions_by_*`.
@@ -2279,25 +2404,189 @@ declare module 'dhive/helpers/database' {
 	     */
 	    getAccounts(usernames: string[]): Promise<ExtendedAccount[]>;
 	    /**
-	     * Convenience to fetch a block and return a specific transaction.
+	     * Returns the details of a transaction based on a transaction id.
 	     */
-	    getTransaction(txc: TransactionConfirmation | {
-	        block_num: number;
-	        id: string;
-	    }): Promise<SignedTransaction>;
+	    getTransaction(txId: string): Promise<SignedTransaction>;
 	    /**
 	     * Returns one or more account history objects for account operations
 	     *
 	     * @param account The account to fetch
 	     * @param from The starting index
 	     * @param limit The maximum number of results to return
+	     * @param operations_bitmask Generated by dhive.utils.makeBitMaskFilter() - see example below
+	     * @example
+	     * const op = dhive.utils.operationOrders
+	     * const operationsBitmask = dhive.utils.makeBitMaskFilter([
+	     *   op.transfer,
+	     *   op.transfer_to_vesting,
+	     *   op.withdraw_vesting,
+	     *   op.interest,
+	     *   op.liquidity_reward,
+	     *   op.transfer_to_savings,
+	     *   op.transfer_from_savings,
+	     *   op.escrow_transfer,
+	     *   op.cancel_transfer_from_savings,
+	     *   op.escrow_approve,
+	     *   op.escrow_dispute,
+	     *   op.escrow_release,
+	     *   op.fill_convert_request,
+	     *   op.fill_order,
+	     *   op.claim_reward_balance,
+	     * ])
 	     */
-	    getAccountHistory(account: string, from: number, limit: number): Promise<[[number, AppliedOperation]]>;
+	    getAccountHistory(account: string, from: number, limit: number, operation_bitmask?: [number, number]): Promise<[[number, AppliedOperation]]>;
 	    /**
 	     * Verify signed transaction.
 	     */
 	    verifyAuthority(stx: SignedTransaction): Promise<boolean>;
+	    /** return rpc node version */
+	    getVersion(): Promise<object>;
 	}
+
+}
+declare module 'dhive/chain/hivemind' {
+	export interface CommunityDetail {
+	    id: number;
+	    name: string;
+	    title: string;
+	    about: string;
+	    lang: string;
+	    type_id: number;
+	    is_nsfw: false;
+	    subscribers: number;
+	    sum_pending: number;
+	    num_pending: number;
+	    num_authors: number;
+	    created_at: string;
+	    avatar_url: string;
+	    context: object;
+	    description: string;
+	    flag_text: string;
+	    settings: {};
+	    team?: string[];
+	    admins?: string[];
+	}
+	export interface Notifications {
+	    id: number;
+	    type: string;
+	    score: number;
+	    date: string;
+	    msg: string;
+	    url: string;
+	}
+
+}
+declare module 'dhive/helpers/hivemind' {
+	/**
+	 * Hivemind database query wrapper
+	 */
+	import { Account } from 'dhive/chain/account';
+	import { Discussion } from 'dhive/chain/comment';
+	import { CommunityDetail, Notifications } from 'dhive/chain/hivemind';
+	import { Client } from 'dhive/client';
+	interface PostsQuery {
+	    /**
+	     * Number of posts to fetch
+	     */
+	    limit?: number;
+	    /**
+	     * Sorting posts
+	     */
+	    sort: 'trending' | 'hot' | 'created' | 'promoted' | 'payout' | 'payout_comments' | 'muted';
+	    /**
+	     * Filtering with tags
+	     */
+	    tag?: string[] | string;
+	    /**
+	     * Observer account
+	     */
+	    observer?: string;
+	    /**
+	     * Paginating last post author
+	     */
+	    start_author?: string;
+	    /**
+	     * Paginating last post permlink
+	     */
+	    start_permlink?: string;
+	}
+	/**
+	 * Omitting sort extended from BridgeParam
+	 */
+	interface AccountPostsQuery extends Omit<PostsQuery, 'sort'> {
+	    account: string;
+	    sort: 'posts';
+	}
+	interface CommunityQuery {
+	    name: string;
+	    observer: string;
+	}
+	interface AccountNotifsQuery {
+	    account: Account['name'];
+	    limit: number;
+	    type?: 'new_community' | 'pin_post';
+	}
+	interface ListCommunitiesQuery {
+	    /**
+	     * Paginating last
+	     */
+	    last?: string;
+	    /**
+	     * Number of communities to fetch
+	     */
+	    limit: number;
+	    /**
+	     * To be developed, not ready yet
+	     */
+	    query?: string | any;
+	    /**
+	     * Observer account
+	     */
+	    observer?: Account['name'];
+	}
+	export class HivemindAPI {
+	    readonly client: Client;
+	    constructor(client: Client);
+	    /**
+	     * Convenience of calling hivemind api
+	     * @param method
+	     * @param params
+	     */
+	    call(method: string, params?: any): Promise<any>;
+	    /**
+	     * Get trending, hot, recent community posts from Hivemind
+	     * @param options
+	     */
+	    getRankedPosts(options: PostsQuery): Promise<Discussion[]>;
+	    /**
+	     * Get posts by particular account from Hivemind
+	     * @param options
+	     */
+	    getAccountPosts(options: AccountPostsQuery): Promise<Discussion[]>;
+	    /**
+	     * Get community details such as who are the admin,
+	     * moderators, how many subscribers, etc..
+	     * @param options
+	     */
+	    getCommunity(options: CommunityQuery): Promise<CommunityDetail[]>;
+	    /**
+	     * List all subscriptions by particular account
+	     * @param account the account you want to query
+	     * @returns {Array} return role, what community the account joined
+	     */
+	    listAllSubscriptions(account: Account['name'] | object): Promise<Discussion[]>;
+	    /**
+	     * Get particular account notifications feed
+	     * @param options
+	     */
+	    getAccountNotifications(options?: AccountNotifsQuery): Promise<Notifications[]>;
+	    /**
+	     * List all available communities on hivemind
+	     * @param options
+	     */
+	    listCommunities(options: ListCommunitiesQuery): Promise<CommunityDetail[]>;
+	}
+	export {};
 
 }
 declare module 'dhive/chain/rc' {
@@ -2364,159 +2653,66 @@ declare module 'dhive/helpers/rc' {
 	    readonly client: Client;
 	    constructor(client: Client);
 	    /**
-	   * Convenience for calling `rc_api`.
-	   */
+	     * Convenience for calling `rc_api`.
+	     */
 	    call(method: string, params?: any): Promise<any>;
 	    /**
-	   * Returns RC data for array of usernames
-	   */
+	     * Returns RC data for array of usernames
+	     */
 	    findRCAccounts(usernames: string[]): Promise<RCAccount[]>;
 	    /**
-	   * Returns the global resource params
-	   */
+	     * Returns the global resource params
+	     */
 	    getResourceParams(): Promise<RCParams>;
 	    /**
-	   * Returns the global resource pool
-	   */
+	     * Returns the global resource pool
+	     */
 	    getResourcePool(): Promise<RCPool>;
 	    /**
-	   * Makes a API call and returns the RC mana-data for a specified username
-	   */
+	     * Makes a API call and returns the RC mana-data for a specified username
+	     */
 	    getRCMana(username: string): Promise<Manabar>;
 	    /**
-	   * Makes a API call and returns the VP mana-data for a specified username
-	   */
+	     * Makes a API call and returns the VP mana-data for a specified username
+	     */
 	    getVPMana(username: string): Promise<Manabar>;
 	    /**
-	   * Calculates the RC mana-data based on an RCAccount - findRCAccounts()
-	   */
+	     * Calculates the RC mana-data based on an RCAccount - findRCAccounts()
+	     */
 	    calculateRCMana(rc_account: RCAccount): Manabar;
 	    /**
-	   * Calculates the RC mana-data based on an Account - getAccounts()
-	   */
+	     * Calculates the RC mana-data based on an Account - getAccounts()
+	     */
 	    calculateVPMana(account: Account): Manabar;
 	    /**
-	   * Internal convenience method to reduce redundant code
-	   */
+	     * Internal convenience method to reduce redundant code
+	     */
 	    private _calculateManabar;
 	}
 
 }
-declare module 'dhive/chain/hivemind' {
-	export interface CommunityDetail {
-	    id: number;
-	    name: string;
-	    title: string;
-	    about: string;
-	    lang: string;
-	    type_id: number;
-	    is_nsfw: false;
-	    subscribers: number;
-	    sum_pending: number;
-	    num_pending: number;
-	    num_authors: number;
-	    created_at: string;
-	    avatar_url: string;
-	    context: object;
-	    description: string;
-	    flag_text: string;
-	    settings: {};
-	    team?: string[];
-	    admins?: string[];
-	}
-	export interface Notifications {
-	    id: number;
-	    type: string;
-	    score: number;
-	    date: string;
-	    msg: string;
-	    url: string;
-	}
-
-}
-declare module 'dhive/helpers/hivemind' {
+declare module 'dhive/helpers/key' {
 	/**
-	 * Hivemind database query wrapper
-	*/
-	import { Discussion } from 'dhive/chain/comment';
-	import { Account } from 'dhive/chain/account';
-	import { CommunityDetail, Notifications } from 'dhive/chain/hivemind';
+	 * @file Account by key API helpers.
+	 * @author Bartłomiej (@engrave) Górnicki
+	 */
+	import { PublicKey } from 'dhive/crypto';
 	import { Client } from 'dhive/client';
-	interface PostsQuery {
-	    /**
-	     * Number of posts to fetch
-	     */
-	    limit?: number;
-	    /**
-	     * Sorting posts
-	     */
-	    sort: 'trending' | 'hot' | 'created' | 'promoted' | 'payout' | 'payout_comments' | 'muted';
-	    /**
-	     * Filtering with tags
-	     */
-	    tag?: string[] | string;
-	    /**
-	     * Observer account
-	     */
-	    observer?: string;
-	    /**
-	     * Paginating last post author
-	     */
-	    start_author?: string;
-	    /**
-	     * Paginating last post permlink
-	     */
-	    start_permlink?: string;
+	export interface AccountsByKey {
+	    accounts: [string[]];
 	}
-	/**
-	 * Omitting sort extended from BridgeParam
-	 * */
-	interface AccountPostsQuery extends Omit<PostsQuery, 'sort'> {
-	    account: string;
-	    sort: 'posts';
-	}
-	interface CommunityQuery {
-	    name: string;
-	    observer: string;
-	}
-	interface AccountNotifsQuery {
-	    account: Account['name'];
-	    limit: number;
-	    type?: 'new_community' | 'pin_post';
-	}
-	interface ListCommunitiesQuery {
-	    /**
-	     * Paginating last
-	     */
-	    last?: string;
-	    /**
-	     * Number of communities to fetch
-	     */
-	    limit: number;
-	    /**
-	     * To be developed, not ready yet
-	     */
-	    query?: string | any;
-	    /**
-	     * Observer account
-	     */
-	    observer?: Account['name'];
-	}
-	export class HivemindAPI {
+	export class AccountByKeyAPI {
 	    readonly client: Client;
 	    constructor(client: Client);
 	    /**
-	   * Convenience for calling `hivemindAPI`.
-	   */
+	     * Convenience for calling `account_by_key_api`.
+	     */
 	    call(method: string, params?: any): Promise<any>;
-	    getRankedPosts(options: PostsQuery): Promise<Discussion[]>;
-	    getAccountPosts(options: AccountPostsQuery): Promise<Discussion[]>;
-	    getCommunity(options: CommunityQuery): Promise<CommunityDetail[]>;
-	    listAllSubscriptions(account: Account['name'] | object): Promise<Discussion[]>;
-	    getAccountNotifications(options?: AccountNotifsQuery): Promise<Notifications[]>;
-	    listCommunities(options: ListCommunitiesQuery): Promise<CommunityDetail[]>;
+	    /**
+	     * Returns all accounts that have the key associated with their owner or active authorities.
+	     */
+	    getKeyReferences(keys: (PublicKey | string)[]): Promise<AccountsByKey>;
 	}
-	export {};
 
 }
 declare module 'dhive/client' {
@@ -2558,8 +2754,9 @@ declare module 'dhive/client' {
 	import { Blockchain } from 'dhive/helpers/blockchain';
 	import { BroadcastAPI } from 'dhive/helpers/broadcast';
 	import { DatabaseAPI } from 'dhive/helpers/database';
-	import { RCAPI } from 'dhive/helpers/rc';
 	import { HivemindAPI } from 'dhive/helpers/hivemind';
+	import { RCAPI } from 'dhive/helpers/rc';
+	import { AccountByKeyAPI } from 'dhive/helpers/key';
 	/**
 	 * Library version.
 	 */
@@ -2602,8 +2799,12 @@ declare module 'dhive/client' {
 	     * iterated and retried in case of timeout errors.
 	     * (important) Requires url parameter to be an array (string[])!
 	     * Can be set to 0 to iterate and retry forever. Defaults to 3 rounds.
-	    */
+	     */
 	    failoverThreshold?: number;
+	    /**
+	     * Whether a console.log should be made when RPC failed over to another one
+	     */
+	    consoleOnFailover?: boolean;
 	    /**
 	     * Retry backoff function, returns milliseconds. Default = {@link defaultBackoff}.
 	     */
@@ -2614,6 +2815,10 @@ declare module 'dhive/client' {
 	     * @see https://nodejs.org/api/http.html#http_new_agent_options.
 	     */
 	    agent?: any;
+	    /**
+	     * Deprecated - don't use
+	     */
+	    rebrandedApi?: boolean;
 	}
 	/**
 	 * RPC Client
@@ -2628,7 +2833,7 @@ declare module 'dhive/client' {
 	    /**
 	     * Address to Hive RPC server.
 	     * String or String[] *read-only*
-	    */
+	     */
 	    address: string | string[];
 	    /**
 	     * Database API helper.
@@ -2647,13 +2852,17 @@ declare module 'dhive/client' {
 	     */
 	    readonly blockchain: Blockchain;
 	    /**
-	     * Blockchain helper.
+	     * Hivemind helper.
 	     */
 	    readonly hivemind: HivemindAPI;
 	    /**
+	     * Accounts by key API helper.
+	     */
+	    readonly keys: AccountByKeyAPI;
+	    /**
 	     * Chain ID for current network.
 	     */
-	    chainId: Buffer;
+	    readonly chainId: Buffer;
 	    /**
 	     * Address prefix for current network.
 	     */
@@ -2661,9 +2870,11 @@ declare module 'dhive/client' {
 	    private timeout;
 	    private backoff;
 	    private failoverThreshold;
+	    private consoleOnFailover;
 	    private currentAddress;
 	    /**
-	     * @param address The address to the Hive RPC server, e.g. `https://api.hive.blog`. or [`https://api.hive.blog`, `https://another.api.com`]
+	     * @param address The address to the Hive RPC server,
+	     * e.g. `https://api.hive.blog`. or [`https://api.hive.blog`, `https://another.api.com`]
 	     * @param options Client options.
 	     */
 	    constructor(address: string | string[], options?: ClientOptions);
@@ -2680,6 +2891,7 @@ declare module 'dhive/client' {
 	     *
 	     */
 	    call(api: string, method: string, params?: any): Promise<any>;
+	    updateOperations(rebrandedApi: any): void;
 	}
 
 }
@@ -2723,6 +2935,8 @@ declare module 'dhive' {
 	export * from 'dhive/helpers/blockchain';
 	export * from 'dhive/helpers/database';
 	export * from 'dhive/helpers/rc';
+	export * from 'dhive/helpers/key';
+	export * from 'dhive/helpers/hivemind';
 	export * from 'dhive/chain/account';
 	export * from 'dhive/chain/asset';
 	export * from 'dhive/chain/block';
@@ -2770,13 +2984,13 @@ declare module 'dhive/index-browser' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import "regenerator-runtime/runtime";
-	import "core-js/features/map";
-	import "core-js/features/number";
-	import "core-js/features/promise";
-	import "core-js/features/symbol";
-	import "core-js/features/array/from";
-	import "core-js/features/symbol/async-iterator";
+	import 'core-js/features/array/from';
+	import 'core-js/features/map';
+	import 'core-js/features/number';
+	import 'core-js/features/promise';
+	import 'core-js/features/symbol';
+	import 'core-js/features/symbol/async-iterator';
+	import 'regenerator-runtime/runtime';
 	import 'whatwg-fetch';
 	export * from 'dhive';
 

@@ -33,16 +33,18 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import * as assert from "assert";
-import { VError } from "verror";
-import packageVersion from "./version";
+import * as assert from 'assert'
+import { VError } from 'verror'
+import packageVersion from './version'
 
-import { Blockchain } from "./helpers/blockchain";
-import { BroadcastAPI } from "./helpers/broadcast";
-import { DatabaseAPI } from "./helpers/database";
-import { RCAPI } from "./helpers/rc";
-import { HivemindAPI } from "./helpers/hivemind"
-import { copy, retryingFetch, waitForEvent } from "./utils";
+import { Blockchain } from './helpers/blockchain'
+import { BroadcastAPI } from './helpers/broadcast'
+import { DatabaseAPI } from './helpers/database'
+import { HivemindAPI } from './helpers/hivemind'
+import {AccountByKeyAPI} from './helpers/key'
+import { RCAPI } from './helpers/rc'
+import { copy, retryingFetch, waitForEvent } from './utils'
+
 /**
  * Library version.
  */
@@ -55,7 +57,6 @@ export const DEFAULT_CHAIN_ID = Buffer.from(
     'beeab0de00000000000000000000000000000000000000000000000000000000',
     'hex'
 )
-
 
 /**
  * Main Hive network address prefix.
@@ -88,7 +89,6 @@ interface RPCCall extends RPCRequest {
      */
     params: [number | string, string, any[]]
 }
-
 
 interface RPCError {
     code: number
@@ -143,8 +143,13 @@ export interface ClientOptions {
      * iterated and retried in case of timeout errors.
      * (important) Requires url parameter to be an array (string[])!
      * Can be set to 0 to iterate and retry forever. Defaults to 3 rounds.
-    */
+     */
     failoverThreshold?: number
+
+    /**
+     * Whether a console.log should be made when RPC failed over to another one
+     */
+    consoleOnFailover?: boolean
 
     /**
      * Retry backoff function, returns milliseconds. Default = {@link defaultBackoff}.
@@ -156,6 +161,10 @@ export interface ClientOptions {
      * @see https://nodejs.org/api/http.html#http_new_agent_options.
      */
     agent?: any // https.Agent
+    /**
+     * Deprecated - don't use
+     */
+    rebrandedApi?: boolean
 }
 
 /**
@@ -172,7 +181,7 @@ export class Client {
     /**
      * Address to Hive RPC server.
      * String or String[] *read-only*
-    */
+     */
     public address: string | string[]
 
     /**
@@ -196,14 +205,19 @@ export class Client {
     public readonly blockchain: Blockchain
 
     /**
-     * Blockchain helper.
+     * Hivemind helper.
      */
     public readonly hivemind: HivemindAPI
 
     /**
+     * Accounts by key API helper.
+     */
+    public readonly keys: AccountByKeyAPI
+
+    /**
      * Chain ID for current network.
      */
-    public chainId: Buffer // TODO: make it readonly after HF24
+    public readonly chainId: Buffer
 
     /**
      * Address prefix for current network.
@@ -215,6 +229,8 @@ export class Client {
 
     private failoverThreshold: number
 
+    private consoleOnFailover: boolean
+
     private currentAddress: string
 
     /**
@@ -223,6 +239,10 @@ export class Client {
      * @param options Client options.
      */
     constructor(address: string | string[], options: ClientOptions = {}) {
+        if (options.rebrandedApi) {
+            // tslint:disable-next-line: no-console
+            console.log('Warning: rebrandedApi is deprecated and safely can be removed from client options')
+        }
         this.currentAddress = Array.isArray(address) ? address[0] : address
         this.address = address
         this.options = options
@@ -236,12 +256,14 @@ export class Client {
         this.timeout = options.timeout || 60 * 1000
         this.backoff = options.backoff || defaultBackoff
         this.failoverThreshold = options.failoverThreshold || 3
+        this.consoleOnFailover = options.consoleOnFailover || false
 
         this.database = new DatabaseAPI(this)
         this.broadcast = new BroadcastAPI(this)
         this.blockchain = new Blockchain(this)
         this.rc = new RCAPI(this)
         this.hivemind = new HivemindAPI(this)
+        this.keys = new AccountByKeyAPI(this)
     }
 
     /**
@@ -254,11 +276,9 @@ export class Client {
             opts.agent = options.agent
         }
 
-        // Testnet details: https://gitlab.syncad.com/hive/hive/-/issues/36
-        opts.addressPrefix = 'STM'
-        opts.chainId =
-            'beeab0de00000000000000000000000000000000000000000000000000000000'
-        return new Client('https://hive-test-beeabode.roelandp.nl', opts)
+        opts.addressPrefix = 'TST'
+        opts.chainId = '18dcf0a285365fc58b71f18b3d3fec954aa0c141c44e4e5cb4cf777b9eab274e'
+        return new Client('https://testnet.openhive.network', opts)
     }
 
     /**
@@ -274,25 +294,15 @@ export class Client {
         method: string,
         params: any = []
     ): Promise<any> {
-        let request: RPCCall
-        if (api === 'bridge') {
-            request = {
-                id: 0,
-                jsonrpc: '2.0',
-                method: api + '.' + method,
-                params
-            }
-        } else {
-            request = {
-                id: '0',
-                jsonrpc: '2.0',
-                method: 'call',
-                params: [api, method, params]
-            }
+        const request: RPCCall = {
+            id: 0,
+            jsonrpc: '2.0',
+            method: api + '.' + method,
+            params
         }
         const body = JSON.stringify(request, (key, value) => {
             // encode Buffers as hex strings instead of an array of bytes
-            if (typeof value === 'object' && value.type === 'Buffer') {
+            if (value && typeof value === 'object' && value.type === 'Buffer') {
                 return Buffer.from(value.data).toString('hex')
             }
             return value
@@ -300,8 +310,12 @@ export class Client {
         const opts: any = {
             body,
             cache: 'no-cache',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json',
+            },
             method: 'POST',
-            mode: 'cors'
+            mode: 'cors',
         }
 
         // Self is not defined within Node environments
@@ -322,7 +336,7 @@ export class Client {
         ) {
             // bit of a hack to work around some nodes high error rates
             // only effective in node.js (until timeout spec lands in browsers)
-            fetchTimeout = tries => (tries + 1) * 500
+            fetchTimeout = (tries) => (tries + 1) * 500
         }
 
         const { response, currentAddress }: { response: RPCResponse; currentAddress: string } =
@@ -332,12 +346,13 @@ export class Client {
                 opts,
                 this.timeout,
                 this.failoverThreshold,
+                this.consoleOnFailover,
                 this.backoff,
                 fetchTimeout
             )
 
         // After failover, change the currently active address
-        if (currentAddress !== this.currentAddress) {this.currentAddress = currentAddress}
+        if (currentAddress !== this.currentAddress) { this.currentAddress = currentAddress }
         // resolve FC error messages into something more readable
         if (response.error) {
             const formatValue = (value: any) => {
@@ -365,8 +380,8 @@ export class Client {
                     }
                 )
                 const unformattedData = Object.keys(topData)
-                    .map(key => ({ key, value: formatValue(topData[key]) }))
-                    .map(item => `${item.key}=${item.value}`)
+                    .map((key) => ({ key, value: formatValue(topData[key]) }))
+                    .map((item) => `${item.key}=${item.value}`)
                 if (unformattedData.length > 0) {
                     message += ' ' + unformattedData.join(' ')
                 }
@@ -375,6 +390,11 @@ export class Client {
         }
         assert.equal(response.id, request.id, 'got invalid response id')
         return response.result
+    }
+
+    public updateOperations(rebrandedApi) {
+        // tslint:disable-next-line: no-console
+        console.log('Warning: call to updateOperations() is deprecated and can safely be removed')
     }
 }
 

@@ -1,0 +1,21 @@
+{
+    "defaultSeverity": "error",
+    "extends": ["tslint:recommended"],
+    "rules": {
+      "array-type": [true, "array"],
+      "member-ordering": [true, {"order": "fields-first"}],
+      "ban-types": false,
+      "indent": [true, "spaces", 4],
+      "interface-name": [true, "never-prefix"],
+      "max-classes-per-file": false,
+      "no-bitwise": false,
+      "no-var-requires": false,
+      "one-variable-per-declaration": false,
+      "quotemark": [true, "single", "avoid-escape"],
+      "semicolon": [true, "never"],
+      "trailing-comma": [true, "never"],
+      "triple-equals": [true, "allow-undefined-check"],
+      "variable-name": false,
+      "no-string-literal": false
+    }
+  }

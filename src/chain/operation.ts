@@ -42,74 +42,99 @@ import { ChainProperties, HexBuffer } from './misc'
 
 /**
  * Operation name.
+ * Ref: https://gitlab.syncad.com/hive/hive/-/blob/master/libraries/protocol/include/hive/protocol/operations.hpp
  */
 export type OperationName =  // <id>
-  | 'account_create' // 9
-  | 'account_create_with_delegation' // 41
-  | 'account_update' // 10
-  | 'account_update2' // 43
-  | 'account_witness_proxy' // 13
-  | 'account_witness_vote' // 12
-  | 'cancel_transfer_from_savings' // 34
-  | 'change_recovery_account' // 26
-  | 'claim_account' // 22
-  | 'claim_reward_balance' // 39
-  | 'create_proposal' // 44
+  | 'vote' // 0
   | 'comment' // 1
-  | 'comment_options' // 19
+  | 'transfer' // 2
+  | 'transfer_to_vesting' // 3
+  | 'withdraw_vesting' // 4
+  | 'limit_order_create' // 5
+  | 'limit_order_cancel' // 6
+  | 'feed_publish' // 7
   | 'convert' // 8
-  | 'create_claimed_account' // 23
+  | 'account_create' // 9
+  | 'account_update' // 10
+  | 'witness_update' // 11
+  | 'account_witness_vote' // 12
+  | 'account_witness_proxy' // 13
+  | 'pow' // 14
   | 'custom' // 15
-  | 'custom_binary' // 35
-  | 'custom_json' // 18
-  | 'decline_voting_rights' // 36
-  | 'delegate_vesting_shares' // 40
+  | 'report_over_production' // 16
   | 'delete_comment' // 17
-  | 'escrow_approve' // 31
+  | 'custom_json' // 18
+  | 'comment_options' // 19
+  | 'set_withdraw_vesting_route' // 20
+  | 'limit_order_create2' // 21
+  | 'claim_account' // 22
+  | 'create_claimed_account' // 23
+  | 'request_account_recovery' // 24
+  | 'recover_account' // 25
+  | 'change_recovery_account' // 26
+  | 'escrow_transfer' // 27
   | 'escrow_dispute' // 28
   | 'escrow_release' // 29
-  | 'escrow_transfer' // 27
-  | 'feed_publish' // 7
-  | 'limit_order_cancel' // 6
-  | 'limit_order_create' // 5
-  | 'limit_order_create2' // 21
-  | 'pow' // 14
   | 'pow2' // 30
-  | 'recover_account' // 25
-  | 'remove_proposal' // 46
-  | 'report_over_production' // 16
-  | 'request_account_recovery' // 24
+  | 'escrow_approve' // 31
+  | 'transfer_to_savings' // 32
+  | 'transfer_from_savings' // 33
+  | 'cancel_transfer_from_savings' // 34
+  | 'custom_binary' // 35
+  | 'decline_voting_rights' // 36
   | 'reset_account' // 37
   | 'set_reset_account' // 38
-  | 'set_withdraw_vesting_route' // 20
-  | 'transfer' // 2
-  | 'transfer_from_savings' // 33
-  | 'transfer_to_savings' // 32
-  | 'transfer_to_vesting' // 3
-  | 'update_proposal_votes' // 45
-  | 'vote' // 0
-  | 'withdraw_vesting' // 4
+  | 'claim_reward_balance' // 39
+  | 'delegate_vesting_shares' // 40
+  | 'account_create_with_delegation' // 41
   | 'witness_set_properties' // 42
-  | 'witness_update' // 11
+  | 'account_update2' // 43
+  | 'create_proposal' // 44
+  | 'update_proposal_votes' // 45
+  | 'remove_proposal' // 46
+  | 'update_proposal' // 47
+  | 'collateralized_convert' // 48
+  | 'recurrent_transfer' // 49
 
 /**
  * Virtual operation name.
  */
 export type VirtualOperationName =  // <id>
-  | 'author_reward' // 43
-  | 'comment_benefactor_reward' // 55
-  | 'comment_payout_update' // 53
-  | 'comment_reward' // 45
-  | 'curation_reward' // 44
-  | 'fill_convert_request' // 42
-  | 'fill_order' // 49
-  | 'fill_transfer_from_savings' // 51
-  | 'fill_vesting_withdraw' // 48
-  | 'hardfork' // 52
-  | 'interest' // 47
-  | 'liquidity_reward' // 46
-  | 'return_vesting_delegation' // 54
-  | 'shutdown_witness' // 50
+  | 'fill_convert_request' // last_regular + 1
+  | 'author_reward' // last_regular + 2
+  | 'curation_reward' // last_regular + 3
+  | 'comment_reward' // last_regular + 4
+  | 'liquidity_reward' // last_regular + 5
+  | 'interest' // last_regular + 6
+  | 'fill_vesting_withdraw' // last_regular + 7
+  | 'fill_order' // last_regular + 8
+  | 'shutdown_witness' // last_regular + 9
+  | 'fill_transfer_from_savings' // last_regular + 10
+  | 'hardfork' // last_regular + 11
+  | 'comment_payout_update' // last_regular + 12
+  | 'return_vesting_delegation' // last_regular + 13
+  | 'comment_benefactor_reward' // last_regular + 14
+  | 'producer_reward' // last_regular + 15
+  | 'clear_null_account_balance' // last_regular + 16
+  | 'proposal_pay' // last_regular + 17
+  | 'sps_fund' // last_regular + 18
+  | 'hardfork_hive' // last_regular + 19
+  | 'hardfork_hive_restore' // last_regular + 20
+  | 'delayed_voting' // last_regular + 21
+  | 'consolidate_treasury_balance' // last_regular + 22
+  | 'effective_comment_vote' // last_regular + 23
+  | 'ineffective_delete_comment' // last_regular + 24
+  | 'sps_convert' // last_regular + 25
+  | 'expired_account_notification' // last_regular + 26
+  | 'changed_recovery_account' // last_regular + 27
+  | 'transfer_to_vesting_completed' // last_regular + 28
+  | 'pow_reward' // last_regular + 29
+  | 'vesting_shares_split' // last_regular + 30
+  | 'account_created' // last_regular + 31
+  | 'fill_collateralized_convert_request' // last_regular + 32
+  | 'system_warning' // last_regular + 33,
+  | 'fill_recurrent_transfer' // last_regular + 34
+  | 'failed_recurrent_transfer' // last_regular + 35
 
 /**
  * Generic operation.
@@ -239,8 +264,8 @@ export interface ClaimRewardBalanceOperation extends Operation {
   0: 'claim_reward_balance' // 39
   1: {
     account: string // account_name_type
-    reward_steem: string | Asset
-    reward_sbd: string | Asset
+    reward_hive: string | Asset
+    reward_hbd: string | Asset
     reward_vests: string | Asset
   }
 }
@@ -278,7 +303,7 @@ export interface CommentOptionsOperation extends Operation {
     /** HBD value of the maximum payout this post will receive. */
     max_accepted_payout: Asset | string
     /** The percent of Hive Dollars to key, unkept amounts will be received as Hive Power. */
-    percent_steem_dollars: number // uint16_t
+    percent_hbd: number // uint16_t
     /** Whether to allow post to receive votes. */
     allow_votes: boolean
     /** Whether to allow post to recieve curation rewards. */
@@ -454,11 +479,11 @@ export interface EscrowReleaseOperation extends Operation {
     /**
      * The amount of hbd to release.
      */
-    sbd_amount: Asset | string
+    hbd_amount: Asset | string
     /**
      * The amount of hive to release.
      */
-    steem_amount: Asset | string
+    hive_amount: Asset | string
   }
 }
 
@@ -487,8 +512,8 @@ export interface EscrowTransferOperation extends Operation {
     to: string // account_name_type
     agent: string // account_name_type
     escrow_id: number // uint32_t
-    sbd_amount: Asset | string
-    steem_amount: Asset | string
+    hbd_amount: Asset | string
+    hive_amount: Asset | string
     fee: Asset | string
     ratification_deadline: string // time_point_sec
     escrow_expiration: string // time_point_sec
@@ -540,8 +565,8 @@ export interface LimitOrderCreate2Operation extends Operation {
     owner: string // account_name_type
     orderid: number // uint32_t
     amount_to_sell: Asset | string
-    fill_or_kill: boolean
     exchange_rate: PriceType
+    fill_or_kill: boolean
     expiration: string // time_point_sec
   }
 }
@@ -884,7 +909,7 @@ export interface WitnessSetPropertiesOperation extends Operation {
   0: 'witness_set_properties' // 42
   1: {
     owner: string
-    props: [string, Buffer][]
+    props: [string, string][]
     extensions: any[]
   }
 }
@@ -932,6 +957,40 @@ export interface RemoveProposalOperation extends Operation {
   1: {
     proposal_owner: string
     proposal_ids: number[] // flat_set_ex<int64_t>
+    extensions: any[]
+  }
+}
+
+export interface UpdateProposalOperation extends Operation {
+  0: 'update_proposal' // 47
+  1: {
+    proposal_id: number
+    creator: string
+    daily_pay: Asset | string
+    subject: string
+    permlink: string
+    extensions: any[]
+  }
+}
+
+export interface CollateralizedConvertOperation extends Operation {
+  0: 'collateralized_convert' // 48
+  1: {
+    owner: string
+    requestid: number
+    amount: Asset | string
+  }
+}
+
+export interface RecurrentTransferOperation extends Operation {
+  0: 'recurrent_transfer' // 49
+  1: {
+    from: string
+    to: string
+    amount: Asset | string
+    memo: string
+    recurrence: number
+    executions: number
     extensions: any[]
   }
 }

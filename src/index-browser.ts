@@ -33,13 +33,13 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import "regenerator-runtime/runtime";
-import "core-js/features/map";
-import "core-js/features/number";
-import "core-js/features/promise";
-import "core-js/features/symbol";
-import "core-js/features/array/from";
-import "core-js/features/symbol/async-iterator";
-import 'whatwg-fetch';
+import 'core-js/features/array/from'
+import 'core-js/features/map'
+import 'core-js/features/number'
+import 'core-js/features/promise'
+import 'core-js/features/symbol'
+import 'core-js/features/symbol/async-iterator'
+import 'regenerator-runtime/runtime'
+import 'whatwg-fetch'
 
-export * from "./index";
+export * from './index'

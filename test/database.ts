@@ -108,23 +108,17 @@ describe("database api", function() {
   });
 
   it("getTransaction", async function() {
-    const tx = await liveClient.database.getTransaction({
-      id: "c20a84c8a12164e1e0750f0ee5d3c37214e2f073",
-      block_num: 13680277
-    });
+    const tx = await liveClient.database.getTransaction("c20a84c8a12164e1e0750f0ee5d3c37214e2f073");
     assert.deepEqual(tx.signatures, [
       "201e02e8daa827382b1a3aefb6809a4501eb77aa813b705be4983d50d74c66432529601e5ae43981dcba2a7e171de5fd75be2e1820942260375d2daf647df2ccaa"
     ]);
     try {
-      await client.database.getTransaction({
-        id: "c20a84c8a12164e1e0750f0ee5d3c37214e2f073",
-        block_num: 1
-      });
+      await client.database.getTransaction("11c20a84c8a12164e1e0750f0ee5d3c37214e2f073");
       assert(false, "should not be reached");
     } catch (error) {
       assert.equal(
         error.message,
-        "Unable to find transaction c20a84c8a12164e1e0750f0ee5d3c37214e2f073 in block 1"
+        "Unable to find transaction 11c20a84c8a12164e1e0750f0ee5d3c37214e2f073"
       );
     }
   });
@@ -176,12 +170,6 @@ describe("database api", function() {
       extensions: []
     };
     const key = PrivateKey.fromLogin(acc.username, acc.password, "posting");
-
-    // remove chainId after hf24
-    const HFV = await client.database.call('get_hardfork_version')
-    if (HFV === '0.23.0') {
-      client.chainId = Buffer.from('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
-    }
 
     const stx = client.broadcast.sign(tx, key);
     const rv = await client.database.verifyAuthority(stx);

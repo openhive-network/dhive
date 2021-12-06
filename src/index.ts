@@ -39,8 +39,8 @@ export { utils }
 export * from './helpers/blockchain'
 export * from './helpers/database'
 export * from './helpers/rc'
+export * from './helpers/key'
 export * from './helpers/hivemind'
-export * from './helpers/aes'
 
 export * from './chain/account'
 export * from './chain/asset'

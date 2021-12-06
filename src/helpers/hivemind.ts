@@ -1,9 +1,9 @@
 /**
  * Hivemind database query wrapper
-*/
+ */
 
-import { Discussion } from '../chain/comment'
 import { Account } from '../chain/account'
+import { Discussion } from '../chain/comment'
 import { CommunityDetail, Notifications } from '../chain/hivemind'
 import { Client } from './../client'
 
@@ -36,7 +36,7 @@ interface PostsQuery {
 
 /**
  * Omitting sort extended from BridgeParam
- * */
+ */
 interface AccountPostsQuery extends Omit<PostsQuery, 'sort'> {
     account: string
     sort: 'posts'
@@ -80,32 +80,60 @@ export class HivemindAPI {
     constructor(readonly client: Client) { }
 
     /**
-   * Convenience for calling `hivemindAPI`.
-   */
+     * Convenience of calling hivemind api
+     * @param method
+     * @param params
+     */
     public call(method: string, params?: any) {
         return this.client.call('bridge', method, params)
     }
 
+    /**
+     * Get trending, hot, recent community posts from Hivemind
+     * @param options
+     */
     public getRankedPosts(options: PostsQuery): Promise<Discussion[]> {
         return this.call('get_ranked_posts', options)
     }
 
+    /**
+     * Get posts by particular account from Hivemind
+     * @param options
+     */
     public getAccountPosts(options: AccountPostsQuery): Promise<Discussion[]> {
         return this.call('get_account_posts', options)
     }
 
+    /**
+     * Get community details such as who are the admin,
+     * moderators, how many subscribers, etc..
+     * @param options
+     */
     public getCommunity(options: CommunityQuery): Promise<CommunityDetail[]> {
         return this.call('get_community', options)
     }
 
+    /**
+     * List all subscriptions by particular account
+     * @param account the account you want to query
+     * @returns {Array} return role, what community the account joined
+     */
     public listAllSubscriptions(account: Account['name'] | object): Promise<Discussion[]> {
         return this.call('list_all_subscriptions', account)
     }
 
+    /**
+     * Get particular account notifications feed
+     * @param options
+     */
     public getAccountNotifications(options?: AccountNotifsQuery): Promise<Notifications[]> {
         return this.call('account_notifications', options)
     }
 
+    /**
+     * List all available communities on hivemind
+     * @param options
+     */
     public listCommunities(options: ListCommunitiesQuery): Promise<CommunityDetail[]> {
         return this.call('list_communities', options)
     }

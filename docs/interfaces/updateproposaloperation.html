@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>EscrowTransferOperation | @hiveio/dhive</title>
+	<title>UpdateProposalOperation | @hiveio/dhive</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,34 +56,16 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="escrowtransferoperation.html">EscrowTransferOperation</a>
+					<a href="updateproposaloperation.html">UpdateProposalOperation</a>
 				</li>
 			</ul>
-			<h1>Interface EscrowTransferOperation</h1>
+			<h1>Interface UpdateProposalOperation</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>The purpose of this operation is to enable someone to send money contingently to
-							another individual. The funds leave the <em>from</em> account and go into a temporary balance
-						where they are held until <em>from</em> releases it to <em>to</em> or <em>to</em> refunds it to <em>from</em>.</p>
-					</div>
-					<p>In the event of a dispute the <em>agent</em> can divide the funds between the to/from account.
-						Disputes can be raised any time before or on the dispute deadline time, after the escrow
-					has been approved by all parties.</p>
-					<p>This operation only creates a proposed escrow transfer. Both the <em>agent</em> and <em>to</em> must
-					agree to the terms of the arrangement by approving the escrow.</p>
-					<p>The escrow agent is paid the fee on approval of all parties. It is up to the escrow agent
-					to determine the fee.</p>
-					<p>Escrow transactions are uniquely identified by &#39;from&#39; and &#39;escrow_id&#39;, the &#39;escrow_id&#39; is defined
-					by the sender.</p>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -91,7 +73,7 @@
 						<a href="operation.html" class="tsd-signature-type">Operation</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">EscrowTransferOperation</span>
+								<span class="target">UpdateProposalOperation</span>
 							</li>
 						</ul>
 					</li>
@@ -104,8 +86,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="escrowtransferoperation.html#0" class="tsd-kind-icon">0</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="escrowtransferoperation.html#1" class="tsd-kind-icon">1</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="updateproposaloperation.html#0" class="tsd-kind-icon">0</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="updateproposaloperation.html#1" class="tsd-kind-icon">1</a></li>
 							</ul>
 						</section>
 					</div>
@@ -116,56 +98,44 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="0" class="tsd-anchor"></a>
 					<h3>0</h3>
-					<div class="tsd-signature tsd-kind-icon">0<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"escrow_transfer"</span></div>
+					<div class="tsd-signature tsd-kind-icon">0<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"update_proposal"</span></div>
 					<aside class="tsd-sources">
 						<p>Overrides <a href="operation.html">Operation</a>.<a href="operation.html#0">0</a></p>
 						<ul>
-							<li>Defined in chain/operation.ts:509</li>
+							<li>Defined in chain/operation.ts:965</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="1" class="tsd-anchor"></a>
 					<h3>1</h3>
-					<div class="tsd-signature tsd-kind-icon">1<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>agent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>escrow_expiration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>escrow_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>fee<span class="tsd-signature-symbol">: </span><a href="../classes/asset.html" class="tsd-signature-type">Asset</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>from<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>hbd_amount<span class="tsd-signature-symbol">: </span><a href="../classes/asset.html" class="tsd-signature-type">Asset</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>hive_amount<span class="tsd-signature-symbol">: </span><a href="../classes/asset.html" class="tsd-signature-type">Asset</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>json_meta<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>ratification_deadline<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>to<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
+					<div class="tsd-signature tsd-kind-icon">1<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>creator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>daily_pay<span class="tsd-signature-symbol">: </span><a href="../classes/asset.html" class="tsd-signature-type">Asset</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>extensions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>permlink<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>proposal_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>subject<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<p>Overrides <a href="operation.html">Operation</a>.<a href="operation.html#1">1</a></p>
 						<ul>
-							<li>Defined in chain/operation.ts:510</li>
+							<li>Defined in chain/operation.ts:966</li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter">
-								<h5>agent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+								<h5>creator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 							<li class="tsd-parameter">
-								<h5>escrow_<wbr>expiration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+								<h5>daily_<wbr>pay<span class="tsd-signature-symbol">: </span><a href="../classes/asset.html" class="tsd-signature-type">Asset</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 							<li class="tsd-parameter">
-								<h5>escrow_<wbr>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+								<h5>extensions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
 							</li>
 							<li class="tsd-parameter">
-								<h5>fee<span class="tsd-signature-symbol">: </span><a href="../classes/asset.html" class="tsd-signature-type">Asset</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								<h5>permlink<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 							<li class="tsd-parameter">
-								<h5>from<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+								<h5>proposal_<wbr>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
 							</li>
 							<li class="tsd-parameter">
-								<h5>hbd_<wbr>amount<span class="tsd-signature-symbol">: </span><a href="../classes/asset.html" class="tsd-signature-type">Asset</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5>hive_<wbr>amount<span class="tsd-signature-symbol">: </span><a href="../classes/asset.html" class="tsd-signature-type">Asset</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5>json_<wbr>meta<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5>ratification_<wbr>deadline<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5>to<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+								<h5>subject<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 						</ul>
 					</div>
@@ -185,13 +155,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="escrowtransferoperation.html" class="tsd-kind-icon">Escrow<wbr>Transfer<wbr>Operation</a>
+						<a href="updateproposaloperation.html" class="tsd-kind-icon">Update<wbr>Proposal<wbr>Operation</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-								<a href="escrowtransferoperation.html#0" class="tsd-kind-icon">0</a>
+								<a href="updateproposaloperation.html#0" class="tsd-kind-icon">0</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-								<a href="escrowtransferoperation.html#1" class="tsd-kind-icon">1</a>
+								<a href="updateproposaloperation.html#1" class="tsd-kind-icon">1</a>
 							</li>
 						</ul>
 					</li>
