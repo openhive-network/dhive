@@ -1,9 +1,9 @@
-import { PrivateKey, PublicKey } from './crypto'
-import { Types } from './chain/serializer'
-import * as Aes from './helpers/aes'
-import { types } from './chain/deserializer'
 import * as bs58 from 'bs58'
 import * as ByteBuffer from 'bytebuffer'
+import { types } from './chain/deserializer'
+import { Types } from './chain/serializer'
+import { PrivateKey, PublicKey } from './crypto'
+import * as Aes from './helpers/aes'
 
 /**
  * Memo/Any message encoding using AES (aes-cbc algorithm)
@@ -67,8 +67,8 @@ function decode(private_key: PrivateKey | string, memo: any) {
     }
 }
 
-const toPrivateObj = o => (o ? o.key ? o : PrivateKey.fromString(o) : o/* null or undefined*/)
-const toPublicObj = o => (o ? o.key ? o : PublicKey.fromString(o) : o/* null or undefined*/)
+const toPrivateObj = (o) => (o ? o.key ? o : PrivateKey.fromString(o) : o/* null or undefined*/)
+const toPublicObj = (o) => (o ? o.key ? o : PublicKey.fromString(o) : o/* null or undefined*/)
 
 export const Memo = {
     decode,

@@ -1,20 +1,21 @@
-import { createCipheriv, createDecipheriv, randomBytes, createHash } from 'crypto'
 import * as assert from 'assert'
+import { createCipheriv, createDecipheriv, createHash, randomBytes } from 'crypto'
 import { PrivateKey, PublicKey } from '../crypto'
 const ByteBuffer = require('bytebuffer')
 const Long = ByteBuffer.Long
 /**
-    Spec: http://localhost:3002/steem/@dantheman/how-to-encrypt-a-memo-when-transferring-steem
-    @throws {Error|TypeError} - "Invalid Key, ..."
-    @arg {PrivateKey} private_key - required and used for decryption
-    @arg {PublicKey} public_key - required and used to calcualte the shared secret
-    @arg {string} [nonce = uniqueNonce()] - assigned a random unique uint64
-
-    @return {object}
-    @property {string} nonce - random or unique uint64, provides entropy when re-using the same private/public keys.
-    @property {Buffer} message - Plain text message
-    @property {number} checksum - shared secret checksum
-*/
+ * Spec: http://peakd.com/steem/@dantheman/how-to-encrypt-a-memo-when-transferring-steem
+ * @throws {Error|TypeError} - "Invalid Key, ..."
+ * @param {PrivateKey} private_key - required and used for decryption
+ * @param {PublicKey} public_key - required and used to calcualte the shared secret
+ * @param message - message to be encrypted
+ * @param {string} [nonce = uniqueNonce()] - assigned a random unique uint64
+ *
+ * @return {object}
+ * @property {string} nonce - random or unique uint64, provides entropy when re-using the same private/public keys.
+ * @property {Buffer} message - Plain text message
+ * @property {number} checksum - shared secret checksum
+ */
 export function encrypt(private_key: PrivateKey, public_key: PublicKey, message: any, nonce): any {
     // Change message to varint32 prefixed encoded string
     const mbuf = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN)
@@ -24,23 +25,23 @@ export function encrypt(private_key: PrivateKey, public_key: PublicKey, message:
 }
 
 /**
-    Spec: http://localhost:3002/steem/@dantheman/how-to-encrypt-a-memo-when-transferring-steem
-    @arg {PrivateKey} private_key - required and used for decryption
-    @arg {PublicKey} public_key - required and used to calcualte the shared secret
-    @arg {string} nonce - random or unique uint64, provides entropy when re-using the same private/public keys.
-    @arg {Buffer} message - Encrypted or plain text message
-    @arg {number} checksum - shared secret checksum
-    @throws {Error|TypeError} - "Invalid Key, ..."
-    @return {Buffer} - message
-*/
+ * Spec: http://peakd.com/steem/@dantheman/how-to-encrypt-a-memo-when-transferring-steem
+ * @arg {PrivateKey} private_key - required and used for decryption
+ * @arg {PublicKey} public_key - required and used to calcualte the shared secret
+ * @arg {string} nonce - random or unique uint64, provides entropy when re-using the same private/public keys.
+ * @arg {Buffer} message - Encrypted or plain text message
+ * @arg {number} checksum - shared secret checksum
+ *  @throws {Error|TypeError} - "Invalid Key, ..."
+ *  @return {Buffer} - message
+ */
 export function decrypt(private_key: PrivateKey, public_key: PublicKey, nonce, message: any, checksum: number): string {
     return crypt(private_key, public_key, nonce, message, checksum).message as string
 }
 
 /**
-    @arg {Buffer} message - Encrypted or plain text message (see checksum)
-    @arg {number} checksum - shared secret checksum (null to encrypt, non-null to decrypt)
-*/
+ * @arg {Buffer} message - Encrypted or plain text message (see checksum)
+ * @arg {number} checksum - shared secret checksum (null to encrypt, non-null to decrypt)
+ */
 function crypt(
     private_key: PrivateKey,
     public_key: PublicKey,
@@ -74,10 +75,11 @@ function crypt(
     return { nonce, message, checksum: check }
 }
 
-/** This method does not use a checksum, the returned data must be validated some other way.
-    @arg {string|Buffer} ciphertext - binary format
-    @return {Buffer}
-*/
+/**
+ * This method does not use a checksum, the returned data must be validated some other way.
+ * @arg {string|Buffer} ciphertext - binary format
+ * @return {Buffer} the decrypted message
+ */
 function cryptoJsDecrypt(message, tag, iv) {
     assert(message, 'Missing cipher text')
     message = toBinaryBuffer(message)
@@ -86,10 +88,11 @@ function cryptoJsDecrypt(message, tag, iv) {
     return message
 }
 
-/** This method does not use a checksum, the returned data must be validated some other way.
-    @arg {string|Buffer} plaintext - binary format
-    @return {Buffer} binary
-*/
+/**
+ * This method does not use a checksum, the returned data must be validated some other way.
+ * @arg {string|Buffer} plaintext - binary format
+ * @return {Buffer} binary
+ */
 function cryptoJsEncrypt(message, tag, iv) {
     assert(message, 'Missing plain text')
     message = toBinaryBuffer(message)
@@ -101,7 +104,7 @@ function cryptoJsEncrypt(message, tag, iv) {
 /** @return {string} unique 64 bit unsigned number string.  Being time based,
  * this is careful to never choose the same nonce twice.  This value could
  * clsbe recorded in the blockchain for a long time.
-*/
+ */
 let unique_nonce_entropy: any = null
 
 function uniqueNonce() {
@@ -116,5 +119,5 @@ function uniqueNonce() {
     return long.toString()
 }
 
-const toLongObj = o => (o ? Long.isLong(o) ? o : Long.fromString(o) : o)
-const toBinaryBuffer = o => (o ? Buffer.isBuffer(o) ? o : Buffer.from(o, 'binary') : o)
+const toLongObj = (o) => (o ? Long.isLong(o) ? o : Long.fromString(o) : o)
+const toBinaryBuffer = (o) => (o ? Buffer.isBuffer(o) ? o : Buffer.from(o, 'binary') : o)
