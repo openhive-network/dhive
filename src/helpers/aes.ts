@@ -119,5 +119,5 @@ function uniqueNonce() {
     return long.toString()
 }
 
-const toLongObj = (o) => (o ? Long.isLong(o) ? o : Long.fromString(o) : o)
-const toBinaryBuffer = (o) => (o ? Buffer.isBuffer(o) ? o : Buffer.from(o, 'binary') : o)
+const toLongObj = o => (o ? Long.isLong(o) ? o : Long.fromString(o) : o)
+const toBinaryBuffer = o => (o ? Buffer.isBuffer(o) ? o : Buffer.from(o, 'binary') : o)
