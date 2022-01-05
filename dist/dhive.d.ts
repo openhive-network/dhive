@@ -787,13 +787,13 @@ declare module 'dhive/crypto' {
 	    doubleSha256: typeof doubleSha256;
 	    encodePrivate: typeof encodePrivate;
 	    encodePublic: typeof encodePublic;
+	    generateTrxId: typeof generateTrxId;
 	    isCanonicalSignature: typeof isCanonicalSignature;
 	    isWif: typeof isWif;
 	    ripemd160: typeof ripemd160;
 	    sha256: typeof sha256;
 	    signTransaction: typeof signTransaction;
 	    transactionDigest: typeof transactionDigest;
-	    generateTrxId: typeof generateTrxId;
 	};
 	export {};
 
@@ -1412,8 +1412,8 @@ declare module 'dhive/chain/operation' {
 	        owner: string;
 	        orderid: number;
 	        amount_to_sell: Asset | string;
-	        fill_or_kill: boolean;
 	        exchange_rate: PriceType;
+	        fill_or_kill: boolean;
 	        expiration: string;
 	    };
 	}
@@ -2589,6 +2589,30 @@ declare module 'dhive/helpers/hivemind' {
 	export {};
 
 }
+declare module 'dhive/helpers/key' {
+	/**
+	 * @file Account by key API helpers.
+	 * @author Bartłomiej (@engrave) Górnicki
+	 */
+	import { PublicKey } from 'dhive/crypto';
+	import { Client } from 'dhive/client';
+	export interface AccountsByKey {
+	    accounts: [string[]];
+	}
+	export class AccountByKeyAPI {
+	    readonly client: Client;
+	    constructor(client: Client);
+	    /**
+	     * Convenience for calling `account_by_key_api`.
+	     */
+	    call(method: string, params?: any): Promise<any>;
+	    /**
+	     * Returns all accounts that have the key associated with their owner or active authorities.
+	     */
+	    getKeyReferences(keys: (PublicKey | string)[]): Promise<AccountsByKey>;
+	}
+
+}
 declare module 'dhive/chain/rc' {
 	import { SMTAsset } from 'dhive/chain/asset';
 	import { Bignum } from 'dhive/chain/misc';
@@ -2691,30 +2715,6 @@ declare module 'dhive/helpers/rc' {
 	}
 
 }
-declare module 'dhive/helpers/key' {
-	/**
-	 * @file Account by key API helpers.
-	 * @author Bartłomiej (@engrave) Górnicki
-	 */
-	import { PublicKey } from 'dhive/crypto';
-	import { Client } from 'dhive/client';
-	export interface AccountsByKey {
-	    accounts: [string[]];
-	}
-	export class AccountByKeyAPI {
-	    readonly client: Client;
-	    constructor(client: Client);
-	    /**
-	     * Convenience for calling `account_by_key_api`.
-	     */
-	    call(method: string, params?: any): Promise<any>;
-	    /**
-	     * Returns all accounts that have the key associated with their owner or active authorities.
-	     */
-	    getKeyReferences(keys: (PublicKey | string)[]): Promise<AccountsByKey>;
-	}
-
-}
 declare module 'dhive/client' {
 	/**
 	 * @file Hive RPC client implementation.
@@ -2755,8 +2755,8 @@ declare module 'dhive/client' {
 	import { BroadcastAPI } from 'dhive/helpers/broadcast';
 	import { DatabaseAPI } from 'dhive/helpers/database';
 	import { HivemindAPI } from 'dhive/helpers/hivemind';
-	import { RCAPI } from 'dhive/helpers/rc';
 	import { AccountByKeyAPI } from 'dhive/helpers/key';
+	import { RCAPI } from 'dhive/helpers/rc';
 	/**
 	 * Library version.
 	 */
