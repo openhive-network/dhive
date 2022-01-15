@@ -11,7 +11,7 @@
     "core-js": "^2.5.1",
     "nib": "^1.1.2",
     "remove-markdown": "^0.3.0",
-    "shelljs": "^0.7.8",
+    "shelljs": "^0.8.5",
     "ts-node": "^3.3.0",
     "tsify": "^3.0.3",
     "typescript": "^2.5.2",
