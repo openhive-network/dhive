@@ -36,15 +36,9 @@
 import fetch from 'cross-fetch'
 import { EventEmitter } from 'events'
 import { PassThrough } from 'stream'
-import * as https from 'https'
 
 // TODO: Add more errors that should trigger a failover
-const timeoutErrors = ['timeout', 'ENOTFOUND', 'ECONNREFUSED', 'database lock']
-
-// custom agent, do not reject if CERT_HAS_EXPIRED
-const agent = new https.Agent({
-  rejectUnauthorized: false,
-});
+const timeoutErrors = ['timeout', 'ENOTFOUND', 'ECONNREFUSED', 'database lock', 'CERT_HAS_EXPIRED']
 
 /**
  * Return a promise that will resove when a specific event is emitted.
@@ -115,7 +109,7 @@ export async function retryingFetch(
   let start = Date.now()
   let tries = 0
   let round = 0
-  opts.agent = agent
+
   do {
     try {
       if (fetchTimeout) {
