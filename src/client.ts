@@ -231,7 +231,7 @@ export class Client {
 
     private consoleOnFailover: boolean
 
-    private currentAddress: string
+    public currentAddress: string
 
     /**
      * @param address The address to the Hive RPC server,

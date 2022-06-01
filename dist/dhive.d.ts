@@ -2871,7 +2871,7 @@ declare module 'dhive/client' {
 	    private backoff;
 	    private failoverThreshold;
 	    private consoleOnFailover;
-	    private currentAddress;
+	    currentAddress: string;
 	    /**
 	     * @param address The address to the Hive RPC server,
 	     * e.g. `https://api.hive.blog`. or [`https://api.hive.blog`, `https://another.api.com`]
