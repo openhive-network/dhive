@@ -43,6 +43,7 @@ import { DatabaseAPI } from './helpers/database'
 import { HivemindAPI } from './helpers/hivemind'
 import {AccountByKeyAPI} from './helpers/key'
 import { RCAPI } from './helpers/rc'
+import {TransactionStatusAPI} from './helpers/transaction'
 import { copy, retryingFetch, waitForEvent } from './utils'
 
 /**
@@ -215,6 +216,11 @@ export class Client {
     public readonly keys: AccountByKeyAPI
 
     /**
+     * Transaction status API helper.
+     */
+    public readonly transaction: TransactionStatusAPI
+
+    /**
      * Chain ID for current network.
      */
     public readonly chainId: Buffer
@@ -264,6 +270,7 @@ export class Client {
         this.rc = new RCAPI(this)
         this.hivemind = new HivemindAPI(this)
         this.keys = new AccountByKeyAPI(this)
+        this.transaction = new TransactionStatusAPI(this)
     }
 
     /**

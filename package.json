@@ -3,7 +3,7 @@
   "version": "1.2.1",
   "description": "Hive blockchain RPC client library",
   "author": "hive-network",
-  "license": "BSD-3-Clause",
+  "license": "BSD-3-Clause-No-Military-License",
   "main": "./lib/index-node",
   "typings": "./lib/index",
   "browser": {
