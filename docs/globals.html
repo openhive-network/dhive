@@ -90,6 +90,7 @@
 								<li class="tsd-kind-class"><a href="classes/publickey.html" class="tsd-kind-icon">Public<wbr>Key</a></li>
 								<li class="tsd-kind-class"><a href="classes/rcapi.html" class="tsd-kind-icon">RCAPI</a></li>
 								<li class="tsd-kind-class"><a href="classes/signature.html" class="tsd-kind-icon">Signature</a></li>
+								<li class="tsd-kind-class"><a href="classes/transactionstatusapi.html" class="tsd-kind-icon">Transaction<wbr>StatusAPI</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -143,6 +144,7 @@
 								<li class="tsd-kind-interface"><a href="interfaces/escrowtransferoperation.html" class="tsd-kind-icon">Escrow<wbr>Transfer<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/extendedaccount.html" class="tsd-kind-icon">Extended<wbr>Account</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/feedpublishoperation.html" class="tsd-kind-icon">Feed<wbr>Publish<wbr>Operation</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/findtransactionparams.html" class="tsd-kind-icon">Find<wbr>Transaction<wbr>Params</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/limitordercanceloperation.html" class="tsd-kind-icon">Limit<wbr>Order<wbr>Cancel<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/limitordercreate2operation.html" class="tsd-kind-icon">Limit<wbr>Order<wbr>Create2<wbr>Operation</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/limitordercreateoperation.html" class="tsd-kind-icon">Limit<wbr>Order<wbr>Create<wbr>Operation</a></li>
@@ -202,6 +204,7 @@
 								<li class="tsd-kind-type-alias"><a href="globals.html#operationname" class="tsd-kind-icon">Operation<wbr>Name</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#pricetype" class="tsd-kind-icon">Price<wbr>Type</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#serializer" class="tsd-kind-icon">Serializer</a></li>
+								<li class="tsd-kind-type-alias"><a href="globals.html#transactionstatus" class="tsd-kind-icon">Transaction<wbr>Status</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#virtualoperationname" class="tsd-kind-icon">Virtual<wbr>Operation<wbr>Name</a></li>
 							</ul>
 						</section>
@@ -406,6 +409,16 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="transactionstatus" class="tsd-anchor"></a>
+					<h3>Transaction<wbr>Status</h3>
+					<div class="tsd-signature tsd-kind-icon">Transaction<wbr>Status<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"unknown"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"within_mempool"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"within_reversible_block"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"within_irreversible_block"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"expired_reversible"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"expired_irreversible"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"too_old"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in helpers/transaction.ts:8</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="virtualoperationname" class="tsd-anchor"></a>
 					<h3>Virtual<wbr>Operation<wbr>Name</h3>
 					<div class="tsd-signature tsd-kind-icon">Virtual<wbr>Operation<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"fill_convert_request"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"author_reward"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"curation_reward"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"comment_reward"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"liquidity_reward"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"interest"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"fill_vesting_withdraw"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"fill_order"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"shutdown_witness"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"fill_transfer_from_savings"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"hardfork"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"comment_payout_update"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"return_vesting_delegation"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"comment_benefactor_reward"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"producer_reward"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"clear_null_account_balance"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"proposal_pay"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"sps_fund"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"hardfork_hive"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"hardfork_hive_restore"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delayed_voting"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"consolidate_treasury_balance"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"effective_comment_vote"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"ineffective_delete_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"sps_convert"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"expired_account_notification"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"changed_recovery_account"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"transfer_to_vesting_completed"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"pow_reward"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"vesting_shares_split"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"account_created"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"fill_collateralized_convert_request"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"system_warning"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"fill_recurrent_transfer"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"failed_recurrent_transfer"</span></div>
@@ -459,7 +472,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>ADDRESS_<wbr>PREFIX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"STM"</span><span class="tsd-signature-symbol"> = &quot;STM&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:64</li>
+							<li>Defined in client.ts:65</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -474,7 +487,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>CHAIN_<wbr>ID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol"> = Buffer.from(&#x27;beeab0de00000000000000000000000000000000000000000000000000000000&#x27;,&#x27;hex&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:56</li>
+							<li>Defined in client.ts:57</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -572,7 +585,7 @@
 					<div class="tsd-signature tsd-kind-icon">VERSION<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = packageVersion</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:51</li>
+							<li>Defined in client.ts:52</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1303,7 +1316,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in client.ts:405</li>
+									<li>Defined in client.ts:412</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3256,6 +3269,9 @@
 					<li class=" tsd-kind-class">
 						<a href="classes/signature.html" class="tsd-kind-icon">Signature</a>
 					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/transactionstatusapi.html" class="tsd-kind-icon">Transaction<wbr>StatusAPI</a>
+					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/account.html" class="tsd-kind-icon">Account</a>
 					</li>
@@ -3399,6 +3415,9 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/feedpublishoperation.html" class="tsd-kind-icon">Feed<wbr>Publish<wbr>Operation</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/findtransactionparams.html" class="tsd-kind-icon">Find<wbr>Transaction<wbr>Params</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/limitordercanceloperation.html" class="tsd-kind-icon">Limit<wbr>Order<wbr>Cancel<wbr>Operation</a>
@@ -3561,6 +3580,9 @@
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#serializer" class="tsd-kind-icon">Serializer</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#transactionstatus" class="tsd-kind-icon">Transaction<wbr>Status</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#virtualoperationname" class="tsd-kind-icon">Virtual<wbr>Operation<wbr>Name</a>

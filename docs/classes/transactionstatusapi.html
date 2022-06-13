@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AccountByKeyAPI | @hiveio/dhive</title>
+	<title>TransactionStatusAPI | @hiveio/dhive</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="accountbykeyapi.html">AccountByKeyAPI</a>
+					<a href="transactionstatusapi.html">TransactionStatusAPI</a>
 				</li>
 			</ul>
-			<h1>Class AccountByKeyAPI</h1>
+			<h1>Class TransactionStatusAPI</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">AccountByKeyAPI</span>
+						<span class="target">TransactionStatusAPI</span>
 					</li>
 				</ul>
 			</section>
@@ -81,20 +81,20 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="accountbykeyapi.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="transactionstatusapi.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="accountbykeyapi.html#client" class="tsd-kind-icon">client</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="transactionstatusapi.html#client" class="tsd-kind-icon">client</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="accountbykeyapi.html#call" class="tsd-kind-icon">call</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="accountbykeyapi.html#getkeyreferences" class="tsd-kind-icon">get<wbr>Key<wbr>References</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="transactionstatusapi.html#call" class="tsd-kind-icon">call</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="transactionstatusapi.html#findtransaction" class="tsd-kind-icon">find<wbr>Transaction</a></li>
 							</ul>
 						</section>
 					</div>
@@ -106,13 +106,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Account<wbr>ByKeyAPI<span class="tsd-signature-symbol">(</span>client<span class="tsd-signature-symbol">: </span><a href="client.html" class="tsd-signature-type">Client</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="accountbykeyapi.html" class="tsd-signature-type">AccountByKeyAPI</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Transaction<wbr>StatusAPI<span class="tsd-signature-symbol">(</span>client<span class="tsd-signature-symbol">: </span><a href="client.html" class="tsd-signature-type">Client</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="transactionstatusapi.html" class="tsd-signature-type">TransactionStatusAPI</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in helpers/key.ts:13</li>
+									<li>Defined in helpers/transaction.ts:21</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -121,7 +121,7 @@
 									<h5>client: <a href="client.html" class="tsd-signature-type">Client</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="accountbykeyapi.html" class="tsd-signature-type">AccountByKeyAPI</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="transactionstatusapi.html" class="tsd-signature-type">TransactionStatusAPI</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -134,7 +134,7 @@
 					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <a href="client.html" class="tsd-signature-type">Client</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in helpers/key.ts:14</li>
+							<li>Defined in helpers/transaction.ts:22</li>
 						</ul>
 					</aside>
 				</section>
@@ -151,12 +151,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in helpers/key.ts:19</li>
+									<li>Defined in helpers/transaction.ts:27</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Convenience for calling <code>account_by_key_api</code>.</p>
+									<p>Convenience for calling <code>transaction_status_api</code>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -173,30 +173,33 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getkeyreferences" class="tsd-anchor"></a>
-					<h3>get<wbr>Key<wbr>References</h3>
+					<a name="findtransaction" class="tsd-anchor"></a>
+					<h3>find<wbr>Transaction</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Key<wbr>References<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="publickey.html" class="tsd-signature-type">PublicKey</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/accountsbykey.html" class="tsd-signature-type">AccountsByKey</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">find<wbr>Transaction<span class="tsd-signature-symbol">(</span>transaction_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, expiration<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>status<span class="tsd-signature-symbol">: </span><a href="../globals.html#transactionstatus" class="tsd-signature-type">TransactionStatus</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in helpers/key.ts:26</li>
+									<li>Defined in helpers/transaction.ts:34</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns all accounts that have the key associated with their owner or active authorities.</p>
+									<p>Returns the status of a given transaction id</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>keys: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="publickey.html" class="tsd-signature-type">PublicKey</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>transaction_id: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> expiration: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/accountsbykey.html" class="tsd-signature-type">AccountsByKey</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>status<span class="tsd-signature-symbol">: </span><a href="../globals.html#transactionstatus" class="tsd-signature-type">TransactionStatus</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -215,19 +218,19 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="accountbykeyapi.html" class="tsd-kind-icon">Account<wbr>ByKeyAPI</a>
+						<a href="transactionstatusapi.html" class="tsd-kind-icon">Transaction<wbr>StatusAPI</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="accountbykeyapi.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="transactionstatusapi.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="accountbykeyapi.html#client" class="tsd-kind-icon">client</a>
+								<a href="transactionstatusapi.html#client" class="tsd-kind-icon">client</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="accountbykeyapi.html#call" class="tsd-kind-icon">call</a>
+								<a href="transactionstatusapi.html#call" class="tsd-kind-icon">call</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="accountbykeyapi.html#getkeyreferences" class="tsd-kind-icon">get<wbr>Key<wbr>References</a>
+								<a href="transactionstatusapi.html#findtransaction" class="tsd-kind-icon">find<wbr>Transaction</a>
 							</li>
 						</ul>
 					</li>
