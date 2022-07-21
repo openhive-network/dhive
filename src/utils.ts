@@ -38,7 +38,7 @@ import { EventEmitter } from 'events'
 import { PassThrough } from 'stream'
 
 // TODO: Add more errors that should trigger a failover
-const timeoutErrors = ['timeout', 'ENOTFOUND', 'ECONNREFUSED', 'database lock', 'CERT_HAS_EXPIRED']
+const timeoutErrors = ['timeout', 'ENOTFOUND', 'ECONNREFUSED', 'database lock', 'CERT_HAS_EXPIRED', 'EHOSTUNREACH']
 
 /**
  * Return a promise that will resove when a specific event is emitted.
