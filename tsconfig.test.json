@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "lib": ["dom", "ES7"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitThis": true,
+    "outDir": "lib",
+    "strictNullChecks": true,
+    "target": "es6",
+    "allowJs": true
+  },
+  "include": ["test/**/*.ts", "test/**/*.js"]
+}

@@ -49,7 +49,6 @@ test: node_modules
 
 .PHONY: ci-test
 ci-test: node_modules
-	eslint -c .eslintrc.json src/**/*.ts
 	nyc -r lcov -e .ts -i ts-node/register mocha --exit --reporter tap --require ts-node/register test/*.ts
 
 .PHONY: browser-test
@@ -63,7 +62,15 @@ browser-test-local: dist/dhive.js
 
 .PHONY: lint
 lint: node_modules
-	tslint -p tsconfig.json -c tslint.json -t stylish --fix
+	eslint -c .eslintrc.json src/**/* --fix
+
+.PHONY: ci-lint
+ci-lint: node_modules
+	eslint -c .eslintrc.json src/**/*
+
+.PHONY: ci-lint-test
+ci-lint-test: node_modules
+	eslint -c .eslintrc.json test/**/*
 
 node_modules:
 	yarn install --non-interactive --frozen-lockfile
