@@ -3,27 +3,27 @@
  * @author Bartłomiej (@engrave) Górnicki
  */
 
-import {PublicKey} from '../crypto'
-import { Client } from './../client'
+import { PublicKey } from '../crypto';
+import { Client } from '../client';
 
 export interface AccountsByKey {
-    accounts: string[][]
+   accounts: string[][];
 }
 
 export class AccountByKeyAPI {
-    constructor(readonly client: Client) {}
+   constructor(private readonly client: Client) {}
 
-    /**
-     * Convenience for calling `account_by_key_api`.
-     */
-    public call(method: string, params?: any) {
-        return this.client.call('account_by_key_api', method, params)
-    }
+   /**
+    * Convenience for calling `account_by_key_api`.
+    */
+   call<T>(method: string, params?: any): Promise<T> {
+      return this.client.call<T>('account_by_key_api', method, params);
+   }
 
-    /**
-     * Returns all accounts that have the key associated with their owner or active authorities.
-     */
-    public async getKeyReferences(keys: (PublicKey | string)[]): Promise<AccountsByKey> {
-        return this.call('get_key_references', { keys: keys.map(key => key.toString()) })
-    }
+   /**
+    * Returns all accounts that have the key associated with their owner or active authorities.
+    */
+   async getKeyReferences(keys: (PublicKey | string)[]): Promise<AccountsByKey> {
+      return this.call('get_key_references', { keys: keys.map((key) => key.toString()) });
+   }
 }
