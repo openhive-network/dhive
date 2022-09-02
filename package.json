@@ -22,6 +22,7 @@
   "scripts": {
     "lint": "eslint -c .eslintrc.json src/** --fix",
     "lint:ci": "eslint -c .eslintrc.json src/**",
+    "lint:test": "eslint -c .eslintrc.json --ext .ts test --fix",
     "test": "make ci-test",
     "prepublish": "make all"
   },
