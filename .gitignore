@@ -1,6 +1,7 @@
 node_modules/
 lib/
 dist/
+docs/
 coverage/
 .nyc_output/
 .testnetrc
