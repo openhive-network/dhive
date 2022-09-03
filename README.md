@@ -2,8 +2,6 @@
 
 Robust hive client library that runs in both node.js and the browser.
 
-Needs test net urls, chain id
-
 ---
 
 **note** As of version 0.7.0 WebSocket support has been removed. The only transport provided now is HTTP(2). For most users the only change required is to swap `wss://` to `https://` in the address. If you run your own full node make sure to set the proper [CORS headers](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) if you plan to access it from a browser.
@@ -13,6 +11,7 @@ Needs test net urls, chain id
 ## Browser compatibility
 
 [![Build Status](https://saucelabs.com/browser-matrix/feruzm-dhive.svg)](https://saucelabs.com/open_sauce/user/feruzm-dhive)
+
 
 ## Installation
 

@@ -1,0 +1,12 @@
+{
+  "require": ["ts-node/register"],
+  "recursive": true,
+  "exit": true,
+  "reporter": "mocha-multi-reporters",
+  "reporterEnabled": "spec, mocha-junit-reporter",
+  "reporterOptions": "configFile=.mocharc.json",
+  "mochaJunitReporterReporterOptions": {
+    "mochaFile": "coverage/junit-coverage.xml",
+    "outputs": true
+  }
+}
