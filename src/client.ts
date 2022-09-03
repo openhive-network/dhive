@@ -145,7 +145,7 @@ export interface ClientOptions {
    /**
     * Retry backoff function, returns milliseconds. Default = {@link defaultBackoff}.
     */
-   backoff?: (tries: number) => number;
+   backoff?: typeof defaultBackoff;
    /**
     * Node.js http(s) agent, use if you want http keep-alive.
     * Defaults to using https.globalAgent.

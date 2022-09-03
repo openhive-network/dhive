@@ -1,17 +1,8 @@
-# [dhive](https://github.com)
+# [@hiveio/dhive](https://gitlab.syncad.com/hive/dhive)
 
-Robust hive client library that runs in both node.js and the browser.
-
----
-
-**note** As of version 0.7.0 WebSocket support has been removed. The only transport provided now is HTTP(2). For most users the only change required is to swap `wss://` to `https://` in the address. If you run your own full node make sure to set the proper [CORS headers](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) if you plan to access it from a browser.
+Robust [Hive](https://hive.io) client library that runs in both node.js and the browser.
 
 ---
-
-## Browser compatibility
-
-[![Build Status](https://saucelabs.com/browser-matrix/feruzm-dhive.svg)](https://saucelabs.com/open_sauce/user/feruzm-dhive)
-
 
 ## Installation
 
@@ -28,7 +19,7 @@ npm install @hiveio/dhive
 Grab `dist/dhive.js` from git and include in your html:
 
 ```html
-<script src="@hiveio/dhive.js"></script>
+<script src="dhive.js"></script>
 ```
 
 Or from the [unpkg](https://unpkg.com) cdn:
@@ -145,5 +136,9 @@ The easiest way to bundle dhive (with browserify, webpack etc.) is to just `npm 
 To allow for deduplication you can `require('@hiveio/dhive/lib/index-browser')`, or if you plan to provide your own polyfills: `require('@hiveio/dhive/lib/index')`. See `src/index-browser.ts` for a list of polyfills expected.
 
 ---
+
+## Documentation
+
+Documentation available at [https://hive.pages.syncad.com/dhive/](https://hive.pages.syncad.com/dhive/)
 
 _Share and Enjoy!_

@@ -61,7 +61,7 @@ export class HexBuffer {
       }
    }
 
-   toString(encoding = 'hex') {
+   toString(encoding: BufferEncoding = 'hex') {
       return this.buffer.toString(encoding);
    }
 

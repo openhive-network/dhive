@@ -1,10 +1,11 @@
 stages:
   - test
-  - deploy
+  - release
+
+image: node:16.17.0
 
 lint:
   stage: test
-  image: node:16.17.0
   script:
     - yarn install --frozen-lockfile
     - yarn run lint
@@ -23,7 +24,6 @@ test:
 
 coverage:
   stage: test
-  image: node:16.17.0
   script:
     - yarn install --frozen-lockfile
     - yarn run test:coverage
@@ -36,3 +36,12 @@ coverage:
       coverage_report:
         coverage_format: cobertura
         path: coverage/cobertura-coverage.xml
+
+pages: # generate docs
+  stage: release
+  script:
+    - yarn install --frozen-lockfile
+    - npx typedoc --out public src
+  artifacts:
+    paths:
+      - public

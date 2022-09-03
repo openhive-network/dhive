@@ -39,7 +39,7 @@ describe('misc', () => {
                });
                s1.on('end', () => {
                   assert.equal(c, 99);
-                  resolve();
+                  resolve(null);
                });
             }, 50);
          });
@@ -59,7 +59,7 @@ describe('misc', () => {
             });
             s.on('end', () => {
                assert(sawError);
-               resolve();
+               resolve(null);
             });
          });
       });

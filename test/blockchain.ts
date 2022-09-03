@@ -90,7 +90,7 @@ describe('blockchain', function () {
          stream.on('error', reject);
          stream.on('end', () => {
             assert.deepEqual(ids, expectedIds);
-            resolve();
+            resolve(null);
          });
       });
    });
@@ -119,7 +119,7 @@ describe('blockchain', function () {
          stream.on('error', reject);
          stream.on('end', () => {
             assert.deepEqual(ops, expectedOps);
-            resolve();
+            resolve(null);
          });
       });
    });
@@ -151,7 +151,7 @@ describe('blockchain', function () {
             assert(false, 'unexpected stream data');
          });
          stream.on('error', () => {
-            resolve();
+            resolve(null);
          });
       });
    });
@@ -162,7 +162,7 @@ describe('blockchain', function () {
          const stream = client.blockchain.getBlockNumberStream();
          stream.on('data', (num) => {
             assert(num >= current);
-            resolve();
+            resolve(null);
          });
          stream.on('error', reject);
       });

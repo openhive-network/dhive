@@ -7,7 +7,7 @@ import { Discussion } from '../chain/comment';
 import { CommunityDetail, Notification } from '../chain/hivemind';
 import { Client } from './../client';
 
-interface PostsQuery {
+export interface PostsQuery {
    /**
     * Number of posts to fetch
     */
@@ -37,23 +37,23 @@ interface PostsQuery {
 /**
  * Omitting sort extended from BridgeParam
  */
-interface AccountPostsQuery extends Omit<PostsQuery, 'sort'> {
+export interface AccountPostsQuery extends Omit<PostsQuery, 'sort'> {
    account: string;
    sort: 'posts';
 }
 
-interface CommunityQuery {
+export interface CommunityQuery {
    name: string;
    observer: string;
 }
 
-interface AccountNotifsQuery {
+export interface AccountNotifsQuery {
    account: Account['name'];
    limit: number;
    type?: 'new_community' | 'pin_post';
 }
 
-interface ListCommunitiesQuery {
+export interface ListCommunitiesQuery {
    /**
     * Paginating last
     */
