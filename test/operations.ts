@@ -8,7 +8,8 @@ const { Asset, PrivateKey, Client, HexBuffer } = ds;
 
 import { getTestnetAccounts, randomString, agent } from './common';
 
-describe('operations', function () {
+// TODO consider mocking responses
+describe.skip('operations', function () {
    this.slow(20 * 1000);
    this.timeout(60 * 1000);
 
@@ -34,7 +35,7 @@ describe('operations', function () {
          acc1Key
       );
       const [user2] = await client.database.getAccounts([acc2.username]);
-      assert.equal(user2.received_vesting_shares, newDelegation.toString());
+      assert.strictEqual(user2.received_vesting_shares, newDelegation.toString());
    });
 
    it('should send custom', async () => {
@@ -49,8 +50,8 @@ describe('operations', function () {
       const rv = await client.broadcast.sendOperations([op], acc1Key);
       const tx = await client.database.getTransaction(rv.id);
       const rop = tx.operations[0];
-      assert.equal(rop[0], 'custom');
-      assert.equal(rop[1].data, HexBuffer.from(op[1].data).toString());
+      assert.strictEqual(rop[0], 'custom');
+      assert.strictEqual(rop[1].data, HexBuffer.from(op[1].data).toString());
    });
 
    it('should send custom json', async () => {
@@ -83,7 +84,7 @@ describe('operations', function () {
       const [acc2af] = await client.database.getAccounts([acc2.username]);
       const old_bal = Asset.from(acc2bf.balance);
       const new_bal = Asset.from(acc2af.balance);
-      assert.equal(new_bal.subtract(old_bal).toString(), '0.001 TESTS');
+      assert.strictEqual(new_bal.subtract(old_bal).toString(), '0.001 TESTS');
    });
 
    it('should create account and post with options', async () => {
@@ -119,15 +120,15 @@ describe('operations', function () {
          acc1Key
       );
       const [newAcc] = await client.database.getAccounts([username]);
-      assert.equal(newAcc.name, username);
+      assert.strictEqual(newAcc.name, username);
       // not sure why but on the testnet the recovery account is always 'steem'
-      // assert.equal(newAcc.recovery_account, acc1.username)
+      // assert.strictEqual(newAcc.recovery_account, acc1.username)
       const postingWif = PrivateKey.fromLogin(username, password, 'posting');
       const postingPub = postingWif.createPublic(client.addressPrefix).toString();
       const memoWif = PrivateKey.fromLogin(username, password, 'memo');
       const memoPub = memoWif.createPublic(client.addressPrefix).toString();
-      assert.equal(newAcc.memo_key, memoPub);
-      assert.equal(newAcc.posting.key_auths[0][0], postingPub);
+      assert.strictEqual(newAcc.memo_key, memoPub);
+      assert.strictEqual(newAcc.posting.key_auths[0][0], postingPub);
 
       const permlink = 'hello-world';
       await client.broadcast.commentWithOptions(
@@ -154,9 +155,9 @@ describe('operations', function () {
 
       const post = await client.call('condenser_api', 'get_content', [username, permlink]);
       assert.deepEqual(post.beneficiaries, [{ account: acc1.username, weight: 10000 }]);
-      assert.equal(post.max_accepted_payout, '10.000 TBD');
-      assert.equal(post.percent_steem_dollars, 0);
-      assert.equal(post.allow_votes, true);
+      assert.strictEqual(post.max_accepted_payout, '10.000 TBD');
+      assert.strictEqual(post.percent_steem_dollars, 0);
+      assert.strictEqual(post.allow_votes, true);
    });
 
    it('should update account', async () => {
@@ -204,8 +205,8 @@ describe('operations', function () {
          key
       );
       const [newAccount] = await client.database.getAccounts([username]);
-      assert.equal(newAccount.name, username);
-      assert.equal(newAccount.memo_key, memoKey);
+      assert.strictEqual(newAccount.name, username);
+      assert.strictEqual(newAccount.memo_key, memoKey);
    });
 
    it('should create account and calculate fees', async () => {
@@ -264,14 +265,14 @@ describe('operations', function () {
          await client.broadcast.createTestAccount({ password, metadata, creator, username: 'foo', fee: '1.111 TESTS' }, acc1Key);
          assert(false, 'should not be reached');
       } catch (error) {
-         assert.equal(error.message, 'Fee must be exactly ' + creationFee.toString());
+         assert.strictEqual(error.message, 'Fee must be exactly ' + creationFee.toString());
       }
 
       try {
          await client.broadcast.createTestAccount({ metadata, creator, username: 'foo' }, acc1Key);
          assert(false, 'should not be reached');
       } catch (error) {
-         assert.equal(error.message, 'Must specify either password or auths');
+         assert.strictEqual(error.message, 'Must specify either password or auths');
       }
    });
 
@@ -304,7 +305,7 @@ describe('operations', function () {
          await client.broadcast.sendOperations([op], acc1Key);
          assert(false);
       } catch (error) {
-         assert.equal(error.message, 'first_block.signee() == second_block.signee(): ');
+         assert.strictEqual(error.message, 'first_block.signee() == second_block.signee(): ');
       }
    });
 });

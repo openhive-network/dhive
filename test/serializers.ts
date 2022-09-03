@@ -30,7 +30,7 @@ describe('serializers', () => {
          }
          for (const [expected, value] of test.values) {
             const actual = serialize(serializer, value);
-            assert.equal(actual, expected);
+            assert.strictEqual(actual, expected);
          }
       });
    }
@@ -38,11 +38,11 @@ describe('serializers', () => {
    it('Binary', () => {
       const data = HexBuffer.from('026400c800');
       const r1 = serialize(Types.Binary(), HexBuffer.from([0x80, 0x00, 0x80]));
-      assert.equal(r1, '03800080');
+      assert.strictEqual(r1, '03800080');
       const r2 = serialize(Types.Binary(), HexBuffer.from(Buffer.from('026400c800', 'hex')));
-      assert.equal(r2, '05026400c800');
+      assert.strictEqual(r2, '05026400c800');
       const r3 = serialize(Types.Binary(5), HexBuffer.from(data));
-      assert.equal(r3, '026400c800');
+      assert.strictEqual(r3, '026400c800');
       assert.throws(() => {
          serialize(Types.Binary(10), data);
       });

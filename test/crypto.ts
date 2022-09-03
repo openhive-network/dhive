@@ -124,4 +124,25 @@ describe('crypto', () => {
          assert.strictEqual(error.name, 'SerializationError');
       }
    });
+
+   it('should generate transaction id', () => {
+      const id = cryptoUtils.generateTrxId({
+         ref_block_num: 63224,
+         ref_block_prefix: 711876320,
+         expiration: '2020-03-17T23:43:48',
+         operations: [
+            [
+               'vote',
+               {
+                  voter: 'ammonite',
+                  author: 'hiveio',
+                  permlink: 'announcing-the-launch-of-hive-blockchain',
+                  weight: 6100
+               }
+            ]
+         ],
+         extensions: []
+      });
+      assert.strictEqual(id, '8809b42c9f5b5aa040fb20faac46d33927dcbf3d');
+   });
 });

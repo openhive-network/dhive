@@ -173,7 +173,7 @@ export class Client {
     * Address to Hive RPC server.
     * String or String[] *read-only*
     */
-   public address: string | string[];
+   public readonly address: string | string[];
 
    /**
     * Database API helper.

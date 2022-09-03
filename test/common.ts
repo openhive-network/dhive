@@ -3,10 +3,9 @@ import { randomBytes } from 'crypto';
 import { Client, PrivateKey } from '../src';
 
 export const NUM_TEST_ACCOUNTS = 2;
-export const IS_BROWSER = global.isBrowser === true;
 export const TEST_NODE = process.env.TEST_NODE || 'https://api.hive.blog';
 
-export const agent = IS_BROWSER ? undefined : new https.Agent({ keepAlive: true });
+export const agent = new https.Agent({ keepAlive: true });
 
 let testAccounts;
 

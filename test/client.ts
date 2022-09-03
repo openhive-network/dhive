@@ -2,6 +2,7 @@ import 'mocha';
 import * as assert from 'assert';
 import { VError } from 'verror';
 
+import { Transaction } from '../lib';
 import { Client } from './../src';
 
 describe('client', function () {
@@ -10,18 +11,17 @@ describe('client', function () {
 
    const client = Client.testnet();
 
-   // TODO: change api.hive.blog to testnet
    it('should handle failover', async () => {
-      const bclient = new Client(['https://wrongapi.hive.blog', 'https://hive-test-beeabode.roelandp.nl'], { timeout: 1000 });
+      const bclient = new Client(['https://wrongapi.openhive.network', 'https://testnet.openhive.network'], { timeout: 1000 });
       const result = await bclient.call('condenser_api', 'get_accounts', [['initminer']]);
-      assert.equal(result.length, 1);
-      assert.equal(result[0].name, 'initminer');
+      assert.strictEqual(result.length, 1);
+      assert.strictEqual(result[0].name, 'initminer');
    });
 
    it('should make rpc call', async () => {
       const result = await client.call('condenser_api', 'get_accounts', [['initminer']]);
-      assert.equal(result.length, 1);
-      assert.equal(result[0].name, 'initminer');
+      assert.strictEqual(result.length, 1);
+      assert.strictEqual(result[0].name, 'initminer');
    });
 
    it('should handle rpc errors', async () => {
@@ -29,29 +29,28 @@ describe('client', function () {
          await client.call('condenser_api', 'i_like_turtles');
          assert(false, 'should not be reached');
       } catch (error) {
-         assert.equal(error.name, 'RPCError');
+         assert.strictEqual(error.name, 'RPCError');
          assert(
             error.message === `itr != _by_name.end(): no method with name 'i_like_turtles'` || // pre-appbase
                error.message === `method_itr != api_itr->second.end(): Could not find method i_like_turtles`
          ); // appbase
 
          const info = VError.info(error as Error);
-         assert.equal(info.code, 10);
-         assert.equal(info.name, 'assert_exception');
+         assert.strictEqual(info.code, 10);
+         assert.strictEqual(info.name, 'assert_exception');
       }
    });
 
    it('should format rpc errors', async () => {
-      const tx = { operations: [['witness_update', {}]] };
       try {
-         await client.call('condenser_api', 'broadcast_transaction', [tx]);
+         await client.call('transaction_status_api', 'find_transaction', { transaction_id: 'asd' });
          assert(false, 'should not be reached');
       } catch (error) {
-         assert.equal(error.name, 'RPCError');
-         assert.equal(error.message, 'is_valid_account_name( name ): Account name ${n} is invalid n=');
+         assert.strictEqual(error.name, 'RPCError');
+         assert.strictEqual(error.message, "Invalid hex character 's'");
          const info = VError.info(error as Error);
-         assert.equal(info.code, 10);
-         assert.equal(info.name, 'assert_exception');
+         assert.strictEqual(info.code, 0);
+         assert.strictEqual(info.name, 'exception');
       }
    });
 

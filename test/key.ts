@@ -4,7 +4,7 @@ import 'mocha';
 import { Client } from './../src';
 import { agent } from './common';
 
-describe.only('account_by_key_api', function () {
+describe('account_by_key_api', function () {
    this.slow(500);
    this.timeout(20 * 1000);
 

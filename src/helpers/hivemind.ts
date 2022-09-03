@@ -4,7 +4,7 @@
 
 import { Account } from '../chain/account';
 import { Discussion } from '../chain/comment';
-import { CommunityDetail, Notifications } from '../chain/hivemind';
+import { CommunityDetail, Notification } from '../chain/hivemind';
 import { Client } from './../client';
 
 interface PostsQuery {
@@ -105,7 +105,7 @@ export class HivemindAPI {
     * moderators, how many subscribers, etc..
     * @param options
     */
-   getCommunity(options: CommunityQuery): Promise<CommunityDetail[]> {
+   getCommunity(options: CommunityQuery): Promise<CommunityDetail> {
       return this.call('get_community', options);
    }
 
@@ -122,7 +122,7 @@ export class HivemindAPI {
     * Get particular account notifications feed
     * @param options
     */
-   getAccountNotifications(options?: AccountNotifsQuery): Promise<Notifications[]> {
+   getAccountNotifications(options?: AccountNotifsQuery): Promise<Notification[]> {
       return this.call('account_notifications', options);
    }
 

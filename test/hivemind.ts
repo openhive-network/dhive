@@ -17,12 +17,13 @@ describe('HivemindAPI', function () {
 
    it('getCommunity', async () => {
       const r = await liveClient.hivemind.getCommunity({ name: 'hive-148441', observer: '' });
-      assert.strictEqual(r.length, 1);
+      assert.strictEqual(r.created_at, '2020-02-26 11:33:30');
+      assert.strictEqual(r.name, 'hive-148441');
    });
 
    it('getAccountNotifications', async () => {
       const r = await liveClient.hivemind.getAccountNotifications({ account: 'acidyo', limit: 2 });
-      assert.strictEqual(r.length, 1);
+      assert.strictEqual(r.length, 2);
    });
 
    it('listCommunities', async () => {
@@ -31,7 +32,7 @@ describe('HivemindAPI', function () {
    });
 
    it('listAllSubscriptions', async () => {
-      const r = await liveClient.hivemind.listAllSubscriptions({ account: 'acidyo' });
+      const r = await liveClient.hivemind.listAllSubscriptions({ account: 'hiveio' });
       assert.strictEqual(r.length, 1);
    });
 });

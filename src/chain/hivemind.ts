@@ -20,7 +20,7 @@ export interface CommunityDetail {
    admins?: string[];
 }
 
-export interface Notifications {
+export interface Notification {
    id: number;
    type: string;
    score: number;
@@ -28,3 +28,6 @@ export interface Notifications {
    msg: string;
    url: string;
 }
+
+/** @deprecated */
+export type Notifications = Notification;

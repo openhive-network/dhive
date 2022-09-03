@@ -1,7 +1,7 @@
 import 'mocha';
 import * as assert from 'assert';
 
-import { Account, Client } from './../src';
+import { Account, Asset, Client } from "./../src";
 import { agent } from './common';
 
 describe('rc_api', function () {
@@ -20,7 +20,7 @@ describe('rc_api', function () {
          vesting_shares: '80241942 VESTS',
          delegated_vesting_shares: '60666472 VESTS',
          received_vesting_shares: '191002659 VESTS',
-         vesting_withdraw_rate: '0',
+         vesting_withdraw_rate: '0.000000 VESTS',
          to_withdraw: 0,
          withdrawn: 0
       } as Account;
