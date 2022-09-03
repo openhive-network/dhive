@@ -23,9 +23,9 @@
     "lint": "eslint -c .eslintrc.json src/** --fix",
     "lint:ci": "eslint -c .eslintrc.json src/**",
     "lint:test": "eslint -c .eslintrc.json --ext .ts test --fix",
-    "test": "mocha --exit --require ts-node/register -r test/_node.js test/*.ts",
+    "test": "mocha test/*.ts",
     "test:coverage": "nyc -r text -r cobertura -r lcov -e .ts -i ts-node/register mocha test/*.ts",
-    "prepublish": "make all"
+    "prepublishOnly": "make all"
   },
   "keywords": [
     "blockchain",

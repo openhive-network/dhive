@@ -1,0 +1,38 @@
+stages:
+  - test
+  - deploy
+
+lint:
+  stage: test
+  image: node:16.17.0
+  script:
+    - yarn install --frozen-lockfile
+    - yarn run lint
+
+test:
+  stage: test
+  image: $IMAGE
+  script:
+    - yarn install --frozen-lockfile
+    - yarn run test
+  parallel:
+    matrix:
+      - IMAGE:
+          - node:14
+          - node:16
+
+coverage:
+  stage: test
+  image: node:16.17.0
+  script:
+    - yarn install --frozen-lockfile
+    - yarn run test:coverage
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  artifacts:
+    paths:
+      - coverage/lcov-report/
+    reports:
+      junit: coverage/junit-coverage.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml

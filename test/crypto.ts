@@ -3,8 +3,7 @@ import * as assert from 'assert';
 import { randomBytes, createHash } from 'crypto';
 import * as ByteBuffer from 'bytebuffer';
 
-import { DEFAULT_CHAIN_ID, PrivateKey, PublicKey, Signature, cryptoUtils, Transaction, Types } from '../src';
-import { Operation } from '../lib';
+import { DEFAULT_CHAIN_ID, PrivateKey, PublicKey, Signature, cryptoUtils, Transaction, Types, Operation } from '../src';
 
 describe('crypto', () => {
    const testnetPrefix = 'STX';
