@@ -14,6 +14,7 @@ all: lib bundle docs
 
 export VERSION_TEMPLATE
 lib: $(SRC_FILES) node_modules
+	mkdir -p dist
 	tsc -p tsconfig.json --outDir lib && \
 	echo "$$VERSION_TEMPLATE" > lib/version.js
 	touch lib
@@ -31,8 +32,7 @@ dist/%.js: lib
 dist/dhive.js: src/index-browser.ts
 
 dist/dhive.d.ts: $(SRC_FILES) node_modules
-	dts-generator --name dhive --project . --out dist/dhive.d.ts
-	perl -i -pe"s@'dhive/index'@'dhive'@g" dist/dhive.d.ts
+	tsc --declaration --emitDeclarationOnly --module System --resolveJsonModule false --outFile dist/dhive.d.ts
 
 dist/%.gz: dist/dhive.js
 	gzip -9 -f -c $(basename $@) > $(basename $@).gz
@@ -76,7 +76,7 @@ node_modules:
 	yarn install --non-interactive --frozen-lockfile
 
 docs: $(SRC_FILES) node_modules
-	typedoc --gitRevision master --target ES6 --mode file --out docs src
+	typedoc --out docs src
 	find docs -name "*.html" | xargs perl -i -pe's~$(shell pwd)~.~g'
 	echo "Served at <https://openhive-network.github.io/dhive>" > docs/README.md
 	touch docs

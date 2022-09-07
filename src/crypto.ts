@@ -70,7 +70,7 @@ const doubleSha256 = (input: Buffer | string): Buffer => sha256(sha256(input));
  */
 const encodePublic = (key: Buffer, prefix: string): string => {
    const checksum = ripemd160(key);
-   return prefix + (bs58.encode(Buffer.concat([key, checksum.slice(0, 4)])) as string);
+   return prefix + bs58.encode(Buffer.concat([key, checksum.slice(0, 4)]));
 };
 
 /**
@@ -80,12 +80,12 @@ const decodePublic = (encodedKey: string): { key: Buffer; prefix: string } => {
    const prefix = encodedKey.slice(0, 3);
    assert.equal(prefix.length, 3, 'public key invalid prefix');
    encodedKey = encodedKey.slice(3);
-   const buffer: Buffer = bs58.decode(encodedKey);
-   const checksum = buffer.slice(-4);
+   const buffer: Uint8Array = bs58.decode(encodedKey);
+   const checksum = Buffer.from(buffer.slice(-4));
    const key = buffer.slice(0, -4);
-   const checksumVerify = ripemd160(key).slice(0, 4);
+   const checksumVerify = ripemd160(Buffer.from(key)).slice(0, 4);
    assert.deepEqual(checksumVerify, checksum, 'public key checksum mismatch');
-   return { key, prefix };
+   return { key: Buffer.from(key), prefix };
 };
 
 /**
@@ -101,7 +101,7 @@ const encodePrivate = (key: Buffer): string => {
  * Decode bs58+doubleSha256-checksum encoded private key.
  */
 const decodePrivate = (encodedKey: string): Buffer => {
-   const buffer: Buffer = bs58.decode(encodedKey);
+   const buffer: Buffer = Buffer.from(bs58.decode(encodedKey));
    assert.deepEqual(buffer.slice(0, 1), NETWORK_ID, 'private key network id mismatch');
    const checksum = buffer.slice(-4);
    const key = buffer.slice(0, -4);
@@ -119,9 +119,9 @@ const isCanonicalSignature = (signature: Buffer): boolean =>
 /**
  * Return true if string is wif, otherwise false.
  */
-const isWif = (privWif: string | Buffer): boolean => {
+const isWif = (privWif: string): boolean => {
    try {
-      const bufWif = new Buffer(bs58.decode(privWif) as string);
+      const bufWif = new Buffer(bs58.decode(privWif));
       const privKey = bufWif.slice(0, -4);
       const checksum = bufWif.slice(-4);
       let newChecksum = sha256(privKey);
@@ -166,7 +166,7 @@ export class PublicKey {
     * @param signature Signature to verify.
     */
    verify(message: Buffer, signature: Signature): boolean {
-      return secp256k1.verify(message, signature.data, this.key);
+      return secp256k1.ecdsaVerify(signature.data, message, this.key);
    }
 
    /**
@@ -240,22 +240,22 @@ export class PrivateKey {
     * @param message 32-byte message.
     */
    sign(message: Buffer): Signature {
-      let rv: { signature: Buffer; recovery: number };
+      let rv: { signature: Uint8Array; recid: number };
       let attempts = 0;
       do {
          const options = {
             data: sha256(Buffer.concat([message, Buffer.alloc(1, ++attempts)]))
          };
-         rv = secp256k1.sign(message, this.key, options);
-      } while (!isCanonicalSignature(rv.signature));
-      return new Signature(rv.signature, rv.recovery);
+         rv = secp256k1.ecdsaSign(message, this.key, options);
+      } while (!isCanonicalSignature(Buffer.from(rv.signature)));
+      return new Signature(Buffer.from(rv.signature), rv.recid);
    }
 
    /**
     * Derive the public key for this private key.
     */
    createPublic(prefix?: string): PublicKey {
-      return new PublicKey(secp256k1.publicKeyCreate(this.key) as Buffer, prefix);
+      return new PublicKey(Buffer.from(secp256k1.publicKeyCreate(this.key)), prefix);
    }
 
    /**
@@ -299,7 +299,7 @@ export class Signature {
     * @param message 32-byte message that was used to create the signature.
     */
    recover(message: Buffer, prefix?: string): PublicKey {
-      return new PublicKey(secp256k1.recover(message, this.data, this.recovery) as Buffer, prefix);
+      return new PublicKey(Buffer.from(secp256k1.ecdsaRecover(this.data, this.recovery, message)), prefix);
    }
 
    toBuffer(): Buffer {

@@ -61,7 +61,7 @@ describe('crypto', () => {
 
    it('should sign and verify', () => {
       const message = randomBytes(32);
-      const signature = testKey.sign(message);
+      const signature = testKey.sign(Buffer.from(message));
       assert(testKey.createPublic().verify(message, signature));
       signature.data.writeUInt8(0x42, 3);
       assert(!testKey.createPublic().verify(message, signature));
@@ -75,7 +75,7 @@ describe('crypto', () => {
    it('should recover pubkey from signatures', () => {
       const key = PrivateKey.fromString(testnetPair.private);
       const msg = randomBytes(32);
-      const signature = key.sign(msg);
+      const signature = key.sign(Buffer.from(msg));
       assert.strictEqual(signature.recover(msg).toString(), key.createPublic().toString());
    });
 

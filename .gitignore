@@ -7,3 +7,4 @@ coverage/
 .testnetrc
 .idea
 .vscode
+.env

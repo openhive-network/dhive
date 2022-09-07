@@ -1,8 +1,8 @@
 import 'mocha';
 import * as assert from 'assert';
-import * as lorem from 'lorem-ipsum';
+import {loremIpsum} from 'lorem-ipsum';
 
-import { Client, PrivateKey } from './../src';
+import { Client, PrivateKey } from "../src";
 
 import { getTestnetAccounts, randomString, agent } from './common';
 
@@ -24,7 +24,7 @@ describe.skip('broadcast', function () {
       const body = [
          `![picture](https://unsplash.it/1200/800?image=${~~(Math.random() * 1085)})`,
          '\n---\n',
-         lorem({ count: ~~(1 + Math.random() * 10), units: 'paragraphs' }),
+        loremIpsum({ count: ~~(1 + Math.random() * 10), units: 'paragraphs' }),
          '\n\n🐢'
       ].join('\n');
       const { id } = await client.broadcast.comment(

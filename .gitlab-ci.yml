@@ -10,7 +10,7 @@ lint:
     - yarn install --frozen-lockfile
     - yarn run lint
 
-test:
+node-test:
   stage: test
   image: $IMAGE
   script:
@@ -21,6 +21,14 @@ test:
       - IMAGE:
           - node:14
           - node:16
+
+browser-test:
+  stage: test
+  image: weboaks/node-karma-protractor-chrome:debian-node16
+  script:
+    - yarn install --frozen-lockfile
+    - yarn run build
+    - yarn run test:browser-in-docker
 
 coverage:
   stage: test
@@ -45,3 +53,14 @@ pages: # generate docs
   artifacts:
     paths:
       - public
+
+publish:
+  stage: release
+  script:
+    - apt update && apt install zip -y
+    - yarn install --frozen-lockfile
+    - yarn run build
+    - zip dist dist/*
+    - yarn run semantic-release
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

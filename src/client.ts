@@ -290,7 +290,7 @@ export class Client {
       };
       const body = JSON.stringify(request, (key: string, value: any): any => {
          // encode Buffers as hex strings instead of an array of bytes
-         if (value && typeof value === 'object' && value.type === 'Buffer') {
+         if (value && typeof value === 'object' && (value.type === 'Buffer' || value.type === 'UInt8Array')) {
             return Buffer.from(value.data as Buffer).toString('hex');
          }
          return value;
