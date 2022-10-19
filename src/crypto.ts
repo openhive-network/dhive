@@ -37,6 +37,7 @@ import * as assert from 'assert'
 import * as bs58 from 'bs58'
 import * as ByteBuffer from 'bytebuffer'
 import { createHash } from 'crypto'
+import * as Ripemd160 from 'ripemd160'
 import * as secp256k1 from 'secp256k1'
 import { VError } from 'verror'
 
@@ -55,7 +56,7 @@ export const NETWORK_ID = Buffer.from([0x80])
  * Return ripemd160 hash of input.
  */
 function ripemd160(input: Buffer | string): Buffer {
-  return createHash('ripemd160')
+  return new Ripemd160()
     .update(input)
     .digest()
 }
