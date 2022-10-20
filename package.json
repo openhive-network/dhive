@@ -1,6 +1,6 @@
 {
   "name": "@hiveio/dhive",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Hive blockchain RPC client library",
   "author": "hive-network",
   "license": "BSD-3-Clause-No-Military-License",
@@ -39,6 +39,7 @@
     "https": "^1.0.0",
     "jsbi": "^3.1.4",
     "node-fetch": "^2.6.0",
+    "ripemd160": "^2.0.2",
     "secp256k1": "^3.8.0",
     "verror": "^1.10.0",
     "whatwg-fetch": "^3.0.0"
