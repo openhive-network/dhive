@@ -2612,11 +2612,7 @@ declare module 'dhive/helpers/key' {
 	import { PublicKey } from 'dhive/crypto';
 	import { Client } from 'dhive/client';
 	export interface AccountsByKey {
-<<<<<<< HEAD
-	    accounts: [string[]];
-=======
 	    accounts: string[][];
->>>>>>> master
 	}
 	export class AccountByKeyAPI {
 	    readonly client: Client;
@@ -2734,8 +2730,6 @@ declare module 'dhive/helpers/rc' {
 	}
 
 }
-<<<<<<< HEAD
-=======
 declare module 'dhive/helpers/transaction' {
 	/**
 	 * @file Transaction status API helpers.
@@ -2759,7 +2753,6 @@ declare module 'dhive/helpers/transaction' {
 	}
 
 }
->>>>>>> master
 declare module 'dhive/client' {
 	/**
 	 * @file Hive RPC client implementation.
@@ -2802,10 +2795,7 @@ declare module 'dhive/client' {
 	import { HivemindAPI } from 'dhive/helpers/hivemind';
 	import { AccountByKeyAPI } from 'dhive/helpers/key';
 	import { RCAPI } from 'dhive/helpers/rc';
-<<<<<<< HEAD
-=======
 	import { TransactionStatusAPI } from 'dhive/helpers/transaction';
->>>>>>> master
 	/**
 	 * Library version.
 	 */
