@@ -81,6 +81,7 @@ export interface Account {
   posting: Authority
   memo_key: string // public_key_type
   json_metadata: string
+  posting_json_metadata: string
   proxy: string // account_name_type
   last_owner_update: string // time_point_sec
   last_account_update: string // time_point_sec

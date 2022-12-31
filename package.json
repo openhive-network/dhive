@@ -3,7 +3,7 @@
   "version": "1.2.5",
   "description": "Hive blockchain RPC client library",
   "author": "hive-network",
-  "license": "BSD-3-Clause",
+  "license": "BSD-3-Clause-No-Military-License",
   "main": "./lib/index-node",
   "typings": "./lib/index",
   "browser": {
@@ -38,8 +38,10 @@
     "core-js": "^3.6.4",
     "cross-fetch": "^3.0.4",
     "ecurve": "^1.0.6",
+    "https": "^1.0.0",
     "jsbi": "^3.1.4",
     "node-fetch": "^2.6.0",
+    "ripemd160": "^2.0.2",
     "secp256k1": "^3.8.0",
     "verror": "^1.10.0",
     "whatwg-fetch": "^3.0.0"

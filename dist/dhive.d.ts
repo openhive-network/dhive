@@ -209,6 +209,7 @@ declare module 'dhive/chain/account' {
 	    posting: Authority;
 	    memo_key: string;
 	    json_metadata: string;
+	    posting_json_metadata: string;
 	    proxy: string;
 	    last_owner_update: string;
 	    last_account_update: string;
@@ -2611,7 +2612,11 @@ declare module 'dhive/helpers/key' {
 	import { PublicKey } from 'dhive/crypto';
 	import { Client } from 'dhive/client';
 	export interface AccountsByKey {
+<<<<<<< HEAD
 	    accounts: [string[]];
+=======
+	    accounts: string[][];
+>>>>>>> master
 	}
 	export class AccountByKeyAPI {
 	    readonly client: Client;
@@ -2729,6 +2734,32 @@ declare module 'dhive/helpers/rc' {
 	}
 
 }
+<<<<<<< HEAD
+=======
+declare module 'dhive/helpers/transaction' {
+	/**
+	 * @file Transaction status API helpers.
+	 * @author Bartłomiej (@engrave) Górnicki
+	 */
+	import { Client } from 'dhive/client';
+	export type TransactionStatus = 'unknown' | 'within_mempool' | 'within_reversible_block' | 'within_irreversible_block' | 'expired_reversible' | 'expired_irreversible' | 'too_old';
+	export class TransactionStatusAPI {
+	    readonly client: Client;
+	    constructor(client: Client);
+	    /**
+	     * Convenience for calling `transaction_status_api`.
+	     */
+	    call(method: string, params?: any): Promise<any>;
+	    /**
+	     * Returns the status of a given transaction id
+	     */
+	    findTransaction(transaction_id: string, expiration?: string): Promise<{
+	        status: TransactionStatus;
+	    }>;
+	}
+
+}
+>>>>>>> master
 declare module 'dhive/client' {
 	/**
 	 * @file Hive RPC client implementation.
@@ -2771,6 +2802,10 @@ declare module 'dhive/client' {
 	import { HivemindAPI } from 'dhive/helpers/hivemind';
 	import { AccountByKeyAPI } from 'dhive/helpers/key';
 	import { RCAPI } from 'dhive/helpers/rc';
+<<<<<<< HEAD
+=======
+	import { TransactionStatusAPI } from 'dhive/helpers/transaction';
+>>>>>>> master
 	/**
 	 * Library version.
 	 */
@@ -2874,6 +2909,10 @@ declare module 'dhive/client' {
 	     */
 	    readonly keys: AccountByKeyAPI;
 	    /**
+	     * Transaction status API helper.
+	     */
+	    readonly transaction: TransactionStatusAPI;
+	    /**
 	     * Chain ID for current network.
 	     */
 	    readonly chainId: Buffer;
@@ -2885,7 +2924,7 @@ declare module 'dhive/client' {
 	    private backoff;
 	    private failoverThreshold;
 	    private consoleOnFailover;
-	    private currentAddress;
+	    currentAddress: string;
 	    /**
 	     * @param address The address to the Hive RPC server,
 	     * e.g. `https://api.hive.blog`. or [`https://api.hive.blog`, `https://another.api.com`]
