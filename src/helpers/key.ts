@@ -24,6 +24,6 @@ export class AccountByKeyAPI {
      * Returns all accounts that have the key associated with their owner or active authorities.
      */
     public async getKeyReferences(keys: (PublicKey | string)[]): Promise<AccountsByKey> {
-        return this.call('get_key_references', { keys: keys.map(key => key.toString()) })
+        return this.call('get_key_references', { keys: keys.map((key) => key.toString()) })
     }
 }
