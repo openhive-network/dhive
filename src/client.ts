@@ -230,14 +230,14 @@ export class Client {
      */
     public readonly addressPrefix: string
 
+    public currentAddress: string
+
     private timeout: number
     private backoff: typeof defaultBackoff
 
     private failoverThreshold: number
 
     private consoleOnFailover: boolean
-
-    public currentAddress: string
 
     /**
      * @param address The address to the Hive RPC server,
@@ -346,7 +346,7 @@ export class Client {
             fetchTimeout = (tries) => (tries + 1) * 500
         }
 
-        const { response, currentAddress }: { response: RPCResponse, currentAddress: string } =
+        const { response, currentAddress }: { response: RPCResponse; currentAddress: string } =
             await retryingFetch(
                 this.currentAddress,
                 this.address,

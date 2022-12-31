@@ -85,7 +85,6 @@ export function iteratorStream<T>(
     })
   return stream
 }
-
 /**
  * Return a deep copy of a JSON-serializable object.
  */
@@ -155,9 +154,9 @@ export async function retryingFetch(
             } else {
               error.message = `[${
                 error.code
-              }] tried ${failoverThreshold} times with ${allAddresses.join(
-                ','
-              )}`
+                }] tried ${failoverThreshold} times with ${allAddresses.join(
+                  ','
+                )}`
               throw error
             }
           } else {
@@ -209,7 +208,8 @@ export interface WitnessProps {
   hbd_interest_rate?: number // uint16_t
   url?: string
 }
-function serialize(serializer: Serializer, data: any) {
+
+const serialize = (serializer: Serializer, data: any) => {
   const buffer = new ByteBuffer(
     ByteBuffer.DEFAULT_CAPACITY,
     ByteBuffer.LITTLE_ENDIAN
@@ -220,10 +220,11 @@ function serialize(serializer: Serializer, data: any) {
   return buffer.toString('hex')
   // return Buffer.from(buffer.toBuffer());
 }
-export function buildWitnessUpdateOp(
+
+export const buildWitnessUpdateOp = (
   owner: string,
   props: WitnessProps
-): WitnessSetPropertiesOperation {
+): WitnessSetPropertiesOperation => {
   const data: WitnessSetPropertiesOperation[1] = {
     extensions: [],
     owner,

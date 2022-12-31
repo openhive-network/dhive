@@ -34,9 +34,11 @@
  */
 
 import * as assert from 'assert'
+import * as bigInteger from 'bigi'
 import * as bs58 from 'bs58'
 import * as ByteBuffer from 'bytebuffer'
 import { createHash } from 'crypto'
+import * as ecurve from 'ecurve'
 import * as Ripemd160 from 'ripemd160'
 import * as secp256k1 from 'secp256k1'
 import { VError } from 'verror'
@@ -46,6 +48,11 @@ import { Types } from './chain/serializer'
 import { SignedTransaction, Transaction } from './chain/transaction'
 import { DEFAULT_ADDRESS_PREFIX, DEFAULT_CHAIN_ID } from './client'
 import { copy } from './utils'
+
+/**
+ * secp256k1 ecurve
+ */
+const secp256k1Curve = ecurve.getCurveByName('secp256k1')
 
 /**
  * Network id used in WIF-encoding.
@@ -66,6 +73,15 @@ function ripemd160(input: Buffer | string): Buffer {
  */
 function sha256(input: Buffer | string): Buffer {
   return createHash('sha256')
+    .update(input)
+    .digest()
+}
+
+/**
+ * Return sha512 hash of input
+ */
+function sha512(input: Buffer | string): Buffer {
+  return createHash('sha512')
     .update(input)
     .digest()
 }
@@ -137,7 +153,6 @@ function isCanonicalSignature(signature: Buffer): boolean {
     !(signature[32] === 0 && !(signature[33] & 0x80))
   )
 }
-
 /**
  * Return true if string is wif, otherwise false.
  */
@@ -154,16 +169,24 @@ function isWif(privWif: string | Buffer): boolean {
       return false
   }
 }
-
 /**
  * ECDSA (secp256k1) public key.
  */
 export class PublicKey {
+
+  public readonly uncompressed: Buffer
+
   constructor(
-    public readonly key: Buffer,
-    public readonly prefix = DEFAULT_ADDRESS_PREFIX
+    public readonly key: any,
+    public readonly prefix = DEFAULT_ADDRESS_PREFIX,
   ) {
     assert(secp256k1.publicKeyVerify(key), 'invalid public key')
+    this.uncompressed = Buffer.from(secp256k1.publicKeyConvert(key, false))
+  }
+
+  public static fromBuffer(key: ByteBuffer) {
+    assert(secp256k1.publicKeyVerify(key), 'invalid buffer as public key')
+    return { key }
   }
 
   /**
@@ -222,6 +245,8 @@ export type KeyRole = 'owner' | 'active' | 'posting' | 'memo'
  * ECDSA (secp256k1) private key.
  */
 export class PrivateKey {
+  public secret: Buffer
+
   constructor(private key: Buffer) {
     assert(secp256k1.privateKeyVerify(key), 'invalid private key')
   }
@@ -263,6 +288,10 @@ export class PrivateKey {
     return PrivateKey.fromSeed(seed)
   }
 
+  public multiply(pub: any): Buffer {
+    return Buffer.from(secp256k1.publicKeyTweakMul(pub.key, this.secret, false))
+  }
+
   /**
    * Sign message.
    * @param message 32-byte message.
@@ -300,6 +329,20 @@ export class PrivateKey {
   public inspect() {
     const key = this.toString()
     return `PrivateKey: ${ key.slice(0, 6) }...${ key.slice(-6) }`
+  }
+
+  /**
+   * Get shared secret for memo cryptography
+   */
+  public get_shared_secret(public_key: PublicKey): Buffer {
+    const KBP = ecurve.Point.fromAffine(
+      secp256k1Curve,
+      bigInteger.fromBuffer(public_key.uncompressed.slice(1, 33)),
+      bigInteger.fromBuffer(public_key.uncompressed.slice(33, 65))
+    )
+    const P = KBP.multiply(bigInteger.fromBuffer(this.key))
+    const S = P.affineX.toBuffer({size: 32})
+    return sha512(S)
   }
 }
 
