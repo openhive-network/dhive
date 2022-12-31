@@ -197,6 +197,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias"><a href="globals.html#assetsymbol" class="tsd-kind-icon">Asset<wbr>Symbol</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#bignum" class="tsd-kind-icon">Bignum</a></li>
+								<li class="tsd-kind-type-alias"><a href="globals.html#deserializer" class="tsd-kind-icon">Deserializer</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#discussionquerycategory" class="tsd-kind-icon">Discussion<wbr>Query<wbr>Category</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#keyrole" class="tsd-kind-icon">Key<wbr>Role</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#operationname" class="tsd-kind-icon">Operation<wbr>Name</a></li>
@@ -210,10 +211,14 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-variable"><a href="globals.html#authorityserializer" class="tsd-kind-icon">Authority<wbr>Serializer</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#beneficiaryserializer" class="tsd-kind-icon">Beneficiary<wbr>Serializer</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#bytebuffer" class="tsd-kind-icon">Byte<wbr>Buffer</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#chainpropertiesserializer" class="tsd-kind-icon">Chain<wbr>Properties<wbr>Serializer</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#default_address_prefix" class="tsd-kind-icon">DEFAULT_<wbr>ADDRESS_<wbr>PREFIX</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#default_chain_id" class="tsd-kind-icon">DEFAULT_<wbr>CHAIN_<wbr>ID</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#encryptedmemodeserializer" class="tsd-kind-icon">Encrypted<wbr>Memo<wbr>Deserializer</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#encryptedmemoserializer" class="tsd-kind-icon">Encrypted<wbr>Memo<wbr>Serializer</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#jsbi" class="tsd-kind-icon">JSBI</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#long" class="tsd-kind-icon">Long</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#network_id" class="tsd-kind-icon">NETWORK_<wbr>ID</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#operationserializers" class="tsd-kind-icon">Operation<wbr>Serializers</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#priceserializer" class="tsd-kind-icon">Price<wbr>Serializer</a></li>
@@ -222,7 +227,9 @@
 								<li class="tsd-kind-variable"><a href="globals.html#transactionserializer" class="tsd-kind-icon">Transaction<wbr>Serializer</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#version" class="tsd-kind-icon">VERSION</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#variablebinaryserializer" class="tsd-kind-icon">Variable<wbr>Binary<wbr>Serializer</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#secp256k1curve" class="tsd-kind-icon">secp256k1<wbr>Curve</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#timeouterrors" class="tsd-kind-icon">timeout<wbr>Errors</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#unique_nonce_entropy" class="tsd-kind-icon">unique_<wbr>nonce_<wbr>entropy</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -230,8 +237,10 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function"><a href="globals.html#arrayserializer" class="tsd-kind-icon">Array<wbr>Serializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#assetserializer" class="tsd-kind-icon">Asset<wbr>Serializer</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#binarydeserializer" class="tsd-kind-icon">Binary<wbr>Deserializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#binaryserializer" class="tsd-kind-icon">Binary<wbr>Serializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#booleanserializer" class="tsd-kind-icon">Boolean<wbr>Serializer</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#bufferdeserializer" class="tsd-kind-icon">Buffer<wbr>Deserializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#dateserializer" class="tsd-kind-icon">Date<wbr>Serializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#flatmapserializer" class="tsd-kind-icon">Flat<wbr>Map<wbr>Serializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#int16serializer" class="tsd-kind-icon">Int16<wbr>Serializer</a></li>
@@ -242,23 +251,34 @@
 								<li class="tsd-kind-function"><a href="globals.html#operationdataserializer" class="tsd-kind-icon">Operation<wbr>Data<wbr>Serializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#operationserializer" class="tsd-kind-icon">Operation<wbr>Serializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#optionalserializer" class="tsd-kind-icon">Optional<wbr>Serializer</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#publickeydeserializer" class="tsd-kind-icon">Public<wbr>Key<wbr>Deserializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#publickeyserializer" class="tsd-kind-icon">Public<wbr>Key<wbr>Serializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#staticvariantserializer" class="tsd-kind-icon">Static<wbr>Variant<wbr>Serializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#stringserializer" class="tsd-kind-icon">String<wbr>Serializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#uint16serializer" class="tsd-kind-icon">UInt16<wbr>Serializer</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#uint32deserializer" class="tsd-kind-icon">UInt32<wbr>Deserializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#uint32serializer" class="tsd-kind-icon">UInt32<wbr>Serializer</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#uint64deserializer" class="tsd-kind-icon">UInt64<wbr>Deserializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#uint64serializer" class="tsd-kind-icon">UInt64<wbr>Serializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#uint8serializer" class="tsd-kind-icon">UInt8<wbr>Serializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#voidserializer" class="tsd-kind-icon">Void<wbr>Serializer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#buildwitnessupdateop" class="tsd-kind-icon">build<wbr>Witness<wbr>Update<wbr>Op</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#copy" class="tsd-kind-icon">copy</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#crypt" class="tsd-kind-icon">crypt</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#cryptojsdecrypt" class="tsd-kind-icon">crypto<wbr>JsDecrypt</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#cryptojsencrypt" class="tsd-kind-icon">crypto<wbr>JsEncrypt</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#decode" class="tsd-kind-icon">decode</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#decodeprivate" class="tsd-kind-icon">decode<wbr>Private</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#decodepublic" class="tsd-kind-icon">decode<wbr>Public</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#decrypt" class="tsd-kind-icon">decrypt</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#defaultbackoff" class="tsd-kind-icon">default<wbr>Backoff</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#doublesha256" class="tsd-kind-icon">double<wbr>Sha256</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#encode" class="tsd-kind-icon">encode</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#encodeprivate" class="tsd-kind-icon">encode<wbr>Private</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#encodepublic" class="tsd-kind-icon">encode<wbr>Public</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#encrypt" class="tsd-kind-icon">encrypt</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#failover" class="tsd-kind-icon">failover</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#fixed_buf" class="tsd-kind-icon">fixed_<wbr>buf</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#generatetrxid" class="tsd-kind-icon">generate<wbr>Trx<wbr>Id</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#getvestingshareprice" class="tsd-kind-icon">get<wbr>Vesting<wbr>Share<wbr>Price</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#getvests" class="tsd-kind-icon">get<wbr>Vests</a></li>
@@ -271,18 +291,26 @@
 								<li class="tsd-kind-function"><a href="globals.html#ripemd160" class="tsd-kind-icon">ripemd160</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#serialize" class="tsd-kind-icon">serialize</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#sha256" class="tsd-kind-icon">sha256</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#sha512" class="tsd-kind-icon">sha512</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#signtransaction" class="tsd-kind-icon">sign<wbr>Transaction</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#sleep" class="tsd-kind-icon">sleep</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#tobinarybuffer" class="tsd-kind-icon">to<wbr>Binary<wbr>Buffer</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#tolongobj" class="tsd-kind-icon">to<wbr>Long<wbr>Obj</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#toprivateobj" class="tsd-kind-icon">to<wbr>Private<wbr>Obj</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#topublicobj" class="tsd-kind-icon">to<wbr>Public<wbr>Obj</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#transactiondigest" class="tsd-kind-icon">transaction<wbr>Digest</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#uniquenonce" class="tsd-kind-icon">unique<wbr>Nonce</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#waitforevent" class="tsd-kind-icon">wait<wbr>For<wbr>Event</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Object literals</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-object-literal"><a href="globals.html#memo" class="tsd-kind-icon">Memo</a></li>
 								<li class="tsd-kind-object-literal"><a href="globals.html#types" class="tsd-kind-icon">Types</a></li>
 								<li class="tsd-kind-object-literal"><a href="globals.html#cryptoutils" class="tsd-kind-icon">crypto<wbr>Utils</a></li>
 								<li class="tsd-kind-object-literal"><a href="globals.html#operationorders" class="tsd-kind-icon">operation<wbr>Orders</a></li>
+								<li class="tsd-kind-object-literal"><a href="globals.html#types" class="tsd-kind-icon">types</a></li>
 							</ul>
 						</section>
 					</div>
@@ -321,6 +349,37 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="deserializer" class="tsd-anchor"></a>
+					<h3>Deserializer</h3>
+					<div class="tsd-signature tsd-kind-icon">Deserializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in chain/deserializer.ts:4</li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="discussionquerycategory" class="tsd-anchor"></a>
 					<h3>Discussion<wbr>Query<wbr>Category</h3>
 					<div class="tsd-signature tsd-kind-icon">Discussion<wbr>Query<wbr>Category<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"active"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"blog"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"cashout"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"children"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"comments"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"feed"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"hot"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"promoted"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"trending"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"votes"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"created"</span></div>
@@ -341,7 +400,7 @@
 					<div class="tsd-signature tsd-kind-icon">Key<wbr>Role<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"owner"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"active"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"posting"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"memo"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in crypto.ts:218</li>
+							<li>Defined in crypto.ts:241</li>
 						</ul>
 					</aside>
 				</section>
@@ -374,10 +433,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="serializer" class="tsd-anchor"></a>
 					<h3>Serializer</h3>
-					<div class="tsd-signature tsd-kind-icon">Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<div class="tsd-signature tsd-kind-icon">Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:42</li>
+							<li>Defined in chain/serializer.ts:41</li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -385,14 +444,14 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
-												<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
+												<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
 											</li>
 											<li>
 												<h5>data: <span class="tsd-signature-type">any</span></h5>
@@ -429,7 +488,7 @@
 					<div class="tsd-signature tsd-kind-icon">Authority<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;weight_threshold&#x27;, UInt32Serializer],[&#x27;account_auths&#x27;, FlatMapSerializer(StringSerializer, UInt16Serializer)],[&#x27;key_auths&#x27;, FlatMapSerializer(PublicKeySerializer, UInt16Serializer)]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:198</li>
+							<li>Defined in chain/serializer.ts:197</li>
 						</ul>
 					</aside>
 				</section>
@@ -439,7 +498,17 @@
 					<div class="tsd-signature tsd-kind-icon">Beneficiary<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;account&#x27;, StringSerializer],[&#x27;weight&#x27;, UInt16Serializer]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:204</li>
+							<li>Defined in chain/serializer.ts:203</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="bytebuffer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Byte<wbr>Buffer</h3>
+					<div class="tsd-signature tsd-kind-icon">Byte<wbr>Buffer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = require(&#x27;bytebuffer&#x27;)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in helpers/aes.ts:4</li>
 						</ul>
 					</aside>
 				</section>
@@ -449,7 +518,7 @@
 					<div class="tsd-signature tsd-kind-icon">Chain<wbr>Properties<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;account_creation_fee&#x27;, AssetSerializer],[&#x27;maximum_block_size&#x27;, UInt32Serializer],[&#x27;hbd_interest_rate&#x27;, UInt16Serializer]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:227</li>
+							<li>Defined in chain/serializer.ts:226</li>
 						</ul>
 					</aside>
 				</section>
@@ -484,12 +553,42 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="encryptedmemodeserializer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Encrypted<wbr>Memo<wbr>Deserializer</h3>
+					<div class="tsd-signature tsd-kind-icon">Encrypted<wbr>Memo<wbr>Deserializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = BufferDeserializer([[&#x27;from&#x27;, PublicKeyDeserializer],[&#x27;to&#x27;, PublicKeyDeserializer],[&#x27;nonce&#x27;, UInt64Deserializer],[&#x27;check&#x27;, UInt32Deserializer],[&#x27;encrypted&#x27;, BinaryDeserializer]])</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in chain/deserializer.ts:51</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="encryptedmemoserializer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Encrypted<wbr>Memo<wbr>Serializer</h3>
+					<div class="tsd-signature tsd-kind-icon">Encrypted<wbr>Memo<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;from&#x27;, PublicKeySerializer],[&#x27;to&#x27;, PublicKeySerializer],[&#x27;nonce&#x27;, UInt64Serializer],[&#x27;check&#x27;, UInt32Serializer],[&#x27;encrypted&#x27;, BinarySerializer()]])</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in chain/serializer.ts:232</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="jsbi" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> JSBI</h3>
 					<div class="tsd-signature tsd-kind-icon">JSBI<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = require(&#x27;jsbi&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in utils.ts:264</li>
+							<li>Defined in utils.ts:265</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="long" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Long</h3>
+					<div class="tsd-signature tsd-kind-icon">Long<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = ByteBuffer.Long</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in helpers/aes.ts:5</li>
 						</ul>
 					</aside>
 				</section>
@@ -499,7 +598,7 @@
 					<div class="tsd-signature tsd-kind-icon">NETWORK_<wbr>ID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol"> = Buffer.from([0x80])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in crypto.ts:52</li>
+							<li>Defined in crypto.ts:59</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -514,7 +613,7 @@
 					<div class="tsd-signature tsd-kind-icon">Operation<wbr>Serializers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:244</li>
+							<li>Defined in chain/serializer.ts:251</li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -532,7 +631,7 @@
 					<div class="tsd-signature tsd-kind-icon">Price<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;base&#x27;, AssetSerializer],[&#x27;quote&#x27;, AssetSerializer]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:209</li>
+							<li>Defined in chain/serializer.ts:208</li>
 						</ul>
 					</aside>
 				</section>
@@ -542,7 +641,7 @@
 					<div class="tsd-signature tsd-kind-icon">Proposal<wbr>Update<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;end_date&#x27;, DateSerializer]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:214</li>
+							<li>Defined in chain/serializer.ts:213</li>
 						</ul>
 					</aside>
 				</section>
@@ -552,7 +651,7 @@
 					<div class="tsd-signature tsd-kind-icon">Signed<wbr>Block<wbr>Header<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;previous&#x27;, BinarySerializer(20)],[&#x27;timestamp&#x27;, DateSerializer],[&#x27;witness&#x27;, StringSerializer],[&#x27;transaction_merkle_root&#x27;, BinarySerializer(20)],[&#x27;extensions&#x27;, ArraySerializer(VoidSerializer)],[&#x27;witness_signature&#x27;, BinarySerializer(65)]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:218</li>
+							<li>Defined in chain/serializer.ts:217</li>
 						</ul>
 					</aside>
 				</section>
@@ -562,7 +661,7 @@
 					<div class="tsd-signature tsd-kind-icon">Transaction<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = ObjectSerializer([[&#x27;ref_block_num&#x27;, UInt16Serializer],[&#x27;ref_block_prefix&#x27;, UInt32Serializer],[&#x27;expiration&#x27;, DateSerializer],[&#x27;operations&#x27;, ArraySerializer(OperationSerializer)],[&#x27;extensions&#x27;, ArraySerializer(StringSerializer)]])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:638</li>
+							<li>Defined in chain/serializer.ts:645</li>
 						</ul>
 					</aside>
 				</section>
@@ -587,9 +686,24 @@
 					<div class="tsd-signature tsd-kind-icon">Variable<wbr>Binary<wbr>Serializer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = BinarySerializer()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:149</li>
+							<li>Defined in chain/serializer.ts:148</li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="secp256k1curve" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> secp256k1<wbr>Curve</h3>
+					<div class="tsd-signature tsd-kind-icon">secp256k1<wbr>Curve<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = ecurve.getCurveByName(&#x27;secp256k1&#x27;)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in crypto.ts:54</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>secp256k1 ecurve</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="timeouterrors" class="tsd-anchor"></a>
@@ -600,6 +714,25 @@
 							<li>Defined in utils.ts:41</li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="unique_nonce_entropy" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagLet">Let</span> unique_<wbr>nonce_<wbr>entropy</h3>
+					<div class="tsd-signature tsd-kind-icon">unique_<wbr>nonce_<wbr>entropy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in helpers/aes.ts:108</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>returns</dt>
+							<dd><p>unique 64 bit unsigned number string.  Being time based,
+									this is careful to never choose the same nonce twice.  This value could
+								clsbe recorded in the blockchain for a long time.</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -614,7 +747,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:162</li>
+									<li>Defined in chain/serializer.ts:161</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -631,13 +764,13 @@
 					<a name="assetserializer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> Asset<wbr>Serializer</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">Asset<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><a href="classes/asset.html" class="tsd-signature-type">Asset</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">Asset<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, data<span class="tsd-signature-symbol">: </span><a href="classes/asset.html" class="tsd-signature-type">Asset</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:102</li>
+									<li>Defined in chain/serializer.ts:101</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -654,13 +787,36 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
+									<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
 								</li>
 								<li>
 									<h5>data: <a href="classes/asset.html" class="tsd-signature-type">Asset</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="binarydeserializer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Binary<wbr>Deserializer</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">Binary<wbr>Deserializer<span class="tsd-signature-symbol">(</span>b<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in chain/deserializer.ts:17</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>b: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -674,7 +830,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:131</li>
+									<li>Defined in chain/serializer.ts:130</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -691,19 +847,19 @@
 					<a name="booleanserializer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> Boolean<wbr>Serializer</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">Boolean<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">Boolean<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:84</li>
+									<li>Defined in chain/serializer.ts:83</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
+									<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
 								</li>
 								<li>
 									<h5>data: <span class="tsd-signature-type">boolean</span></h5>
@@ -714,22 +870,45 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="dateserializer" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> Date<wbr>Serializer</h3>
+					<a name="bufferdeserializer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Buffer<wbr>Deserializer</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">Date<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">Buffer<wbr>Deserializer<span class="tsd-signature-symbol">(</span>keyDeserializers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="globals.html#deserializer" class="tsd-signature-type">Deserializer</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:112</li>
+									<li>Defined in chain/deserializer.ts:24</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
+									<h5>keyDeserializers: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="globals.html#deserializer" class="tsd-signature-type">Deserializer</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="dateserializer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Date<wbr>Serializer</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">Date<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in chain/serializer.ts:111</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
 								</li>
 								<li>
 									<h5>data: <span class="tsd-signature-type">string</span></h5>
@@ -749,7 +928,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:151</li>
+									<li>Defined in chain/serializer.ts:150</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -769,19 +948,19 @@
 					<a name="int16serializer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> Int16<wbr>Serializer</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">Int16<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">Int16<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:56</li>
+									<li>Defined in chain/serializer.ts:55</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
+									<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
 								</li>
 								<li>
 									<h5>data: <span class="tsd-signature-type">number</span></h5>
@@ -795,19 +974,19 @@
 					<a name="int32serializer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> Int32<wbr>Serializer</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">Int32<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">Int32<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:60</li>
+									<li>Defined in chain/serializer.ts:59</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
+									<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
 								</li>
 								<li>
 									<h5>data: <span class="tsd-signature-type">number</span></h5>
@@ -821,19 +1000,19 @@
 					<a name="int64serializer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> Int64<wbr>Serializer</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">Int64<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">Int64<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:64</li>
+									<li>Defined in chain/serializer.ts:63</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
+									<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
 								</li>
 								<li>
 									<h5>data: <span class="tsd-signature-type">number</span></h5>
@@ -847,19 +1026,19 @@
 					<a name="int8serializer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> Int8<wbr>Serializer</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">Int8<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">Int8<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:52</li>
+									<li>Defined in chain/serializer.ts:51</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
+									<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
 								</li>
 								<li>
 									<h5>data: <span class="tsd-signature-type">number</span></h5>
@@ -879,7 +1058,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:172</li>
+									<li>Defined in chain/serializer.ts:171</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -902,7 +1081,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:233</li>
+									<li>Defined in chain/serializer.ts:240</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -922,19 +1101,19 @@
 					<a name="operationserializer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> Operation<wbr>Serializer</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">Operation<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, operation<span class="tsd-signature-symbol">: </span><a href="interfaces/operation.html" class="tsd-signature-type">Operation</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">Operation<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, operation<span class="tsd-signature-symbol">: </span><a href="interfaces/operation.html" class="tsd-signature-type">Operation</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:625</li>
+									<li>Defined in chain/serializer.ts:632</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
+									<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
 								</li>
 								<li>
 									<h5>operation: <a href="interfaces/operation.html" class="tsd-signature-type">Operation</a></h5>
@@ -954,7 +1133,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:186</li>
+									<li>Defined in chain/serializer.ts:185</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -968,22 +1147,50 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="publickeyserializer" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> Public<wbr>Key<wbr>Serializer</h3>
+					<a name="publickeydeserializer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Public<wbr>Key<wbr>Deserializer</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">Public<wbr>Key<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><a href="classes/publickey.html" class="tsd-signature-type">PublicKey</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">Public<wbr>Key<wbr>Deserializer<span class="tsd-signature-symbol">(</span>buf<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>key<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a><span class="tsd-signature-symbol"> }</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:116</li>
+									<li>Defined in chain/deserializer.ts:6</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
+									<h5>buf: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>key<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>key<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="publickeyserializer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Public<wbr>Key<wbr>Serializer</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">Public<wbr>Key<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, data<span class="tsd-signature-symbol">: </span><a href="classes/publickey.html" class="tsd-signature-type">PublicKey</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in chain/serializer.ts:115</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
 								</li>
 								<li>
 									<h5>data: <a href="classes/publickey.html" class="tsd-signature-type">PublicKey</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
@@ -1003,7 +1210,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:88</li>
+									<li>Defined in chain/serializer.ts:87</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1020,19 +1227,19 @@
 					<a name="stringserializer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> String<wbr>Serializer</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">String<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">String<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:48</li>
+									<li>Defined in chain/serializer.ts:47</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
+									<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
 								</li>
 								<li>
 									<h5>data: <span class="tsd-signature-type">string</span></h5>
@@ -1046,25 +1253,48 @@
 					<a name="uint16serializer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> UInt16<wbr>Serializer</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">UInt16<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">UInt16<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:72</li>
+									<li>Defined in chain/serializer.ts:71</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
+									<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
 								</li>
 								<li>
 									<h5>data: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="uint32deserializer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> UInt32<wbr>Deserializer</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">UInt32<wbr>Deserializer<span class="tsd-signature-symbol">(</span>b<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in chain/deserializer.ts:15</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>b: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1072,19 +1302,19 @@
 					<a name="uint32serializer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> UInt32<wbr>Serializer</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">UInt32<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">UInt32<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:76</li>
+									<li>Defined in chain/serializer.ts:75</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
+									<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
 								</li>
 								<li>
 									<h5>data: <span class="tsd-signature-type">number</span></h5>
@@ -1095,22 +1325,45 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="uint64serializer" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> UInt64<wbr>Serializer</h3>
+					<a name="uint64deserializer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> UInt64<wbr>Deserializer</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">UInt64<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">UInt64<wbr>Deserializer<span class="tsd-signature-symbol">(</span>b<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Long</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:80</li>
+									<li>Defined in chain/deserializer.ts:13</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
+									<h5>b: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Long</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="uint64serializer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> UInt64<wbr>Serializer</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">UInt64<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in chain/serializer.ts:79</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
 								</li>
 								<li>
 									<h5>data: <span class="tsd-signature-type">number</span></h5>
@@ -1124,19 +1377,19 @@
 					<a name="uint8serializer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> UInt8<wbr>Serializer</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">UInt8<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">UInt8<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:68</li>
+									<li>Defined in chain/serializer.ts:67</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
+									<h5>buffer: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
 								</li>
 								<li>
 									<h5>data: <span class="tsd-signature-type">number</span></h5>
@@ -1150,28 +1403,22 @@
 					<a name="voidserializer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> Void<wbr>Serializer</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">Void<wbr>Serializer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ByteBuffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">never</span></li>
+						<li class="tsd-signature tsd-kind-icon">Void<wbr>Serializer<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">never</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in chain/serializer.ts:44</li>
+									<li>Defined in chain/serializer.ts:43</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>buffer: <span class="tsd-signature-type">ByteBuffer</span></h5>
-								</li>
-							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">never</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="buildwitnessupdateop" class="tsd-anchor"></a>
-					<h3>build<wbr>Witness<wbr>Update<wbr>Op</h3>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> build<wbr>Witness<wbr>Update<wbr>Op</h3>
 					<ul class="tsd-signatures tsd-kind-function">
 						<li class="tsd-signature tsd-kind-icon">build<wbr>Witness<wbr>Update<wbr>Op<span class="tsd-signature-symbol">(</span>owner<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, props<span class="tsd-signature-symbol">: </span><a href="interfaces/witnessprops.html" class="tsd-signature-type">WitnessProps</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/witnesssetpropertiesoperation.html" class="tsd-signature-type">WitnessSetPropertiesOperation</a></li>
 					</ul>
@@ -1179,7 +1426,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:222</li>
+									<li>Defined in utils.ts:223</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1205,7 +1452,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:92</li>
+									<li>Defined in utils.ts:91</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1230,6 +1477,179 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="crypt" class="tsd-anchor"></a>
+					<h3>crypt</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">crypt<span class="tsd-signature-symbol">(</span>private_key<span class="tsd-signature-symbol">: </span><a href="classes/privatekey.html" class="tsd-signature-type">PrivateKey</a>, public_key<span class="tsd-signature-symbol">: </span><a href="classes/publickey.html" class="tsd-signature-type">PublicKey</a>, nonce<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span>, message<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, checksum<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>checksum<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Number</span><span class="tsd-signature-symbol">; </span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a><span class="tsd-signature-symbol">; </span>nonce<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in helpers/aes.ts:45</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>arg</dt>
+									<dd><p>{Buffer} message - Encrypted or plain text message (see checksum)</p>
+									</dd>
+									<dt>arg</dt>
+									<dd><p>{number} checksum - shared secret checksum (null to encrypt, non-null to decrypt)</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>private_key: <a href="classes/privatekey.html" class="tsd-signature-type">PrivateKey</a></h5>
+								</li>
+								<li>
+									<h5>public_key: <a href="classes/publickey.html" class="tsd-signature-type">PublicKey</a></h5>
+								</li>
+								<li>
+									<h5>nonce: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></h5>
+								</li>
+								<li>
+									<h5>message: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> checksum: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>checksum<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Number</span><span class="tsd-signature-symbol">; </span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a><span class="tsd-signature-symbol">; </span>nonce<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>checksum<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Number</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>nonce<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="cryptojsdecrypt" class="tsd-anchor"></a>
+					<h3>crypto<wbr>JsDecrypt</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">crypto<wbr>JsDecrypt<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, tag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, iv<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in helpers/aes.ts:83</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This method does not use a checksum, the returned data must be validated some other way.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>arg</dt>
+									<dd><p>{string|Buffer} ciphertext - binary format</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>message: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>tag: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>iv: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<p>the decrypted message</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="cryptojsencrypt" class="tsd-anchor"></a>
+					<h3>crypto<wbr>JsEncrypt</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">crypto<wbr>JsEncrypt<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, tag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, iv<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in helpers/aes.ts:96</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This method does not use a checksum, the returned data must be validated some other way.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>arg</dt>
+									<dd><p>{string|Buffer} plaintext - binary format</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>message: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>tag: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>iv: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<p>binary</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="decode" class="tsd-anchor"></a>
+					<h3>decode</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">(</span>private_key<span class="tsd-signature-symbol">: </span><a href="classes/privatekey.html" class="tsd-signature-type">PrivateKey</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, memo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in memo.ts:42</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Encrypted memo/message decryption</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>private_key: <a href="classes/privatekey.html" class="tsd-signature-type">PrivateKey</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Privatekey of recipient</p>
+									</div>
+								</li>
+								<li>
+									<h5>memo: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Encrypted message/memo</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="decodeprivate" class="tsd-anchor"></a>
 					<h3>decode<wbr>Private</h3>
 					<ul class="tsd-signatures tsd-kind-function">
@@ -1239,7 +1659,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in crypto.ts:114</li>
+									<li>Defined in crypto.ts:130</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1267,7 +1687,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in crypto.ts:90</li>
+									<li>Defined in crypto.ts:106</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1289,6 +1709,69 @@
 								<li class="tsd-parameter">
 									<h5>prefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
 								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="decrypt" class="tsd-anchor"></a>
+					<h3>decrypt</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">decrypt<span class="tsd-signature-symbol">(</span>private_key<span class="tsd-signature-symbol">: </span><a href="classes/privatekey.html" class="tsd-signature-type">PrivateKey</a>, public_key<span class="tsd-signature-symbol">: </span><a href="classes/publickey.html" class="tsd-signature-type">PublicKey</a>, nonce<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, checksum<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in helpers/aes.ts:37</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Spec: <a href="http://peakd.com/steem/@dantheman/how-to-encrypt-a-memo-when-transferring-steem">http://peakd.com/steem/@dantheman/how-to-encrypt-a-memo-when-transferring-steem</a></p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>arg</dt>
+									<dd><p>{PrivateKey} private_key - required and used for decryption</p>
+									</dd>
+									<dt>arg</dt>
+									<dd><p>{PublicKey} public_key - required and used to calcualte the shared secret</p>
+									</dd>
+									<dt>arg</dt>
+									<dd><p>{string} nonce - random or unique uint64, provides entropy when re-using the same private/public keys.</p>
+									</dd>
+									<dt>arg</dt>
+									<dd><p>{Buffer} message - Encrypted or plain text message</p>
+									</dd>
+									<dt>arg</dt>
+									<dd><p>{number} checksum - shared secret checksum</p>
+									</dd>
+									<dt>throws</dt>
+									<dd><p>{Error|TypeError} - &quot;Invalid Key, ...&quot;</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>private_key: <a href="classes/privatekey.html" class="tsd-signature-type">PrivateKey</a></h5>
+								</li>
+								<li>
+									<h5>public_key: <a href="classes/publickey.html" class="tsd-signature-type">PublicKey</a></h5>
+								</li>
+								<li>
+									<h5>nonce: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>message: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>checksum: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<ul>
+								<li>message</li>
 							</ul>
 						</li>
 					</ul>
@@ -1332,7 +1815,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in crypto.ts:75</li>
+									<li>Defined in crypto.ts:91</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1351,6 +1834,55 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="encode" class="tsd-anchor"></a>
+					<h3>encode</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">(</span>private_key<span class="tsd-signature-symbol">: </span><a href="classes/privatekey.html" class="tsd-signature-type">PrivateKey</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, public_key<span class="tsd-signature-symbol">: </span><a href="classes/publickey.html" class="tsd-signature-type">PublicKey</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, memo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, testNonce<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in memo.ts:15</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Memo/Any message encoding using AES (aes-cbc algorithm)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>private_key: <a href="classes/privatekey.html" class="tsd-signature-type">PrivateKey</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Privatekey of sender</p>
+									</div>
+								</li>
+								<li>
+									<h5>public_key: <a href="classes/publickey.html" class="tsd-signature-type">PublicKey</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>publickey of recipient</p>
+									</div>
+								</li>
+								<li>
+									<h5>memo: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>message to be encrypted</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> testNonce: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>nonce with high entropy</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="encodeprivate" class="tsd-anchor"></a>
 					<h3>encode<wbr>Private</h3>
 					<ul class="tsd-signatures tsd-kind-function">
@@ -1360,7 +1892,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in crypto.ts:105</li>
+									<li>Defined in crypto.ts:121</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1388,7 +1920,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in crypto.ts:82</li>
+									<li>Defined in crypto.ts:98</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1410,6 +1942,66 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="encrypt" class="tsd-anchor"></a>
+					<h3>encrypt</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">encrypt<span class="tsd-signature-symbol">(</span>private_key<span class="tsd-signature-symbol">: </span><a href="classes/privatekey.html" class="tsd-signature-type">PrivateKey</a>, public_key<span class="tsd-signature-symbol">: </span><a href="classes/publickey.html" class="tsd-signature-type">PublicKey</a>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, nonce<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in helpers/aes.ts:19</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Spec: <a href="http://peakd.com/steem/@dantheman/how-to-encrypt-a-memo-when-transferring-steem">http://peakd.com/steem/@dantheman/how-to-encrypt-a-memo-when-transferring-steem</a></p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>throws</dt>
+									<dd><p>{Error|TypeError} - &quot;Invalid Key, ...&quot;</p>
+									</dd>
+									<dt>property</dt>
+									<dd><p>{string} nonce - random or unique uint64, provides entropy when re-using the same private/public keys.</p>
+									</dd>
+									<dt>property</dt>
+									<dd><p>{Buffer} message - Plain text message</p>
+									</dd>
+									<dt>property</dt>
+									<dd><p>{number} checksum - shared secret checksum</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>private_key: <a href="classes/privatekey.html" class="tsd-signature-type">PrivateKey</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>required and used for decryption</p>
+									</div>
+								</li>
+								<li>
+									<h5>public_key: <a href="classes/publickey.html" class="tsd-signature-type">PublicKey</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>required and used to calcualte the shared secret</p>
+									</div>
+								</li>
+								<li>
+									<h5>message: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>message to be encrypted</p>
+									</div>
+								</li>
+								<li>
+									<h5>nonce: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="failover" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> failover</h3>
 					<ul class="tsd-signatures tsd-kind-function">
@@ -1419,7 +2011,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:178</li>
+									<li>Defined in utils.ts:177</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1442,6 +2034,32 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="fixed_buf" class="tsd-anchor"></a>
+					<h3>fixed_<wbr>buf</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">fixed_<wbr>buf<span class="tsd-signature-symbol">(</span>b<span class="tsd-signature-symbol">: </span><a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a>, len<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in chain/deserializer.ts:41</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>b: <a href="globals.html#bytebuffer" class="tsd-signature-type">ByteBuffer</a></h5>
+								</li>
+								<li>
+									<h5>len: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="generatetrxid" class="tsd-anchor"></a>
 					<h3>generate<wbr>Trx<wbr>Id</h3>
 					<ul class="tsd-signatures tsd-kind-function">
@@ -1451,7 +2069,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in crypto.ts:401</li>
+									<li>Defined in crypto.ts:444</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1536,7 +2154,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in crypto.ts:131</li>
+									<li>Defined in crypto.ts:147</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1564,7 +2182,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in crypto.ts:143</li>
+									<li>Defined in crypto.ts:158</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1626,7 +2244,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:359</li>
+									<li>Defined in utils.ts:360</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1657,7 +2275,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:367</li>
+									<li>Defined in utils.ts:368</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1683,7 +2301,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils.ts:99</li>
+									<li>Defined in utils.ts:98</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1750,7 +2368,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in crypto.ts:57</li>
+									<li>Defined in crypto.ts:64</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1770,7 +2388,7 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="serialize" class="tsd-anchor"></a>
-					<h3>serialize</h3>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> serialize</h3>
 					<ul class="tsd-signatures tsd-kind-function">
 						<li class="tsd-signature tsd-kind-icon">serialize<span class="tsd-signature-symbol">(</span>serializer<span class="tsd-signature-symbol">: </span><a href="globals.html#serializer" class="tsd-signature-type">Serializer</a>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
@@ -1804,12 +2422,40 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in crypto.ts:66</li>
+									<li>Defined in crypto.ts:73</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Return sha256 hash of input.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>input: <span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="sha512" class="tsd-anchor"></a>
+					<h3>sha512</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">sha512<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in crypto.ts:82</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return sha512 hash of input</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1832,7 +2478,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in crypto.ts:379</li>
+									<li>Defined in crypto.ts:422</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1891,6 +2537,98 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="tobinarybuffer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> to<wbr>Binary<wbr>Buffer</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Binary<wbr>Buffer<span class="tsd-signature-symbol">(</span>o<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in helpers/aes.ts:123</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>o: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="tolongobj" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> to<wbr>Long<wbr>Obj</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Long<wbr>Obj<span class="tsd-signature-symbol">(</span>o<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in helpers/aes.ts:122</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>o: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="toprivateobj" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> to<wbr>Private<wbr>Obj</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Private<wbr>Obj<span class="tsd-signature-symbol">(</span>o<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in memo.ts:70</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>o: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="topublicobj" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> to<wbr>Public<wbr>Obj</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Public<wbr>Obj<span class="tsd-signature-symbol">(</span>o<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in memo.ts:71</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>o: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="transactiondigest" class="tsd-anchor"></a>
 					<h3>transaction<wbr>Digest</h3>
 					<ul class="tsd-signatures tsd-kind-function">
@@ -1900,7 +2638,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in crypto.ts:350</li>
+									<li>Defined in crypto.ts:393</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1921,6 +2659,23 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="uniquenonce" class="tsd-anchor"></a>
+					<h3>unique<wbr>Nonce</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">unique<wbr>Nonce<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in helpers/aes.ts:110</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1965,12 +2720,42 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Object literals</h2>
 				<section class="tsd-panel tsd-member tsd-kind-object-literal">
+					<a name="memo" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Memo</h3>
+					<div class="tsd-signature tsd-kind-icon">Memo<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in memo.ts:73</li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="memo.decode" class="tsd-anchor"></a>
+						<h3>decode</h3>
+						<div class="tsd-signature tsd-kind-icon">decode<span class="tsd-signature-symbol">:</span> <a href="globals.html#decode" class="tsd-signature-type">decode</a></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in memo.ts:74</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="memo.encode" class="tsd-anchor"></a>
+						<h3>encode</h3>
+						<div class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">:</span> <a href="globals.html#encode" class="tsd-signature-type">encode</a></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in memo.ts:75</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal">
 					<a name="types" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> Types</h3>
 					<div class="tsd-signature tsd-kind-icon">Types<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in chain/serializer.ts:646</li>
+							<li>Defined in chain/serializer.ts:653</li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -1979,7 +2764,7 @@
 						<div class="tsd-signature tsd-kind-icon">Array<span class="tsd-signature-symbol">:</span> <a href="globals.html#arrayserializer" class="tsd-signature-type">ArraySerializer</a><span class="tsd-signature-symbol"> = ArraySerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:647</li>
+								<li>Defined in chain/serializer.ts:654</li>
 							</ul>
 						</aside>
 					</section>
@@ -1989,7 +2774,7 @@
 						<div class="tsd-signature tsd-kind-icon">Asset<span class="tsd-signature-symbol">:</span> <a href="globals.html#assetserializer" class="tsd-signature-type">AssetSerializer</a><span class="tsd-signature-symbol"> = AssetSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:648</li>
+								<li>Defined in chain/serializer.ts:655</li>
 							</ul>
 						</aside>
 					</section>
@@ -1999,7 +2784,7 @@
 						<div class="tsd-signature tsd-kind-icon">Authority<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = AuthoritySerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:649</li>
+								<li>Defined in chain/serializer.ts:656</li>
 							</ul>
 						</aside>
 					</section>
@@ -2009,7 +2794,7 @@
 						<div class="tsd-signature tsd-kind-icon">Binary<span class="tsd-signature-symbol">:</span> <a href="globals.html#binaryserializer" class="tsd-signature-type">BinarySerializer</a><span class="tsd-signature-symbol"> = BinarySerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:650</li>
+								<li>Defined in chain/serializer.ts:657</li>
 							</ul>
 						</aside>
 					</section>
@@ -2019,7 +2804,7 @@
 						<div class="tsd-signature tsd-kind-icon">Boolean<span class="tsd-signature-symbol">:</span> <a href="globals.html#booleanserializer" class="tsd-signature-type">BooleanSerializer</a><span class="tsd-signature-symbol"> = BooleanSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:651</li>
+								<li>Defined in chain/serializer.ts:658</li>
 							</ul>
 						</aside>
 					</section>
@@ -2029,7 +2814,17 @@
 						<div class="tsd-signature tsd-kind-icon">Date<span class="tsd-signature-symbol">:</span> <a href="globals.html#dateserializer" class="tsd-signature-type">DateSerializer</a><span class="tsd-signature-symbol"> = DateSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:652</li>
+								<li>Defined in chain/serializer.ts:659</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="types.encryptedmemo" class="tsd-anchor"></a>
+						<h3>Encrypted<wbr>Memo</h3>
+						<div class="tsd-signature tsd-kind-icon">Encrypted<wbr>Memo<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = EncryptedMemoSerializer</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in chain/serializer.ts:660</li>
 							</ul>
 						</aside>
 					</section>
@@ -2039,7 +2834,7 @@
 						<div class="tsd-signature tsd-kind-icon">Flat<wbr>Map<span class="tsd-signature-symbol">:</span> <a href="globals.html#flatmapserializer" class="tsd-signature-type">FlatMapSerializer</a><span class="tsd-signature-symbol"> = FlatMapSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:653</li>
+								<li>Defined in chain/serializer.ts:661</li>
 							</ul>
 						</aside>
 					</section>
@@ -2049,7 +2844,7 @@
 						<div class="tsd-signature tsd-kind-icon">Int16<span class="tsd-signature-symbol">:</span> <a href="globals.html#int16serializer" class="tsd-signature-type">Int16Serializer</a><span class="tsd-signature-symbol"> = Int16Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:654</li>
+								<li>Defined in chain/serializer.ts:662</li>
 							</ul>
 						</aside>
 					</section>
@@ -2059,7 +2854,7 @@
 						<div class="tsd-signature tsd-kind-icon">Int32<span class="tsd-signature-symbol">:</span> <a href="globals.html#int32serializer" class="tsd-signature-type">Int32Serializer</a><span class="tsd-signature-symbol"> = Int32Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:655</li>
+								<li>Defined in chain/serializer.ts:663</li>
 							</ul>
 						</aside>
 					</section>
@@ -2069,7 +2864,7 @@
 						<div class="tsd-signature tsd-kind-icon">Int64<span class="tsd-signature-symbol">:</span> <a href="globals.html#int64serializer" class="tsd-signature-type">Int64Serializer</a><span class="tsd-signature-symbol"> = Int64Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:656</li>
+								<li>Defined in chain/serializer.ts:664</li>
 							</ul>
 						</aside>
 					</section>
@@ -2079,7 +2874,7 @@
 						<div class="tsd-signature tsd-kind-icon">Int8<span class="tsd-signature-symbol">:</span> <a href="globals.html#int8serializer" class="tsd-signature-type">Int8Serializer</a><span class="tsd-signature-symbol"> = Int8Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:657</li>
+								<li>Defined in chain/serializer.ts:665</li>
 							</ul>
 						</aside>
 					</section>
@@ -2089,7 +2884,7 @@
 						<div class="tsd-signature tsd-kind-icon">Object<span class="tsd-signature-symbol">:</span> <a href="globals.html#objectserializer" class="tsd-signature-type">ObjectSerializer</a><span class="tsd-signature-symbol"> = ObjectSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:658</li>
+								<li>Defined in chain/serializer.ts:666</li>
 							</ul>
 						</aside>
 					</section>
@@ -2099,7 +2894,7 @@
 						<div class="tsd-signature tsd-kind-icon">Operation<span class="tsd-signature-symbol">:</span> <a href="globals.html#operationserializer" class="tsd-signature-type">OperationSerializer</a><span class="tsd-signature-symbol"> = OperationSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:659</li>
+								<li>Defined in chain/serializer.ts:667</li>
 							</ul>
 						</aside>
 					</section>
@@ -2109,7 +2904,7 @@
 						<div class="tsd-signature tsd-kind-icon">Optional<span class="tsd-signature-symbol">:</span> <a href="globals.html#optionalserializer" class="tsd-signature-type">OptionalSerializer</a><span class="tsd-signature-symbol"> = OptionalSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:660</li>
+								<li>Defined in chain/serializer.ts:668</li>
 							</ul>
 						</aside>
 					</section>
@@ -2119,7 +2914,7 @@
 						<div class="tsd-signature tsd-kind-icon">Price<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = PriceSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:661</li>
+								<li>Defined in chain/serializer.ts:669</li>
 							</ul>
 						</aside>
 					</section>
@@ -2129,7 +2924,7 @@
 						<div class="tsd-signature tsd-kind-icon">Public<wbr>Key<span class="tsd-signature-symbol">:</span> <a href="globals.html#publickeyserializer" class="tsd-signature-type">PublicKeySerializer</a><span class="tsd-signature-symbol"> = PublicKeySerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:662</li>
+								<li>Defined in chain/serializer.ts:670</li>
 							</ul>
 						</aside>
 					</section>
@@ -2139,7 +2934,7 @@
 						<div class="tsd-signature tsd-kind-icon">Static<wbr>Variant<span class="tsd-signature-symbol">:</span> <a href="globals.html#staticvariantserializer" class="tsd-signature-type">StaticVariantSerializer</a><span class="tsd-signature-symbol"> = StaticVariantSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:663</li>
+								<li>Defined in chain/serializer.ts:671</li>
 							</ul>
 						</aside>
 					</section>
@@ -2149,7 +2944,7 @@
 						<div class="tsd-signature tsd-kind-icon">String<span class="tsd-signature-symbol">:</span> <a href="globals.html#stringserializer" class="tsd-signature-type">StringSerializer</a><span class="tsd-signature-symbol"> = StringSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:664</li>
+								<li>Defined in chain/serializer.ts:672</li>
 							</ul>
 						</aside>
 					</section>
@@ -2159,7 +2954,7 @@
 						<div class="tsd-signature tsd-kind-icon">Transaction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = TransactionSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:665</li>
+								<li>Defined in chain/serializer.ts:673</li>
 							</ul>
 						</aside>
 					</section>
@@ -2169,7 +2964,7 @@
 						<div class="tsd-signature tsd-kind-icon">UInt16<span class="tsd-signature-symbol">:</span> <a href="globals.html#uint16serializer" class="tsd-signature-type">UInt16Serializer</a><span class="tsd-signature-symbol"> = UInt16Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:666</li>
+								<li>Defined in chain/serializer.ts:674</li>
 							</ul>
 						</aside>
 					</section>
@@ -2179,7 +2974,7 @@
 						<div class="tsd-signature tsd-kind-icon">UInt32<span class="tsd-signature-symbol">:</span> <a href="globals.html#uint32serializer" class="tsd-signature-type">UInt32Serializer</a><span class="tsd-signature-symbol"> = UInt32Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:667</li>
+								<li>Defined in chain/serializer.ts:675</li>
 							</ul>
 						</aside>
 					</section>
@@ -2189,7 +2984,7 @@
 						<div class="tsd-signature tsd-kind-icon">UInt64<span class="tsd-signature-symbol">:</span> <a href="globals.html#uint64serializer" class="tsd-signature-type">UInt64Serializer</a><span class="tsd-signature-symbol"> = UInt64Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:668</li>
+								<li>Defined in chain/serializer.ts:676</li>
 							</ul>
 						</aside>
 					</section>
@@ -2199,7 +2994,7 @@
 						<div class="tsd-signature tsd-kind-icon">UInt8<span class="tsd-signature-symbol">:</span> <a href="globals.html#uint8serializer" class="tsd-signature-type">UInt8Serializer</a><span class="tsd-signature-symbol"> = UInt8Serializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:669</li>
+								<li>Defined in chain/serializer.ts:677</li>
 							</ul>
 						</aside>
 					</section>
@@ -2209,7 +3004,7 @@
 						<div class="tsd-signature tsd-kind-icon">Void<span class="tsd-signature-symbol">:</span> <a href="globals.html#voidserializer" class="tsd-signature-type">VoidSerializer</a><span class="tsd-signature-symbol"> = VoidSerializer</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in chain/serializer.ts:670</li>
+								<li>Defined in chain/serializer.ts:678</li>
 							</ul>
 						</aside>
 					</section>
@@ -2220,7 +3015,7 @@
 					<div class="tsd-signature tsd-kind-icon">crypto<wbr>Utils<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in crypto.ts:420</li>
+							<li>Defined in crypto.ts:463</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -2234,7 +3029,7 @@
 						<div class="tsd-signature tsd-kind-icon">decode<wbr>Private<span class="tsd-signature-symbol">:</span> <a href="globals.html#decodeprivate" class="tsd-signature-type">decodePrivate</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:421</li>
+								<li>Defined in crypto.ts:464</li>
 							</ul>
 						</aside>
 					</section>
@@ -2244,7 +3039,7 @@
 						<div class="tsd-signature tsd-kind-icon">double<wbr>Sha256<span class="tsd-signature-symbol">:</span> <a href="globals.html#doublesha256" class="tsd-signature-type">doubleSha256</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:422</li>
+								<li>Defined in crypto.ts:465</li>
 							</ul>
 						</aside>
 					</section>
@@ -2254,7 +3049,7 @@
 						<div class="tsd-signature tsd-kind-icon">encode<wbr>Private<span class="tsd-signature-symbol">:</span> <a href="globals.html#encodeprivate" class="tsd-signature-type">encodePrivate</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:423</li>
+								<li>Defined in crypto.ts:466</li>
 							</ul>
 						</aside>
 					</section>
@@ -2264,7 +3059,7 @@
 						<div class="tsd-signature tsd-kind-icon">encode<wbr>Public<span class="tsd-signature-symbol">:</span> <a href="globals.html#encodepublic" class="tsd-signature-type">encodePublic</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:424</li>
+								<li>Defined in crypto.ts:467</li>
 							</ul>
 						</aside>
 					</section>
@@ -2274,7 +3069,7 @@
 						<div class="tsd-signature tsd-kind-icon">generate<wbr>Trx<wbr>Id<span class="tsd-signature-symbol">:</span> <a href="globals.html#generatetrxid" class="tsd-signature-type">generateTrxId</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:431</li>
+								<li>Defined in crypto.ts:468</li>
 							</ul>
 						</aside>
 					</section>
@@ -2284,7 +3079,7 @@
 						<div class="tsd-signature tsd-kind-icon">is<wbr>Canonical<wbr>Signature<span class="tsd-signature-symbol">:</span> <a href="globals.html#iscanonicalsignature" class="tsd-signature-type">isCanonicalSignature</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:425</li>
+								<li>Defined in crypto.ts:469</li>
 							</ul>
 						</aside>
 					</section>
@@ -2294,7 +3089,7 @@
 						<div class="tsd-signature tsd-kind-icon">is<wbr>Wif<span class="tsd-signature-symbol">:</span> <a href="globals.html#iswif" class="tsd-signature-type">isWif</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:426</li>
+								<li>Defined in crypto.ts:470</li>
 							</ul>
 						</aside>
 					</section>
@@ -2304,7 +3099,7 @@
 						<div class="tsd-signature tsd-kind-icon">ripemd160<span class="tsd-signature-symbol">:</span> <a href="globals.html#ripemd160" class="tsd-signature-type">ripemd160</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:427</li>
+								<li>Defined in crypto.ts:471</li>
 							</ul>
 						</aside>
 					</section>
@@ -2314,7 +3109,7 @@
 						<div class="tsd-signature tsd-kind-icon">sha256<span class="tsd-signature-symbol">:</span> <a href="globals.html#sha256" class="tsd-signature-type">sha256</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:428</li>
+								<li>Defined in crypto.ts:472</li>
 							</ul>
 						</aside>
 					</section>
@@ -2324,7 +3119,7 @@
 						<div class="tsd-signature tsd-kind-icon">sign<wbr>Transaction<span class="tsd-signature-symbol">:</span> <a href="globals.html#signtransaction" class="tsd-signature-type">signTransaction</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:429</li>
+								<li>Defined in crypto.ts:473</li>
 							</ul>
 						</aside>
 					</section>
@@ -2334,7 +3129,7 @@
 						<div class="tsd-signature tsd-kind-icon">transaction<wbr>Digest<span class="tsd-signature-symbol">:</span> <a href="globals.html#transactiondigest" class="tsd-signature-type">transactionDigest</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in crypto.ts:430</li>
+								<li>Defined in crypto.ts:474</li>
 							</ul>
 						</aside>
 					</section>
@@ -2345,7 +3140,7 @@
 					<div class="tsd-signature tsd-kind-icon">operation<wbr>Orders<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in utils.ts:265</li>
+							<li>Defined in utils.ts:266</li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -2354,7 +3149,7 @@
 						<div class="tsd-signature tsd-kind-icon">account_<wbr>create<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 9</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:276</li>
+								<li>Defined in utils.ts:277</li>
 							</ul>
 						</aside>
 					</section>
@@ -2364,7 +3159,7 @@
 						<div class="tsd-signature tsd-kind-icon">account_<wbr>create_<wbr>with_<wbr>delegation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 41</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:308</li>
+								<li>Defined in utils.ts:309</li>
 							</ul>
 						</aside>
 					</section>
@@ -2374,7 +3169,7 @@
 						<div class="tsd-signature tsd-kind-icon">account_<wbr>created<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 80</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:348</li>
+								<li>Defined in utils.ts:349</li>
 							</ul>
 						</aside>
 					</section>
@@ -2384,7 +3179,7 @@
 						<div class="tsd-signature tsd-kind-icon">account_<wbr>update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 10</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:277</li>
+								<li>Defined in utils.ts:278</li>
 							</ul>
 						</aside>
 					</section>
@@ -2394,7 +3189,7 @@
 						<div class="tsd-signature tsd-kind-icon">account_<wbr>update2<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 43</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:310</li>
+								<li>Defined in utils.ts:311</li>
 							</ul>
 						</aside>
 					</section>
@@ -2404,7 +3199,7 @@
 						<div class="tsd-signature tsd-kind-icon">account_<wbr>witness_<wbr>proxy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 13</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:280</li>
+								<li>Defined in utils.ts:281</li>
 							</ul>
 						</aside>
 					</section>
@@ -2414,7 +3209,7 @@
 						<div class="tsd-signature tsd-kind-icon">account_<wbr>witness_<wbr>vote<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 12</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:279</li>
+								<li>Defined in utils.ts:280</li>
 							</ul>
 						</aside>
 					</section>
@@ -2424,7 +3219,7 @@
 						<div class="tsd-signature tsd-kind-icon">author_<wbr>reward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 51</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:319</li>
+								<li>Defined in utils.ts:320</li>
 							</ul>
 						</aside>
 					</section>
@@ -2434,7 +3229,7 @@
 						<div class="tsd-signature tsd-kind-icon">cancel_<wbr>transfer_<wbr>from_<wbr>savings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 34</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:301</li>
+								<li>Defined in utils.ts:302</li>
 							</ul>
 						</aside>
 					</section>
@@ -2444,7 +3239,7 @@
 						<div class="tsd-signature tsd-kind-icon">change_<wbr>recovery_<wbr>account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 26</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:293</li>
+								<li>Defined in utils.ts:294</li>
 							</ul>
 						</aside>
 					</section>
@@ -2454,7 +3249,7 @@
 						<div class="tsd-signature tsd-kind-icon">changed_<wbr>recovery_<wbr>account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 76</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:344</li>
+								<li>Defined in utils.ts:345</li>
 							</ul>
 						</aside>
 					</section>
@@ -2464,7 +3259,7 @@
 						<div class="tsd-signature tsd-kind-icon">claim_<wbr>account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 22</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:289</li>
+								<li>Defined in utils.ts:290</li>
 							</ul>
 						</aside>
 					</section>
@@ -2474,7 +3269,7 @@
 						<div class="tsd-signature tsd-kind-icon">claim_<wbr>reward_<wbr>balance<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 39</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:306</li>
+								<li>Defined in utils.ts:307</li>
 							</ul>
 						</aside>
 					</section>
@@ -2484,7 +3279,7 @@
 						<div class="tsd-signature tsd-kind-icon">clear_<wbr>null_<wbr>account_<wbr>balance<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 65</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:333</li>
+								<li>Defined in utils.ts:334</li>
 							</ul>
 						</aside>
 					</section>
@@ -2494,7 +3289,7 @@
 						<div class="tsd-signature tsd-kind-icon">collateralized_<wbr>convert<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 48</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:315</li>
+								<li>Defined in utils.ts:316</li>
 							</ul>
 						</aside>
 					</section>
@@ -2504,7 +3299,7 @@
 						<div class="tsd-signature tsd-kind-icon">comment<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:268</li>
+								<li>Defined in utils.ts:269</li>
 							</ul>
 						</aside>
 					</section>
@@ -2514,7 +3309,7 @@
 						<div class="tsd-signature tsd-kind-icon">comment_<wbr>benefactor_<wbr>reward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 63</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:331</li>
+								<li>Defined in utils.ts:332</li>
 							</ul>
 						</aside>
 					</section>
@@ -2524,7 +3319,7 @@
 						<div class="tsd-signature tsd-kind-icon">comment_<wbr>options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 19</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:286</li>
+								<li>Defined in utils.ts:287</li>
 							</ul>
 						</aside>
 					</section>
@@ -2534,7 +3329,7 @@
 						<div class="tsd-signature tsd-kind-icon">comment_<wbr>payout_<wbr>update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 61</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:329</li>
+								<li>Defined in utils.ts:330</li>
 							</ul>
 						</aside>
 					</section>
@@ -2544,7 +3339,7 @@
 						<div class="tsd-signature tsd-kind-icon">comment_<wbr>reward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 53</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:321</li>
+								<li>Defined in utils.ts:322</li>
 							</ul>
 						</aside>
 					</section>
@@ -2554,7 +3349,7 @@
 						<div class="tsd-signature tsd-kind-icon">consolidate_<wbr>treasury_<wbr>balance<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 71</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:339</li>
+								<li>Defined in utils.ts:340</li>
 							</ul>
 						</aside>
 					</section>
@@ -2564,7 +3359,7 @@
 						<div class="tsd-signature tsd-kind-icon">convert<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 8</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:275</li>
+								<li>Defined in utils.ts:276</li>
 							</ul>
 						</aside>
 					</section>
@@ -2574,7 +3369,7 @@
 						<div class="tsd-signature tsd-kind-icon">create_<wbr>claimed_<wbr>account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 23</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:290</li>
+								<li>Defined in utils.ts:291</li>
 							</ul>
 						</aside>
 					</section>
@@ -2584,7 +3379,7 @@
 						<div class="tsd-signature tsd-kind-icon">create_<wbr>proposal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 44</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:311</li>
+								<li>Defined in utils.ts:312</li>
 							</ul>
 						</aside>
 					</section>
@@ -2594,7 +3389,7 @@
 						<div class="tsd-signature tsd-kind-icon">curation_<wbr>reward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 52</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:320</li>
+								<li>Defined in utils.ts:321</li>
 							</ul>
 						</aside>
 					</section>
@@ -2604,7 +3399,7 @@
 						<div class="tsd-signature tsd-kind-icon">custom<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 15</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:282</li>
+								<li>Defined in utils.ts:283</li>
 							</ul>
 						</aside>
 					</section>
@@ -2614,7 +3409,7 @@
 						<div class="tsd-signature tsd-kind-icon">custom_<wbr>binary<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 35</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:302</li>
+								<li>Defined in utils.ts:303</li>
 							</ul>
 						</aside>
 					</section>
@@ -2624,7 +3419,7 @@
 						<div class="tsd-signature tsd-kind-icon">custom_<wbr>json<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 18</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:285</li>
+								<li>Defined in utils.ts:286</li>
 							</ul>
 						</aside>
 					</section>
@@ -2634,7 +3429,7 @@
 						<div class="tsd-signature tsd-kind-icon">decline_<wbr>voting_<wbr>rights<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 36</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:303</li>
+								<li>Defined in utils.ts:304</li>
 							</ul>
 						</aside>
 					</section>
@@ -2644,7 +3439,7 @@
 						<div class="tsd-signature tsd-kind-icon">delayed_<wbr>voting<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 70</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:338</li>
+								<li>Defined in utils.ts:339</li>
 							</ul>
 						</aside>
 					</section>
@@ -2654,7 +3449,7 @@
 						<div class="tsd-signature tsd-kind-icon">delegate_<wbr>vesting_<wbr>shares<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 40</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:307</li>
+								<li>Defined in utils.ts:308</li>
 							</ul>
 						</aside>
 					</section>
@@ -2664,7 +3459,7 @@
 						<div class="tsd-signature tsd-kind-icon">delete_<wbr>comment<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 17</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:284</li>
+								<li>Defined in utils.ts:285</li>
 							</ul>
 						</aside>
 					</section>
@@ -2674,7 +3469,7 @@
 						<div class="tsd-signature tsd-kind-icon">effective_<wbr>comment_<wbr>vote<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 72</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:340</li>
+								<li>Defined in utils.ts:341</li>
 							</ul>
 						</aside>
 					</section>
@@ -2684,7 +3479,7 @@
 						<div class="tsd-signature tsd-kind-icon">escrow_<wbr>approve<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 31</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:298</li>
+								<li>Defined in utils.ts:299</li>
 							</ul>
 						</aside>
 					</section>
@@ -2694,7 +3489,7 @@
 						<div class="tsd-signature tsd-kind-icon">escrow_<wbr>dispute<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 28</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:295</li>
+								<li>Defined in utils.ts:296</li>
 							</ul>
 						</aside>
 					</section>
@@ -2704,7 +3499,7 @@
 						<div class="tsd-signature tsd-kind-icon">escrow_<wbr>release<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 29</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:296</li>
+								<li>Defined in utils.ts:297</li>
 							</ul>
 						</aside>
 					</section>
@@ -2714,7 +3509,7 @@
 						<div class="tsd-signature tsd-kind-icon">escrow_<wbr>transfer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 27</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:294</li>
+								<li>Defined in utils.ts:295</li>
 							</ul>
 						</aside>
 					</section>
@@ -2724,7 +3519,7 @@
 						<div class="tsd-signature tsd-kind-icon">expired_<wbr>account_<wbr>notification<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 75</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:343</li>
+								<li>Defined in utils.ts:344</li>
 							</ul>
 						</aside>
 					</section>
@@ -2734,7 +3529,7 @@
 						<div class="tsd-signature tsd-kind-icon">failed_<wbr>recurrent_<wbr>transfer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 84</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:352</li>
+								<li>Defined in utils.ts:353</li>
 							</ul>
 						</aside>
 					</section>
@@ -2744,7 +3539,7 @@
 						<div class="tsd-signature tsd-kind-icon">feed_<wbr>publish<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 7</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:274</li>
+								<li>Defined in utils.ts:275</li>
 							</ul>
 						</aside>
 					</section>
@@ -2754,7 +3549,7 @@
 						<div class="tsd-signature tsd-kind-icon">fill_<wbr>collateralized_<wbr>convert_<wbr>request<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 81</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:349</li>
+								<li>Defined in utils.ts:350</li>
 							</ul>
 						</aside>
 					</section>
@@ -2764,7 +3559,7 @@
 						<div class="tsd-signature tsd-kind-icon">fill_<wbr>convert_<wbr>request<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 50</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:318</li>
+								<li>Defined in utils.ts:319</li>
 							</ul>
 						</aside>
 					</section>
@@ -2774,7 +3569,7 @@
 						<div class="tsd-signature tsd-kind-icon">fill_<wbr>order<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 57</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:325</li>
+								<li>Defined in utils.ts:326</li>
 							</ul>
 						</aside>
 					</section>
@@ -2784,7 +3579,7 @@
 						<div class="tsd-signature tsd-kind-icon">fill_<wbr>recurrent_<wbr>transfer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 83</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:351</li>
+								<li>Defined in utils.ts:352</li>
 							</ul>
 						</aside>
 					</section>
@@ -2794,7 +3589,7 @@
 						<div class="tsd-signature tsd-kind-icon">fill_<wbr>transfer_<wbr>from_<wbr>savings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 59</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:327</li>
+								<li>Defined in utils.ts:328</li>
 							</ul>
 						</aside>
 					</section>
@@ -2804,7 +3599,7 @@
 						<div class="tsd-signature tsd-kind-icon">fill_<wbr>vesting_<wbr>withdraw<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 56</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:324</li>
+								<li>Defined in utils.ts:325</li>
 							</ul>
 						</aside>
 					</section>
@@ -2814,7 +3609,7 @@
 						<div class="tsd-signature tsd-kind-icon">hardfork<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 60</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:328</li>
+								<li>Defined in utils.ts:329</li>
 							</ul>
 						</aside>
 					</section>
@@ -2824,7 +3619,7 @@
 						<div class="tsd-signature tsd-kind-icon">hardfork_<wbr>hive<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 68</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:336</li>
+								<li>Defined in utils.ts:337</li>
 							</ul>
 						</aside>
 					</section>
@@ -2834,7 +3629,7 @@
 						<div class="tsd-signature tsd-kind-icon">hardfork_<wbr>hive_<wbr>restore<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 69</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:337</li>
+								<li>Defined in utils.ts:338</li>
 							</ul>
 						</aside>
 					</section>
@@ -2844,7 +3639,7 @@
 						<div class="tsd-signature tsd-kind-icon">ineffective_<wbr>delete_<wbr>comment<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 73</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:341</li>
+								<li>Defined in utils.ts:342</li>
 							</ul>
 						</aside>
 					</section>
@@ -2854,7 +3649,7 @@
 						<div class="tsd-signature tsd-kind-icon">interest<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 55</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:323</li>
+								<li>Defined in utils.ts:324</li>
 							</ul>
 						</aside>
 					</section>
@@ -2864,7 +3659,7 @@
 						<div class="tsd-signature tsd-kind-icon">limit_<wbr>order_<wbr>cancel<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 6</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:273</li>
+								<li>Defined in utils.ts:274</li>
 							</ul>
 						</aside>
 					</section>
@@ -2874,7 +3669,7 @@
 						<div class="tsd-signature tsd-kind-icon">limit_<wbr>order_<wbr>create<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 5</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:272</li>
+								<li>Defined in utils.ts:273</li>
 							</ul>
 						</aside>
 					</section>
@@ -2884,7 +3679,7 @@
 						<div class="tsd-signature tsd-kind-icon">limit_<wbr>order_<wbr>create2<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 21</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:288</li>
+								<li>Defined in utils.ts:289</li>
 							</ul>
 						</aside>
 					</section>
@@ -2894,7 +3689,7 @@
 						<div class="tsd-signature tsd-kind-icon">liquidity_<wbr>reward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 54</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:322</li>
+								<li>Defined in utils.ts:323</li>
 							</ul>
 						</aside>
 					</section>
@@ -2904,7 +3699,7 @@
 						<div class="tsd-signature tsd-kind-icon">pow<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 14</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:281</li>
+								<li>Defined in utils.ts:282</li>
 							</ul>
 						</aside>
 					</section>
@@ -2914,7 +3709,7 @@
 						<div class="tsd-signature tsd-kind-icon">pow2<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 30</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:297</li>
+								<li>Defined in utils.ts:298</li>
 							</ul>
 						</aside>
 					</section>
@@ -2924,7 +3719,7 @@
 						<div class="tsd-signature tsd-kind-icon">pow_<wbr>reward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 78</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:346</li>
+								<li>Defined in utils.ts:347</li>
 							</ul>
 						</aside>
 					</section>
@@ -2934,7 +3729,7 @@
 						<div class="tsd-signature tsd-kind-icon">producer_<wbr>reward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 64</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:332</li>
+								<li>Defined in utils.ts:333</li>
 							</ul>
 						</aside>
 					</section>
@@ -2944,7 +3739,7 @@
 						<div class="tsd-signature tsd-kind-icon">proposal_<wbr>pay<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 66</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:334</li>
+								<li>Defined in utils.ts:335</li>
 							</ul>
 						</aside>
 					</section>
@@ -2954,7 +3749,7 @@
 						<div class="tsd-signature tsd-kind-icon">recover_<wbr>account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 25</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:292</li>
+								<li>Defined in utils.ts:293</li>
 							</ul>
 						</aside>
 					</section>
@@ -2964,7 +3759,7 @@
 						<div class="tsd-signature tsd-kind-icon">recurrent_<wbr>transfer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 49</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:316</li>
+								<li>Defined in utils.ts:317</li>
 							</ul>
 						</aside>
 					</section>
@@ -2974,7 +3769,7 @@
 						<div class="tsd-signature tsd-kind-icon">remove_<wbr>proposal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 46</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:313</li>
+								<li>Defined in utils.ts:314</li>
 							</ul>
 						</aside>
 					</section>
@@ -2984,7 +3779,7 @@
 						<div class="tsd-signature tsd-kind-icon">report_<wbr>over_<wbr>production<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 16</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:283</li>
+								<li>Defined in utils.ts:284</li>
 							</ul>
 						</aside>
 					</section>
@@ -2994,7 +3789,7 @@
 						<div class="tsd-signature tsd-kind-icon">request_<wbr>account_<wbr>recovery<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 24</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:291</li>
+								<li>Defined in utils.ts:292</li>
 							</ul>
 						</aside>
 					</section>
@@ -3004,7 +3799,7 @@
 						<div class="tsd-signature tsd-kind-icon">reset_<wbr>account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 37</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:304</li>
+								<li>Defined in utils.ts:305</li>
 							</ul>
 						</aside>
 					</section>
@@ -3014,7 +3809,7 @@
 						<div class="tsd-signature tsd-kind-icon">return_<wbr>vesting_<wbr>delegation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 62</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:330</li>
+								<li>Defined in utils.ts:331</li>
 							</ul>
 						</aside>
 					</section>
@@ -3024,7 +3819,7 @@
 						<div class="tsd-signature tsd-kind-icon">set_<wbr>reset_<wbr>account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 38</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:305</li>
+								<li>Defined in utils.ts:306</li>
 							</ul>
 						</aside>
 					</section>
@@ -3034,7 +3829,7 @@
 						<div class="tsd-signature tsd-kind-icon">set_<wbr>withdraw_<wbr>vesting_<wbr>route<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 20</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:287</li>
+								<li>Defined in utils.ts:288</li>
 							</ul>
 						</aside>
 					</section>
@@ -3044,7 +3839,7 @@
 						<div class="tsd-signature tsd-kind-icon">shutdown_<wbr>witness<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 58</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:326</li>
+								<li>Defined in utils.ts:327</li>
 							</ul>
 						</aside>
 					</section>
@@ -3054,7 +3849,7 @@
 						<div class="tsd-signature tsd-kind-icon">sps_<wbr>convert<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 74</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:342</li>
+								<li>Defined in utils.ts:343</li>
 							</ul>
 						</aside>
 					</section>
@@ -3064,7 +3859,7 @@
 						<div class="tsd-signature tsd-kind-icon">sps_<wbr>fund<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 67</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:335</li>
+								<li>Defined in utils.ts:336</li>
 							</ul>
 						</aside>
 					</section>
@@ -3074,7 +3869,7 @@
 						<div class="tsd-signature tsd-kind-icon">system_<wbr>warning<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 82</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:350</li>
+								<li>Defined in utils.ts:351</li>
 							</ul>
 						</aside>
 					</section>
@@ -3084,7 +3879,7 @@
 						<div class="tsd-signature tsd-kind-icon">transfer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 2</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:269</li>
+								<li>Defined in utils.ts:270</li>
 							</ul>
 						</aside>
 					</section>
@@ -3094,7 +3889,7 @@
 						<div class="tsd-signature tsd-kind-icon">transfer_<wbr>from_<wbr>savings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 33</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:300</li>
+								<li>Defined in utils.ts:301</li>
 							</ul>
 						</aside>
 					</section>
@@ -3104,7 +3899,7 @@
 						<div class="tsd-signature tsd-kind-icon">transfer_<wbr>to_<wbr>savings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 32</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:299</li>
+								<li>Defined in utils.ts:300</li>
 							</ul>
 						</aside>
 					</section>
@@ -3114,7 +3909,7 @@
 						<div class="tsd-signature tsd-kind-icon">transfer_<wbr>to_<wbr>vesting<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 3</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:270</li>
+								<li>Defined in utils.ts:271</li>
 							</ul>
 						</aside>
 					</section>
@@ -3124,7 +3919,7 @@
 						<div class="tsd-signature tsd-kind-icon">transfer_<wbr>to_<wbr>vesting_<wbr>completed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 77</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:345</li>
+								<li>Defined in utils.ts:346</li>
 							</ul>
 						</aside>
 					</section>
@@ -3134,7 +3929,7 @@
 						<div class="tsd-signature tsd-kind-icon">update_<wbr>proposal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 47</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:314</li>
+								<li>Defined in utils.ts:315</li>
 							</ul>
 						</aside>
 					</section>
@@ -3144,7 +3939,7 @@
 						<div class="tsd-signature tsd-kind-icon">update_<wbr>proposal_<wbr>votes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 45</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:312</li>
+								<li>Defined in utils.ts:313</li>
 							</ul>
 						</aside>
 					</section>
@@ -3154,7 +3949,7 @@
 						<div class="tsd-signature tsd-kind-icon">vesting_<wbr>shares_<wbr>split<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 79</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:347</li>
+								<li>Defined in utils.ts:348</li>
 							</ul>
 						</aside>
 					</section>
@@ -3164,7 +3959,7 @@
 						<div class="tsd-signature tsd-kind-icon">vote<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:266</li>
+								<li>Defined in utils.ts:267</li>
 							</ul>
 						</aside>
 					</section>
@@ -3174,7 +3969,7 @@
 						<div class="tsd-signature tsd-kind-icon">withdraw_<wbr>vesting<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 4</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:271</li>
+								<li>Defined in utils.ts:272</li>
 							</ul>
 						</aside>
 					</section>
@@ -3184,7 +3979,7 @@
 						<div class="tsd-signature tsd-kind-icon">witness_<wbr>set_<wbr>properties<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 42</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:309</li>
+								<li>Defined in utils.ts:310</li>
 							</ul>
 						</aside>
 					</section>
@@ -3194,7 +3989,27 @@
 						<div class="tsd-signature tsd-kind-icon">witness_<wbr>update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 11</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in utils.ts:278</li>
+								<li>Defined in utils.ts:279</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal">
+					<a name="types" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> types</h3>
+					<div class="tsd-signature tsd-kind-icon">types<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in chain/deserializer.ts:59</li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="types.encryptedmemod" class="tsd-anchor"></a>
+						<h3>Encrypted<wbr>MemoD</h3>
+						<div class="tsd-signature tsd-kind-icon">Encrypted<wbr>MemoD<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> = EncryptedMemoDeserializer</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in chain/deserializer.ts:60</li>
 							</ul>
 						</aside>
 					</section>
@@ -3548,6 +4363,9 @@
 						<a href="globals.html#bignum" class="tsd-kind-icon">Bignum</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#deserializer" class="tsd-kind-icon">Deserializer</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#discussionquerycategory" class="tsd-kind-icon">Discussion<wbr>Query<wbr>Category</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
@@ -3572,6 +4390,9 @@
 						<a href="globals.html#beneficiaryserializer" class="tsd-kind-icon">Beneficiary<wbr>Serializer</a>
 					</li>
 					<li class=" tsd-kind-variable">
+						<a href="globals.html#bytebuffer" class="tsd-kind-icon">Byte<wbr>Buffer</a>
+					</li>
+					<li class=" tsd-kind-variable">
 						<a href="globals.html#chainpropertiesserializer" class="tsd-kind-icon">Chain<wbr>Properties<wbr>Serializer</a>
 					</li>
 					<li class=" tsd-kind-variable">
@@ -3581,7 +4402,16 @@
 						<a href="globals.html#default_chain_id" class="tsd-kind-icon">DEFAULT_<wbr>CHAIN_<wbr>ID</a>
 					</li>
 					<li class=" tsd-kind-variable">
+						<a href="globals.html#encryptedmemodeserializer" class="tsd-kind-icon">Encrypted<wbr>Memo<wbr>Deserializer</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#encryptedmemoserializer" class="tsd-kind-icon">Encrypted<wbr>Memo<wbr>Serializer</a>
+					</li>
+					<li class=" tsd-kind-variable">
 						<a href="globals.html#jsbi" class="tsd-kind-icon">JSBI</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#long" class="tsd-kind-icon">Long</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#network_id" class="tsd-kind-icon">NETWORK_<wbr>ID</a>
@@ -3608,7 +4438,13 @@
 						<a href="globals.html#variablebinaryserializer" class="tsd-kind-icon">Variable<wbr>Binary<wbr>Serializer</a>
 					</li>
 					<li class=" tsd-kind-variable">
+						<a href="globals.html#secp256k1curve" class="tsd-kind-icon">secp256k1<wbr>Curve</a>
+					</li>
+					<li class=" tsd-kind-variable">
 						<a href="globals.html#timeouterrors" class="tsd-kind-icon">timeout<wbr>Errors</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#unique_nonce_entropy" class="tsd-kind-icon">unique_<wbr>nonce_<wbr>entropy</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#arrayserializer" class="tsd-kind-icon">Array<wbr>Serializer</a>
@@ -3617,10 +4453,16 @@
 						<a href="globals.html#assetserializer" class="tsd-kind-icon">Asset<wbr>Serializer</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#binarydeserializer" class="tsd-kind-icon">Binary<wbr>Deserializer</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#binaryserializer" class="tsd-kind-icon">Binary<wbr>Serializer</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#booleanserializer" class="tsd-kind-icon">Boolean<wbr>Serializer</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#bufferdeserializer" class="tsd-kind-icon">Buffer<wbr>Deserializer</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#dateserializer" class="tsd-kind-icon">Date<wbr>Serializer</a>
@@ -3653,6 +4495,9 @@
 						<a href="globals.html#optionalserializer" class="tsd-kind-icon">Optional<wbr>Serializer</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#publickeydeserializer" class="tsd-kind-icon">Public<wbr>Key<wbr>Deserializer</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#publickeyserializer" class="tsd-kind-icon">Public<wbr>Key<wbr>Serializer</a>
 					</li>
 					<li class=" tsd-kind-function">
@@ -3665,7 +4510,13 @@
 						<a href="globals.html#uint16serializer" class="tsd-kind-icon">UInt16<wbr>Serializer</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#uint32deserializer" class="tsd-kind-icon">UInt32<wbr>Deserializer</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#uint32serializer" class="tsd-kind-icon">UInt32<wbr>Serializer</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#uint64deserializer" class="tsd-kind-icon">UInt64<wbr>Deserializer</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#uint64serializer" class="tsd-kind-icon">UInt64<wbr>Serializer</a>
@@ -3683,10 +4534,25 @@
 						<a href="globals.html#copy" class="tsd-kind-icon">copy</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#crypt" class="tsd-kind-icon">crypt</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#cryptojsdecrypt" class="tsd-kind-icon">crypto<wbr>JsDecrypt</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#cryptojsencrypt" class="tsd-kind-icon">crypto<wbr>JsEncrypt</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decode" class="tsd-kind-icon">decode</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#decodeprivate" class="tsd-kind-icon">decode<wbr>Private</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#decodepublic" class="tsd-kind-icon">decode<wbr>Public</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decrypt" class="tsd-kind-icon">decrypt</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#defaultbackoff" class="tsd-kind-icon">default<wbr>Backoff</a>
@@ -3695,13 +4561,22 @@
 						<a href="globals.html#doublesha256" class="tsd-kind-icon">double<wbr>Sha256</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#encode" class="tsd-kind-icon">encode</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#encodeprivate" class="tsd-kind-icon">encode<wbr>Private</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#encodepublic" class="tsd-kind-icon">encode<wbr>Public</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#encrypt" class="tsd-kind-icon">encrypt</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#failover" class="tsd-kind-icon">failover</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#fixed_buf" class="tsd-kind-icon">fixed_<wbr>buf</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#generatetrxid" class="tsd-kind-icon">generate<wbr>Trx<wbr>Id</a>
@@ -3740,16 +4615,37 @@
 						<a href="globals.html#sha256" class="tsd-kind-icon">sha256</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#sha512" class="tsd-kind-icon">sha512</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#signtransaction" class="tsd-kind-icon">sign<wbr>Transaction</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#sleep" class="tsd-kind-icon">sleep</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#tobinarybuffer" class="tsd-kind-icon">to<wbr>Binary<wbr>Buffer</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#tolongobj" class="tsd-kind-icon">to<wbr>Long<wbr>Obj</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#toprivateobj" class="tsd-kind-icon">to<wbr>Private<wbr>Obj</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#topublicobj" class="tsd-kind-icon">to<wbr>Public<wbr>Obj</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#transactiondigest" class="tsd-kind-icon">transaction<wbr>Digest</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#uniquenonce" class="tsd-kind-icon">unique<wbr>Nonce</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#waitforevent" class="tsd-kind-icon">wait<wbr>For<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#memo" class="tsd-kind-icon">Memo</a>
 					</li>
 					<li class=" tsd-kind-object-literal">
 						<a href="globals.html#types" class="tsd-kind-icon">Types</a>
@@ -3759,6 +4655,9 @@
 					</li>
 					<li class=" tsd-kind-object-literal">
 						<a href="globals.html#operationorders" class="tsd-kind-icon">operation<wbr>Orders</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#types" class="tsd-kind-icon">types</a>
 					</li>
 				</ul>
 			</nav>

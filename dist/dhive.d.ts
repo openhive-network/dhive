@@ -516,6 +516,7 @@ declare module 'dhive/chain/misc' {
 
 }
 declare module 'dhive/chain/serializer' {
+	/// <reference types="node" />
 	/**
 	 * @file Hive protocol serialization.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -550,7 +551,6 @@ declare module 'dhive/chain/serializer' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	/// <reference types="node" />
 	import * as ByteBuffer from 'bytebuffer';
 	import { PublicKey } from 'dhive/crypto';
 	import { Asset } from 'dhive/chain/asset';
@@ -566,6 +566,9 @@ declare module 'dhive/chain/serializer' {
 	    Binary: (size?: number | undefined) => (buffer: ByteBuffer, data: HexBuffer | Buffer) => void;
 	    Boolean: (buffer: ByteBuffer, data: boolean) => void;
 	    Date: (buffer: ByteBuffer, data: string) => void;
+	    EncryptedMemo: (buffer: ByteBuffer, data: {
+	        [key: string]: any;
+	    }) => void;
 	    FlatMap: (keySerializer: Serializer, valueSerializer: Serializer) => (buffer: ByteBuffer, data: [any, any][]) => void;
 	    Int16: (buffer: ByteBuffer, data: number) => void;
 	    Int32: (buffer: ByteBuffer, data: number) => void;
@@ -589,7 +592,7 @@ declare module 'dhive/chain/serializer' {
 	    UInt32: (buffer: ByteBuffer, data: number) => void;
 	    UInt64: (buffer: ByteBuffer, data: number) => void;
 	    UInt8: (buffer: ByteBuffer, data: number) => void;
-	    Void: (buffer: ByteBuffer) => never;
+	    Void: () => never;
 	};
 
 }
@@ -683,6 +686,7 @@ declare module 'dhive/crypto' {
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
 	/// <reference types="node" />
+	import * as ByteBuffer from 'bytebuffer';
 	import { SignedTransaction, Transaction } from 'dhive/chain/transaction';
 	/**
 	 * Network id used in WIF-encoding.
@@ -692,9 +696,13 @@ declare module 'dhive/crypto' {
 	 * ECDSA (secp256k1) public key.
 	 */
 	export class PublicKey {
-	    readonly key: Buffer;
+	    readonly key: any;
 	    readonly prefix: string;
-	    constructor(key: Buffer, prefix?: string);
+	    readonly uncompressed: Buffer;
+	    constructor(key: any, prefix?: string);
+	    static fromBuffer(key: ByteBuffer): {
+	        key: ByteBuffer;
+	    };
 	    /**
 	     * Create a new instance from a WIF-encoded key.
 	     */
@@ -728,6 +736,7 @@ declare module 'dhive/crypto' {
 	 */
 	export class PrivateKey {
 	    private key;
+	    secret: Buffer;
 	    constructor(key: Buffer);
 	    /**
 	     * Convenience to create a new instance from WIF string or buffer.
@@ -745,6 +754,7 @@ declare module 'dhive/crypto' {
 	     * Create key from username and password.
 	     */
 	    static fromLogin(username: string, password: string, role?: KeyRole): PrivateKey;
+	    multiply(pub: any): Buffer;
 	    /**
 	     * Sign message.
 	     * @param message 32-byte message.
@@ -763,6 +773,10 @@ declare module 'dhive/crypto' {
 	     * to get the full encoded key you need to explicitly call {@link toString}.
 	     */
 	    inspect(): string;
+	    /**
+	     * Get shared secret for memo cryptography
+	     */
+	    get_shared_secret(public_key: PublicKey): Buffer;
 	}
 	/**
 	 * ECDSA (secp256k1) signature.
@@ -787,13 +801,13 @@ declare module 'dhive/crypto' {
 	    doubleSha256: typeof doubleSha256;
 	    encodePrivate: typeof encodePrivate;
 	    encodePublic: typeof encodePublic;
+	    generateTrxId: typeof generateTrxId;
 	    isCanonicalSignature: typeof isCanonicalSignature;
 	    isWif: typeof isWif;
 	    ripemd160: typeof ripemd160;
 	    sha256: typeof sha256;
 	    signTransaction: typeof signTransaction;
 	    transactionDigest: typeof transactionDigest;
-	    generateTrxId: typeof generateTrxId;
 	};
 	export {};
 
@@ -1412,8 +1426,8 @@ declare module 'dhive/chain/operation' {
 	        owner: string;
 	        orderid: number;
 	        amount_to_sell: Asset | string;
-	        fill_or_kill: boolean;
 	        exchange_rate: PriceType;
+	        fill_or_kill: boolean;
 	        expiration: string;
 	    };
 	}
@@ -1894,7 +1908,7 @@ declare module 'dhive/utils' {
 	    hbd_interest_rate?: number;
 	    url?: string;
 	}
-	export function buildWitnessUpdateOp(owner: string, props: WitnessProps): WitnessSetPropertiesOperation;
+	export const buildWitnessUpdateOp: (owner: string, props: WitnessProps) => WitnessSetPropertiesOperation;
 	export const operationOrders: {
 	    vote: number;
 	    comment: number;
@@ -2589,6 +2603,30 @@ declare module 'dhive/helpers/hivemind' {
 	export {};
 
 }
+declare module 'dhive/helpers/key' {
+	/**
+	 * @file Account by key API helpers.
+	 * @author Bartłomiej (@engrave) Górnicki
+	 */
+	import { PublicKey } from 'dhive/crypto';
+	import { Client } from 'dhive/client';
+	export interface AccountsByKey {
+	    accounts: [string[]];
+	}
+	export class AccountByKeyAPI {
+	    readonly client: Client;
+	    constructor(client: Client);
+	    /**
+	     * Convenience for calling `account_by_key_api`.
+	     */
+	    call(method: string, params?: any): Promise<any>;
+	    /**
+	     * Returns all accounts that have the key associated with their owner or active authorities.
+	     */
+	    getKeyReferences(keys: (PublicKey | string)[]): Promise<AccountsByKey>;
+	}
+
+}
 declare module 'dhive/chain/rc' {
 	import { SMTAsset } from 'dhive/chain/asset';
 	import { Bignum } from 'dhive/chain/misc';
@@ -2691,30 +2729,6 @@ declare module 'dhive/helpers/rc' {
 	}
 
 }
-declare module 'dhive/helpers/key' {
-	/**
-	 * @file Account by key API helpers.
-	 * @author Bartłomiej (@engrave) Górnicki
-	 */
-	import { PublicKey } from 'dhive/crypto';
-	import { Client } from 'dhive/client';
-	export interface AccountsByKey {
-	    accounts: [string[]];
-	}
-	export class AccountByKeyAPI {
-	    readonly client: Client;
-	    constructor(client: Client);
-	    /**
-	     * Convenience for calling `account_by_key_api`.
-	     */
-	    call(method: string, params?: any): Promise<any>;
-	    /**
-	     * Returns all accounts that have the key associated with their owner or active authorities.
-	     */
-	    getKeyReferences(keys: (PublicKey | string)[]): Promise<AccountsByKey>;
-	}
-
-}
 declare module 'dhive/client' {
 	/**
 	 * @file Hive RPC client implementation.
@@ -2755,8 +2769,8 @@ declare module 'dhive/client' {
 	import { BroadcastAPI } from 'dhive/helpers/broadcast';
 	import { DatabaseAPI } from 'dhive/helpers/database';
 	import { HivemindAPI } from 'dhive/helpers/hivemind';
-	import { RCAPI } from 'dhive/helpers/rc';
 	import { AccountByKeyAPI } from 'dhive/helpers/key';
+	import { RCAPI } from 'dhive/helpers/rc';
 	/**
 	 * Library version.
 	 */
@@ -2895,6 +2909,53 @@ declare module 'dhive/client' {
 	}
 
 }
+declare module 'dhive/chain/deserializer' {
+	/// <reference types="node" />
+	import * as ByteBuffer from 'bytebuffer';
+	export type Deserializer = (buffer: ByteBuffer) => void;
+	export const types: {
+	    EncryptedMemoD: (buf: Buffer | ByteBuffer) => {};
+	};
+
+}
+declare module 'dhive/helpers/aes' {
+	import { PrivateKey, PublicKey } from 'dhive/crypto';
+	/**
+	 * Spec: http://peakd.com/steem/@dantheman/how-to-encrypt-a-memo-when-transferring-steem
+	 * @throws {Error|TypeError} - "Invalid Key, ..."
+	 * @param {PrivateKey} private_key - required and used for decryption
+	 * @param {PublicKey} public_key - required and used to calcualte the shared secret
+	 * @param message - message to be encrypted
+	 * @param {string} [nonce = uniqueNonce()] - assigned a random unique uint64
+	 *
+	 * @return {object}
+	 * @property {string} nonce - random or unique uint64, provides entropy when re-using the same private/public keys.
+	 * @property {Buffer} message - Plain text message
+	 * @property {number} checksum - shared secret checksum
+	 */
+	export function encrypt(private_key: PrivateKey, public_key: PublicKey, message: any, nonce: any): any;
+	/**
+	 * Spec: http://peakd.com/steem/@dantheman/how-to-encrypt-a-memo-when-transferring-steem
+	 * @arg {PrivateKey} private_key - required and used for decryption
+	 * @arg {PublicKey} public_key - required and used to calcualte the shared secret
+	 * @arg {string} nonce - random or unique uint64, provides entropy when re-using the same private/public keys.
+	 * @arg {Buffer} message - Encrypted or plain text message
+	 * @arg {number} checksum - shared secret checksum
+	 *  @throws {Error|TypeError} - "Invalid Key, ..."
+	 *  @return {Buffer} - message
+	 */
+	export function decrypt(private_key: PrivateKey, public_key: PublicKey, nonce: any, message: any, checksum: number): string;
+
+}
+declare module 'dhive/memo' {
+	import { PrivateKey, PublicKey } from 'dhive/crypto'; function encode(private_key: PrivateKey | string, public_key: PublicKey | string, memo: string, testNonce?: number): string; function decode(private_key: PrivateKey | string, memo: any): any;
+	export const Memo: {
+	    decode: typeof decode;
+	    encode: typeof encode;
+	};
+	export {};
+
+}
 declare module 'dhive' {
 	/**
 	 * @file dhive exports.
@@ -2944,9 +3005,12 @@ declare module 'dhive' {
 	export * from 'dhive/chain/misc';
 	export * from 'dhive/chain/operation';
 	export * from 'dhive/chain/serializer';
+	export * from 'dhive/chain/deserializer';
 	export * from 'dhive/chain/transaction';
+	export * from 'dhive/chain/hivemind';
 	export * from 'dhive/client';
 	export * from 'dhive/crypto';
+	export * from 'dhive/memo';
 
 }
 declare module 'dhive/index-browser' {
