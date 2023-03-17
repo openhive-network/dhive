@@ -643,6 +643,15 @@ const TransactionSerializer = ObjectSerializer([
   ['extensions', ArraySerializer(StringSerializer)]
 ])
 
+const EncryptedMemoSerializer = ObjectSerializer([
+  ['from', PublicKeySerializer],
+  ['to', PublicKeySerializer],
+  ['nonce', UInt64Serializer],
+  ['check', UInt32Serializer],
+  ['encrypted', BinarySerializer()]
+])
+
+
 export const Types = {
   Array: ArraySerializer,
   Asset: AssetSerializer,
@@ -650,6 +659,7 @@ export const Types = {
   Binary: BinarySerializer,
   Boolean: BooleanSerializer,
   Date: DateSerializer,
+  EncryptedMemo: EncryptedMemoSerializer,
   FlatMap: FlatMapSerializer,
   Int16: Int16Serializer,
   Int32: Int32Serializer,
