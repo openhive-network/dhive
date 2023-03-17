@@ -49,7 +49,6 @@ export * from './chain/comment'
 export * from './chain/misc'
 export * from './chain/operation'
 export * from './chain/serializer'
-export * from './chain/deserializer'
 export * from './chain/transaction'
 export * from './chain/hivemind'
 
