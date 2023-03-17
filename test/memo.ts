@@ -4,15 +4,7 @@ import { Memo } from "../src/memo"
 const { encode, decode } = Memo
 
 import {
-    DEFAULT_ADDRESS_PREFIX,
-    DEFAULT_CHAIN_ID,
-    Operation,
-    PrivateKey,
-    PublicKey,
-    Signature,
-    cryptoUtils,
-    Transaction,
-    Types
+    PrivateKey
 } from "./../src";
 
 const private_key = PrivateKey.fromSeed("")
@@ -20,7 +12,7 @@ const public_key = private_key.createPublic()
 
 describe("memo", function () {
     it('encrypt/decrypt memo', () => {
-        const nonce = 1462976530069648
+        const nonce = '1462976530069648'
         const text = '#tngflx9099'
 
         const cypertext = encode(private_key, public_key, text, nonce)
