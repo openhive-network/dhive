@@ -48,7 +48,7 @@ function fixed_buf(b: ByteBuffer, len: number): Buffer | any {
     }
 }
 
-const EncryptedMemoDeserializer = BufferDeserializer([
+const EncryptedMemoDeserializer: any = BufferDeserializer([
     ['from', PublicKeyDeserializer],
     ['to', PublicKeyDeserializer],
     ['nonce', UInt64Deserializer],
