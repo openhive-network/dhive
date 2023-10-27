@@ -116,6 +116,12 @@ export async function retryingFetch(
       }
       const response = await fetch(currentAddress, opts)
       if (!response.ok) {
+        if (response.status === 500){ // Support for Drone
+          const resJson = await response.json();
+          if (resJson.jsonrpc === "2.0"){
+            return { response: resJson, currentAddress }
+          }
+        }
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
       return { response: await response.json(), currentAddress }
