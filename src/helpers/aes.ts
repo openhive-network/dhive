@@ -83,7 +83,7 @@ const crypt = (
  * @arg {string|Buffer} ciphertext - binary format
  * @return {Buffer} the decrypted message
  */
-const cryptoJsDecrypt = (message: Buffer, tag, iv): Buffer => {
+export const cryptoJsDecrypt = (message: Buffer, tag, iv): Buffer => {
   assert(message, 'Missing cipher text')
   let messageBuffer = message
   const decipher = createDecipheriv('aes-256-cbc', tag, iv)
@@ -96,7 +96,7 @@ const cryptoJsDecrypt = (message: Buffer, tag, iv): Buffer => {
  * @arg {string|Buffer} plaintext - binary format
  * @return {Buffer} binary
  */
-const cryptoJsEncrypt = (message: Buffer, tag, iv): Buffer => {
+export const cryptoJsEncrypt = (message: Buffer, tag, iv): Buffer => {
   assert(message, 'Missing plain text')
   let messageBuffer = message
   const cipher = createCipheriv('aes-256-cbc', tag, iv)
