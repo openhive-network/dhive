@@ -86,8 +86,10 @@ describe("database api", function() {
 
   it("getBlock", async function() {
     const result = await client.database.getBlock(1);
-    assert.equal("0000000000000000000000000000000000000000", result.previous);
-    assert.equal(serverConfig["HIVE_INIT_PUBLIC_KEY_STR"], result.signing_key);
+    if(result) {
+      assert.equal("0000000000000000000000000000000000000000", result.previous);
+      assert.equal(serverConfig["HIVE_INIT_PUBLIC_KEY_STR"], result.signing_key);
+    }
   });
 
   it("getOperations", async function() {

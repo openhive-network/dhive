@@ -102,6 +102,13 @@ export class DatabaseAPI {
     return this.client.call('condenser_api', method, params)
   }
 
+    /**
+     * Convenience for calling `block_api`.
+     */
+    public callBlock(method: string, params?: any) {
+      return this.fetch.call(`block_api.${method}`, params);
+  }
+
   /**
    * Return state of server.
    */
@@ -164,8 +171,9 @@ export class DatabaseAPI {
   /**
    * Return block *blockNum*.
    */
-  public getBlock(blockNum: number): Promise<SignedBlock> {
-    return this.call('get_block', [blockNum])
+  public getBlock(blockNum: number): Promise<SignedBlock | null> {
+    const result: { block: SignedBlock } = await this.callBlock('get_block', { block_num: blockNum });
+    return result?.block ?? null
   }
 
   /**
