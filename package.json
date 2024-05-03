@@ -74,12 +74,12 @@
     "mocha": "^7.1.1",
     "nyc": "^15.0.0",
     "regenerator-runtime": "^0.13.1",
+    "terser": "^5.31.0",
     "ts-node": "^8.7.0",
     "tsify": "^4.0.0",
     "tslint": "^5.11.0",
     "typedoc": "^0.17.1",
     "typescript": "^3.8.3",
-    "uglify-js": "^3.4.9",
     "watchify": "^3.11.0"
   }
 }

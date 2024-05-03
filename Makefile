@@ -23,7 +23,7 @@ dist/%.js: lib
 		--standalone dhive --plugin tsify \
 		--transform [ babelify --extensions .ts ] \
 		| derequire > $@
-	uglifyjs $@ \
+	terser $@ \
 		--source-map "content=inline,url=$(notdir $@).map,filename=$@.map" \
 		--compress "dead_code,collapse_vars,reduce_vars,keep_infinity,drop_console,passes=2" \
 		--output $@ || rm $@
