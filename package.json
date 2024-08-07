@@ -1,6 +1,6 @@
 {
   "name": "@hiveio/dhive",
-  "version": "1.3.0",
+  "version": "1.3.1-beta",
   "description": "Hive blockchain RPC client library",
   "author": "hive-network",
   "license": "BSD-3-Clause-No-Military-License",
@@ -32,9 +32,9 @@
     "dhive"
   ],
   "dependencies": {
+    "@ecency/bytebuffer": "^6.0.0",
     "bigi": "^1.4.2",
     "bs58": "^4.0.1",
-    "bytebuffer": "^5.0.1",
     "core-js": "^3.6.4",
     "cross-fetch": "^3.0.4",
     "ecurve": "^1.0.6",

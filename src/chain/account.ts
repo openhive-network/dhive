@@ -33,8 +33,6 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import * as ByteBuffer from 'bytebuffer'
-
 import { PublicKey } from '../crypto'
 import { Asset } from './asset'
 
