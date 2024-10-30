@@ -1,5 +1,5 @@
 import * as bs58 from 'bs58'
-import * as ByteBuffer from 'bytebuffer'
+import * as ByteBuffer from '@ecency/bytebuffer'
 import { types } from './chain/deserializer'
 import { Types } from './chain/serializer'
 import { PrivateKey, PublicKey } from './crypto'

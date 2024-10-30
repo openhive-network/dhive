@@ -38,7 +38,7 @@ import { EventEmitter } from 'events'
 import { PassThrough } from 'stream'
 
 // TODO: Add more errors that should trigger a failover
-const timeoutErrors = ['timeout', 'ENOTFOUND', 'ECONNREFUSED', 'database lock', 'CERT_HAS_EXPIRED', 'EHOSTUNREACH', 'ECONNRESET', 'ERR_TLS_CERT_ALTNAME_INVALID']
+const timeoutErrors = ['timeout', 'ENOTFOUND', 'ECONNREFUSED', 'database lock', 'CERT_HAS_EXPIRED', 'EHOSTUNREACH', 'ECONNRESET', 'ERR_TLS_CERT_ALTNAME_INVALID', 'EAI_AGAIN']
 
 /**
  * Return a promise that will resove when a specific event is emitted.
@@ -192,7 +192,7 @@ const failover = (
 
 // Hack to be able to generate a valid witness_set_properties op
 // Can hopefully be removed when hived's JSON representation is fixed
-import * as ByteBuffer from 'bytebuffer'
+import * as ByteBuffer from '@ecency/bytebuffer'
 import { Asset, PriceType } from './chain/asset'
 import { WitnessSetPropertiesOperation } from './chain/operation'
 import { Serializer, Types } from './chain/serializer'

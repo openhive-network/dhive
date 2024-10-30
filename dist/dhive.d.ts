@@ -687,7 +687,7 @@ declare module 'dhive/crypto' {
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
 	/// <reference types="node" />
-	import * as ByteBuffer from 'bytebuffer';
+	import * as ByteBuffer from '@ecency/bytebuffer';
 	import { SignedTransaction, Transaction } from 'dhive/chain/transaction';
 	/**
 	 * Network id used in WIF-encoding.
@@ -702,7 +702,7 @@ declare module 'dhive/crypto' {
 	    readonly uncompressed: Buffer;
 	    constructor(key: any, prefix?: string);
 	    static fromBuffer(key: ByteBuffer): {
-	        key: ByteBuffer;
+	        key: any;
 	    };
 	    /**
 	     * Create a new instance from a WIF-encoded key.
@@ -2939,7 +2939,7 @@ declare module 'dhive/client' {
 
 }
 declare module 'dhive/chain/deserializer' {
-	import * as ByteBuffer from 'bytebuffer';
+	import * as ByteBuffer from '@ecency/bytebuffer';
 	export type Deserializer = (buffer: ByteBuffer) => void;
 	export const types: {
 	    EncryptedMemoD: any;
