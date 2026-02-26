@@ -44,6 +44,7 @@ import { HivemindAPI } from './helpers/hivemind'
 import {AccountByKeyAPI} from './helpers/key'
 import { RCAPI } from './helpers/rc'
 import {TransactionStatusAPI} from './helpers/transaction'
+import { NodeHealthTracker, HealthTrackerOptions } from './health-tracker'
 import { copy, retryingFetch, waitForEvent } from './utils'
 
 /**
@@ -166,6 +167,11 @@ export interface ClientOptions {
      * Deprecated - don't use
      */
     rebrandedApi?: boolean
+    /**
+     * Options for the node health tracker.
+     * Controls cooldown periods, stale block thresholds, etc.
+     */
+    healthTrackerOptions?: HealthTrackerOptions
 }
 
 /**
@@ -221,6 +227,12 @@ export class Client {
     public readonly transaction: TransactionStatusAPI
 
     /**
+     * Node health tracker for smart failover.
+     * Tracks per-node, per-API health and head block freshness.
+     */
+    public readonly healthTracker: NodeHealthTracker
+
+    /**
      * Chain ID for current network.
      */
     public readonly chainId: Buffer
@@ -264,6 +276,7 @@ export class Client {
         this.failoverThreshold = options.failoverThreshold || 3
         this.consoleOnFailover = options.consoleOnFailover || false
 
+        this.healthTracker = new NodeHealthTracker(options.healthTrackerOptions)
         this.database = new DatabaseAPI(this)
         this.broadcast = new BroadcastAPI(this)
         this.blockchain = new Blockchain(this)
@@ -301,6 +314,10 @@ export class Client {
         method: string,
         params: any = []
     ): Promise<any> {
+        const isBroadcast =
+            api === 'network_broadcast_api' ||
+            method.startsWith('broadcast_transaction')
+
         const request: RPCCall = {
             id: 0,
             jsonrpc: '2.0',
@@ -337,10 +354,7 @@ export class Client {
             opts.agent = this.options.agent
         }
         let fetchTimeout: any
-        if (
-            api !== 'network_broadcast_api' &&
-            !method.startsWith('broadcast_transaction')
-        ) {
+        if (!isBroadcast) {
             // bit of a hack to work around some nodes high error rates
             // only effective in node.js (until timeout spec lands in browsers)
             fetchTimeout = (tries) => (tries + 1) * 500
@@ -355,12 +369,35 @@ export class Client {
                 this.failoverThreshold,
                 this.consoleOnFailover,
                 this.backoff,
-                fetchTimeout
+                fetchTimeout,
+                {
+                    healthTracker: this.healthTracker,
+                    api,
+                    isBroadcast,
+                    consoleOnFailover: this.consoleOnFailover,
+                }
             )
 
         // After failover, change the currently active address
         if (currentAddress !== this.currentAddress) { this.currentAddress = currentAddress }
-        // resolve FC error messages into something more readable
+
+        // Passively track head block from get_dynamic_global_properties responses.
+        // This costs nothing — we just inspect data we already fetched.
+        if (
+            response.result &&
+            method === 'get_dynamic_global_properties' &&
+            response.result.head_block_number
+        ) {
+            this.healthTracker.updateHeadBlock(
+                currentAddress,
+                response.result.head_block_number
+            )
+        }
+
+        // Handle RPC-level errors.
+        // Unlike network errors, these mean the node responded but returned an error.
+        // We record it as an API-specific failure so the health tracker can
+        // deprioritize this node for this API in future calls.
         if (response.error) {
             const formatValue = (value: any) => {
                 switch (typeof value) {
@@ -393,6 +430,19 @@ export class Client {
                     message += ' ' + unformattedData.join(' ')
                 }
             }
+
+            // Track RPC errors that indicate node/plugin issues (not user errors).
+            // JSON-RPC error codes (response.error.code):
+            //   -32601 = Method not found (plugin not enabled on this node)
+            //   -32603 = Internal error (node issue)
+            //   -32003 = Hive assertion error (user error — bad params, invalid account)
+            // Only API/plugin errors should be tracked, and only as API-specific failures
+            // (not global node failures) since other APIs on this node may work fine.
+            const rpcCode = response.error.code
+            if (rpcCode === -32601 || rpcCode === -32603) {
+                this.healthTracker.recordApiFailure(currentAddress, api)
+            }
+
             throw new VError({ info: data, name: 'RPCError' }, message)
         }
         assert.equal(response.id, request.id, 'got invalid response id')

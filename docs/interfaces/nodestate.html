@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>RPCError | @hiveio/dhive</title>
+	<title>NodeState | @hiveio/dhive</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="rpcerror.html">RPCError</a>
+					<a href="nodestate.html">NodeState</a>
 				</li>
 			</ul>
-			<h1>Interface RPCError</h1>
+			<h1>Interface NodeState</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">RPCError</span>
+						<span class="target">NodeState</span>
 					</li>
 				</ul>
 			</section>
@@ -81,9 +81,11 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rpcerror.html#code" class="tsd-kind-icon">code</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rpcerror.html#data" class="tsd-kind-icon">data</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rpcerror.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="nodestate.html#apifailures" class="tsd-kind-icon">api<wbr>Failures</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="nodestate.html#consecutivefailures" class="tsd-kind-icon">consecutive<wbr>Failures</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="nodestate.html#headblock" class="tsd-kind-icon">head<wbr>Block</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="nodestate.html#headblockupdatedat" class="tsd-kind-icon">head<wbr>Block<wbr>Updated<wbr>At</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="nodestate.html#lastfailure" class="tsd-kind-icon">last<wbr>Failure</a></li>
 							</ul>
 						</section>
 					</div>
@@ -92,34 +94,79 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="code" class="tsd-anchor"></a>
-					<h3>code</h3>
-					<div class="tsd-signature tsd-kind-icon">code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="apifailures" class="tsd-anchor"></a>
+					<h3>api<wbr>Failures</h3>
+					<div class="tsd-signature tsd-kind-icon">api<wbr>Failures<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="apifailure.html" class="tsd-signature-type">ApiFailure</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:96</li>
+							<li>Defined in health-tracker.ts:18</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Per-API failure tracking (api name → failure info)</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="data" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> data</h3>
-					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="consecutivefailures" class="tsd-anchor"></a>
+					<h3>consecutive<wbr>Failures</h3>
+					<div class="tsd-signature tsd-kind-icon">consecutive<wbr>Failures<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:98</li>
+							<li>Defined in health-tracker.ts:20</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Consecutive failures across all APIs</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="message" class="tsd-anchor"></a>
-					<h3>message</h3>
-					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="headblock" class="tsd-anchor"></a>
+					<h3>head<wbr>Block</h3>
+					<div class="tsd-signature tsd-kind-icon">head<wbr>Block<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in client.ts:97</li>
+							<li>Defined in health-tracker.ts:24</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Last known head block number from this node</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="headblockupdatedat" class="tsd-anchor"></a>
+					<h3>head<wbr>Block<wbr>Updated<wbr>At</h3>
+					<div class="tsd-signature tsd-kind-icon">head<wbr>Block<wbr>Updated<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in health-tracker.ts:26</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>When headBlock was last updated</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="lastfailure" class="tsd-anchor"></a>
+					<h3>last<wbr>Failure</h3>
+					<div class="tsd-signature tsd-kind-icon">last<wbr>Failure<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in health-tracker.ts:22</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Timestamp of last failure</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -136,16 +183,22 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="rpcerror.html" class="tsd-kind-icon">RPCError</a>
+						<a href="nodestate.html" class="tsd-kind-icon">Node<wbr>State</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="rpcerror.html#code" class="tsd-kind-icon">code</a>
+								<a href="nodestate.html#apifailures" class="tsd-kind-icon">api<wbr>Failures</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="rpcerror.html#data" class="tsd-kind-icon">data</a>
+								<a href="nodestate.html#consecutivefailures" class="tsd-kind-icon">consecutive<wbr>Failures</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="rpcerror.html#message" class="tsd-kind-icon">message</a>
+								<a href="nodestate.html#headblock" class="tsd-kind-icon">head<wbr>Block</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="nodestate.html#headblockupdatedat" class="tsd-kind-icon">head<wbr>Block<wbr>Updated<wbr>At</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="nodestate.html#lastfailure" class="tsd-kind-icon">last<wbr>Failure</a>
 							</li>
 						</ul>
 					</li>
