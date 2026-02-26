@@ -3,6 +3,109 @@ declare module 'dhive/version' {
 	export default _default;
 
 }
+declare module 'dhive/health-tracker' {
+	/**
+	 * @file Node health tracking for smart failover.
+	 * @license BSD-3-Clause-No-Military-License
+	 *
+	 * Tracks per-node, per-API health to enable intelligent failover decisions.
+	 * Nodes that fail for specific APIs are deprioritized for those APIs while
+	 * remaining available for others. Stale nodes (behind on head block) are
+	 * also deprioritized.
+	 */
+	export interface HealthTrackerOptions {
+	    /**
+	     * How long (ms) to deprioritize a node after consecutive failures.
+	     * Default: 30 seconds.
+	     */
+	    nodeCooldownMs?: number;
+	    /**
+	     * How long (ms) to deprioritize a node for a specific API after failures.
+	     * Default: 60 seconds.
+	     */
+	    apiCooldownMs?: number;
+	    /**
+	     * Number of consecutive failures before a node enters cooldown.
+	     * Default: 3.
+	     */
+	    maxFailuresBeforeCooldown?: number;
+	    /**
+	     * Number of API-specific failures before deprioritizing for that API.
+	     * Default: 2.
+	     */
+	    maxApiFailuresBeforeCooldown?: number;
+	    /**
+	     * How many blocks behind the best known head block a node can be
+	     * before being considered stale. Default: 30.
+	     */
+	    staleBlockThreshold?: number;
+	    /**
+	     * How long (ms) head block data remains valid for staleness checks.
+	     * Default: 2 minutes.
+	     */
+	    headBlockTtlMs?: number;
+	}
+	export class NodeHealthTracker {
+	    private health;
+	    private bestKnownHeadBlock;
+	    private bestKnownHeadBlockTime;
+	    private readonly nodeCooldownMs;
+	    private readonly apiCooldownMs;
+	    private readonly maxFailuresBeforeCooldown;
+	    private readonly maxApiFailuresBeforeCooldown;
+	    private readonly staleBlockThreshold;
+	    private readonly headBlockTtlMs;
+	    constructor(options?: HealthTrackerOptions);
+	    private getOrCreate;
+	    /**
+	     * Record a successful call to a node for a specific API.
+	     * Clears consecutive failure counter and API-specific failures for this API.
+	     */
+	    recordSuccess(node: string, api: string): void;
+	    /**
+	     * Record a network-level failure (timeout, connection refused, HTTP error).
+	     * Increments both the global consecutive failure counter and the API-specific counter.
+	     */
+	    recordFailure(node: string, api: string): void;
+	    /**
+	     * Record an API/plugin-specific failure (e.g. "method not found", "plugin not enabled").
+	     * Only increments the per-API counter, NOT the global consecutive failure counter.
+	     * This prevents a node with a disabled plugin from being penalized for all APIs.
+	     */
+	    recordApiFailure(node: string, api: string): void;
+	    private incrementApiFailure;
+	    /**
+	     * Update head block number for a node.
+	     * Called passively when get_dynamic_global_properties responses are observed.
+	     */
+	    updateHeadBlock(node: string, headBlock: number): void;
+	    /**
+	     * Check if a node is considered healthy for a given API.
+	     */
+	    isNodeHealthy(node: string, api?: string): boolean;
+	    /**
+	     * Return nodes ordered by health for a specific API call.
+	     * Healthy nodes come first (preserving original order), then unhealthy nodes as fallback.
+	     */
+	    getOrderedNodes(allNodes: string[], api?: string): string[];
+	    /**
+	     * Reset all health tracking data.
+	     */
+	    reset(): void;
+	    /**
+	     * Get a snapshot of current health state for diagnostics.
+	     */
+	    getHealthSnapshot(): Map<string, {
+	        consecutiveFailures: number;
+	        headBlock: number;
+	        apiFailures: Record<string, {
+	            count: number;
+	        }>;
+	        healthy: boolean;
+	    }>;
+	}
+
+}
 declare module 'dhive/chain/asset' {
 	/**
 	 * @file Hive asset type definitions and helpers.
@@ -1872,6 +1975,20 @@ declare module 'dhive/utils' {
 	 */
 	/// <reference types="node" />
 	import { EventEmitter } from 'events';
+	import { NodeHealthTracker } from 'dhive/health-tracker';
+	/**
+	 * Context for smart retry/failover decisions.
+	 */
+	export interface RetryContext {
+	    /** Health tracker instance for per-node, per-API tracking */
+	    healthTracker?: NodeHealthTracker;
+	    /** The API being called (e.g. "bridge", "condenser_api", "database_api") */
+	    api?: string;
+	    /** Whether this is a broadcast operation — never retry after request may have been received */
+	    isBroadcast?: boolean;
+	    /** Whether to log failover events to console */
+	    consoleOnFailover?: boolean;
+	}
 	/**
 	 * Return a promise that will resove when a specific event is emitted.
 	 */
@@ -1889,9 +2006,19 @@ declare module 'dhive/utils' {
 	 */
 	export function copy<T>(object: T): T;
 	/**
-	 * Fetch API wrapper that retries until timeout is reached.
+	 * Smart fetch with immediate failover and per-node health tracking.
+	 *
+	 * For read operations:
+	 * - On failure, immediately try the next healthy node (no backoff within a round)
+	 * - After trying all nodes once (one round), apply backoff before the next round
+	 * - Stop after failoverThreshold rounds
+	 *
+	 * For broadcast operations:
+	 * - Only retry on pre-connection errors (ECONNREFUSED, ENOTFOUND, etc.)
+	 *   where we know the request never reached the server
+	 * - NEVER retry after timeout or response errors to prevent double-broadcasting
 	 */
-	export function retryingFetch(currentAddress: string, allAddresses: string | string[], opts: any, timeout: number, failoverThreshold: number, consoleOnFailover: boolean, backoff: (tries: number) => number, fetchTimeout?: (tries: number) => number): Promise<{
+	export function retryingFetch(currentAddress: string, allAddresses: string | string[], opts: any, timeout: number, failoverThreshold: number, consoleOnFailover: boolean, backoff: (tries: number) => number, fetchTimeout?: (tries: number) => number, retryContext?: RetryContext): Promise<{
 	    response: any;
 	    currentAddress: string;
 	}>;
@@ -2796,6 +2923,7 @@ declare module 'dhive/client' {
 	import { AccountByKeyAPI } from 'dhive/helpers/key';
 	import { RCAPI } from 'dhive/helpers/rc';
 	import { TransactionStatusAPI } from 'dhive/helpers/transaction';
+	import { NodeHealthTracker, HealthTrackerOptions } from 'dhive/health-tracker';
 	/**
 	 * Library version.
 	 */
@@ -2858,6 +2986,11 @@ declare module 'dhive/client' {
 	     * Deprecated - don't use
 	     */
 	    rebrandedApi?: boolean;
+	    /**
+	     * Options for the node health tracker.
+	     * Controls cooldown periods, stale block thresholds, etc.
+	     */
+	    healthTrackerOptions?: HealthTrackerOptions;
 	}
 	/**
 	 * RPC Client
@@ -2902,6 +3035,11 @@ declare module 'dhive/client' {
 	     * Transaction status API helper.
 	     */
 	    readonly transaction: TransactionStatusAPI;
+	    /**
+	     * Node health tracker for smart failover.
+	     * Tracks per-node, per-API health and head block freshness.
+	     */
+	    readonly healthTracker: NodeHealthTracker;
 	    /**
 	     * Chain ID for current network.
 	     */
@@ -3010,6 +3148,8 @@ declare module 'dhive' {
 	 */
 	import * as utils from 'dhive/utils';
 	export { utils };
+	export { NodeHealthTracker } from 'dhive/health-tracker';
+	export type { HealthTrackerOptions } from 'dhive/health-tracker';
 	export * from 'dhive/helpers/blockchain';
 	export * from 'dhive/helpers/database';
 	export * from 'dhive/helpers/rc';
