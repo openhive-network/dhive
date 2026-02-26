@@ -35,8 +35,7 @@
 
 import * as utils from './utils'
 export { utils }
-export { NodeHealthTracker } from './health-tracker'
-export type { HealthTrackerOptions } from './health-tracker'
+export { NodeHealthTracker, HealthTrackerOptions } from './health-tracker'
 
 export * from './helpers/blockchain'
 export * from './helpers/database'
