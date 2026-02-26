@@ -3148,8 +3148,7 @@ declare module 'dhive' {
 	 */
 	import * as utils from 'dhive/utils';
 	export { utils };
-	export { NodeHealthTracker } from 'dhive/health-tracker';
-	export type { HealthTrackerOptions } from 'dhive/health-tracker';
+	export { NodeHealthTracker, HealthTrackerOptions } from 'dhive/health-tracker';
 	export * from 'dhive/helpers/blockchain';
 	export * from 'dhive/helpers/database';
 	export * from 'dhive/helpers/rc';
