@@ -19,8 +19,8 @@ node-test:
   parallel:
     matrix:
       - IMAGE:
-          - node:14
-          - node:16
+          - node:18
+          - node:20
 
 browser-test:
   stage: test

@@ -53,8 +53,7 @@ ci-test: node_modules
 
 .PHONY: browser-test
 browser-test: dist/dhive.js
-	BUILD_NUMBER="$$(git rev-parse --short HEAD)-$$(date +%s)" \
-		karma start test/_karma-sauce.js
+	karma start test/_karma-docker.js
 
 .PHONY: browser-test-local
 browser-test-local: dist/dhive.js
