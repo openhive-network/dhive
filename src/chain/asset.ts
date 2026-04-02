@@ -36,9 +36,9 @@
 import * as assert from 'assert';
 
 export interface SMTAsset {
-    amount: string | number;
-    precision: number;
-    nai: string;
+  amount: string | number;
+  precision: number;
+  nai: string;
 }
 
 /**
@@ -50,143 +50,143 @@ export type AssetSymbol = 'HIVE' | 'VESTS' | 'HBD' | 'TESTS' | 'TBD' | 'STEEM' |
  * Class representing a hive asset, e.g. `1.000 HIVE` or `12.112233 VESTS`.
  */
 export class Asset {
-    constructor(readonly amount: number, readonly symbol: AssetSymbol) {}
+  constructor(readonly amount: number, readonly symbol: AssetSymbol) {}
 
-    /**
-     * Create a new Asset instance from a string, e.g. `42.000 HIVE`.
-     */
-    static fromString(string: string, expectedSymbol?: AssetSymbol) {
-        const [amountString, symbol] = string.split(' ');
-        if (!['HIVE', 'VESTS', 'HBD', 'TESTS', 'TBD', 'SBD', 'STEEM'].includes(symbol)) {
-            throw new Error(`Invalid asset symbol: ${symbol}`);
-        }
-        if (expectedSymbol && symbol !== expectedSymbol) {
-            throw new Error(`Invalid asset, expected symbol: ${expectedSymbol} got: ${symbol}`);
-        }
-        const amount = Number.parseFloat(amountString);
-        if (!Number.isFinite(amount)) {
-            throw new Error(`Invalid asset amount: ${amountString}`);
-        }
-        return new Asset(amount, symbol as AssetSymbol);
+  /**
+   * Create a new Asset instance from a string, e.g. `42.000 HIVE`.
+   */
+  static fromString(string: string, expectedSymbol?: AssetSymbol) {
+    const [amountString, symbol] = string.split(' ');
+    if (!['HIVE', 'VESTS', 'HBD', 'TESTS', 'TBD', 'SBD', 'STEEM'].includes(symbol)) {
+      throw new Error(`Invalid asset symbol: ${symbol}`);
     }
+    if (expectedSymbol && symbol !== expectedSymbol) {
+      throw new Error(`Invalid asset, expected symbol: ${expectedSymbol} got: ${symbol}`);
+    }
+    const amount = Number.parseFloat(amountString);
+    if (!Number.isFinite(amount)) {
+      throw new Error(`Invalid asset amount: ${amountString}`);
+    }
+    return new Asset(amount, symbol as AssetSymbol);
+  }
 
-    /**
-     * Convenience to create new Asset.
-     * @param symbol Symbol to use when created from number. Will also be used to validate
-     *               the asset, throws if the passed value has a different symbol than this.
-     */
-    static from(value: string | Asset | number, symbol?: AssetSymbol) {
-        if (value instanceof Asset) {
-            if (symbol && value.symbol !== symbol) {
-                throw new Error(`Invalid asset, expected symbol: ${symbol} got: ${value.symbol}`);
-            }
-            return value;
-        } else if (typeof value === 'number' && Number.isFinite(value)) {
-            return new Asset(value, symbol || 'STEEM');
-        } else if (typeof value === 'string') {
-            return Asset.fromString(value, symbol);
-        } else {
-            throw new Error(`Invalid asset '${String(value)}'`);
-        }
+  /**
+   * Convenience to create new Asset.
+   * @param symbol Symbol to use when created from number. Will also be used to validate
+   *               the asset, throws if the passed value has a different symbol than this.
+   */
+  static from(value: string | Asset | number, symbol?: AssetSymbol) {
+    if (value instanceof Asset) {
+      if (symbol && value.symbol !== symbol) {
+        throw new Error(`Invalid asset, expected symbol: ${symbol} got: ${value.symbol}`);
+      }
+      return value;
+    } else if (typeof value === 'number' && Number.isFinite(value)) {
+      return new Asset(value, symbol || 'STEEM');
+    } else if (typeof value === 'string') {
+      return Asset.fromString(value, symbol);
+    } else {
+      throw new Error(`Invalid asset '${String(value)}'`);
     }
+  }
 
-    /**
-     * Return the smaller of the two assets.
-     */
-    static min(a: Asset, b: Asset) {
-        assert(a.symbol === b.symbol, 'can not compare assets with different symbols');
-        return a.amount < b.amount ? a : b;
-    }
+  /**
+   * Return the smaller of the two assets.
+   */
+  static min(a: Asset, b: Asset) {
+    assert(a.symbol === b.symbol, 'can not compare assets with different symbols');
+    return a.amount < b.amount ? a : b;
+  }
 
-    /**
-     * Return the larger of the two assets.
-     */
-    static max(a: Asset, b: Asset) {
-        assert(a.symbol === b.symbol, 'can not compare assets with different symbols');
-        return a.amount > b.amount ? a : b;
-    }
+  /**
+   * Return the larger of the two assets.
+   */
+  static max(a: Asset, b: Asset) {
+    assert(a.symbol === b.symbol, 'can not compare assets with different symbols');
+    return a.amount > b.amount ? a : b;
+  }
 
-    /**
-     * Return asset precision.
-     */
-    getPrecision(): number {
-        switch (this.symbol) {
-            case 'TESTS':
-            case 'TBD':
-            case 'HIVE':
-            case 'HBD':
-            case 'SBD':
-            case 'STEEM':
-                return 3;
-            case 'VESTS':
-                return 6;
-        }
+  /**
+   * Return asset precision.
+   */
+  getPrecision(): number {
+    switch (this.symbol) {
+      case 'TESTS':
+      case 'TBD':
+      case 'HIVE':
+      case 'HBD':
+      case 'SBD':
+      case 'STEEM':
+        return 3;
+      case 'VESTS':
+        return 6;
     }
+  }
 
-    /**
-     * returns a representation of this asset using only STEEM SBD for
-     * legacy purposes
-     */
-    steem_symbols(): Asset {
-        switch (this.symbol) {
-            case 'HIVE':
-                return Asset.from(this.amount, 'STEEM');
-            case 'HBD':
-                return Asset.from(this.amount, 'SBD');
-            default:
-                return this;
-        }
+  /**
+   * returns a representation of this asset using only STEEM SBD for
+   * legacy purposes
+   */
+  steem_symbols(): Asset {
+    switch (this.symbol) {
+      case 'HIVE':
+        return Asset.from(this.amount, 'STEEM');
+      case 'HBD':
+        return Asset.from(this.amount, 'SBD');
+      default:
+        return this;
     }
+  }
 
-    /**
-     * Return a string representation of this asset, e.g. `42.000 HIVE`.
-     */
-    toString(): string {
-        return `${this.amount.toFixed(this.getPrecision())} ${this.symbol}`;
-    }
+  /**
+   * Return a string representation of this asset, e.g. `42.000 HIVE`.
+   */
+  toString(): string {
+    return `${this.amount.toFixed(this.getPrecision())} ${this.symbol}`;
+  }
 
-    /**
-     * Return a new Asset instance with amount added.
-     */
-    add(amount: Asset | string | number): Asset {
-        const other = Asset.from(amount, this.symbol);
-        assert(this.symbol === other.symbol, 'can not add with different symbols');
-        return new Asset(this.amount + other.amount, this.symbol);
-    }
+  /**
+   * Return a new Asset instance with amount added.
+   */
+  add(amount: Asset | string | number): Asset {
+    const other = Asset.from(amount, this.symbol);
+    assert(this.symbol === other.symbol, 'can not add with different symbols');
+    return new Asset(this.amount + other.amount, this.symbol);
+  }
 
-    /**
-     * Return a new Asset instance with amount subtracted.
-     */
-    subtract(amount: Asset | string | number): Asset {
-        const other = Asset.from(amount, this.symbol);
-        assert(this.symbol === other.symbol, 'can not subtract with different symbols');
-        return new Asset(this.amount - other.amount, this.symbol);
-    }
+  /**
+   * Return a new Asset instance with amount subtracted.
+   */
+  subtract(amount: Asset | string | number): Asset {
+    const other = Asset.from(amount, this.symbol);
+    assert(this.symbol === other.symbol, 'can not subtract with different symbols');
+    return new Asset(this.amount - other.amount, this.symbol);
+  }
 
-    /**
-     * Return a new Asset with the amount multiplied by factor.
-     */
-    multiply(factor: Asset | string | number): Asset {
-        const other = Asset.from(factor, this.symbol);
-        assert(this.symbol === other.symbol, 'can not multiply with different symbols');
-        return new Asset(this.amount * other.amount, this.symbol);
-    }
+  /**
+   * Return a new Asset with the amount multiplied by factor.
+   */
+  multiply(factor: Asset | string | number): Asset {
+    const other = Asset.from(factor, this.symbol);
+    assert(this.symbol === other.symbol, 'can not multiply with different symbols');
+    return new Asset(this.amount * other.amount, this.symbol);
+  }
 
-    /**
-     * Return a new Asset with the amount divided.
-     */
-    divide(divisor: Asset | string | number): Asset {
-        const other = Asset.from(divisor, this.symbol);
-        assert(this.symbol === other.symbol, 'can not divide with different symbols');
-        return new Asset(this.amount / other.amount, this.symbol);
-    }
+  /**
+   * Return a new Asset with the amount divided.
+   */
+  divide(divisor: Asset | string | number): Asset {
+    const other = Asset.from(divisor, this.symbol);
+    assert(this.symbol === other.symbol, 'can not divide with different symbols');
+    return new Asset(this.amount / other.amount, this.symbol);
+  }
 
-    /**
-     * For JSON serialization, same as toString().
-     */
-    toJSON(): string {
-        return this.toString();
-    }
+  /**
+   * For JSON serialization, same as toString().
+   */
+  toJSON(): string {
+    return this.toString();
+  }
 }
 
 export type PriceType = Price | { base: Asset | string; quote: Asset | string };
@@ -203,50 +203,50 @@ export type PriceType = Price | { base: Asset | string; quote: Asset | string };
  *  can determine value of EUR against USD.
  */
 export class Price {
-    /**
-     * @param base  - represents a value of the price object to be expressed relatively to quote
-     *                asset. Cannot have amount == 0 if you want to build valid price.
-     * @param quote - represents an relative asset. Cannot have amount == 0, otherwise
-     *                asertion fail.
-     *
-     * Both base and quote shall have different symbol defined.
-     */
-    constructor(readonly base: Asset, readonly quote: Asset) {
-        assert(base.amount !== 0 && quote.amount !== 0, 'base and quote assets must be non-zero');
-        assert(base.symbol !== quote.symbol, 'base and quote can not have the same symbol');
-    }
+  /**
+   * @param base  - represents a value of the price object to be expressed relatively to quote
+   *                asset. Cannot have amount == 0 if you want to build valid price.
+   * @param quote - represents an relative asset. Cannot have amount == 0, otherwise
+   *                asertion fail.
+   *
+   * Both base and quote shall have different symbol defined.
+   */
+  constructor(readonly base: Asset, readonly quote: Asset) {
+    assert(base.amount !== 0 && quote.amount !== 0, 'base and quote assets must be non-zero');
+    assert(base.symbol !== quote.symbol, 'base and quote can not have the same symbol');
+  }
 
-    /**
-     * Convenience to create new Price.
-     */
-    static from(value: PriceType) {
-        if (value instanceof Price) {
-            return value;
-        } else {
-            return new Price(Asset.from(value.base), Asset.from(value.quote));
-        }
+  /**
+   * Convenience to create new Price.
+   */
+  static from(value: PriceType) {
+    if (value instanceof Price) {
+      return value;
+    } else {
+      return new Price(Asset.from(value.base), Asset.from(value.quote));
     }
+  }
 
-    /**
-     * Return a string representation of this price pair.
-     */
-    toString() {
-        return `${this.base.toString()}:${this.quote.toString()}`;
-    }
+  /**
+   * Return a string representation of this price pair.
+   */
+  toString() {
+    return `${this.base.toString()}:${this.quote.toString()}`;
+  }
 
-    /**
-     * Return a new Asset with the price converted between the symbols in the pair.
-     * Throws if passed asset symbol is not base or quote.
-     */
-    convert(asset: Asset) {
-        if (asset.symbol === this.base.symbol) {
-            assert(this.base.amount > 0);
-            return new Asset((asset.amount * this.quote.amount) / this.base.amount, this.quote.symbol);
-        } else if (asset.symbol === this.quote.symbol) {
-            assert(this.quote.amount > 0);
-            return new Asset((asset.amount * this.base.amount) / this.quote.amount, this.base.symbol);
-        } else {
-            throw new Error(`Can not convert ${asset.toString()} with ${this.toString()}`);
-        }
+  /**
+   * Return a new Asset with the price converted between the symbols in the pair.
+   * Throws if passed asset symbol is not base or quote.
+   */
+  convert(asset: Asset) {
+    if (asset.symbol === this.base.symbol) {
+      assert(this.base.amount > 0);
+      return new Asset((asset.amount * this.quote.amount) / this.base.amount, this.quote.symbol);
+    } else if (asset.symbol === this.quote.symbol) {
+      assert(this.quote.amount > 0);
+      return new Asset((asset.amount * this.base.amount) / this.quote.amount, this.base.symbol);
+    } else {
+      throw new Error(`Can not convert ${asset.toString()} with ${this.toString()}`);
     }
+  }
 }

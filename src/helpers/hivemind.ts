@@ -8,129 +8,129 @@ import { CommunityDetail, Notification } from '../chain/hivemind';
 import { Client } from './../client';
 
 export interface PostsQuery {
-    /**
-     * Number of posts to fetch
-     */
-    limit?: number;
-    /**
-     * Sorting posts
-     */
-    sort: 'trending' | 'hot' | 'created' | 'promoted' | 'payout' | 'payout_comments' | 'muted';
-    /**
-     * Filtering with tags
-     */
-    tag?: string[] | string;
-    /**
-     * Observer account
-     */
-    observer?: string;
-    /**
-     * Paginating last post author
-     */
-    start_author?: string;
-    /**
-     * Paginating last post permlink
-     */
-    start_permlink?: string;
+  /**
+   * Number of posts to fetch
+   */
+  limit?: number;
+  /**
+   * Sorting posts
+   */
+  sort: 'trending' | 'hot' | 'created' | 'promoted' | 'payout' | 'payout_comments' | 'muted';
+  /**
+   * Filtering with tags
+   */
+  tag?: string[] | string;
+  /**
+   * Observer account
+   */
+  observer?: string;
+  /**
+   * Paginating last post author
+   */
+  start_author?: string;
+  /**
+   * Paginating last post permlink
+   */
+  start_permlink?: string;
 }
 
 /**
  * Omitting sort extended from BridgeParam
  */
 export interface AccountPostsQuery extends Omit<PostsQuery, 'sort'> {
-    account: string;
-    sort: 'posts';
+  account: string;
+  sort: 'posts';
 }
 
 export interface CommunityQuery {
-    name: string;
-    observer: string;
+  name: string;
+  observer: string;
 }
 
 export interface AccountNotifsQuery {
-    account: Account['name'];
-    limit: number;
-    type?: 'new_community' | 'pin_post';
+  account: Account['name'];
+  limit: number;
+  type?: 'new_community' | 'pin_post';
 }
 
 export interface ListCommunitiesQuery {
-    /**
-     * Paginating last
-     */
-    last?: string;
-    /**
-     * Number of communities to fetch
-     */
-    limit: number;
-    /**
-     * To be developed, not ready yet
-     */
-    query?: string | any;
-    /**
-     * Observer account
-     */
-    observer?: Account['name'];
+  /**
+   * Paginating last
+   */
+  last?: string;
+  /**
+   * Number of communities to fetch
+   */
+  limit: number;
+  /**
+   * To be developed, not ready yet
+   */
+  query?: string | any;
+  /**
+   * Observer account
+   */
+  observer?: Account['name'];
 }
 
 export class HivemindAPI {
-    constructor(readonly client: Client) {}
+  constructor(readonly client: Client) {}
 
-    /**
-     * Convenience of calling hivemind api
-     * @param method
-     * @param params
-     */
-    call<T>(method: string, params?: any): Promise<T> {
-        return this.client.call('bridge', method, params);
-    }
+  /**
+   * Convenience of calling hivemind api
+   * @param method
+   * @param params
+   */
+  call<T>(method: string, params?: any): Promise<T> {
+    return this.client.call('bridge', method, params);
+  }
 
-    /**
-     * Get trending, hot, recent community posts from Hivemind
-     * @param options
-     */
-    getRankedPosts(options: PostsQuery): Promise<Discussion[]> {
-        return this.call('get_ranked_posts', options);
-    }
+  /**
+   * Get trending, hot, recent community posts from Hivemind
+   * @param options
+   */
+  getRankedPosts(options: PostsQuery): Promise<Discussion[]> {
+    return this.call('get_ranked_posts', options);
+  }
 
-    /**
-     * Get posts by particular account from Hivemind
-     * @param options
-     */
-    getAccountPosts(options: AccountPostsQuery): Promise<Discussion[]> {
-        return this.call('get_account_posts', options);
-    }
+  /**
+   * Get posts by particular account from Hivemind
+   * @param options
+   */
+  getAccountPosts(options: AccountPostsQuery): Promise<Discussion[]> {
+    return this.call('get_account_posts', options);
+  }
 
-    /**
-     * Get community details such as who are the admin,
-     * moderators, how many subscribers, etc..
-     * @param options
-     */
-    getCommunity(options: CommunityQuery): Promise<CommunityDetail> {
-        return this.call('get_community', options);
-    }
+  /**
+   * Get community details such as who are the admin,
+   * moderators, how many subscribers, etc..
+   * @param options
+   */
+  getCommunity(options: CommunityQuery): Promise<CommunityDetail> {
+    return this.call('get_community', options);
+  }
 
-    /**
-     * List all subscriptions by particular account
-     * @param account the account you want to query
-     * @returns {Array} return role, what community the account joined
-     */
-    listAllSubscriptions(account: Account['name'] | object): Promise<Discussion[]> {
-        return this.call('list_all_subscriptions', account);
-    }
+  /**
+   * List all subscriptions by particular account
+   * @param account the account you want to query
+   * @returns {Array} return role, what community the account joined
+   */
+  listAllSubscriptions(account: Account['name'] | object): Promise<Discussion[]> {
+    return this.call('list_all_subscriptions', account);
+  }
 
-    /**
-     * Get particular account notifications feed
-     * @param options
-     */
-    getAccountNotifications(options?: AccountNotifsQuery): Promise<Notification[]> {
-        return this.call('account_notifications', options);
-    }
+  /**
+   * Get particular account notifications feed
+   * @param options
+   */
+  getAccountNotifications(options?: AccountNotifsQuery): Promise<Notification[]> {
+    return this.call('account_notifications', options);
+  }
 
-    /**
-     * List all available communities on hivemind
-     * @param options
-     */
-    listCommunities(options: ListCommunitiesQuery): Promise<CommunityDetail[]> {
-        return this.call('list_communities', options);
-    }
+  /**
+   * List all available communities on hivemind
+   * @param options
+   */
+  listCommunities(options: ListCommunitiesQuery): Promise<CommunityDetail[]> {
+    return this.call('list_communities', options);
+  }
 }
