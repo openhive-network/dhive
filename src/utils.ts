@@ -33,13 +33,13 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import fetch from 'cross-fetch';
-import { EventEmitter } from 'events';
-import { PassThrough } from 'stream';
-import { NodeHealthTracker } from './health-tracker';
+import fetch from 'cross-fetch'
+import { EventEmitter } from 'events'
+import { PassThrough } from 'stream'
+import { NodeHealthTracker } from './health-tracker'
 
 // Errors that indicate the request never reached the server — safe to retry even for broadcasts
-const PRE_CONNECTION_ERRORS = ['ECONNREFUSED', 'ENOTFOUND', 'EHOSTUNREACH', 'EAI_AGAIN'];
+const PRE_CONNECTION_ERRORS = ['ECONNREFUSED', 'ENOTFOUND', 'EHOSTUNREACH', 'EAI_AGAIN']
 
 // All errors that should trigger failover for read operations
 const FAILOVER_ERRORS = [
@@ -52,20 +52,20 @@ const FAILOVER_ERRORS = [
   'ETIMEDOUT',
   'EPIPE',
   'EPROTO'
-];
+]
 
 /**
  * Context for smart retry/failover decisions.
  */
 export interface RetryContext {
   /** Health tracker instance for per-node, per-API tracking */
-  healthTracker?: NodeHealthTracker;
+  healthTracker?: NodeHealthTracker
   /** The API being called (e.g. "bridge", "condenser_api", "database_api") */
-  api?: string;
+  api?: string
   /** Whether this is a broadcast operation — never retry after request may have been received */
-  isBroadcast?: boolean;
+  isBroadcast?: boolean
   /** Whether to log failover events to console */
-  consoleOnFailover?: boolean;
+  consoleOnFailover?: boolean
 }
 
 /**
@@ -73,8 +73,8 @@ export interface RetryContext {
  */
 export function waitForEvent<T>(emitter: EventEmitter, eventName: string | symbol): Promise<T> {
   return new Promise((resolve, reject) => {
-    emitter.once(eventName, resolve);
-  });
+    emitter.once(eventName, resolve)
+  })
 }
 
 /**
@@ -82,45 +82,45 @@ export function waitForEvent<T>(emitter: EventEmitter, eventName: string | symbo
  */
 export function sleep(ms: number): Promise<void> {
   return new Promise<void>((resolve) => {
-    setTimeout(resolve, ms);
-  });
+    setTimeout(resolve, ms)
+  })
 }
 
 /**
  * Return a stream that emits iterator values.
  */
 export function iteratorStream<T>(iterator: AsyncIterableIterator<T>): NodeJS.ReadableStream {
-  const stream = new PassThrough({ objectMode: true });
+  const stream = new PassThrough({ objectMode: true })
   const iterate = async () => {
     for await (const item of iterator) {
       if (!stream.write(item)) {
-        await waitForEvent(stream, 'drain');
+        await waitForEvent(stream, 'drain')
       }
     }
-  };
+  }
   iterate()
     .then(() => {
-      stream.end();
+      stream.end()
     })
     .catch((error) => {
-      stream.emit('error', error);
-      stream.end();
-    });
-  return stream;
+      stream.emit('error', error)
+      stream.end()
+    })
+  return stream
 }
 /**
  * Return a deep copy of a JSON-serializable object.
  */
 export function copy<T>(object: T): T {
-  return JSON.parse(JSON.stringify(object));
+  return JSON.parse(JSON.stringify(object))
 }
 
 /**
  * Check if an error code indicates the request never reached the server.
  */
 function isPreConnectionError(error: any): boolean {
-  if (!error || !error.code) return false;
-  return PRE_CONNECTION_ERRORS.some((code) => error.code.includes(code));
+  if (!error || !error.code) return false
+  return PRE_CONNECTION_ERRORS.some((code) => error.code.includes(code))
 }
 
 /**
@@ -128,17 +128,17 @@ function isPreConnectionError(error: any): boolean {
  * Matches any known network/timeout error, or errors with no code (HTTP errors).
  */
 function shouldFailover(error: any): boolean {
-  if (!error) return true;
+  if (!error) return true
   // HTTP errors (from !response.ok) have no .code — they should trigger failover
-  if (!error.code) return true;
-  return FAILOVER_ERRORS.some((code) => error.code.includes(code));
+  if (!error.code) return true
+  return FAILOVER_ERRORS.some((code) => error.code.includes(code))
 }
 
 /**
  * Get the next node in the ordered list (wraps around).
  */
 function nextNode(nodes: string[], currentIndex: number): number {
-  return (currentIndex + 1) % nodes.length;
+  return (currentIndex + 1) % nodes.length
 }
 
 /**
@@ -165,61 +165,61 @@ export async function retryingFetch(
   fetchTimeout?: (tries: number) => number,
   retryContext?: RetryContext
 ) {
-  const { healthTracker, api, isBroadcast } = retryContext || {};
-  const logFailover = retryContext?.consoleOnFailover ?? consoleOnFailover;
+  const { healthTracker, api, isBroadcast } = retryContext || {}
+  const logFailover = retryContext?.consoleOnFailover ?? consoleOnFailover
 
   // Build ordered node list: healthy nodes first, then unhealthy as fallback
-  let orderedNodes: string[];
+  let orderedNodes: string[]
   if (Array.isArray(allAddresses) && allAddresses.length > 1) {
-    orderedNodes = healthTracker ? healthTracker.getOrderedNodes(allAddresses, api) : [...allAddresses];
+    orderedNodes = healthTracker ? healthTracker.getOrderedNodes(allAddresses, api) : [...allAddresses]
   } else {
-    orderedNodes = Array.isArray(allAddresses) ? allAddresses : [allAddresses];
+    orderedNodes = Array.isArray(allAddresses) ? allAddresses : [allAddresses]
   }
 
   // Always start from the healthiest node (index 0 of the ordered list).
   // The health tracker already sorted nodes with healthy ones first,
   // so starting from 0 ensures we use the best available node.
-  let nodeIndex = 0;
+  let nodeIndex = 0
 
-  const totalNodes = orderedNodes.length;
-  const startTime = Date.now();
-  let nodesTriedInRound = 0;
-  let round = 0;
-  let lastError: any;
+  const totalNodes = orderedNodes.length
+  const startTime = Date.now()
+  let nodesTriedInRound = 0
+  let round = 0
+  let lastError: any
 
   // tslint:disable-next-line: no-constant-condition
   while (true) {
-    const node = orderedNodes[nodeIndex];
+    const node = orderedNodes[nodeIndex]
 
     try {
       // Skip nodes that are currently rate-limited
       if (healthTracker && healthTracker.isRateLimited(node)) {
-        lastError = new Error(`Node ${node} is rate-limited, skipping`);
-        if (healthTracker && api) healthTracker.recordFailure(node, api);
-        throw lastError;
+        lastError = new Error(`Node ${node} is rate-limited, skipping`)
+        if (healthTracker && api) healthTracker.recordFailure(node, api)
+        throw lastError
       }
 
       if (fetchTimeout) {
-        opts.timeout = fetchTimeout(nodesTriedInRound);
+        opts.timeout = fetchTimeout(nodesTriedInRound)
       }
 
-      const response = await fetch(node, opts);
+      const response = await fetch(node, opts)
 
       if (!response.ok) {
         // Handle 429 — record rate limit and fail over immediately
         if (response.status === 429) {
-          const retryAfterHeader = response.headers?.get?.('retry-after');
-          const retryAfterSec = retryAfterHeader ? parseInt(retryAfterHeader, 10) : undefined;
+          const retryAfterHeader = response.headers?.get?.('retry-after')
+          const retryAfterSec = retryAfterHeader ? parseInt(retryAfterHeader, 10) : undefined
           if (healthTracker) {
-            healthTracker.recordRateLimit(node, !isNaN(retryAfterSec as number) ? retryAfterSec : undefined);
+            healthTracker.recordRateLimit(node, !isNaN(retryAfterSec as number) ? retryAfterSec : undefined)
           }
-          throw new Error(`HTTP 429: Too Many Requests`);
+          throw new Error(`HTTP 429: Too Many Requests`)
         }
 
         // Handle 503 — don't parse JSON body, just fail over
         if (response.status === 503) {
-          if (healthTracker && api) healthTracker.recordFailure(node, api);
-          throw new Error(`HTTP 503: Service Temporarily Unavailable`);
+          if (healthTracker && api) healthTracker.recordFailure(node, api)
+          throw new Error(`HTTP 503: Service Temporarily Unavailable`)
         }
 
         // Some Hive nodes return non-200 HTTP status (500, 502, etc.)
@@ -228,32 +228,32 @@ export async function retryingFetch(
         // but returns an error HTTP status. For broadcasts, ignoring the body
         // would cause the caller to think it failed, leading to double-posts.
         try {
-          const resJson = await response.json();
+          const resJson = await response.json()
           if (resJson.jsonrpc === '2.0') {
-            if (healthTracker && api) healthTracker.recordSuccess(node, api);
-            return { response: resJson, currentAddress: node };
+            if (healthTracker && api) healthTracker.recordSuccess(node, api)
+            return { response: resJson, currentAddress: node }
           }
         } catch {
           // JSON parse failed, fall through to error handling
         }
-        const statusText = response.statusText || `status code ${response.status}`;
-        throw new Error(`HTTP ${response.status}: ${statusText}`);
+        const statusText = response.statusText || `status code ${response.status}`
+        throw new Error(`HTTP ${response.status}: ${statusText}`)
       }
 
-      const responseJson = await response.json();
+      const responseJson = await response.json()
 
       // Record success in health tracker
       if (healthTracker && api) {
-        healthTracker.recordSuccess(node, api);
+        healthTracker.recordSuccess(node, api)
       }
 
-      return { response: responseJson, currentAddress: node };
+      return { response: responseJson, currentAddress: node }
     } catch (error) {
-      lastError = error;
+      lastError = error
 
       // Record failure in health tracker
       if (healthTracker && api) {
-        healthTracker.recordFailure(node, api);
+        healthTracker.recordFailure(node, api)
       }
 
       // === BROADCAST SAFETY ===
@@ -263,77 +263,77 @@ export async function retryingFetch(
       if (isBroadcast) {
         if (isPreConnectionError(error) && totalNodes > 1) {
           // Safe to try another node — request never left the client
-          nodeIndex = nextNode(orderedNodes, nodeIndex);
-          nodesTriedInRound++;
+          nodeIndex = nextNode(orderedNodes, nodeIndex)
+          nodesTriedInRound++
           if (nodesTriedInRound >= totalNodes) {
             // Tried all nodes, give up for broadcasts
-            throw error;
+            throw error
           }
           if (logFailover) {
             // tslint:disable-next-line: no-console
-            console.log(`Broadcast failover to: ${orderedNodes[nodeIndex]} (${error.code}, request never sent)`);
+            console.log(`Broadcast failover to: ${orderedNodes[nodeIndex]} (${error.code}, request never sent)`)
           }
-          continue;
+          continue
         }
         // Timeout, HTTP error, or unknown error — request may have been received.
         // Do NOT retry. Throw immediately.
-        throw error;
+        throw error
       }
 
       // === READ OPERATION FAILOVER ===
       if (!shouldFailover(error)) {
         // Unrecognized error type — don't failover, throw immediately
-        throw error;
+        throw error
       }
 
       // Small delay between node attempts within a round to prevent
       // flooding all nodes when multiple concurrent requests fail over
       if (totalNodes > 1 && nodesTriedInRound > 0) {
-        await sleep(50 + Math.random() * 50); // 50-100ms jitter
+        await sleep(50 + Math.random() * 50) // 50-100ms jitter
       }
 
       // Try next node immediately (no backoff within a round)
       if (totalNodes > 1) {
-        nodeIndex = nextNode(orderedNodes, nodeIndex);
-        nodesTriedInRound++;
+        nodeIndex = nextNode(orderedNodes, nodeIndex)
+        nodesTriedInRound++
 
         if (nodesTriedInRound >= totalNodes) {
           // Completed a full round through all nodes
-          nodesTriedInRound = 0;
+          nodesTriedInRound = 0
 
           // failoverThreshold=0 means retry forever (only timeout can stop it)
           if (failoverThreshold > 0) {
-            round++;
+            round++
             if (round >= failoverThreshold) {
               error.message =
                 `All ${totalNodes} nodes failed after ${failoverThreshold} rounds. ` +
                 `Last error: [${error.code || 'HTTP'}] ${error.message}. ` +
-                `Nodes: ${orderedNodes.join(', ')}`;
-              throw error;
+                `Nodes: ${orderedNodes.join(', ')}`
+              throw error
             }
           }
 
           // Check total timeout before starting next round
           if (timeout !== 0 && Date.now() - startTime > timeout) {
-            throw error;
+            throw error
           }
 
           // Backoff between rounds (not between individual node attempts)
-          await sleep(backoff(round));
+          await sleep(backoff(round))
         }
 
         if (logFailover) {
           // tslint:disable-next-line: no-console
           console.log(
             `Switched Hive RPC: ${orderedNodes[nodeIndex]} (previous: ${node}, error: ${error.code || error.message})`
-          );
+          )
         }
       } else {
         // Single node: use backoff and retry same node (legacy behavior)
         if (timeout !== 0 && Date.now() - startTime > timeout) {
-          throw error;
+          throw error
         }
-        await sleep(backoff(nodesTriedInRound++));
+        await sleep(backoff(nodesTriedInRound++))
       }
     }
   }
@@ -341,72 +341,72 @@ export async function retryingFetch(
 
 // Hack to be able to generate a valid witness_set_properties op
 // Can hopefully be removed when hived's JSON representation is fixed
-import * as ByteBuffer from '@ecency/bytebuffer';
-import { Asset, PriceType } from './chain/asset';
-import { WitnessSetPropertiesOperation } from './chain/operation';
-import { Serializer, Types } from './chain/serializer';
-import { PublicKey } from './crypto';
+import * as ByteBuffer from '@ecency/bytebuffer'
+import { Asset, PriceType } from './chain/asset'
+import { WitnessSetPropertiesOperation } from './chain/operation'
+import { Serializer, Types } from './chain/serializer'
+import { PublicKey } from './crypto'
 export interface WitnessProps {
-  account_creation_fee?: string | Asset;
-  account_subsidy_budget?: number; // uint32_t
-  account_subsidy_decay?: number; // uint32_t
-  key: PublicKey | string;
-  maximum_block_size?: number; // uint32_t
-  new_signing_key?: PublicKey | string | null;
-  hbd_exchange_rate?: PriceType;
-  hbd_interest_rate?: number; // uint16_t
-  url?: string;
+  account_creation_fee?: string | Asset
+  account_subsidy_budget?: number // uint32_t
+  account_subsidy_decay?: number // uint32_t
+  key: PublicKey | string
+  maximum_block_size?: number // uint32_t
+  new_signing_key?: PublicKey | string | null
+  hbd_exchange_rate?: PriceType
+  hbd_interest_rate?: number // uint16_t
+  url?: string
 }
 
 const serialize = (serializer: Serializer, data: any) => {
-  const buffer = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN);
-  serializer(buffer, data);
-  buffer.flip();
+  const buffer = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN)
+  serializer(buffer, data)
+  buffer.flip()
   // `props` values must be hex
-  return buffer.toString('hex');
+  return buffer.toString('hex')
   // return Buffer.from(buffer.toBuffer());
-};
+}
 
 export const buildWitnessUpdateOp = (owner: string, props: WitnessProps): WitnessSetPropertiesOperation => {
   const data: WitnessSetPropertiesOperation[1] = {
     extensions: [],
     owner,
     props: []
-  };
+  }
   for (const key of Object.keys(props)) {
-    let type: Serializer;
+    let type: Serializer
     switch (key) {
       case 'key':
       case 'new_signing_key':
-        type = Types.PublicKey;
-        break;
+        type = Types.PublicKey
+        break
       case 'account_subsidy_budget':
       case 'account_subsidy_decay':
       case 'maximum_block_size':
-        type = Types.UInt32;
-        break;
+        type = Types.UInt32
+        break
       case 'hbd_interest_rate':
-        type = Types.UInt16;
-        break;
+        type = Types.UInt16
+        break
       case 'url':
-        type = Types.String;
-        break;
+        type = Types.String
+        break
       case 'hbd_exchange_rate':
-        type = Types.Price;
-        break;
+        type = Types.Price
+        break
       case 'account_creation_fee':
-        type = Types.Asset;
-        break;
+        type = Types.Asset
+        break
       default:
-        throw new Error(`Unknown witness prop: ${key}`);
+        throw new Error(`Unknown witness prop: ${key}`)
     }
-    data.props.push([key, serialize(type, props[key])]);
+    data.props.push([key, serialize(type, props[key])])
   }
-  data.props.sort((a, b) => a[0].localeCompare(b[0]));
-  return ['witness_set_properties', data];
-};
+  data.props.sort((a, b) => a[0].localeCompare(b[0]))
+  return ['witness_set_properties', data]
+}
 
-const JSBI = require('jsbi');
+const JSBI = require('jsbi')
 export const operationOrders = {
   vote: 0,
   // tslint:disable-next-line: object-literal-sort-keys
@@ -495,7 +495,7 @@ export const operationOrders = {
   system_warning: 82,
   fill_recurrent_transfer: 83,
   failed_recurrent_transfer: 84
-};
+}
 
 /**
  * Make bitmask filter to be used with getAccountHistory call
@@ -504,13 +504,13 @@ export const operationOrders = {
 export function makeBitMaskFilter(allowedOperations: number[]) {
   return allowedOperations
     .reduce(redFunction, [JSBI.BigInt(0), JSBI.BigInt(0)])
-    .map((value) => (JSBI.notEqual(value, JSBI.BigInt(0)) ? value.toString() : null));
+    .map((value) => (JSBI.notEqual(value, JSBI.BigInt(0)) ? value.toString() : null))
 }
 
 const redFunction = ([low, high], allowedOperation) => {
   if (allowedOperation < 64) {
-    return [JSBI.bitwiseOr(low, JSBI.leftShift(JSBI.BigInt(1), JSBI.BigInt(allowedOperation))), high];
+    return [JSBI.bitwiseOr(low, JSBI.leftShift(JSBI.BigInt(1), JSBI.BigInt(allowedOperation))), high]
   } else {
-    return [low, JSBI.bitwiseOr(high, JSBI.leftShift(JSBI.BigInt(1), JSBI.BigInt(allowedOperation - 64)))];
+    return [low, JSBI.bitwiseOr(high, JSBI.leftShift(JSBI.BigInt(1), JSBI.BigInt(allowedOperation - 64)))]
   }
-};
+}

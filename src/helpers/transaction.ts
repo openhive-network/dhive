@@ -3,7 +3,7 @@
  * @author Bartłomiej (@engrave) Górnicki
  */
 
-import { Client } from '../client';
+import { Client } from '../client'
 
 export type TransactionStatus =
   | 'unknown'
@@ -12,11 +12,11 @@ export type TransactionStatus =
   | 'within_irreversible_block'
   | 'expired_reversible'
   | 'expired_irreversible'
-  | 'too_old';
+  | 'too_old'
 
 interface FindTransactionParams {
-  transaction_id: string;
-  expiration?: string;
+  transaction_id: string
+  expiration?: string
 }
 
 export class TransactionStatusAPI {
@@ -26,7 +26,7 @@ export class TransactionStatusAPI {
    * Convenience for calling `transaction_status_api`.
    */
   call<T>(method: string, params?: any): Promise<T> {
-    return this.client.call<T>('transaction_status_api', method, params);
+    return this.client.call<T>('transaction_status_api', method, params)
   }
 
   /**
@@ -35,10 +35,10 @@ export class TransactionStatusAPI {
   async findTransaction(transaction_id: string, expiration?: string): Promise<{ status: TransactionStatus }> {
     const params: FindTransactionParams = {
       transaction_id
-    };
-    if (expiration) {
-      params.expiration = expiration;
     }
-    return this.call('find_transaction', params);
+    if (expiration) {
+      params.expiration = expiration
+    }
+    return this.call('find_transaction', params)
   }
 }

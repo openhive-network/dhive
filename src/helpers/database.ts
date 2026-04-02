@@ -33,15 +33,15 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import { ExtendedAccount } from '../chain/account';
-import { Price } from '../chain/asset';
-import { BlockHeader, SignedBlock } from '../chain/block';
-import { Discussion } from '../chain/comment';
-import { DynamicGlobalProperties } from '../chain/misc';
-import { ChainProperties, VestingDelegation } from '../chain/misc';
-import { AppliedOperation } from '../chain/operation';
-import { SignedTransaction } from '../chain/transaction';
-import { Client } from './../client';
+import { ExtendedAccount } from '../chain/account'
+import { Price } from '../chain/asset'
+import { BlockHeader, SignedBlock } from '../chain/block'
+import { Discussion } from '../chain/comment'
+import { DynamicGlobalProperties } from '../chain/misc'
+import { ChainProperties, VestingDelegation } from '../chain/misc'
+import { AppliedOperation } from '../chain/operation'
+import { SignedTransaction } from '../chain/transaction'
+import { Client } from './../client'
 
 /**
  * Possible categories for `get_discussions_by_*`.
@@ -57,36 +57,36 @@ export type DiscussionQueryCategory =
   | 'promoted'
   | 'trending'
   | 'votes'
-  | 'created';
+  | 'created'
 
 export interface DisqussionQuery {
   /**
    * Name of author or tag to fetch.
    */
-  tag?: string;
+  tag?: string
   /**
    * Number of results, max 100.
    */
-  limit: number;
-  filter_tags?: string[];
-  select_authors?: string[];
-  select_tags?: string[];
+  limit: number
+  filter_tags?: string[]
+  select_authors?: string[]
+  select_tags?: string[]
   /**
    * Number of bytes of post body to fetch, default 0 (all)
    */
-  truncate_body?: number;
+  truncate_body?: number
   /**
    * Name of author to start from, used for paging.
    * Should be used in conjunction with `start_permlink`.
    */
-  start_author?: string;
+  start_author?: string
   /**
    * Permalink of post to start from, used for paging.
    * Should be used in conjunction with `start_author`.
    */
-  start_permlink?: string;
-  parent_author?: string;
-  parent_permlink?: string;
+  start_permlink?: string
+  parent_author?: string
+  parent_permlink?: string
 }
 
 export class DatabaseAPI {
@@ -96,21 +96,21 @@ export class DatabaseAPI {
    * Convenience for calling `database_api`.
    */
   call<T>(method: string, params?: any[]): Promise<T> {
-    return this.client.call<T>('condenser_api', method, params);
+    return this.client.call<T>('condenser_api', method, params)
   }
 
   /**
    * Return state of server.
    */
   getDynamicGlobalProperties(): Promise<DynamicGlobalProperties> {
-    return this.call('get_dynamic_global_properties');
+    return this.call('get_dynamic_global_properties')
   }
 
   /**
    * Return median chain properties decided by witness.
    */
   async getChainProperties(): Promise<ChainProperties> {
-    return this.call('get_chain_properties');
+    return this.call('get_chain_properties')
   }
 
   /**
@@ -119,14 +119,14 @@ export class DatabaseAPI {
    *             e.g. `@almost-digital` or `trending/travel`
    */
   async getState(path: string): Promise<any> {
-    return this.call('get_state', [path]);
+    return this.call('get_state', [path])
   }
 
   /**
    * Return median price in HBD for 1 HIVE as reported by the witnesses.
    */
   async getCurrentMedianHistoryPrice(): Promise<Price> {
-    return Price.from(await this.call('get_current_median_history_price'));
+    return Price.from(await this.call('get_current_median_history_price'))
   }
 
   /**
@@ -136,7 +136,7 @@ export class DatabaseAPI {
    * @param limit Number of results, max 1000.
    */
   async getVestingDelegations(account: string, from = '', limit = 1000): Promise<VestingDelegation[]> {
-    return this.call('get_vesting_delegations', [account, from, limit]);
+    return this.call('get_vesting_delegations', [account, from, limit])
   }
 
   /**
@@ -144,28 +144,28 @@ export class DatabaseAPI {
    * https://github.com/steemit/steem/blob/master/libraries/protocol/include/steemit/protocol/config.hpp
    */
   getConfig(): Promise<{ [name: string]: string | number | boolean }> {
-    return this.call('get_config');
+    return this.call('get_config')
   }
 
   /**
    * Return header for *blockNum*.
    */
   getBlockHeader(blockNum: number): Promise<BlockHeader> {
-    return this.call('get_block_header', [blockNum]);
+    return this.call('get_block_header', [blockNum])
   }
 
   /**
    * Return block *blockNum*.
    */
   getBlock(blockNum: number): Promise<SignedBlock> {
-    return this.call('get_block', [blockNum]);
+    return this.call('get_block', [blockNum])
   }
 
   /**
    * Return all applied operations in *blockNum*.
    */
   getOperations(blockNum: number, onlyVirtual = false): Promise<AppliedOperation[]> {
-    return this.call('get_ops_in_block', [blockNum, onlyVirtual]);
+    return this.call('get_ops_in_block', [blockNum, onlyVirtual])
   }
 
   /**
@@ -176,7 +176,7 @@ export class DatabaseAPI {
    *           for `blog` and `feed` the tag is set to a username.
    */
   getDiscussions(by: DiscussionQueryCategory, query: DisqussionQuery): Promise<Discussion[]> {
-    return this.call(`get_discussions_by_${by}`, [query]);
+    return this.call(`get_discussions_by_${by}`, [query])
   }
 
   /**
@@ -184,14 +184,14 @@ export class DatabaseAPI {
    * @param usernames The accounts to fetch.
    */
   getAccounts(usernames: string[]): Promise<ExtendedAccount[]> {
-    return this.call('get_accounts', [usernames]);
+    return this.call('get_accounts', [usernames])
   }
 
   /**
    * Returns the details of a transaction based on a transaction id.
    */
   async getTransaction(txId: string): Promise<SignedTransaction> {
-    return this.call('get_transaction', [txId]);
+    return this.call('get_transaction', [txId])
   }
 
   /**
@@ -227,25 +227,25 @@ export class DatabaseAPI {
     limit: number,
     operation_bitmask?: [number, number]
   ): Promise<[[number, AppliedOperation]]> {
-    let params = [account, from, limit];
+    let params = [account, from, limit]
     if (operation_bitmask && Array.isArray(operation_bitmask)) {
       if (operation_bitmask.length !== 2) {
-        throw Error('operation_bitmask should be generated by the helper function');
+        throw Error('operation_bitmask should be generated by the helper function')
       }
-      params = params.concat(operation_bitmask);
+      params = params.concat(operation_bitmask)
     }
-    return this.call('get_account_history', params);
+    return this.call('get_account_history', params)
   }
 
   /**
    * Verify signed transaction.
    */
   async verifyAuthority(stx: SignedTransaction): Promise<boolean> {
-    return this.call('verify_authority', [stx]);
+    return this.call('verify_authority', [stx])
   }
 
   /** return rpc node version */
   async getVersion(): Promise<object> {
-    return this.call('get_version', []);
+    return this.call('get_version', [])
   }
 }

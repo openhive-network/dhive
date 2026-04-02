@@ -33,75 +33,75 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import * as assert from 'assert';
-import { VError } from 'verror';
-import packageVersion from './version';
+import * as assert from 'assert'
+import { VError } from 'verror'
+import packageVersion from './version'
 
-import { Blockchain } from './helpers/blockchain';
-import { BroadcastAPI } from './helpers/broadcast';
-import { DatabaseAPI } from './helpers/database';
-import { HivemindAPI } from './helpers/hivemind';
-import { AccountByKeyAPI } from './helpers/key';
-import { RCAPI } from './helpers/rc';
-import { TransactionStatusAPI } from './helpers/transaction';
-import { NodeHealthTracker, HealthTrackerOptions } from './health-tracker';
-import { copy, retryingFetch } from './utils';
+import { Blockchain } from './helpers/blockchain'
+import { BroadcastAPI } from './helpers/broadcast'
+import { DatabaseAPI } from './helpers/database'
+import { HivemindAPI } from './helpers/hivemind'
+import { AccountByKeyAPI } from './helpers/key'
+import { RCAPI } from './helpers/rc'
+import { TransactionStatusAPI } from './helpers/transaction'
+import { NodeHealthTracker, HealthTrackerOptions } from './health-tracker'
+import { copy, retryingFetch } from './utils'
 
 /**
  * Library version.
  */
-export const VERSION = packageVersion;
+export const VERSION = packageVersion
 
 /**
  * Main Hive network chain id.
  */
-export const DEFAULT_CHAIN_ID = Buffer.from('beeab0de00000000000000000000000000000000000000000000000000000000', 'hex');
+export const DEFAULT_CHAIN_ID = Buffer.from('beeab0de00000000000000000000000000000000000000000000000000000000', 'hex')
 
 /**
  * Main Hive network address prefix.
  */
-export const DEFAULT_ADDRESS_PREFIX = 'STM';
+export const DEFAULT_ADDRESS_PREFIX = 'STM'
 
 interface RPCRequest {
   /**
    * Request sequence number.
    */
-  id: number | string;
+  id: number | string
   /**
    * RPC method.
    */
-  method: 'call' | 'notice' | 'callback';
+  method: 'call' | 'notice' | 'callback'
   /**
    * Array of parameters to pass to the method.
    */
-  jsonrpc: '2.0';
-  params: any[];
+  jsonrpc: '2.0'
+  params: any[]
 }
 
 interface RPCCall extends RPCRequest {
-  method: 'call' | any;
+  method: 'call' | any
   /**
    * 1. API to call, you can pass either the numerical id of the API you get
    *    from calling 'get_api_by_name' or the name directly as a string.
    * 2. Method to call on that API.
    * 3. Arguments to pass to the method.
    */
-  params: [number | string, string, any[]];
+  params: [number | string, string, any[]]
 }
 
 interface RPCError {
-  code: number;
-  message: string;
-  data?: any;
+  code: number
+  message: string
+  data?: any
 }
 
 interface RPCResponse {
   /**
    * Response sequence number, corresponding to request sequence number.
    */
-  id: number;
-  error?: RPCError;
-  result?: any;
+  id: number
+  error?: RPCError
+  result?: any
 }
 
 /**
@@ -115,12 +115,12 @@ export interface ClientOptions {
    * `beeab0de00000000000000000000000000000000000000000000000000000000`
    *
    */
-  chainId?: string;
+  chainId?: string
   /**
    * Hive address prefix. Defaults to main network:
    * `STM`
    */
-  addressPrefix?: string;
+  addressPrefix?: string
   /**
    * Send timeout, how long to wait in milliseconds before giving
    * up on a rpc call. Note that this is not an exact timeout,
@@ -128,7 +128,7 @@ export interface ClientOptions {
    * be retried any more past the timeout.
    * Can be set to 0 to retry forever. Defaults to 60 * 1000 ms.
    */
-  timeout?: number;
+  timeout?: number
 
   /**
    * Specifies the amount of times the urls (RPC nodes) should be
@@ -136,32 +136,32 @@ export interface ClientOptions {
    * (important) Requires url parameter to be an array (string[])!
    * Can be set to 0 to iterate and retry forever. Defaults to 3 rounds.
    */
-  failoverThreshold?: number;
+  failoverThreshold?: number
 
   /**
    * Whether a console.log should be made when RPC failed over to another one
    */
-  consoleOnFailover?: boolean;
+  consoleOnFailover?: boolean
 
   /**
    * Retry backoff function, returns milliseconds. Default = {@link defaultBackoff}.
    */
-  backoff?: (tries: number) => number;
+  backoff?: (tries: number) => number
   /**
    * Node.js http(s) agent, use if you want http keep-alive.
    * Defaults to using https.globalAgent.
    * @see https://nodejs.org/api/http.html#http_new_agent_options.
    */
-  agent?: any; // https.Agent
+  agent?: any // https.Agent
   /**
    * Deprecated - don't use
    */
-  rebrandedApi?: boolean;
+  rebrandedApi?: boolean
   /**
    * Options for the node health tracker.
    * Controls cooldown periods, stale block thresholds, etc.
    */
-  healthTrackerOptions?: HealthTrackerOptions;
+  healthTrackerOptions?: HealthTrackerOptions
 }
 
 /**
@@ -173,70 +173,70 @@ export class Client {
   /**
    * Client options, *read-only*.
    */
-  public readonly options: ClientOptions;
+  public readonly options: ClientOptions
 
   /**
    * Address to Hive RPC server.
    * String or String[] *read-only*
    */
-  public readonly address: string | string[];
+  public readonly address: string | string[]
 
   /**
    * Database API helper.
    */
-  public readonly database: DatabaseAPI;
+  public readonly database: DatabaseAPI
 
   /**
    * RC API helper.
    */
-  public readonly rc: RCAPI;
+  public readonly rc: RCAPI
 
   /**
    * Broadcast API helper.
    */
-  public readonly broadcast: BroadcastAPI;
+  public readonly broadcast: BroadcastAPI
 
   /**
    * Blockchain helper.
    */
-  public readonly blockchain: Blockchain;
+  public readonly blockchain: Blockchain
 
   /**
    * Hivemind helper.
    */
-  public readonly hivemind: HivemindAPI;
+  public readonly hivemind: HivemindAPI
 
   /**
    * Accounts by key API helper.
    */
-  public readonly keys: AccountByKeyAPI;
+  public readonly keys: AccountByKeyAPI
 
   /**
    * Transaction status API helper.
    */
-  public readonly transaction: TransactionStatusAPI;
+  public readonly transaction: TransactionStatusAPI
 
   /**
    * Node health tracker for smart failover.
    * Tracks per-node, per-API health and head block freshness.
    */
-  public readonly healthTracker: NodeHealthTracker;
+  public readonly healthTracker: NodeHealthTracker
 
   /**
    * Chain ID for current network.
    */
-  public readonly chainId: Buffer;
+  public readonly chainId: Buffer
 
   /**
    * Address prefix for current network.
    */
-  public readonly addressPrefix: string;
+  public readonly addressPrefix: string
 
-  public currentAddress: string;
-  private readonly timeout: number;
-  private readonly backoff: (tries: number) => number;
-  private readonly failoverThreshold: number;
-  private readonly consoleOnFailover: boolean;
+  public currentAddress: string
+  private readonly timeout: number
+  private readonly backoff: (tries: number) => number
+  private readonly failoverThreshold: number
+  private readonly consoleOnFailover: boolean
 
   /**
    * @param address The address to the Hive RPC server,
@@ -246,44 +246,44 @@ export class Client {
   constructor(address: string | string[], options: ClientOptions = {}) {
     if (options.rebrandedApi) {
       // eslint-disable-next-line no-console
-      console.log('Warning: rebrandedApi is deprecated and safely can be removed from client options');
+      console.log('Warning: rebrandedApi is deprecated and safely can be removed from client options')
     }
-    this.currentAddress = Array.isArray(address) ? address[0] : address;
-    this.address = address;
-    this.options = options;
+    this.currentAddress = Array.isArray(address) ? address[0] : address
+    this.address = address
+    this.options = options
 
-    this.chainId = options.chainId ? Buffer.from(options.chainId, 'hex') : DEFAULT_CHAIN_ID;
-    assert.equal(this.chainId.length, 32, 'invalid chain id');
-    this.addressPrefix = options.addressPrefix || DEFAULT_ADDRESS_PREFIX;
+    this.chainId = options.chainId ? Buffer.from(options.chainId, 'hex') : DEFAULT_CHAIN_ID
+    assert.equal(this.chainId.length, 32, 'invalid chain id')
+    this.addressPrefix = options.addressPrefix || DEFAULT_ADDRESS_PREFIX
 
-    this.timeout = options.timeout || 60 * 1000;
-    this.backoff = options.backoff || defaultBackoff;
-    this.failoverThreshold = options.failoverThreshold || 3;
-    this.consoleOnFailover = options.consoleOnFailover || false;
+    this.timeout = options.timeout || 60 * 1000
+    this.backoff = options.backoff || defaultBackoff
+    this.failoverThreshold = options.failoverThreshold || 3
+    this.consoleOnFailover = options.consoleOnFailover || false
 
-    this.healthTracker = new NodeHealthTracker(options.healthTrackerOptions);
-    this.database = new DatabaseAPI(this);
-    this.broadcast = new BroadcastAPI(this);
-    this.blockchain = new Blockchain(this);
-    this.rc = new RCAPI(this);
-    this.hivemind = new HivemindAPI(this);
-    this.keys = new AccountByKeyAPI(this);
-    this.transaction = new TransactionStatusAPI(this);
+    this.healthTracker = new NodeHealthTracker(options.healthTrackerOptions)
+    this.database = new DatabaseAPI(this)
+    this.broadcast = new BroadcastAPI(this)
+    this.blockchain = new Blockchain(this)
+    this.rc = new RCAPI(this)
+    this.hivemind = new HivemindAPI(this)
+    this.keys = new AccountByKeyAPI(this)
+    this.transaction = new TransactionStatusAPI(this)
   }
 
   /**
    * Create a new client instance configured for the testnet.
    */
   static testnet(options?: ClientOptions) {
-    let opts: ClientOptions = {};
+    let opts: ClientOptions = {}
     if (options) {
-      opts = copy<ClientOptions>(options);
-      opts.agent = options.agent;
+      opts = copy<ClientOptions>(options)
+      opts.agent = options.agent
     }
 
-    opts.addressPrefix = 'TST';
-    opts.chainId = '18dcf0a285365fc58b71f18b3d3fec954aa0c141c44e4e5cb4cf777b9eab274e';
-    return new Client('https://testnet.openhive.network', opts);
+    opts.addressPrefix = 'TST'
+    opts.chainId = '18dcf0a285365fc58b71f18b3d3fec954aa0c141c44e4e5cb4cf777b9eab274e'
+    return new Client('https://testnet.openhive.network', opts)
   }
 
   /**
@@ -295,21 +295,21 @@ export class Client {
    *
    */
   public async call<T = any>(api: string, method: string, params: any = []): Promise<T> {
-    const isBroadcast = api === 'network_broadcast_api' || method.startsWith('broadcast_transaction');
+    const isBroadcast = api === 'network_broadcast_api' || method.startsWith('broadcast_transaction')
 
     const request: RPCCall = {
       id: 0,
       jsonrpc: '2.0',
       method: api + '.' + method,
       params
-    };
+    }
     const body = JSON.stringify(request, (key, value) => {
       // encode Buffers as hex strings instead of an array of bytes
       if (value && typeof value === 'object' && (value.type === 'Buffer' || value.type === 'UInt8Array')) {
-        return Buffer.from(value.data).toString('hex');
+        return Buffer.from(value.data).toString('hex')
       }
-      return value;
-    });
+      return value
+    })
     const opts: any = {
       body,
       cache: 'no-cache',
@@ -319,24 +319,24 @@ export class Client {
       },
       method: 'POST',
       mode: 'cors'
-    };
+    }
 
     // Self is not defined within Node environments
     // This check is needed because the user agent cannot be set in a browser
     if (typeof self === undefined) {
       opts.headers = {
         'User-Agent': `dhive/${packageVersion}`
-      };
+      }
     }
 
     if (this.options.agent) {
-      opts.agent = this.options.agent;
+      opts.agent = this.options.agent
     }
-    let fetchTimeout: any;
+    let fetchTimeout: any
     if (!isBroadcast) {
       // bit of a hack to work around some nodes high error rates
       // only effective in node.js (until timeout spec lands in browsers)
-      fetchTimeout = (tries) => (tries + 1) * 500;
+      fetchTimeout = (tries) => (tries + 1) * 500
     }
 
     const { response, currentAddress }: { response: RPCResponse; currentAddress: string } = await retryingFetch(
@@ -354,17 +354,17 @@ export class Client {
         isBroadcast,
         consoleOnFailover: this.consoleOnFailover
       }
-    );
+    )
 
     // After failover, change the currently active address
     if (currentAddress !== this.currentAddress) {
-      this.currentAddress = currentAddress;
+      this.currentAddress = currentAddress
     }
 
     // Passively track head block from get_dynamic_global_properties responses.
     // This costs nothing -- we just inspect data we already fetched.
     if (response.result && method === 'get_dynamic_global_properties' && response.result.head_block_number) {
-      this.healthTracker.updateHeadBlock(currentAddress, response.result.head_block_number);
+      this.healthTracker.updateHeadBlock(currentAddress, response.result.head_block_number)
     }
 
     // Handle RPC-level errors.
@@ -375,47 +375,47 @@ export class Client {
       const formatValue = (value: any) => {
         switch (typeof value) {
           case 'object':
-            return JSON.stringify(value);
+            return JSON.stringify(value)
           default:
-            return String(value);
+            return String(value)
         }
-      };
-      const { data } = response.error;
-      let { message } = response.error;
+      }
+      const { data } = response.error
+      let { message } = response.error
       if (data && data.stack && data.stack.length > 0) {
-        const top = data.stack[0];
-        const topData = copy(top.data);
+        const top = data.stack[0]
+        const topData = copy(top.data)
         message = top.format.replace(/\$\{([a-z_]+)\}/gi, (match: string, key: string) => {
-          let rv = match;
+          let rv = match
           if (topData[key]) {
-            rv = formatValue(topData[key]);
-            delete topData[key];
+            rv = formatValue(topData[key])
+            delete topData[key]
           }
-          return rv;
-        });
+          return rv
+        })
         const unformattedData = Object.keys(topData)
           .map((key) => ({ key, value: formatValue(topData[key]) }))
-          .map((item) => `${item.key}=${item.value}`);
+          .map((item) => `${item.key}=${item.value}`)
         if (unformattedData.length > 0) {
-          message += ' ' + unformattedData.join(' ');
+          message += ' ' + unformattedData.join(' ')
         }
       }
 
       // Track RPC errors that indicate node/plugin issues (not user errors).
-      const rpcCode = response.error.code;
+      const rpcCode = response.error.code
       if (rpcCode === -32601 || rpcCode === -32603) {
-        this.healthTracker.recordApiFailure(currentAddress, api);
+        this.healthTracker.recordApiFailure(currentAddress, api)
       }
 
-      throw new VError({ info: data, name: 'RPCError' }, message);
+      throw new VError({ info: data, name: 'RPCError' }, message)
     }
-    assert.equal(response.id, request.id, 'got invalid response id');
-    return response.result;
+    assert.equal(response.id, request.id, 'got invalid response id')
+    return response.result
   }
 
   public updateOperations(_rebrandedApi: boolean) {
     // eslint-disable-next-line no-console
-    console.log('Warning: call to updateOperations() is deprecated and can safely be removed');
+    console.log('Warning: call to updateOperations() is deprecated and can safely be removed')
   }
 }
 
@@ -423,4 +423,4 @@ export class Client {
  * Default backoff function.
  * ```min(tries*10^2, 10 seconds)```
  */
-const defaultBackoff = (tries: number): number => Math.min(Math.pow(tries * 10, 2), 10 * 1000);
+const defaultBackoff = (tries: number): number => Math.min(Math.pow(tries * 10, 2), 10 * 1000)

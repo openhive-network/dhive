@@ -1,1 +1,1 @@
-require('../src/index-node');
+require('../src/index-node')
