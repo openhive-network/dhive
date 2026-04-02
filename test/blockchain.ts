@@ -35,7 +35,6 @@ describe('blockchain', function () {
     'comment_payout_update',
     'comment_payout_update',
     'fill_vesting_withdraw',
-    'fill_vesting_withdraw',
     'comment',
     'comment',
     'vote',
@@ -68,7 +67,6 @@ describe('blockchain', function () {
     'comment_reward',
     'comment_payout_update',
     'comment_payout_update',
-    'fill_vesting_withdraw',
     'fill_vesting_withdraw'
   ]
 

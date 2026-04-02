@@ -281,9 +281,9 @@ export class Client {
       opts.agent = options.agent
     }
 
-    opts.addressPrefix = 'TST'
-    opts.chainId = '18dcf0a285365fc58b71f18b3d3fec954aa0c141c44e4e5cb4cf777b9eab274e'
-    return new Client('https://testnet.openhive.network', opts)
+    opts.addressPrefix = 'STM'
+    opts.chainId = '4200000000000000000000000000000000000000000000000000000000000000'
+    return new Client('https://api.fake.openhive.network', opts)
   }
 
   /**

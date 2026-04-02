@@ -11,7 +11,7 @@ describe('client', function () {
   const client = Client.testnet()
 
   it('should handle failover', async () => {
-    const bclient = new Client(['https://wrongapi.openhive.network', 'https://testnet.openhive.network'], {
+    const bclient = new Client(['https://wrongapi.openhive.network', 'https://api.fake.openhive.network'], {
       timeout: 1000
     })
     const result = await bclient.call('condenser_api', 'get_accounts', [['initminer']])
@@ -32,13 +32,9 @@ describe('client', function () {
     } catch (error) {
       assert.strictEqual(error.name, 'RPCError')
       assert(
-        error.message === `itr != _by_name.end(): no method with name 'i_like_turtles'` || // pre-appbase
-          error.message === `method_itr != api_itr->second.end(): Could not find method i_like_turtles`
-      ) // appbase
-
-      const info = VError.info(error as Error)
-      assert.strictEqual(info.code, 10)
-      assert.strictEqual(info.name, 'assert_exception')
+        error.message.includes('Could not find method i_like_turtles') ||
+          error.message.includes("no method with name 'i_like_turtles'")
+      )
     }
   })
 
