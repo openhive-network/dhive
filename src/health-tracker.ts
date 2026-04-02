@@ -74,8 +74,8 @@ export interface HealthTrackerOptions {
 
 export class NodeHealthTracker {
   private health: Map<string, NodeState> = new Map()
-  private bestKnownHeadBlock: number = 0
-  private bestKnownHeadBlockTime: number = 0
+  private bestKnownHeadBlock = 0
+  private bestKnownHeadBlockTime = 0
 
   private readonly nodeCooldownMs: number
   private readonly apiCooldownMs: number
@@ -93,21 +93,6 @@ export class NodeHealthTracker {
     this.staleBlockThreshold = options.staleBlockThreshold ?? 30
     this.headBlockTtlMs = options.headBlockTtlMs ?? 120_000
     this.defaultRateLimitMs = options.defaultRateLimitMs ?? 10_000
-  }
-
-  private getOrCreate(node: string): NodeState {
-    let state = this.health.get(node)
-    if (!state) {
-      state = {
-        apiFailures: new Map(),
-        consecutiveFailures: 0,
-        lastFailure: 0,
-        headBlock: 0,
-        headBlockUpdatedAt: 0
-      }
-      this.health.set(node, state)
-    }
-    return state
   }
 
   /**
@@ -150,7 +135,9 @@ export class NodeHealthTracker {
    */
   isRateLimited(node: string): boolean {
     const state = this.health.get(node)
-    if (!state?.rateLimit) return false
+    if (!state?.rateLimit) {
+      return false
+    }
     return Date.now() < state.rateLimit.retryAfter
   }
 
@@ -164,19 +151,14 @@ export class NodeHealthTracker {
     this.incrementApiFailure(state, api)
   }
 
-  private incrementApiFailure(state: NodeState, api: string): void {
-    const apiState = state.apiFailures.get(api) || { count: 0, lastFailure: 0 }
-    apiState.count++
-    apiState.lastFailure = Date.now()
-    state.apiFailures.set(api, apiState)
-  }
-
   /**
    * Update head block number for a node.
    * Called passively when get_dynamic_global_properties responses are observed.
    */
   updateHeadBlock(node: string, headBlock: number): void {
-    if (!headBlock || headBlock <= 0) return
+    if (!headBlock || headBlock <= 0) {
+      return
+    }
     const state = this.getOrCreate(node)
     state.headBlock = headBlock
     state.headBlockUpdatedAt = Date.now()
@@ -191,7 +173,9 @@ export class NodeHealthTracker {
    */
   isNodeHealthy(node: string, api?: string): boolean {
     const state = this.health.get(node)
-    if (!state) return true // Unknown nodes are assumed healthy
+    if (!state) {
+      return true
+    } // Unknown nodes are assumed healthy
 
     const now = Date.now()
 
@@ -286,5 +270,27 @@ export class NodeHealthTracker {
       })
     }
     return snapshot
+  }
+
+  private getOrCreate(node: string): NodeState {
+    let state = this.health.get(node)
+    if (!state) {
+      state = {
+        apiFailures: new Map(),
+        consecutiveFailures: 0,
+        lastFailure: 0,
+        headBlock: 0,
+        headBlockUpdatedAt: 0
+      }
+      this.health.set(node, state)
+    }
+    return state
+  }
+
+  private incrementApiFailure(state: NodeState, api: string): void {
+    const apiState = state.apiFailures.get(api) || { count: 0, lastFailure: 0 }
+    apiState.count++
+    apiState.lastFailure = Date.now()
+    state.apiFailures.set(api, apiState)
   }
 }

@@ -165,12 +165,12 @@ function isWif(privWif: string | Buffer): boolean {
 export class PublicKey {
   public readonly uncompressed: Buffer
 
-  constructor(public readonly key: any, public readonly prefix = DEFAULT_ADDRESS_PREFIX) {
+  constructor(readonly key: any, readonly prefix = DEFAULT_ADDRESS_PREFIX) {
     assert(secp256k1.publicKeyVerify(key), 'invalid public key')
     this.uncompressed = Buffer.from(secp256k1.publicKeyConvert(key, false))
   }
 
-  public static fromBuffer(key: ByteBuffer) {
+  static fromBuffer(key: ByteBuffer) {
     assert(secp256k1.publicKeyVerify(key), 'invalid buffer as public key')
     return { key }
   }
@@ -178,7 +178,7 @@ export class PublicKey {
   /**
    * Create a new instance from a WIF-encoded key.
    */
-  public static fromString(wif: string) {
+  static fromString(wif: string) {
     const { key, prefix } = decodePublic(wif)
     return new PublicKey(key, prefix)
   }
@@ -186,7 +186,7 @@ export class PublicKey {
   /**
    * Create a new instance.
    */
-  public static from(value: string | PublicKey) {
+  static from(value: string | PublicKey) {
     if (value instanceof PublicKey) {
       return value
     } else {
@@ -199,28 +199,28 @@ export class PublicKey {
    * @param message 32-byte message to verify.
    * @param signature Signature to verify.
    */
-  public verify(message: Buffer, signature: Signature): boolean {
+  verify(message: Buffer, signature: Signature): boolean {
     return secp256k1.verify(message, signature.data, this.key)
   }
 
   /**
    * Return a WIF-encoded representation of the key.
    */
-  public toString() {
+  toString() {
     return encodePublic(this.key, this.prefix)
   }
 
   /**
    * Return JSON representation of this key, same as toString().
    */
-  public toJSON() {
+  toJSON() {
     return this.toString()
   }
 
   /**
    * Used by `utils.inspect` and `console.log` in node.js.
    */
-  public inspect() {
+  inspect() {
     return `PublicKey: ${this.toString()}`
   }
 }
@@ -240,7 +240,7 @@ export class PrivateKey {
   /**
    * Convenience to create a new instance from WIF string or buffer.
    */
-  public static from(value: string | Buffer) {
+  static from(value: string | Buffer) {
     if (typeof value === 'string') {
       return PrivateKey.fromString(value)
     } else {
@@ -251,26 +251,26 @@ export class PrivateKey {
   /**
    * Create a new instance from a WIF-encoded key.
    */
-  public static fromString(wif: string) {
+  static fromString(wif: string) {
     return new PrivateKey(decodePrivate(wif).slice(1))
   }
 
   /**
    * Create a new instance from a seed.
    */
-  public static fromSeed(seed: string) {
+  static fromSeed(seed: string) {
     return new PrivateKey(sha256(seed))
   }
 
   /**
    * Create key from username and password.
    */
-  public static fromLogin(username: string, password: string, role: KeyRole = 'active') {
+  static fromLogin(username: string, password: string, role: KeyRole = 'active') {
     const seed = username + role + password
     return PrivateKey.fromSeed(seed)
   }
 
-  public multiply(pub: any): Buffer {
+  multiply(pub: any): Buffer {
     return Buffer.from(secp256k1.publicKeyTweakMul(pub.key, this.secret, false))
   }
 
@@ -278,7 +278,7 @@ export class PrivateKey {
    * Sign message.
    * @param message 32-byte message.
    */
-  public sign(message: Buffer): Signature {
+  sign(message: Buffer): Signature {
     let rv: { signature: Buffer; recovery: number }
     let attempts = 0
     do {
@@ -293,14 +293,14 @@ export class PrivateKey {
   /**
    * Derive the public key for this private key.
    */
-  public createPublic(prefix?: string): PublicKey {
+  createPublic(prefix?: string): PublicKey {
     return new PublicKey(secp256k1.publicKeyCreate(this.key), prefix)
   }
 
   /**
    * Return a WIF-encoded representation of the key.
    */
-  public toString() {
+  toString() {
     return encodePrivate(Buffer.concat([NETWORK_ID, this.key]))
   }
 
@@ -308,7 +308,7 @@ export class PrivateKey {
    * Used by `utils.inspect` and `console.log` in node.js. Does not show the full key
    * to get the full encoded key you need to explicitly call {@link toString}.
    */
-  public inspect() {
+  inspect() {
     const key = this.toString()
     return `PrivateKey: ${key.slice(0, 6)}...${key.slice(-6)}`
   }
@@ -316,7 +316,7 @@ export class PrivateKey {
   /**
    * Get shared secret for memo cryptography
    */
-  public get_shared_secret(public_key: PublicKey): Buffer {
+  get_shared_secret(public_key: PublicKey): Buffer {
     const KBP = ecurve.Point.fromAffine(
       secp256k1Curve,
       bigInteger.fromBuffer(public_key.uncompressed.slice(1, 33)),
@@ -336,14 +336,14 @@ export class Signature {
     assert.equal(data.length, 64, 'invalid signature')
   }
 
-  public static fromBuffer(buffer: Buffer) {
+  static fromBuffer(buffer: Buffer) {
     assert.equal(buffer.length, 65, 'invalid signature')
     const recovery = buffer.readUInt8(0) - 31
     const data = buffer.slice(1)
     return new Signature(data, recovery)
   }
 
-  public static fromString(string: string) {
+  static fromString(string: string) {
     return Signature.fromBuffer(Buffer.from(string, 'hex'))
   }
 
@@ -351,18 +351,18 @@ export class Signature {
    * Recover public key from signature by providing original signed message.
    * @param message 32-byte message that was used to create the signature.
    */
-  public recover(message: Buffer, prefix?: string) {
+  recover(message: Buffer, prefix?: string) {
     return new PublicKey(secp256k1.recover(message, this.data, this.recovery), prefix)
   }
 
-  public toBuffer() {
+  toBuffer() {
     const buffer = Buffer.alloc(65)
     buffer.writeUInt8(this.recovery + 31, 0)
     this.data.copy(buffer, 1)
     return buffer
   }
 
-  public toString() {
+  toString() {
     return this.toBuffer().toString('hex')
   }
 }

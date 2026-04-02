@@ -294,7 +294,7 @@ export class Client {
    * @param params  Array of parameters to pass to the method, optional.
    *
    */
-  public async call<T = any>(api: string, method: string, params: any = []): Promise<T> {
+  async call<T = any>(api: string, method: string, params: any = []): Promise<T> {
     const isBroadcast = api === 'network_broadcast_api' || method.startsWith('broadcast_transaction')
 
     const request: RPCCall = {
@@ -413,7 +413,7 @@ export class Client {
     return response.result
   }
 
-  public updateOperations(_rebrandedApi: boolean) {
+  updateOperations(_rebrandedApi: boolean) {
     // eslint-disable-next-line no-console
     console.log('Warning: call to updateOperations() is deprecated and can safely be removed')
   }

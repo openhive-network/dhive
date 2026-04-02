@@ -33,9 +33,10 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import fetch from 'cross-fetch'
 import { EventEmitter } from 'events'
 import { PassThrough } from 'stream'
+import fetch from 'cross-fetch'
+import * as ByteBuffer from '@ecency/bytebuffer'
 import { NodeHealthTracker } from './health-tracker'
 
 // Errors that indicate the request never reached the server — safe to retry even for broadcasts
@@ -119,7 +120,9 @@ export function copy<T>(object: T): T {
  * Check if an error code indicates the request never reached the server.
  */
 function isPreConnectionError(error: any): boolean {
-  if (!error || !error.code) return false
+  if (!error || !error.code) {
+    return false
+  }
   return PRE_CONNECTION_ERRORS.some((code) => error.code.includes(code))
 }
 
@@ -128,9 +131,13 @@ function isPreConnectionError(error: any): boolean {
  * Matches any known network/timeout error, or errors with no code (HTTP errors).
  */
 function shouldFailover(error: any): boolean {
-  if (!error) return true
+  if (!error) {
+    return true
+  }
   // HTTP errors (from !response.ok) have no .code — they should trigger failover
-  if (!error.code) return true
+  if (!error.code) {
+    return true
+  }
   return FAILOVER_ERRORS.some((code) => error.code.includes(code))
 }
 
@@ -187,7 +194,7 @@ export async function retryingFetch(
   let round = 0
   let lastError: any
 
-  // tslint:disable-next-line: no-constant-condition
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     const node = orderedNodes[nodeIndex]
 
@@ -195,7 +202,9 @@ export async function retryingFetch(
       // Skip nodes that are currently rate-limited
       if (healthTracker && healthTracker.isRateLimited(node)) {
         lastError = new Error(`Node ${node} is rate-limited, skipping`)
-        if (healthTracker && api) healthTracker.recordFailure(node, api)
+        if (healthTracker && api) {
+          healthTracker.recordFailure(node, api)
+        }
         throw lastError
       }
 
@@ -218,7 +227,9 @@ export async function retryingFetch(
 
         // Handle 503 — don't parse JSON body, just fail over
         if (response.status === 503) {
-          if (healthTracker && api) healthTracker.recordFailure(node, api)
+          if (healthTracker && api) {
+            healthTracker.recordFailure(node, api)
+          }
           throw new Error(`HTTP 503: Service Temporarily Unavailable`)
         }
 
@@ -230,7 +241,9 @@ export async function retryingFetch(
         try {
           const resJson = await response.json()
           if (resJson.jsonrpc === '2.0') {
-            if (healthTracker && api) healthTracker.recordSuccess(node, api)
+            if (healthTracker && api) {
+              healthTracker.recordSuccess(node, api)
+            }
             return { response: resJson, currentAddress: node }
           }
         } catch {
@@ -270,7 +283,7 @@ export async function retryingFetch(
             throw error
           }
           if (logFailover) {
-            // tslint:disable-next-line: no-console
+            // eslint-disable-next-line no-console
             console.log(`Broadcast failover to: ${orderedNodes[nodeIndex]} (${error.code}, request never sent)`)
           }
           continue
@@ -323,7 +336,7 @@ export async function retryingFetch(
         }
 
         if (logFailover) {
-          // tslint:disable-next-line: no-console
+          // eslint-disable-next-line no-console
           console.log(
             `Switched Hive RPC: ${orderedNodes[nodeIndex]} (previous: ${node}, error: ${error.code || error.message})`
           )
@@ -341,7 +354,6 @@ export async function retryingFetch(
 
 // Hack to be able to generate a valid witness_set_properties op
 // Can hopefully be removed when hived's JSON representation is fixed
-import * as ByteBuffer from '@ecency/bytebuffer'
 import { Asset, PriceType } from './chain/asset'
 import { WitnessSetPropertiesOperation } from './chain/operation'
 import { Serializer, Types } from './chain/serializer'
@@ -409,7 +421,7 @@ export const buildWitnessUpdateOp = (owner: string, props: WitnessProps): Witnes
 const JSBI = require('jsbi')
 export const operationOrders = {
   vote: 0,
-  // tslint:disable-next-line: object-literal-sort-keys
+  // eslint-disable-next-line sort-keys
   comment: 1,
   transfer: 2,
   transfer_to_vesting: 3,
