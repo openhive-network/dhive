@@ -1,7 +1,7 @@
 import 'mocha';
 import * as assert from 'assert';
 import { randomBytes, createHash } from 'crypto';
-import * as ByteBuffer from 'bytebuffer';
+import * as ByteBuffer from '@ecency/bytebuffer';
 
 import { DEFAULT_CHAIN_ID, PrivateKey, PublicKey, Signature, cryptoUtils, Transaction, Types, Operation } from '../src';
 

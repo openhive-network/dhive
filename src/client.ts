@@ -37,13 +37,14 @@ import * as assert from 'assert';
 import { VError } from 'verror';
 import packageVersion from './version';
 
+import { Blockchain } from './helpers/blockchain';
 import { BroadcastAPI } from './helpers/broadcast';
 import { DatabaseAPI } from './helpers/database';
-import { Blockchain } from './helpers/blockchain';
 import { HivemindAPI } from './helpers/hivemind';
 import { AccountByKeyAPI } from './helpers/key';
 import { RCAPI } from './helpers/rc';
 import { TransactionStatusAPI } from './helpers/transaction';
+import { NodeHealthTracker, HealthTrackerOptions } from './health-tracker';
 import { copy, retryingFetch } from './utils';
 
 /**
@@ -94,13 +95,13 @@ interface RPCError {
    data?: any;
 }
 
-interface RPCResponse<T = any> {
+interface RPCResponse {
    /**
     * Response sequence number, corresponding to request sequence number.
     */
    id: number;
    error?: RPCError;
-   result?: T;
+   result?: any;
 }
 
 /**
@@ -145,7 +146,7 @@ export interface ClientOptions {
    /**
     * Retry backoff function, returns milliseconds. Default = {@link defaultBackoff}.
     */
-   backoff?: typeof defaultBackoff;
+   backoff?: (tries: number) => number;
    /**
     * Node.js http(s) agent, use if you want http keep-alive.
     * Defaults to using https.globalAgent.
@@ -156,6 +157,11 @@ export interface ClientOptions {
     * Deprecated - don't use
     */
    rebrandedApi?: boolean;
+   /**
+    * Options for the node health tracker.
+    * Controls cooldown periods, stale block thresholds, etc.
+    */
+   healthTrackerOptions?: HealthTrackerOptions;
 }
 
 /**
@@ -211,6 +217,12 @@ export class Client {
    public readonly transaction: TransactionStatusAPI;
 
    /**
+    * Node health tracker for smart failover.
+    * Tracks per-node, per-API health and head block freshness.
+    */
+   public readonly healthTracker: NodeHealthTracker;
+
+   /**
     * Chain ID for current network.
     */
    public readonly chainId: Buffer;
@@ -222,7 +234,7 @@ export class Client {
 
    public currentAddress: string;
    private readonly timeout: number;
-   private readonly backoff: typeof defaultBackoff;
+   private readonly backoff: (tries: number) => number;
    private readonly failoverThreshold: number;
    private readonly consoleOnFailover: boolean;
 
@@ -249,6 +261,7 @@ export class Client {
       this.failoverThreshold = options.failoverThreshold || 3;
       this.consoleOnFailover = options.consoleOnFailover || false;
 
+      this.healthTracker = new NodeHealthTracker(options.healthTrackerOptions);
       this.database = new DatabaseAPI(this);
       this.broadcast = new BroadcastAPI(this);
       this.blockchain = new Blockchain(this);
@@ -281,17 +294,19 @@ export class Client {
     * @param params  Array of parameters to pass to the method, optional.
     *
     */
-   async call<T = any>(api: string, method: string, params: any = []): Promise<T> {
+   public async call<T = any>(api: string, method: string, params: any = []): Promise<T> {
+      const isBroadcast = api === 'network_broadcast_api' || method.startsWith('broadcast_transaction');
+
       const request: RPCCall = {
          id: 0,
          jsonrpc: '2.0',
          method: api + '.' + method,
          params
       };
-      const body = JSON.stringify(request, (key: string, value: any): any => {
+      const body = JSON.stringify(request, (key, value) => {
          // encode Buffers as hex strings instead of an array of bytes
          if (value && typeof value === 'object' && (value.type === 'Buffer' || value.type === 'UInt8Array')) {
-            return Buffer.from(value.data as Buffer).toString('hex');
+            return Buffer.from(value.data).toString('hex');
          }
          return value;
       });
@@ -317,14 +332,14 @@ export class Client {
       if (this.options.agent) {
          opts.agent = this.options.agent;
       }
-      let fetchTimeout: undefined | ((tries: number) => number);
-      if (api !== 'network_broadcast_api' && !method.startsWith('broadcast_transaction')) {
+      let fetchTimeout: any;
+      if (!isBroadcast) {
          // bit of a hack to work around some nodes high error rates
          // only effective in node.js (until timeout spec lands in browsers)
          fetchTimeout = (tries) => (tries + 1) * 500;
       }
 
-      const { response, currentAddress }: { response: RPCResponse<T>; currentAddress: string } = await retryingFetch(
+      const { response, currentAddress }: { response: RPCResponse; currentAddress: string } = await retryingFetch(
          this.currentAddress,
          this.address,
          opts,
@@ -332,14 +347,30 @@ export class Client {
          this.failoverThreshold,
          this.consoleOnFailover,
          this.backoff,
-         fetchTimeout
+         fetchTimeout,
+         {
+            healthTracker: this.healthTracker,
+            api,
+            isBroadcast,
+            consoleOnFailover: this.consoleOnFailover
+         }
       );
 
       // After failover, change the currently active address
       if (currentAddress !== this.currentAddress) {
          this.currentAddress = currentAddress;
       }
-      // resolve FC error messages into something more readable
+
+      // Passively track head block from get_dynamic_global_properties responses.
+      // This costs nothing -- we just inspect data we already fetched.
+      if (response.result && method === 'get_dynamic_global_properties' && response.result.head_block_number) {
+         this.healthTracker.updateHeadBlock(currentAddress, response.result.head_block_number);
+      }
+
+      // Handle RPC-level errors.
+      // Unlike network errors, these mean the node responded but returned an error.
+      // We record it as an API-specific failure so the health tracker can
+      // deprioritize this node for this API in future calls.
       if (response.error) {
          const formatValue = (value: any) => {
             switch (typeof value) {
@@ -362,20 +393,27 @@ export class Client {
                }
                return rv;
             });
-            const unformattedData = Object.keys(topData as Record<string, unknown>)
+            const unformattedData = Object.keys(topData)
                .map((key) => ({ key, value: formatValue(topData[key]) }))
                .map((item) => `${item.key}=${item.value}`);
             if (unformattedData.length > 0) {
                message += ' ' + unformattedData.join(' ');
             }
          }
+
+         // Track RPC errors that indicate node/plugin issues (not user errors).
+         const rpcCode = response.error.code;
+         if (rpcCode === -32601 || rpcCode === -32603) {
+            this.healthTracker.recordApiFailure(currentAddress, api);
+         }
+
          throw new VError({ info: data, name: 'RPCError' }, message);
       }
       assert.equal(response.id, request.id, 'got invalid response id');
-      return response.result as T;
+      return response.result;
    }
 
-   updateOperations(_rebrandedApi: boolean) {
+   public updateOperations(_rebrandedApi: boolean) {
       // eslint-disable-next-line no-console
       console.log('Warning: call to updateOperations() is deprecated and can safely be removed');
    }

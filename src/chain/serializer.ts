@@ -33,7 +33,7 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import * as ByteBuffer from 'bytebuffer';
+import * as ByteBuffer from '@ecency/bytebuffer';
 import { PublicKey } from '../crypto';
 import { Asset } from './asset';
 import { HexBuffer } from './misc';
@@ -596,6 +596,14 @@ const TransactionSerializer = ObjectSerializer([
    ['extensions', ArraySerializer(StringSerializer)]
 ]);
 
+const EncryptedMemoSerializer = ObjectSerializer([
+   ['from', PublicKeySerializer],
+   ['to', PublicKeySerializer],
+   ['nonce', UInt64Serializer],
+   ['check', UInt32Serializer],
+   ['encrypted', BinarySerializer()]
+]);
+
 export const Types = {
    Array: ArraySerializer,
    Asset: AssetSerializer,
@@ -603,6 +611,7 @@ export const Types = {
    Binary: BinarySerializer,
    Boolean: BooleanSerializer,
    Date: DateSerializer,
+   EncryptedMemo: EncryptedMemoSerializer,
    FlatMap: FlatMapSerializer,
    Int16: Int16Serializer,
    Int32: Int32Serializer,

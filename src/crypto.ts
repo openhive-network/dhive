@@ -35,15 +35,22 @@
 
 import * as assert from 'assert';
 import { createHash } from 'crypto';
+import * as bigInteger from 'bigi';
 import * as bs58 from 'bs58';
-import * as ByteBuffer from 'bytebuffer';
+import * as ByteBuffer from '@ecency/bytebuffer';
+import * as ecurve from 'ecurve';
+import * as Ripemd160 from 'ripemd160';
 import * as secp256k1 from 'secp256k1';
 import { VError } from 'verror';
-
 import { Types } from './chain/serializer';
 import { SignedTransaction, Transaction } from './chain/transaction';
 import { DEFAULT_ADDRESS_PREFIX, DEFAULT_CHAIN_ID } from './client';
 import { copy } from './utils';
+
+/**
+ * secp256k1 ecurve
+ */
+const secp256k1Curve = ecurve.getCurveByName('secp256k1');
 
 /**
  * Network id used in WIF-encoding.
@@ -53,73 +60,87 @@ export const NETWORK_ID = Buffer.from([0x80]);
 /**
  * Return ripemd160 hash of input.
  */
-const ripemd160 = (input: Buffer | string): Buffer => createHash('ripemd160').update(input).digest();
+function ripemd160(input: Buffer | string): Buffer {
+   return new Ripemd160().update(input).digest();
+}
 
 /**
  * Return sha256 hash of input.
  */
-const sha256 = (input: Buffer | string): Buffer => createHash('sha256').update(input).digest();
+function sha256(input: Buffer | string): Buffer {
+   return createHash('sha256').update(input).digest();
+}
+
+/**
+ * Return sha512 hash of input
+ */
+function sha512(input: Buffer | string): Buffer {
+   return createHash('sha512').update(input).digest();
+}
 
 /**
  * Return 2-round sha256 hash of input.
  */
-const doubleSha256 = (input: Buffer | string): Buffer => sha256(sha256(input));
+function doubleSha256(input: Buffer | string): Buffer {
+   return sha256(sha256(input));
+}
 
 /**
  * Encode public key with bs58+ripemd160-checksum.
  */
-const encodePublic = (key: Buffer, prefix: string): string => {
+function encodePublic(key: Buffer, prefix: string): string {
    const checksum = ripemd160(key);
    return prefix + bs58.encode(Buffer.concat([key, checksum.slice(0, 4)]));
-};
+}
 
 /**
  * Decode bs58+ripemd160-checksum encoded public key.
  */
-const decodePublic = (encodedKey: string): { key: Buffer; prefix: string } => {
+function decodePublic(encodedKey: string): { key: Buffer; prefix: string } {
    const prefix = encodedKey.slice(0, 3);
    assert.equal(prefix.length, 3, 'public key invalid prefix');
    encodedKey = encodedKey.slice(3);
-   const buffer: Uint8Array = bs58.decode(encodedKey);
-   const checksum = Buffer.from(buffer.slice(-4));
+   const buffer: Buffer = bs58.decode(encodedKey);
+   const checksum = buffer.slice(-4);
    const key = buffer.slice(0, -4);
-   const checksumVerify = ripemd160(Buffer.from(key)).slice(0, 4);
+   const checksumVerify = ripemd160(key).slice(0, 4);
    assert.deepEqual(checksumVerify, checksum, 'public key checksum mismatch');
-   return { key: Buffer.from(key), prefix };
-};
+   return { key, prefix };
+}
 
 /**
  * Encode bs58+doubleSha256-checksum private key.
  */
-const encodePrivate = (key: Buffer): string => {
+function encodePrivate(key: Buffer): string {
    assert.equal(key.readUInt8(0), 0x80, 'private key network id mismatch');
    const checksum = doubleSha256(key);
    return bs58.encode(Buffer.concat([key, checksum.slice(0, 4)]));
-};
+}
 
 /**
  * Decode bs58+doubleSha256-checksum encoded private key.
  */
-const decodePrivate = (encodedKey: string): Buffer => {
-   const buffer: Buffer = Buffer.from(bs58.decode(encodedKey));
+function decodePrivate(encodedKey: string): Buffer {
+   const buffer: Buffer = bs58.decode(encodedKey);
    assert.deepEqual(buffer.slice(0, 1), NETWORK_ID, 'private key network id mismatch');
    const checksum = buffer.slice(-4);
    const key = buffer.slice(0, -4);
    const checksumVerify = doubleSha256(key).slice(0, 4);
    assert.deepEqual(checksumVerify, checksum, 'private key checksum mismatch');
    return key;
-};
+}
 
 /**
  * Return true if signature is canonical, otherwise false.
  */
-const isCanonicalSignature = (signature: Buffer): boolean =>
-   !(signature[0] & 0x80) && !(signature[0] === 0 && !(signature[1] & 0x80)) && !(signature[32] & 0x80) && !(signature[32] === 0 && !(signature[33] & 0x80));
+function isCanonicalSignature(signature: Buffer): boolean {
+   return !(signature[0] & 0x80) && !(signature[0] === 0 && !(signature[1] & 0x80)) && !(signature[32] & 0x80) && !(signature[32] === 0 && !(signature[33] & 0x80));
+}
 
 /**
  * Return true if string is wif, otherwise false.
  */
-const isWif = (privWif: string): boolean => {
+function isWif(privWif: string | Buffer): boolean {
    try {
       const bufWif = new Buffer(bs58.decode(privWif));
       const privKey = bufWif.slice(0, -4);
@@ -131,20 +152,28 @@ const isWif = (privWif: string): boolean => {
    } catch (e) {
       return false;
    }
-};
+}
 
 /**
  * ECDSA (secp256k1) public key.
  */
 export class PublicKey {
-   constructor(readonly key: Buffer, readonly prefix = DEFAULT_ADDRESS_PREFIX) {
+   public readonly uncompressed: Buffer;
+
+   constructor(public readonly key: any, public readonly prefix = DEFAULT_ADDRESS_PREFIX) {
       assert(secp256k1.publicKeyVerify(key), 'invalid public key');
+      this.uncompressed = Buffer.from(secp256k1.publicKeyConvert(key, false));
+   }
+
+   public static fromBuffer(key: ByteBuffer) {
+      assert(secp256k1.publicKeyVerify(key), 'invalid buffer as public key');
+      return { key };
    }
 
    /**
     * Create a new instance from a WIF-encoded key.
     */
-   static fromString(wif: string) {
+   public static fromString(wif: string) {
       const { key, prefix } = decodePublic(wif);
       return new PublicKey(key, prefix);
    }
@@ -152,7 +181,7 @@ export class PublicKey {
    /**
     * Create a new instance.
     */
-   static from(value: string | PublicKey) {
+   public static from(value: string | PublicKey) {
       if (value instanceof PublicKey) {
          return value;
       } else {
@@ -165,29 +194,28 @@ export class PublicKey {
     * @param message 32-byte message to verify.
     * @param signature Signature to verify.
     */
-   verify(message: Buffer, signature: Signature): boolean {
-      return secp256k1.ecdsaVerify(signature.data, message, this.key);
+   public verify(message: Buffer, signature: Signature): boolean {
+      return (secp256k1 as any).verify(message, signature.data, this.key);
    }
 
    /**
     * Return a WIF-encoded representation of the key.
     */
-
-   toString() {
+   public toString() {
       return encodePublic(this.key, this.prefix);
    }
 
    /**
     * Return JSON representation of this key, same as toString().
     */
-   toJSON() {
+   public toJSON() {
       return this.toString();
    }
 
    /**
     * Used by `utils.inspect` and `console.log` in node.js.
     */
-   inspect() {
+   public inspect() {
       return `PublicKey: ${this.toString()}`;
    }
 }
@@ -198,6 +226,8 @@ export type KeyRole = 'owner' | 'active' | 'posting' | 'memo';
  * ECDSA (secp256k1) private key.
  */
 export class PrivateKey {
+   public secret: Buffer;
+
    constructor(private key: Buffer) {
       assert(secp256k1.privateKeyVerify(key), 'invalid private key');
    }
@@ -205,7 +235,7 @@ export class PrivateKey {
    /**
     * Convenience to create a new instance from WIF string or buffer.
     */
-   static from(value: string | Buffer) {
+   public static from(value: string | Buffer) {
       if (typeof value === 'string') {
          return PrivateKey.fromString(value);
       } else {
@@ -216,52 +246,56 @@ export class PrivateKey {
    /**
     * Create a new instance from a WIF-encoded key.
     */
-   static fromString(wif: string) {
+   public static fromString(wif: string) {
       return new PrivateKey(decodePrivate(wif).slice(1));
    }
 
    /**
     * Create a new instance from a seed.
     */
-   static fromSeed(seed: string) {
+   public static fromSeed(seed: string) {
       return new PrivateKey(sha256(seed));
    }
 
    /**
     * Create key from username and password.
     */
-   static fromLogin(username: string, password: string, role: KeyRole = 'active') {
+   public static fromLogin(username: string, password: string, role: KeyRole = 'active') {
       const seed = username + role + password;
       return PrivateKey.fromSeed(seed);
+   }
+
+   public multiply(pub: any): Buffer {
+      return Buffer.from(secp256k1.publicKeyTweakMul(pub.key, this.secret, false));
    }
 
    /**
     * Sign message.
     * @param message 32-byte message.
     */
-   sign(message: Buffer): Signature {
-      let rv: { signature: Uint8Array; recid: number };
+   public sign(message: Buffer): Signature {
+      let rv: { signature: Buffer; recovery: number };
       let attempts = 0;
       do {
          const options = {
             data: sha256(Buffer.concat([message, Buffer.alloc(1, ++attempts)]))
          };
-         rv = secp256k1.ecdsaSign(message, this.key, options);
-      } while (!isCanonicalSignature(Buffer.from(rv.signature)));
-      return new Signature(Buffer.from(rv.signature), rv.recid);
+         rv = (secp256k1 as any).sign(message, this.key, options);
+      } while (!isCanonicalSignature(rv.signature));
+      return new Signature(rv.signature, rv.recovery);
    }
 
    /**
     * Derive the public key for this private key.
     */
-   createPublic(prefix?: string): PublicKey {
-      return new PublicKey(Buffer.from(secp256k1.publicKeyCreate(this.key)), prefix);
+   public createPublic(prefix?: string): PublicKey {
+      return new PublicKey(secp256k1.publicKeyCreate(this.key), prefix);
    }
 
    /**
     * Return a WIF-encoded representation of the key.
     */
-   toString() {
+   public toString() {
       return encodePrivate(Buffer.concat([NETWORK_ID, this.key]));
    }
 
@@ -269,9 +303,23 @@ export class PrivateKey {
     * Used by `utils.inspect` and `console.log` in node.js. Does not show the full key
     * to get the full encoded key you need to explicitly call {@link toString}.
     */
-   inspect() {
+   public inspect() {
       const key = this.toString();
       return `PrivateKey: ${key.slice(0, 6)}...${key.slice(-6)}`;
+   }
+
+   /**
+    * Get shared secret for memo cryptography
+    */
+   public get_shared_secret(public_key: PublicKey): Buffer {
+      const KBP = ecurve.Point.fromAffine(
+         secp256k1Curve,
+         bigInteger.fromBuffer(public_key.uncompressed.slice(1, 33)),
+         bigInteger.fromBuffer(public_key.uncompressed.slice(33, 65))
+      );
+      const P = KBP.multiply(bigInteger.fromBuffer(this.key));
+      const S = P.affineX.toBuffer({ size: 32 });
+      return sha512(S);
    }
 }
 
@@ -283,14 +331,14 @@ export class Signature {
       assert.equal(data.length, 64, 'invalid signature');
    }
 
-   static fromBuffer(buffer: Buffer): Signature {
+   public static fromBuffer(buffer: Buffer) {
       assert.equal(buffer.length, 65, 'invalid signature');
       const recovery = buffer.readUInt8(0) - 31;
       const data = buffer.slice(1);
       return new Signature(data, recovery);
    }
 
-   static fromString(string: string): Signature {
+   public static fromString(string: string) {
       return Signature.fromBuffer(Buffer.from(string, 'hex'));
    }
 
@@ -298,27 +346,26 @@ export class Signature {
     * Recover public key from signature by providing original signed message.
     * @param message 32-byte message that was used to create the signature.
     */
-   recover(message: Buffer, prefix?: string): PublicKey {
-      return new PublicKey(Buffer.from(secp256k1.ecdsaRecover(this.data, this.recovery, message)), prefix);
+   public recover(message: Buffer, prefix?: string) {
+      return new PublicKey((secp256k1 as any).recover(message, this.data, this.recovery), prefix);
    }
 
-   toBuffer(): Buffer {
+   public toBuffer() {
       const buffer = Buffer.alloc(65);
       buffer.writeUInt8(this.recovery + 31, 0);
       this.data.copy(buffer, 1);
       return buffer;
    }
 
-   toString(): string {
+   public toString() {
       return this.toBuffer().toString('hex');
    }
 }
-
 /**
  * Return the sha256 transaction digest.
  * @param chainId The chain id to use when creating the hash.
  */
-const transactionDigest = (transaction: Transaction | SignedTransaction, chainId: Buffer = DEFAULT_CHAIN_ID) => {
+function transactionDigest(transaction: Transaction | SignedTransaction, chainId: Buffer = DEFAULT_CHAIN_ID) {
    const buffer = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN);
    try {
       Types.Transaction(buffer, transaction);
@@ -330,7 +377,7 @@ const transactionDigest = (transaction: Transaction | SignedTransaction, chainId
    const transactionData = Buffer.from(buffer.toBuffer());
    const digest = sha256(Buffer.concat([chainId, transactionData]));
    return digest;
-};
+}
 
 /**
  * Return copy of transaction with signature appended to signatures array.
@@ -338,7 +385,7 @@ const transactionDigest = (transaction: Transaction | SignedTransaction, chainId
  * @param keys Key(s) to sign transaction with.
  * @param options Chain id and address prefix, compatible with {@link Client}.
  */
-const signTransaction = (transaction: Transaction, keys: PrivateKey | PrivateKey[], chainId: Buffer = DEFAULT_CHAIN_ID) => {
+function signTransaction(transaction: Transaction, keys: PrivateKey | PrivateKey[], chainId: Buffer = DEFAULT_CHAIN_ID) {
    const digest = transactionDigest(transaction, chainId);
    const signedTransaction = copy(transaction) as SignedTransaction;
    if (!signedTransaction.signatures) {
@@ -354,9 +401,9 @@ const signTransaction = (transaction: Transaction, keys: PrivateKey | PrivateKey
    }
 
    return signedTransaction;
-};
+}
 
-const generateTrxId = (transaction: Transaction) => {
+function generateTrxId(transaction: Transaction) {
    const buffer = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN);
    try {
       Types.Transaction(buffer, transaction);
@@ -366,7 +413,7 @@ const generateTrxId = (transaction: Transaction) => {
    buffer.flip();
    const transactionData = Buffer.from(buffer.toBuffer());
    return cryptoUtils.sha256(transactionData).toString('hex').slice(0, 40);
-};
+}
 
 /** Misc crypto utility functions. */
 export const cryptoUtils = {

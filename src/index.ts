@@ -34,8 +34,8 @@
  */
 
 import * as utils from './utils';
-
 export { utils };
+export { NodeHealthTracker, HealthTrackerOptions } from './health-tracker';
 
 export * from './helpers/blockchain';
 export * from './helpers/database';
@@ -51,6 +51,8 @@ export * from './chain/misc';
 export * from './chain/operation';
 export * from './chain/serializer';
 export * from './chain/transaction';
+export * from './chain/hivemind';
 
 export * from './client';
 export * from './crypto';
+export * from './memo';
