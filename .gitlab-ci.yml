@@ -2,7 +2,7 @@ stages:
   - test
   - release
 
-image: node:16.17.0
+image: node:20
 
 lint:
   stage: test
