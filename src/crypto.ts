@@ -170,9 +170,9 @@ export class PublicKey {
     this.uncompressed = Buffer.from(secp256k1.publicKeyConvert(key, false))
   }
 
-  static fromBuffer(key: ByteBuffer) {
+  static fromBuffer(key: Buffer) {
     assert(secp256k1.publicKeyVerify(key), 'invalid buffer as public key')
-    return { key }
+    return new PublicKey(key)
   }
 
   /**
@@ -231,8 +231,6 @@ export type KeyRole = 'owner' | 'active' | 'posting' | 'memo'
  * ECDSA (secp256k1) private key.
  */
 export class PrivateKey {
-  public secret: Buffer
-
   constructor(private key: Buffer) {
     assert(secp256k1.privateKeyVerify(key), 'invalid private key')
   }
@@ -271,7 +269,7 @@ export class PrivateKey {
   }
 
   multiply(pub: any): Buffer {
-    return Buffer.from(secp256k1.publicKeyTweakMul(pub.key, this.secret, false))
+    return Buffer.from(secp256k1.publicKeyTweakMul(pub.key, this.key, false))
   }
 
   /**

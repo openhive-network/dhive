@@ -8,7 +8,7 @@ describe('rc_api', function () {
   this.slow(500)
   this.timeout(20 * 1000)
 
-  const client = Client.testnet({ agent })
+  const client = Client.mirrornet({ agent })
 
   it('calculateVPMana', () => {
     const account: Account = {

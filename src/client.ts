@@ -272,9 +272,10 @@ export class Client {
   }
 
   /**
-   * Create a new client instance configured for the testnet.
+   * Create a new client instance configured for the Hive mirrornet.
+   * Mirrornet mirrors mainnet data with a separate chain id.
    */
-  static testnet(options?: ClientOptions) {
+  static mirrornet(options?: ClientOptions) {
     let opts: ClientOptions = {}
     if (options) {
       opts = copy<ClientOptions>(options)
@@ -284,6 +285,22 @@ export class Client {
     opts.addressPrefix = 'STM'
     opts.chainId = '4200000000000000000000000000000000000000000000000000000000000000'
     return new Client('https://api.fake.openhive.network', opts)
+  }
+
+  /**
+   * @deprecated The Hive testnet (testnet.openhive.network) is no longer available.
+   * Use {@link Client.mirrornet} instead. This method will be removed in the next major version.
+   */
+  static testnet(options?: ClientOptions) {
+    if (!(Client as any)._testnetWarned) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'Client.testnet() is deprecated: the Hive testnet is no longer available. ' +
+          'This now returns a mirrornet client. Use Client.mirrornet() instead.'
+      )
+      ;(Client as any)._testnetWarned = true
+    }
+    return Client.mirrornet(options)
   }
 
   /**
@@ -323,7 +340,7 @@ export class Client {
 
     // Self is not defined within Node environments
     // This check is needed because the user agent cannot be set in a browser
-    if (typeof self === undefined) {
+    if (typeof self === 'undefined') {
       opts.headers = {
         'User-Agent': `dhive/${packageVersion}`
       }

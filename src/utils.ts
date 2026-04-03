@@ -183,10 +183,15 @@ export async function retryingFetch(
     orderedNodes = Array.isArray(allAddresses) ? allAddresses : [allAddresses]
   }
 
-  // Always start from the healthiest node (index 0 of the ordered list).
-  // The health tracker already sorted nodes with healthy ones first,
-  // so starting from 0 ensures we use the best available node.
+  // Start from the caller's current node if it's still healthy,
+  // otherwise fall back to the healthiest node (index 0).
   let nodeIndex = 0
+  if (currentAddress) {
+    const currentIdx = orderedNodes.indexOf(currentAddress)
+    if (currentIdx !== -1) {
+      nodeIndex = currentIdx
+    }
+  }
 
   const totalNodes = orderedNodes.length
   const startTime = Date.now()
@@ -202,9 +207,7 @@ export async function retryingFetch(
       // Skip nodes that are currently rate-limited
       if (healthTracker && healthTracker.isRateLimited(node)) {
         lastError = new Error(`Node ${node} is rate-limited, skipping`)
-        if (healthTracker && api) {
-          healthTracker.recordFailure(node, api)
-        }
+        lastError._failureRecorded = true // already rate-limited, don't double-count
         throw lastError
       }
 
@@ -222,7 +225,9 @@ export async function retryingFetch(
           if (healthTracker) {
             healthTracker.recordRateLimit(node, !isNaN(retryAfterSec as number) ? retryAfterSec : undefined)
           }
-          throw new Error(`HTTP 429: Too Many Requests`)
+          const err429 = new Error(`HTTP 429: Too Many Requests`)
+          ;(err429 as any)._failureRecorded = true
+          throw err429
         }
 
         // Handle 503 — don't parse JSON body, just fail over
@@ -230,7 +235,9 @@ export async function retryingFetch(
           if (healthTracker && api) {
             healthTracker.recordFailure(node, api)
           }
-          throw new Error(`HTTP 503: Service Temporarily Unavailable`)
+          const err503 = new Error(`HTTP 503: Service Temporarily Unavailable`)
+          ;(err503 as any)._failureRecorded = true
+          throw err503
         }
 
         // Some Hive nodes return non-200 HTTP status (500, 502, etc.)
@@ -264,8 +271,8 @@ export async function retryingFetch(
     } catch (error) {
       lastError = error
 
-      // Record failure in health tracker
-      if (healthTracker && api) {
+      // Record failure in health tracker (unless already recorded above)
+      if (healthTracker && api && !(error as any)._failureRecorded) {
         healthTracker.recordFailure(node, api)
       }
 

@@ -8,7 +8,7 @@ describe('client', function () {
   this.slow(200)
   this.timeout(30 * 1000)
 
-  const client = Client.testnet()
+  const client = Client.mirrornet()
 
   it('should handle failover', async () => {
     const bclient = new Client(['https://wrongapi.openhive.network', 'https://api.fake.openhive.network'], {

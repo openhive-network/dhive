@@ -8,7 +8,7 @@ describe('database api', function () {
   this.slow(500)
   this.timeout(20 * 1000)
 
-  const client = Client.testnet({ agent })
+  const client = Client.mirrornet({ agent })
   let serverConfig: { [key: string]: boolean | string | number }
   const liveClient = new Client(TEST_NODE, { agent })
 
