@@ -1,0 +1,4 @@
+[submodule "npm-common-config"]
+	path = npm-common-config
+	url = https://gitlab.syncad.com/hive/common-ci-configuration.git
+	branch = develop

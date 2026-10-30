@@ -33,14 +33,14 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import * as assert from 'assert'
+import assert = require('assert')
 import { createHash } from 'crypto'
-import * as bigInteger from 'bigi'
-import * as bs58 from 'bs58'
-import * as ByteBuffer from '@ecency/bytebuffer'
-import * as ecurve from 'ecurve'
-import * as Ripemd160 from 'ripemd160'
-import * as secp256k1 from 'secp256k1'
+import bigInteger = require('bigi')
+import bs58 = require('bs58')
+import ByteBuffer = require('@ecency/bytebuffer')
+import ecurve = require('ecurve')
+import Ripemd160 = require('ripemd160')
+import secp256k1 = require('secp256k1')
 import { VError } from 'verror'
 import { Types } from './chain/serializer'
 import { SignedTransaction, Transaction } from './chain/transaction'
@@ -55,7 +55,7 @@ const secp256k1Curve = ecurve.getCurveByName('secp256k1')
 /**
  * Network id used in WIF-encoding.
  */
-export const NETWORK_ID = Buffer.from([0x80])
+export const NETWORK_ID: Buffer = Buffer.from([0x80])
 
 /**
  * Return ripemd160 hash of input.
@@ -376,7 +376,7 @@ export class Signature {
     )
   }
 
-  public toBuffer() {
+  public toBuffer(): Buffer {
     const buffer = Buffer.alloc(65)
     buffer.writeUInt8(this.recovery + 31, 0)
     this.data.copy(buffer, 1)
@@ -394,7 +394,7 @@ export class Signature {
 function transactionDigest(
   transaction: Transaction | SignedTransaction,
   chainId: Buffer = DEFAULT_CHAIN_ID
-) {
+): Buffer {
   const buffer = new ByteBuffer(
     ByteBuffer.DEFAULT_CAPACITY,
     ByteBuffer.LITTLE_ENDIAN

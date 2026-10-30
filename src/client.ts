@@ -33,7 +33,7 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import * as assert from 'assert'
+import assert = require('assert')
 import { VError } from 'verror'
 import packageVersion from './version'
 
@@ -55,7 +55,7 @@ export const VERSION = packageVersion
 /**
  * Main Hive network chain id.
  */
-export const DEFAULT_CHAIN_ID = Buffer.from(
+export const DEFAULT_CHAIN_ID: Buffer = Buffer.from(
     'beeab0de00000000000000000000000000000000000000000000000000000000',
     'hex'
 )

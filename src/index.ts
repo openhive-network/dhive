@@ -33,6 +33,8 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
+/// <reference types="node" preserve="true" />
+
 import * as utils from './utils'
 export { utils }
 export { NodeHealthTracker, HealthTrackerOptions } from './health-tracker'

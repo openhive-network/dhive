@@ -6,10 +6,12 @@
       "esnext.asynciterable"
     ],
     "module": "commonjs",
-    "moduleResolution": "node",
-    "target": "es5",
+    "moduleResolution": "bundler",
+    "target": "es2015",
     "allowJs": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "strict": false,
+    "types": ["node"]
   },
   "exclude": [
     "node_modules"

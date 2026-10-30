@@ -3,12 +3,12 @@
 #
 #   .aidev/run-checks.sh <suite> <step>...
 #
-# dhive's CI is .travis.yml / .circleci (`yarn install --frozen-lockfile`, then
-# `yarn test` = `make ci-test`: eslint, then mocha under nyc). Every run first
-# installs node_modules offline and frozen (.aidev/yarn-deps.sh), one junit case
+# dhive's CI is .gitlab-ci.yml (`pnpm install --frozen-lockfile`, then `make lib
+# bundle`, `make eslint` and `make unit-test`). Every run first installs
+# node_modules offline and frozen (.aidev/pnpm-deps.sh), one junit case
 # `install`. Steps, each one junit case (its log the failure body):
 #
-#   lint      `eslint -c .eslintrc.json src/**/*.ts`, as `make ci-test` runs it
+#   lint      `eslint -c .eslintrc.json src/**/*.ts`, as `make eslint` runs it
 #             (in bash without globstar, so src/*/*.ts)
 #   build     `make lib`: tsc -p tsconfig.json --outDir lib (.js and .d.ts,
 #             gitignored) plus lib/version.js; lib/ is removed first so make
@@ -16,8 +16,7 @@
 #   bundle    the browserify + tsify + babelify | derequire pipeline of the
 #             Makefile's dist/dhive.js rule, written into test-results/<suite>/
 #             instead: dist/ is committed and the gates must not rewrite it
-#   test      mocha (ts-node) over the test files not in TESTS_NEED_NETWORK or
-#             TESTS_FAILING;
+#   test      mocha (tsx) over the test files not in TESTS_NEED_NETWORK;
 #             mocha's xunit report is kept as test-results/<suite>/mocha-xunit.xml
 #   coverage  the same files under nyc (ci-test's `nyc -r lcov`), reports in
 #             test-results/<suite>/coverage
@@ -48,32 +47,23 @@ TESTS_NEED_NETWORK=(
     test/operations.ts    # Client.testnet(): creates accounts, broadcasts
     test/transaction.ts   # Client.testnet(): transaction_status_api
 )
-# Test files left out because they fail at onboarding for a reason of their own:
-# they import `bytebuffer`, which is not a dependency (src moved to
-# @ecency/bytebuffer; @types/bytebuffer is only types), so mocha cannot load
-# them and aborts the whole run.
-TESTS_FAILING=(
-    test/crypto.ts
-    test/serializers.ts
-)
 MOCHA_TIMEOUT="${MOCHA_TIMEOUT:-20000}"
 
 offline_tests() {
-    local skipped=" ${TESTS_NEED_NETWORK[*]} ${TESTS_FAILING[*]} " f
+    local skipped=" ${TESTS_NEED_NETWORK[*]} " f
     for f in test/*.ts; do
         case "$skipped" in *" $f "*) continue ;; esac
         echo "$f"
     done
 }
-# Called through `step` and through nyc (as `bash -c mocha_offline`), so it and
-# the file list are exported for nyc's child; bash cannot export an array.
-OFFLINE_TESTS="$(offline_tests | tr '\n' ' ')"
+mapfile -t OFFLINE_TESTS < <(offline_tests)
+MOCHA_ARGS=(--exit --timeout "$MOCHA_TIMEOUT" --require tsx/cjs -r test/_node.js
+    --reporter xunit --reporter-option "output=$out/mocha-xunit.xml" "${OFFLINE_TESTS[@]}")
+# Run directly or under nyc; nyc's child does not inherit bash's exported
+# functions, so it gets the command itself, not a function.
 mocha_offline() {
-    local files
-    read -r -a files <<< "$OFFLINE_TESTS"
-    mocha --exit --timeout "$MOCHA_TIMEOUT" --require ts-node/register -r test/_node.js \
-        --reporter xunit --reporter-option "output=$out/mocha-xunit.xml" "${files[@]}" \
-        && echo "mocha: ${#files[@]} files, xunit in $out/mocha-xunit.xml" \
+    "$@" mocha "${MOCHA_ARGS[@]}" \
+        && echo "mocha: ${#OFFLINE_TESTS[@]} files, xunit in $out/mocha-xunit.xml" \
         || { rc=$?; grep -E '<failure|<testsuite' "$out/mocha-xunit.xml" 2>/dev/null | head -40; return $rc; }
 }
 bundle() {
@@ -81,8 +71,6 @@ bundle() {
         --transform [ babelify --extensions .ts ] | derequire > "$out/dhive.js" \
         && [ -s "$out/dhive.js" ] && ls -l "$out/dhive.js"
 }
-export -f mocha_offline
-export out OFFLINE_TESTS MOCHA_TIMEOUT
 
 status=0
 record() { # name rc seconds log
@@ -106,7 +94,7 @@ step() {
 # The install is a case of its own: a lockfile the image's store cannot serve
 # fails here, not as a missing tool in a later step.
 t0=$SECONDS
-if ! ( source "$root/.aidev/yarn-deps.sh" ) > "$out/install.log" 2>&1; then
+if ! ( source "$root/.aidev/pnpm-deps.sh" ) > "$out/install.log" 2>&1; then
     tail -40 "$out/install.log" >&2
     record install 1 "$((SECONDS - t0))" "$out/install.log"
     junit_write_cases "$out/junit.xml" "$suite" "$cases"
@@ -120,8 +108,8 @@ for s in "$@"; do
         build) step build bash -c 'rm -rf lib && make lib' ;;
         bundle) step bundle bundle ;;
         test) step test mocha_offline ;;
-        coverage) step coverage nyc --temp-dir "$out/nyc-temp" --report-dir "$out/coverage" \
-            -r lcov -r text-summary -e .ts -i ts-node/register bash -c mocha_offline ;;
+        coverage) step coverage mocha_offline nyc --temp-dir "$out/nyc-temp" --report-dir "$out/coverage" \
+            -r lcov -r text-summary -e .ts -i tsx/cjs ;;
         *) printf 'case\t%s\tfail\t0\tunknown step\n' "$s" >> "$cases"; status=1 ;;
     esac
 done

@@ -33,7 +33,7 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import * as assert from 'assert'
+import assert = require('assert')
 
 export interface SMTAsset {
   amount: string | number

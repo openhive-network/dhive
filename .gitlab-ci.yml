@@ -1,0 +1,63 @@
+stages:
+  - build
+  - test
+
+include:
+  - project: 'hive/common-ci-configuration'
+    ref: develop
+    file:
+      - '/templates/npm_projects.gitlab-ci.yml'
+
+# Every hive runner except the one that is down has run_untagged=false, so an
+# untagged job never starts; this also tags the jobs the ccc templates define.
+default:
+  tags: [public-runner-docker]
+
+variables:
+  # npm-common-config follows ccc's develop, so a catalog bump there reaches the
+  # next pipeline (.pnpm_install_with_catalog_fallback handles the lockfile).
+  GIT_SUBMODULE_STRATEGY: recursive
+  GIT_SUBMODULE_UPDATE_FLAGS: --remote
+
+# Installs with ccc's catalog fallback in ccc's node image, which has no make.
+.dhive_job:
+  extends: .npm_based_job_base
+  image: "${NODE_TEST_TOOLS_IMAGE}"
+  before_script:
+    - apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends make > /dev/null
+    - !reference [.npm_based_job_base, before_script]
+
+build:
+  extends: .dhive_job
+  stage: build
+  script:
+    - make lib bundle
+  artifacts:
+    paths:
+      - lib/
+      - dist/
+      - pnpm-lock.catalog-refreshed.yaml
+    when: always
+    expire_in: 1 week
+
+lint:
+  extends: .dhive_job
+  stage: test
+  needs: []
+  script:
+    - make eslint
+
+unit_tests:
+  extends: .dhive_job
+  stage: test
+  needs: []
+  script:
+    - make unit-test
+  artifacts:
+    reports:
+      junit: reports/unit-tests.xml
+    paths:
+      - reports/
+      - pnpm-lock.catalog-refreshed.yaml
+    when: always
+    expire_in: 1 week
