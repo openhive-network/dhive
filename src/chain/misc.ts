@@ -62,7 +62,7 @@ export class HexBuffer {
   }
 
   public toString(encoding = 'hex') {
-    return this.buffer.toString(encoding)
+    return this.buffer.toString(encoding as BufferEncoding)
   }
 
   public toJSON() {

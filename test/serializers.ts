@@ -1,6 +1,6 @@
 import 'mocha'
-import * as assert from 'assert'
-import * as ByteBuffer from 'bytebuffer'
+import assert = require('assert')
+import ByteBuffer = require('@ecency/bytebuffer')
 
 import {Types, Serializer, HexBuffer} from './../src'
 

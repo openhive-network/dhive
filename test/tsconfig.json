@@ -2,8 +2,9 @@
   "compilerOptions": {
     "lib": ["dom", "ES7"],
     "module": "commonjs",
-    "moduleResolution": "node",
-    "target": "es5",
+    "moduleResolution": "bundler",
+    "strict": false,
+    "target": "es6",
     "types": ["node", "verror"]
   },
   "include": ["*.ts"]

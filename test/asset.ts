@@ -1,5 +1,5 @@
 import "mocha";
-import * as assert from "assert";
+import assert = require("assert");
 
 import { Asset, Price, getVestingSharePrice } from "./../src";
 

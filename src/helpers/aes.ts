@@ -1,4 +1,4 @@
-import * as assert from 'assert'
+import assert = require('assert')
 import {
   createCipheriv,
   createDecipheriv,
@@ -75,7 +75,7 @@ const crypt = (
   } else {
     message = cryptoJsEncrypt(message, tag, iv)
   }
-  return { nonce: nonceL, message, checksum: check32 }
+  return { checksum: check32, message, nonce: nonceL }
 }
 
 /**

@@ -9,7 +9,8 @@ dhive is a TypeScript RPC client library for the Hive blockchain. It provides a 
 
 ## Tech Stack
 
-- **Language**: TypeScript 3.8.3
+- **Language**: TypeScript 6.0 (`catalog:typescript-toolset` from ccc, the `npm-common-config` submodule)
+- **Package manager**: pnpm (`pnpm-lock.yaml`; `pnpm-workspace.yaml` is a symlink to ccc's catalogs)
 - **Target**: ES6 / CommonJS
 - **Build System**: Make + browserify + tsify
 - **Minifier**: Terser
@@ -73,7 +74,8 @@ make clean        # Remove lib/, dist/, docs/
 ### Testing
 
 ```bash
-make test                  # Run tests with ts-node
+make test                  # Run all tests with tsx (includes live-node tests)
+make unit-test             # Tests that need no Hive node (xunit in reports/)
 make ci-test               # ESLint + tests with coverage (TAP)
 make coverage              # Generate HTML coverage report
 make browser-test          # Browser tests via Sauce Labs
@@ -84,7 +86,7 @@ make browser-test-local    # Browser tests via local Karma
 
 ```bash
 make lint         # Run tslint with auto-fix
-yarn lint         # Run ESLint
+make eslint       # Run ESLint
 ```
 
 ## Key Files
@@ -127,17 +129,12 @@ yarn lint         # Run ESLint
 
 ## CI/CD Notes
 
-### CircleCI (.circleci/config.yml)
+### GitLab CI (.gitlab-ci.yml)
 
-- Tests on Node.js 8, 9, 10
-- Uses yarn with frozen lockfile
-- Caches node_modules
-- Outputs TAP format results
-
-### Travis CI (.travis.yml)
-
-- Node.js 8, 9, 10 matrix
-- Publishes coverage to coveralls.io
+- Runs in ccc's `node-test-tools` image (Node and pnpm come from ccc)
+- Installs with ccc's `.pnpm_install_with_catalog_fallback`, then `make lib bundle`, `make eslint`, `make unit-test`
+- Checks out the ccc submodule at its `develop` tip (`GIT_SUBMODULE_UPDATE_FLAGS: --remote`)
+- Every job is tagged `public-runner-docker` (untagged jobs find no runner)
 
 ### Build Outputs
 

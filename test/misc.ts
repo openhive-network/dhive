@@ -1,5 +1,5 @@
 import "mocha";
-import * as assert from "assert";
+import assert = require("assert");
 import * as stream from "stream";
 import { VError } from "verror";
 
@@ -24,7 +24,7 @@ describe("misc", function() {
 
     it("should handle backpressure", async function() {
       this.slow(500);
-      await new Promise((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         const s1 = new stream.PassThrough({
           highWaterMark: 10,
           objectMode: true
@@ -45,7 +45,7 @@ describe("misc", function() {
     });
 
     it("should handle errors", async function() {
-      await new Promise(resolve => {
+      await new Promise<void>(resolve => {
         const s = utils.iteratorStream(errorCounter(10, 2));
         let last = 0;
         let sawError = false;

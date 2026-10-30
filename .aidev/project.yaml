@@ -27,8 +27,15 @@ branches:
 # The image is .aidev/runtime/Dockerfile, built and pinned by .aidev/runtime/build.sh.
 environment:
   kind: "container"
-  image: "registry.gitlab.syncad.com/hive/dhive/aidev-tests@sha256:3721a0926f664936f3ee3c8a0914a83c251f8403138a3c68c8bd6511044627f6"
-  inputs: ["package.json", "yarn.lock"]
+  image: "registry.gitlab.syncad.com/hive/dhive/aidev-tests@sha256:0615d95b7eee1fefab982f4e8e58154c1698275e23b465ba156da173dc24a309"
+  inputs: ["package.json", "pnpm-lock.yaml"]
+  # The image bakes pnpm-lock.yaml into node-test-tools' store, so a lockfile-only
+  # move (e.g. ccc's catalog re-sync) can be served from it or a fetch.
+  packages:
+    lock: pnpm-lock.yaml
+    store: /opt/pnpm-store
+    install: [pnpm, install, --offline, --frozen-lockfile, --ignore-scripts]
+    fetch: [pnpm, fetch, --frozen-lockfile]
 
 issues:
   intake_label: todo
