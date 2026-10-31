@@ -1,5 +1,5 @@
 import "mocha";
-import * as assert from "assert";
+import assert = require("assert");
 
 import { Client, Asset, Transaction, PrivateKey } from "./../src";
 import { getTestnetAccounts, randomString, agent, TEST_NODE } from "./common";

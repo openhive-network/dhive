@@ -1,7 +1,7 @@
 
 import {Client, BlockchainMode} from '@hiveio/dhive'
 
-import * as removeMarkdown from 'remove-markdown'
+import removeMarkdown = require('remove-markdown')
 
 const DEFAULT_SERVER = [
     'https://rpc.esteem.app',
@@ -61,7 +61,7 @@ export default async function main() {
     const commentsEl = document.getElementById('comments')
     const backlog = []
 
-    let renderTimer: NodeJS.Timer | undefined
+    let renderTimer: ReturnType<typeof setTimeout> | undefined
 
     document.querySelector('a[href="#pause"]').addEventListener('click', function(event) {
         event.preventDefault()

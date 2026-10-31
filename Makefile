@@ -41,16 +41,31 @@ bundle: dist/dhive.js.gz dist/dhive.d.ts
 
 .PHONY: coverage
 coverage: node_modules
-	nyc -r html -r text -e .ts -i ts-node/register mocha --exit --reporter nyan --require ts-node/register test/*.ts
+	nyc -r html -r text -e .ts -i tsx/cjs mocha --exit --reporter nyan --require tsx/cjs test/*.ts
 
 .PHONY: test
 test: node_modules
-	mocha --exit --require ts-node/register -r test/_node.js test/*.ts --grep '$(grep)'
+	mocha --exit --require tsx/cjs -r test/_node.js test/*.ts --grep '$(grep)'
 
 .PHONY: ci-test
-ci-test: node_modules
+ci-test: eslint
+	nyc -r lcov -e .ts -i tsx/cjs mocha --exit --reporter tap --require tsx/cjs test/*.ts
+
+# Test files that call a live Hive node (api.hive.blog, testnet.openhive.network
+# and the failover nodes in test/client.ts); unit-test leaves them out.
+NETWORK_TESTS := test/blockchain.ts test/broadcast.ts test/client.ts test/database.ts \
+	test/hivemind.ts test/key.ts test/operations.ts test/transaction.ts
+UNIT_TESTS := $(filter-out $(NETWORK_TESTS),$(wildcard test/*.ts))
+
+.PHONY: unit-test
+unit-test: node_modules
+	mkdir -p reports
+	mocha --exit --timeout 20000 --require tsx/cjs -r test/_node.js \
+		--reporter xunit --reporter-option output=reports/unit-tests.xml $(UNIT_TESTS)
+
+.PHONY: eslint
+eslint: node_modules
 	eslint -c .eslintrc.json src/**/*.ts
-	nyc -r lcov -e .ts -i ts-node/register mocha --exit --reporter tap --require ts-node/register test/*.ts
 
 .PHONY: browser-test
 browser-test: dist/dhive.js
@@ -66,10 +81,10 @@ lint: node_modules
 	tslint -p tsconfig.json -c tslint.json -t stylish --fix
 
 node_modules:
-	yarn install --non-interactive --frozen-lockfile
+	pnpm install --frozen-lockfile
 
 docs: $(SRC_FILES) node_modules
-	typedoc --gitRevision master --target ES6 --mode file --out docs src
+	typedoc --gitRevision master --out docs src/index.ts
 	find docs -name "*.html" | xargs perl -i -pe's~$(shell pwd)~.~g'
 	echo "Served at <https://openhive-network.github.io/dhive>" > docs/README.md
 	touch docs

@@ -33,7 +33,7 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import * as assert from 'assert'
+import assert = require('assert')
 
 import { Authority, AuthorityType } from '../chain/account'
 import { Asset } from '../chain/asset'
