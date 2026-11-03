@@ -53,14 +53,51 @@ export type AssetSymbol =
   | 'STEEM'
   | 'SBD'
 
+const NAI_SYMBOLS: { [nai: string]: AssetSymbol } = {
+  '@@000000013': 'HBD',
+  '@@000000021': 'HIVE',
+  '@@000000037': 'VESTS'
+}
+
 /**
  * Class representing a hive asset, e.g. `1.000 HIVE` or `12.112233 VESTS`.
  */
 export class Asset {
+  /**
+   * Exact amount in the smallest unit, kept when the asset was parsed from an
+   * exact representation so that NAI conversion does not go through a float.
+   */
+  private units?: string
+
   constructor(
     public readonly amount: number,
     public readonly symbol: AssetSymbol
   ) {}
+
+  /**
+   * Create a new Asset instance from the NAI format used by `block_api`,
+   * e.g. `{nai: '@@000000013', amount: '1000', precision: 3}` for `1.000 HBD`.
+   * Throws if the NAI is unknown, the precision does not match its symbol or
+   * the amount is not an integer string.
+   */
+  public static fromNai(nai: NaiAsset): Asset {
+    const symbol = Object.prototype.hasOwnProperty.call(NAI_SYMBOLS, nai.nai)
+      ? NAI_SYMBOLS[nai.nai]
+      : undefined
+    if (!symbol) {
+      throw new Error(`Unknown asset NAI: ${nai.nai}`)
+    }
+    const precision = Asset.symbolPrecision(symbol)
+    if (nai.precision !== precision) {
+      throw new Error(
+        `Invalid precision for NAI ${nai.nai} (${symbol}): expected ${precision} got: ${nai.precision}`
+      )
+    }
+    if (typeof nai.amount !== 'string' || !/^-?\d+$/.test(nai.amount)) {
+      throw new Error(`Invalid NAI asset amount: ${String(nai.amount)}`)
+    }
+    return Asset.fromUnits(nai.amount, symbol)
+  }
 
   /**
    * Create a new Asset instance from a string, e.g. `42.000 HIVE`.
@@ -77,6 +114,13 @@ export class Asset {
         `Invalid asset, expected symbol: ${expectedSymbol} got: ${symbol}`
       )
     }
+    const units = Asset.decimalToUnits(
+      amountString,
+      Asset.symbolPrecision(symbol as AssetSymbol)
+    )
+    if (units !== undefined) {
+      return Asset.fromUnits(units, symbol as AssetSymbol)
+    }
     const amount = Number.parseFloat(amountString)
     if (!Number.isFinite(amount)) {
       throw new Error(`Invalid asset amount: ${amountString}`)
@@ -89,7 +133,13 @@ export class Asset {
    * @param symbol Symbol to use when created from number. Will also be used to validate
    *               the asset, throws if the passed value has a different symbol than this.
    */
-  public static from(value: string | Asset | number, symbol?: AssetSymbol) {
+  public static from(
+    value: string | Asset | number | NaiAsset,
+    symbol?: AssetSymbol
+  ) {
+    if (typeof value === 'object' && value !== null && !(value instanceof Asset)) {
+      value = Asset.fromNai(value)
+    }
     if (value instanceof Asset) {
       if (symbol && value.symbol !== symbol) {
         throw new Error(
@@ -128,21 +178,52 @@ export class Asset {
     return a.amount > b.amount ? a : b
   }
 
+  private static fromUnits(units: string, symbol: AssetSymbol): Asset {
+    const asset = new Asset(
+      Number(Asset.unitsToDecimal(units, Asset.symbolPrecision(symbol))),
+      symbol
+    )
+    asset.units = units
+    return asset
+  }
+
+  private static symbolPrecision(symbol: AssetSymbol): number {
+    return symbol === 'VESTS' ? 6 : 3
+  }
+
+  /**
+   * Convert a plain decimal string to a normalized integer string of the
+   * smallest unit, or undefined if it is not representable exactly.
+   */
+  private static decimalToUnits(decimal: string, precision: number) {
+    const match = /^(-?)(\d+)(?:\.(\d*))?$/.exec(decimal)
+    if (!match || (match[3] || '').length > precision) {
+      return undefined
+    }
+    const [, sign, int, frac = ''] = match
+    const digits = (int + frac + '0'.repeat(precision - frac.length)).replace(
+      /^0+(?=\d)/,
+      ''
+    )
+    return digits === '0' ? digits : sign + digits
+  }
+
+  private static unitsToDecimal(units: string, precision: number) {
+    const sign = units.startsWith('-') ? '-' : ''
+    let digits = sign ? units.slice(1) : units
+    if (digits.length <= precision) {
+      digits = '0'.repeat(precision - digits.length + 1) + digits
+    }
+    const point = digits.length - precision
+    const fraction = precision > 0 ? '.' + digits.slice(point) : ''
+    return sign + digits.slice(0, point) + fraction
+  }
+
   /**
    * Return asset precision.
    */
   public getPrecision(): number {
-    switch (this.symbol) {
-      case 'TESTS':
-      case 'TBD':
-      case 'HIVE':
-      case 'HBD':
-      case 'SBD':
-      case 'STEEM':
-        return 3
-      case 'VESTS':
-        return 6
-    }
+    return Asset.symbolPrecision(this.symbol)
   }
 
   /**
@@ -164,7 +245,27 @@ export class Asset {
    * Return a string representation of this asset, e.g. `42.000 HIVE`.
    */
   public toString(): string {
-    return `${this.amount.toFixed(this.getPrecision())} ${this.symbol}`
+    const amount =
+      this.units !== undefined
+        ? Asset.unitsToDecimal(this.units, this.getPrecision())
+        : this.amount.toFixed(this.getPrecision())
+    return `${amount} ${this.symbol}`
+  }
+
+  /**
+   * Return this asset in the NAI format used by `block_api`. The legacy
+   * STEEM/SBD and testnet TESTS/TBD symbols map to the HIVE and HBD NAIs.
+   */
+  public toNai(): NaiAsset {
+    const precision = this.getPrecision()
+    const units =
+      this.units !== undefined
+        ? this.units
+        : Asset.decimalToUnits(this.amount.toFixed(precision), precision)
+    if (units === undefined) {
+      throw new Error(`Can not convert ${this.amount} ${this.symbol} to NAI`)
+    }
+    return { amount: units, nai: this.nai(), precision }
   }
 
   /**
@@ -217,6 +318,21 @@ export class Asset {
    */
   public toJSON(): string {
     return this.toString()
+  }
+
+  private nai(): string {
+    switch (this.symbol) {
+      case 'HIVE':
+      case 'STEEM':
+      case 'TESTS':
+        return '@@000000021'
+      case 'HBD':
+      case 'SBD':
+      case 'TBD':
+        return '@@000000013'
+      case 'VESTS':
+        return '@@000000037'
+    }
   }
 }
 
