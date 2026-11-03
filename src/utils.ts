@@ -33,7 +33,6 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import fetch from 'cross-fetch'
 import { EventEmitter } from 'events'
 import { PassThrough } from 'stream'
 import { NodeHealthTracker } from './health-tracker'
@@ -137,6 +136,35 @@ function recordedFailure(message: string): Error {
 }
 
 /**
+ * Fetch through the runtime's global fetch when it has one and no `agent` is
+ * requested, otherwise through cross-fetch (node-fetch in Node.js), loaded only
+ * then. The global fetch in Node.js (undici) ignores `agent` and `timeout`, so
+ * `timeout` is applied with an abort signal and network errors are given the
+ * `code` node-fetch would report, which the failover logic matches on.
+ */
+async function platformFetch(url: string, opts: any): Promise<Response> {
+  if (typeof globalThis.fetch !== 'function' || opts.agent) {
+    const { default: fallbackFetch } = await import('cross-fetch')
+    return fallbackFetch(url, opts)
+  }
+  const { timeout, ...init } = opts
+  if (timeout && typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function') {
+    init.signal = AbortSignal.timeout(timeout)
+  }
+  try {
+    return await globalThis.fetch(url, init)
+  } catch (error) {
+    if (error && error.name === 'TimeoutError') {
+      throw new Error(`network timeout at: ${url}`)
+    }
+    if (error && !error.code && error.cause && typeof error.cause.code === 'string') {
+      error.code = error.cause.code
+    }
+    throw error
+  }
+}
+
+/**
  * Get the next node in the ordered list (wraps around).
  */
 function nextNode(nodes: string[], currentIndex: number): number {
@@ -211,7 +239,7 @@ export async function retryingFetch(
         opts.timeout = fetchTimeout(nodesTriedInRound)
       }
 
-      const response = await fetch(node, opts)
+      const response = await platformFetch(node, opts)
 
       if (!response.ok) {
         // Handle 429 — record rate limit and fail over immediately
@@ -347,7 +375,8 @@ export async function retryingFetch(
 
 // Hack to be able to generate a valid witness_set_properties op
 // Can hopefully be removed when hived's JSON representation is fixed
-import ByteBuffer = require('@ecency/bytebuffer')
+import ByteBuffer from '@ecency/bytebuffer'
+import JSBI from 'jsbi'
 import { Asset, PriceType } from './chain/asset'
 import { WitnessSetPropertiesOperation } from './chain/operation'
 import { Serializer, Types } from './chain/serializer'
@@ -418,7 +447,6 @@ export const buildWitnessUpdateOp = (
   return ['witness_set_properties', data]
 }
 
-const JSBI = require('jsbi')
 export const operationOrders = {
   vote: 0,
   // tslint:disable-next-line: object-literal-sort-keys

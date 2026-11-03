@@ -12,9 +12,13 @@
 <h1>Type Alias DiscussionQueryCategory</h1></div>
 <div class="tsd-signature"><span class="tsd-kind-type-alias">DiscussionQueryCategory</span><span class="tsd-signature-symbol">:</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;active&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;blog&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;cashout&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;children&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;comments&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;feed&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;hot&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;promoted&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;trending&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;votes&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;created&quot;</span></div>
 <div class="tsd-comment tsd-typography"><p>Possible categories for <code>get_discussions_by_*</code>.</p>
+<p>Hivemind serves only <code>blog</code>, <code>comments</code>, <code>created</code>, <code>feed</code>, <code>hot</code> and <code>trending</code>
+(<code>get_condenser_api_method</code> in hivemind's
+<code>hive/db/sql_scripts/postgrest/utilities/get_api_method.sql</code>). The other categories
+were removed from the API and fail with a method-not-found error.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in helpers/database.ts:52</li></ul></aside></div>
+<li>Defined in helpers/database.ts:57</li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

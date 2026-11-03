@@ -3,126 +3,6 @@ declare module 'dhive/version' {
 	export default _default;
 
 }
-declare module 'dhive/health-tracker' {
-	/**
-	 * @file Node health tracking for smart failover.
-	 * @license BSD-3-Clause-No-Military-License
-	 *
-	 * Tracks per-node, per-API health to enable intelligent failover decisions.
-	 * Nodes that fail for specific APIs are deprioritized for those APIs while
-	 * remaining available for others. Stale nodes (behind on head block) are
-	 * also deprioritized.
-	 */
-	export interface HealthTrackerOptions {
-	    /**
-	     * How long (ms) to deprioritize a node after consecutive failures.
-	     * Default: 30 seconds.
-	     */
-	    nodeCooldownMs?: number;
-	    /**
-	     * How long (ms) to deprioritize a node for a specific API after failures.
-	     * Default: 60 seconds.
-	     */
-	    apiCooldownMs?: number;
-	    /**
-	     * Number of consecutive failures before a node enters cooldown.
-	     * Default: 3.
-	     */
-	    maxFailuresBeforeCooldown?: number;
-	    /**
-	     * Number of API-specific failures before deprioritizing for that API.
-	     * Default: 2.
-	     */
-	    maxApiFailuresBeforeCooldown?: number;
-	    /**
-	     * How many blocks behind the best known head block a node can be
-	     * before being considered stale. Default: 30.
-	     */
-	    staleBlockThreshold?: number;
-	    /**
-	     * How long (ms) head block data remains valid for staleness checks.
-	     * Default: 2 minutes.
-	     */
-	    headBlockTtlMs?: number;
-	    /**
-	     * Default duration (ms) to skip a node after receiving a 429 response,
-	     * used when the server doesn't provide a Retry-After header.
-	     * Default: 10 seconds.
-	     */
-	    defaultRateLimitMs?: number;
-	}
-	export class NodeHealthTracker {
-	    private health;
-	    private bestKnownHeadBlock;
-	    private bestKnownHeadBlockTime;
-	    private readonly nodeCooldownMs;
-	    private readonly apiCooldownMs;
-	    private readonly maxFailuresBeforeCooldown;
-	    private readonly maxApiFailuresBeforeCooldown;
-	    private readonly staleBlockThreshold;
-	    private readonly headBlockTtlMs;
-	    private readonly defaultRateLimitMs;
-	    constructor(options?: HealthTrackerOptions);
-	    private getOrCreate;
-	    /**
-	     * Record a successful call to a node for a specific API.
-	     * Clears consecutive failure counter and API-specific failures for this API.
-	     */
-	    recordSuccess(node: string, api: string): void;
-	    /**
-	     * Record a network-level failure (timeout, connection refused, HTTP error).
-	     * Increments both the global consecutive failure counter and the API-specific counter.
-	     */
-	    recordFailure(node: string, api: string): void;
-	    /**
-	     * Record that a node returned HTTP 429 (Too Many Requests).
-	     * The node will be skipped until the rate limit expires.
-	     * @param retryAfterSeconds Value from the Retry-After header, or undefined to use default.
-	     */
-	    recordRateLimit(node: string, retryAfterSeconds?: number): void;
-	    /**
-	     * Check if a node is currently rate-limited (429 cooldown active).
-	     */
-	    isRateLimited(node: string): boolean;
-	    /**
-	     * Record an API/plugin-specific failure (e.g. "method not found", "plugin not enabled").
-	     * Only increments the per-API counter, NOT the global consecutive failure counter.
-	     * This prevents a node with a disabled plugin from being penalized for all APIs.
-	     */
-	    recordApiFailure(node: string, api: string): void;
-	    private incrementApiFailure;
-	    /**
-	     * Update head block number for a node.
-	     * Called passively when get_dynamic_global_properties responses are observed.
-	     */
-	    updateHeadBlock(node: string, headBlock: number): void;
-	    /**
-	     * Check if a node is considered healthy for a given API.
-	     */
-	    isNodeHealthy(node: string, api?: string): boolean;
-	    /**
-	     * Return nodes ordered by health for a specific API call.
-	     * Healthy nodes come first (preserving original order), then unhealthy nodes as fallback.
-	     */
-	    getOrderedNodes(allNodes: string[], api?: string): string[];
-	    /**
-	     * Reset all health tracking data.
-	     */
-	    reset(): void;
-	    /**
-	     * Get a snapshot of current health state for diagnostics.
-	     */
-	    getHealthSnapshot(): Map<string, {
-	        consecutiveFailures: number;
-	        headBlock: number;
-	        apiFailures: Record<string, {
-	            count: number;
-	        }>;
-	        healthy: boolean;
-	    }>;
-	}
-
-}
 declare module 'dhive/chain/asset' {
 	/**
 	 * @file Hive asset type definitions and helpers.
@@ -175,6 +55,13 @@ declare module 'dhive/chain/asset' {
 	    readonly symbol: AssetSymbol;
 	    constructor(amount: number, symbol: AssetSymbol);
 	    /**
+	     * Create a new Asset instance from the NAI format used by `block_api`,
+	     * e.g. `{nai: '@@000000013', amount: '1000', precision: 3}` for `1.000 HBD`.
+	     * Throws if the NAI is unknown, the precision does not match its symbol or
+	     * the amount is not an integer string.
+	     */
+	    static fromNai(nai: NaiAsset): Asset;
+	    /**
 	     * Create a new Asset instance from a string, e.g. `42.000 HIVE`.
 	     */
 	    static fromString(string: string, expectedSymbol?: AssetSymbol): Asset;
@@ -183,7 +70,7 @@ declare module 'dhive/chain/asset' {
 	     * @param symbol Symbol to use when created from number. Will also be used to validate
 	     *               the asset, throws if the passed value has a different symbol than this.
 	     */
-	    static from(value: string | Asset | number, symbol?: AssetSymbol): Asset;
+	    static from(value: string | Asset | number | NaiAsset, symbol?: AssetSymbol): Asset;
 	    /**
 	     * Return the smaller of the two assets.
 	     */
@@ -192,6 +79,14 @@ declare module 'dhive/chain/asset' {
 	     * Return the larger of the two assets.
 	     */
 	    static max(a: Asset, b: Asset): Asset;
+	    private static fromUnits;
+	    private static symbolPrecision;
+	    /**
+	     * Convert a plain decimal string to a normalized integer string of the
+	     * smallest unit, or undefined if it is not representable exactly.
+	     */
+	    private static decimalToUnits;
+	    private static unitsToDecimal;
 	    /**
 	     * Return asset precision.
 	     */
@@ -205,6 +100,11 @@ declare module 'dhive/chain/asset' {
 	     * Return a string representation of this asset, e.g. `42.000 HIVE`.
 	     */
 	    toString(): string;
+	    /**
+	     * Return this asset in the NAI format used by `block_api`. The legacy
+	     * STEEM/SBD and testnet TESTS/TBD symbols map to the HIVE and HBD NAIs.
+	     */
+	    toNai(): NaiAsset;
 	    /**
 	     * Return a new Asset instance with amount added.
 	     */
@@ -225,6 +125,7 @@ declare module 'dhive/chain/asset' {
 	     * For JSON serialization, same as toString().
 	     */
 	    toJSON(): string;
+	    private nai;
 	}
 	export type PriceType = Price | {
 	    base: Asset | string;
@@ -266,6 +167,23 @@ declare module 'dhive/chain/asset' {
 	     * Throws if passed asset symbol is not base or quote.
 	     */
 	    convert(asset: Asset): Asset;
+	}
+	/**
+	 * Asset in the NAI (numeric asset identifier) format used by `block_api`,
+	 * e.g. `{nai: '@@000000013', amount: '1000', precision: 3}` for `1.000 HBD`.
+	 * `amount` is the integer number of the smallest units, as a string.
+	 */
+	export interface NaiAsset {
+	    nai: string;
+	    amount: string;
+	    precision: number;
+	}
+	/**
+	 * Price whose sides are NAI assets.
+	 */
+	export interface NaiPrice {
+	    base: NaiAsset;
+	    quote: NaiAsset;
 	}
 
 }
@@ -635,86 +553,6 @@ declare module 'dhive/chain/misc' {
 	export function getVests(account: Account, subtract_delegated?: boolean, add_received?: boolean): number;
 
 }
-declare module 'dhive/chain/serializer' {
-	/**
-	 * @file Hive protocol serialization.
-	 * @author Johan Nordberg <code@johan-nordberg.com>
-	 * @license
-	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
-	 *
-	 * Redistribution and use in source and binary forms, with or without modification,
-	 * are permitted provided that the following conditions are met:
-	 *
-	 *  1. Redistribution of source code must retain the above copyright notice, this
-	 *     list of conditions and the following disclaimer.
-	 *
-	 *  2. Redistribution in binary form must reproduce the above copyright notice,
-	 *     this list of conditions and the following disclaimer in the documentation
-	 *     and/or other materials provided with the distribution.
-	 *
-	 *  3. Neither the name of the copyright holder nor the names of its contributors
-	 *     may be used to endorse or promote products derived from this software without
-	 *     specific prior written permission.
-	 *
-	 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-	 * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-	 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-	 * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-	 * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-	 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-	 * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-	 * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-	 * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-	 * OF THE POSSIBILITY OF SUCH DAMAGE.
-	 *
-	 * You acknowledge that this software is not designed, licensed or intended for use
-	 * in the design, construction, operation or maintenance of any military facility.
-	 */
-	import * as ByteBuffer from 'bytebuffer';
-	import { PublicKey } from 'dhive/crypto';
-	import { Asset } from 'dhive/chain/asset';
-	import { HexBuffer } from 'dhive/chain/misc';
-	import { Operation } from 'dhive/chain/operation';
-	export type Serializer = (buffer: ByteBuffer, data: any) => void;
-	export const Types: {
-	    Array: (itemSerializer: Serializer) => (buffer: ByteBuffer, data: any[]) => void;
-	    Asset: (buffer: ByteBuffer, data: Asset | string | number) => void;
-	    Authority: (buffer: ByteBuffer, data: {
-	        [key: string]: any;
-	    }) => void;
-	    Binary: (size?: number) => (buffer: ByteBuffer, data: Buffer | HexBuffer) => void;
-	    Boolean: (buffer: ByteBuffer, data: boolean) => void;
-	    Date: (buffer: ByteBuffer, data: string) => void;
-	    EncryptedMemo: (buffer: ByteBuffer, data: {
-	        [key: string]: any;
-	    }) => void;
-	    FlatMap: (keySerializer: Serializer, valueSerializer: Serializer) => (buffer: ByteBuffer, data: [any, any][]) => void;
-	    Int16: (buffer: ByteBuffer, data: number) => void;
-	    Int32: (buffer: ByteBuffer, data: number) => void;
-	    Int64: (buffer: ByteBuffer, data: number) => void;
-	    Int8: (buffer: ByteBuffer, data: number) => void;
-	    Object: (keySerializers: [string, Serializer][]) => (buffer: ByteBuffer, data: {
-	        [key: string]: any;
-	    }) => void;
-	    Operation: (buffer: ByteBuffer, operation: Operation) => void;
-	    Optional: (valueSerializer: Serializer) => (buffer: ByteBuffer, data: any) => void;
-	    Price: (buffer: ByteBuffer, data: {
-	        [key: string]: any;
-	    }) => void;
-	    PublicKey: (buffer: ByteBuffer, data: PublicKey | string | null) => void;
-	    StaticVariant: (itemSerializers: Serializer[]) => (buffer: ByteBuffer, data: [number, any]) => void;
-	    String: (buffer: ByteBuffer, data: string) => void;
-	    Transaction: (buffer: ByteBuffer, data: {
-	        [key: string]: any;
-	    }) => void;
-	    UInt16: (buffer: ByteBuffer, data: number) => void;
-	    UInt32: (buffer: ByteBuffer, data: number) => void;
-	    UInt64: (buffer: ByteBuffer, data: number) => void;
-	    UInt8: (buffer: ByteBuffer, data: number) => void;
-	    Void: (buffer: ByteBuffer) => never;
-	};
-
-}
 declare module 'dhive/chain/transaction' {
 	/**
 	 * @file Hive transaction type definitions.
@@ -767,165 +605,6 @@ declare module 'dhive/chain/transaction' {
 	    trx_num: number;
 	    expired: boolean;
 	}
-
-}
-declare module 'dhive/crypto' {
-	/**
-	 * @file Hive crypto helpers.
-	 * @author Johan Nordberg <code@johan-nordberg.com>
-	 * @license
-	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
-	 *
-	 * Redistribution and use in source and binary forms, with or without modification,
-	 * are permitted provided that the following conditions are met:
-	 *
-	 *  1. Redistribution of source code must retain the above copyright notice, this
-	 *     list of conditions and the following disclaimer.
-	 *
-	 *  2. Redistribution in binary form must reproduce the above copyright notice,
-	 *     this list of conditions and the following disclaimer in the documentation
-	 *     and/or other materials provided with the distribution.
-	 *
-	 *  3. Neither the name of the copyright holder nor the names of its contributors
-	 *     may be used to endorse or promote products derived from this software without
-	 *     specific prior written permission.
-	 *
-	 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-	 * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-	 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-	 * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-	 * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-	 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-	 * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-	 * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-	 * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-	 * OF THE POSSIBILITY OF SUCH DAMAGE.
-	 *
-	 * You acknowledge that this software is not designed, licensed or intended for use
-	 * in the design, construction, operation or maintenance of any military facility.
-	 */
-	import ByteBuffer = require('@ecency/bytebuffer');
-	import { SignedTransaction, Transaction } from 'dhive/chain/transaction';
-	/**
-	 * Network id used in WIF-encoding.
-	 */
-	export const NETWORK_ID: Buffer; function ripemd160(input: Buffer | string): Buffer; function sha256(input: Buffer | string): Buffer; function doubleSha256(input: Buffer | string): Buffer; function encodePublic(key: Buffer, prefix: string): string; function encodePrivate(key: Buffer): string; function decodePrivate(encodedKey: string): Buffer; function isCanonicalSignature(signature: Buffer): boolean; function isWif(privWif: string | Buffer): boolean;
-	/**
-	 * ECDSA (secp256k1) public key.
-	 */
-	export class PublicKey {
-	    readonly key: any;
-	    readonly prefix: string;
-	    readonly uncompressed: Buffer;
-	    constructor(key: any, prefix?: string);
-	    static fromBuffer(key: ByteBuffer): PublicKey;
-	    /**
-	     * Create a new instance from a WIF-encoded key.
-	     */
-	    static fromString(wif: string): PublicKey;
-	    /**
-	     * Create a new instance.
-	     */
-	    static from(value: string | PublicKey): PublicKey;
-	    /**
-	     * Verify a 32-byte signature.
-	     * @param message 32-byte message to verify.
-	     * @param signature Signature to verify.
-	     */
-	    verify(message: Buffer, signature: Signature): boolean;
-	    /**
-	     * Return a WIF-encoded representation of the key.
-	     */
-	    toString(): string;
-	    /**
-	     * Return JSON representation of this key, same as toString().
-	     */
-	    toJSON(): string;
-	    /**
-	     * Used by `utils.inspect` and `console.log` in node.js.
-	     */
-	    inspect(): string;
-	}
-	export type KeyRole = 'owner' | 'active' | 'posting' | 'memo';
-	/**
-	 * ECDSA (secp256k1) private key.
-	 */
-	export class PrivateKey {
-	    private key;
-	    secret: Buffer;
-	    constructor(key: Buffer);
-	    /**
-	     * Convenience to create a new instance from WIF string or buffer.
-	     */
-	    static from(value: string | Buffer): PrivateKey;
-	    /**
-	     * Create a new instance from a WIF-encoded key.
-	     */
-	    static fromString(wif: string): PrivateKey;
-	    /**
-	     * Create a new instance from a seed.
-	     */
-	    static fromSeed(seed: string): PrivateKey;
-	    /**
-	     * Create key from username and password.
-	     */
-	    static fromLogin(username: string, password: string, role?: KeyRole): PrivateKey;
-	    multiply(pub: any): Buffer;
-	    /**
-	     * Sign message.
-	     * @param message 32-byte message.
-	     */
-	    sign(message: Buffer): Signature;
-	    /**
-	     * Derive the public key for this private key.
-	     */
-	    createPublic(prefix?: string): PublicKey;
-	    /**
-	     * Return a WIF-encoded representation of the key.
-	     */
-	    toString(): string;
-	    /**
-	     * Used by `utils.inspect` and `console.log` in node.js. Does not show the full key
-	     * to get the full encoded key you need to explicitly call {@link toString}.
-	     */
-	    inspect(): string;
-	    /**
-	     * Get shared secret for memo cryptography
-	     */
-	    get_shared_secret(public_key: PublicKey): Buffer;
-	}
-	/**
-	 * ECDSA (secp256k1) signature.
-	 */
-	export class Signature {
-	    data: Buffer;
-	    recovery: number;
-	    constructor(data: Buffer, recovery: number);
-	    static fromBuffer(buffer: Buffer): Signature;
-	    static fromString(string: string): Signature;
-	    /**
-	     * Recover public key from signature by providing original signed message.
-	     * @param message 32-byte message that was used to create the signature.
-	     */
-	    recover(message: Buffer, prefix?: string): PublicKey;
-	    toBuffer(): Buffer;
-	    toString(): string;
-	} function transactionDigest(transaction: Transaction | SignedTransaction, chainId?: Buffer): Buffer; function signTransaction(transaction: Transaction, keys: PrivateKey | PrivateKey[], chainId?: Buffer): SignedTransaction; function generateTrxId(transaction: Transaction): string;
-	/** Misc crypto utility functions. */
-	export const cryptoUtils: {
-	    decodePrivate: typeof decodePrivate;
-	    doubleSha256: typeof doubleSha256;
-	    encodePrivate: typeof encodePrivate;
-	    encodePublic: typeof encodePublic;
-	    generateTrxId: typeof generateTrxId;
-	    isCanonicalSignature: typeof isCanonicalSignature;
-	    isWif: typeof isWif;
-	    ripemd160: typeof ripemd160;
-	    sha256: typeof sha256;
-	    signTransaction: typeof signTransaction;
-	    transactionDigest: typeof transactionDigest;
-	};
-	export {};
 
 }
 declare module 'dhive/chain/block' {
@@ -1949,6 +1628,206 @@ declare module 'dhive/chain/operation' {
 	}
 
 }
+declare module 'dhive/chain/serializer' {
+	/**
+	 * @file Hive protocol serialization.
+	 * @author Johan Nordberg <code@johan-nordberg.com>
+	 * @license
+	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
+	 *
+	 * Redistribution and use in source and binary forms, with or without modification,
+	 * are permitted provided that the following conditions are met:
+	 *
+	 *  1. Redistribution of source code must retain the above copyright notice, this
+	 *     list of conditions and the following disclaimer.
+	 *
+	 *  2. Redistribution in binary form must reproduce the above copyright notice,
+	 *     this list of conditions and the following disclaimer in the documentation
+	 *     and/or other materials provided with the distribution.
+	 *
+	 *  3. Neither the name of the copyright holder nor the names of its contributors
+	 *     may be used to endorse or promote products derived from this software without
+	 *     specific prior written permission.
+	 *
+	 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+	 * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+	 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+	 * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+	 * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+	 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+	 * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+	 * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+	 * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+	 * OF THE POSSIBILITY OF SUCH DAMAGE.
+	 *
+	 * You acknowledge that this software is not designed, licensed or intended for use
+	 * in the design, construction, operation or maintenance of any military facility.
+	 */
+	import * as ByteBuffer from 'bytebuffer';
+	import { PublicKey } from 'dhive/crypto';
+	import { Asset } from 'dhive/chain/asset';
+	import { HexBuffer } from 'dhive/chain/misc';
+	import { Operation } from 'dhive/chain/operation';
+	export type Serializer = (buffer: ByteBuffer, data: any) => void;
+	export const Types: {
+	    Array: (itemSerializer: Serializer) => (buffer: ByteBuffer, data: any[]) => void;
+	    Asset: (buffer: ByteBuffer, data: Asset | string | number) => void;
+	    Authority: (buffer: ByteBuffer, data: {
+	        [key: string]: any;
+	    }) => void;
+	    Binary: (size?: number) => (buffer: ByteBuffer, data: Buffer | HexBuffer) => void;
+	    Boolean: (buffer: ByteBuffer, data: boolean) => void;
+	    Date: (buffer: ByteBuffer, data: string) => void;
+	    EncryptedMemo: (buffer: ByteBuffer, data: {
+	        [key: string]: any;
+	    }) => void;
+	    FlatMap: (keySerializer: Serializer, valueSerializer: Serializer) => (buffer: ByteBuffer, data: [any, any][]) => void;
+	    Int16: (buffer: ByteBuffer, data: number) => void;
+	    Int32: (buffer: ByteBuffer, data: number) => void;
+	    Int64: (buffer: ByteBuffer, data: number) => void;
+	    Int8: (buffer: ByteBuffer, data: number) => void;
+	    Object: (keySerializers: [string, Serializer][]) => (buffer: ByteBuffer, data: {
+	        [key: string]: any;
+	    }) => void;
+	    Operation: (buffer: ByteBuffer, operation: Operation) => void;
+	    Optional: (valueSerializer: Serializer) => (buffer: ByteBuffer, data: any) => void;
+	    Price: (buffer: ByteBuffer, data: {
+	        [key: string]: any;
+	    }) => void;
+	    PublicKey: (buffer: ByteBuffer, data: PublicKey | string | null) => void;
+	    StaticVariant: (itemSerializers: Serializer[]) => (buffer: ByteBuffer, data: [number, any]) => void;
+	    String: (buffer: ByteBuffer, data: string) => void;
+	    Transaction: (buffer: ByteBuffer, data: {
+	        [key: string]: any;
+	    }) => void;
+	    UInt16: (buffer: ByteBuffer, data: number) => void;
+	    UInt32: (buffer: ByteBuffer, data: number) => void;
+	    UInt64: (buffer: ByteBuffer, data: number) => void;
+	    UInt8: (buffer: ByteBuffer, data: number) => void;
+	    Void: (buffer: ByteBuffer) => never;
+	};
+
+}
+declare module 'dhive/health-tracker' {
+	/**
+	 * @file Node health tracking for smart failover.
+	 * @license BSD-3-Clause-No-Military-License
+	 *
+	 * Tracks per-node, per-API health to enable intelligent failover decisions.
+	 * Nodes that fail for specific APIs are deprioritized for those APIs while
+	 * remaining available for others. Stale nodes (behind on head block) are
+	 * also deprioritized.
+	 */
+	export interface HealthTrackerOptions {
+	    /**
+	     * How long (ms) to deprioritize a node after consecutive failures.
+	     * Default: 30 seconds.
+	     */
+	    nodeCooldownMs?: number;
+	    /**
+	     * How long (ms) to deprioritize a node for a specific API after failures.
+	     * Default: 60 seconds.
+	     */
+	    apiCooldownMs?: number;
+	    /**
+	     * Number of consecutive failures before a node enters cooldown.
+	     * Default: 3.
+	     */
+	    maxFailuresBeforeCooldown?: number;
+	    /**
+	     * Number of API-specific failures before deprioritizing for that API.
+	     * Default: 2.
+	     */
+	    maxApiFailuresBeforeCooldown?: number;
+	    /**
+	     * How many blocks behind the best known head block a node can be
+	     * before being considered stale. Default: 30.
+	     */
+	    staleBlockThreshold?: number;
+	    /**
+	     * How long (ms) head block data remains valid for staleness checks.
+	     * Default: 2 minutes.
+	     */
+	    headBlockTtlMs?: number;
+	    /**
+	     * Default duration (ms) to skip a node after receiving a 429 response,
+	     * used when the server doesn't provide a Retry-After header.
+	     * Default: 10 seconds.
+	     */
+	    defaultRateLimitMs?: number;
+	}
+	export class NodeHealthTracker {
+	    private health;
+	    private bestKnownHeadBlock;
+	    private bestKnownHeadBlockTime;
+	    private readonly nodeCooldownMs;
+	    private readonly apiCooldownMs;
+	    private readonly maxFailuresBeforeCooldown;
+	    private readonly maxApiFailuresBeforeCooldown;
+	    private readonly staleBlockThreshold;
+	    private readonly headBlockTtlMs;
+	    private readonly defaultRateLimitMs;
+	    constructor(options?: HealthTrackerOptions);
+	    private getOrCreate;
+	    /**
+	     * Record a successful call to a node for a specific API.
+	     * Clears consecutive failure counter and API-specific failures for this API.
+	     */
+	    recordSuccess(node: string, api: string): void;
+	    /**
+	     * Record a network-level failure (timeout, connection refused, HTTP error).
+	     * Increments both the global consecutive failure counter and the API-specific counter.
+	     */
+	    recordFailure(node: string, api: string): void;
+	    /**
+	     * Record that a node returned HTTP 429 (Too Many Requests).
+	     * The node will be skipped until the rate limit expires.
+	     * @param retryAfterSeconds Value from the Retry-After header, or undefined to use default.
+	     */
+	    recordRateLimit(node: string, retryAfterSeconds?: number): void;
+	    /**
+	     * Check if a node is currently rate-limited (429 cooldown active).
+	     */
+	    isRateLimited(node: string): boolean;
+	    /**
+	     * Record an API/plugin-specific failure (e.g. "method not found", "plugin not enabled").
+	     * Only increments the per-API counter, NOT the global consecutive failure counter.
+	     * This prevents a node with a disabled plugin from being penalized for all APIs.
+	     */
+	    recordApiFailure(node: string, api: string): void;
+	    private incrementApiFailure;
+	    /**
+	     * Update head block number for a node.
+	     * Called passively when get_dynamic_global_properties responses are observed.
+	     */
+	    updateHeadBlock(node: string, headBlock: number): void;
+	    /**
+	     * Check if a node is considered healthy for a given API.
+	     */
+	    isNodeHealthy(node: string, api?: string): boolean;
+	    /**
+	     * Return nodes ordered by health for a specific API call.
+	     * Healthy nodes come first (preserving original order), then unhealthy nodes as fallback.
+	     */
+	    getOrderedNodes(allNodes: string[], api?: string): string[];
+	    /**
+	     * Reset all health tracking data.
+	     */
+	    reset(): void;
+	    /**
+	     * Get a snapshot of current health state for diagnostics.
+	     */
+	    getHealthSnapshot(): Map<string, {
+	        consecutiveFailures: number;
+	        headBlock: number;
+	        apiFailures: Record<string, {
+	            count: number;
+	        }>;
+	        healthy: boolean;
+	    }>;
+	}
+
+}
 declare module 'dhive/utils' {
 	/**
 	 * @file Misc utility functions.
@@ -2139,6 +2018,293 @@ declare module 'dhive/utils' {
 	 * @param allowedOperations Array of operations index numbers
 	 */
 	export function makeBitMaskFilter(allowedOperations: number[]): any[];
+
+}
+declare module 'dhive/crypto' {
+	/**
+	 * @file Hive crypto helpers.
+	 * @author Johan Nordberg <code@johan-nordberg.com>
+	 * @license
+	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
+	 *
+	 * Redistribution and use in source and binary forms, with or without modification,
+	 * are permitted provided that the following conditions are met:
+	 *
+	 *  1. Redistribution of source code must retain the above copyright notice, this
+	 *     list of conditions and the following disclaimer.
+	 *
+	 *  2. Redistribution in binary form must reproduce the above copyright notice,
+	 *     this list of conditions and the following disclaimer in the documentation
+	 *     and/or other materials provided with the distribution.
+	 *
+	 *  3. Neither the name of the copyright holder nor the names of its contributors
+	 *     may be used to endorse or promote products derived from this software without
+	 *     specific prior written permission.
+	 *
+	 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+	 * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+	 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+	 * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+	 * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+	 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+	 * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+	 * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+	 * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+	 * OF THE POSSIBILITY OF SUCH DAMAGE.
+	 *
+	 * You acknowledge that this software is not designed, licensed or intended for use
+	 * in the design, construction, operation or maintenance of any military facility.
+	 */
+	import ByteBuffer from '@ecency/bytebuffer';
+	import { SignedTransaction, Transaction } from 'dhive/chain/transaction';
+	/**
+	 * Network id used in WIF-encoding.
+	 */
+	export const NETWORK_ID: Buffer; function ripemd160(input: Buffer | string): Buffer; function sha256(input: Buffer | string): Buffer; function doubleSha256(input: Buffer | string): Buffer; function encodePublic(key: Buffer, prefix: string): string; function encodePrivate(key: Buffer): string; function decodePrivate(encodedKey: string): Buffer; function isCanonicalSignature(signature: Buffer): boolean; function isWif(privWif: string | Buffer): boolean;
+	/**
+	 * ECDSA (secp256k1) public key.
+	 */
+	export class PublicKey {
+	    readonly key: any;
+	    readonly prefix: string;
+	    readonly uncompressed: Buffer;
+	    constructor(key: any, prefix?: string);
+	    static fromBuffer(key: ByteBuffer): PublicKey;
+	    /**
+	     * Create a new instance from a WIF-encoded key.
+	     */
+	    static fromString(wif: string): PublicKey;
+	    /**
+	     * Create a new instance.
+	     */
+	    static from(value: string | PublicKey): PublicKey;
+	    /**
+	     * Verify a 32-byte signature.
+	     * @param message 32-byte message to verify.
+	     * @param signature Signature to verify.
+	     */
+	    verify(message: Buffer, signature: Signature): boolean;
+	    /**
+	     * Return a WIF-encoded representation of the key.
+	     */
+	    toString(): string;
+	    /**
+	     * Return JSON representation of this key, same as toString().
+	     */
+	    toJSON(): string;
+	    /**
+	     * Used by `utils.inspect` and `console.log` in node.js.
+	     */
+	    inspect(): string;
+	}
+	export type KeyRole = 'owner' | 'active' | 'posting' | 'memo';
+	/**
+	 * ECDSA (secp256k1) private key.
+	 */
+	export class PrivateKey {
+	    private key;
+	    secret: Buffer;
+	    constructor(key: Buffer);
+	    /**
+	     * Convenience to create a new instance from WIF string or buffer.
+	     */
+	    static from(value: string | Buffer): PrivateKey;
+	    /**
+	     * Create a new instance from a WIF-encoded key.
+	     */
+	    static fromString(wif: string): PrivateKey;
+	    /**
+	     * Create a new instance from a seed.
+	     */
+	    static fromSeed(seed: string): PrivateKey;
+	    /**
+	     * Create key from username and password.
+	     */
+	    static fromLogin(username: string, password: string, role?: KeyRole): PrivateKey;
+	    multiply(pub: any): Buffer;
+	    /**
+	     * Sign message.
+	     * @param message 32-byte message.
+	     */
+	    sign(message: Buffer): Signature;
+	    /**
+	     * Derive the public key for this private key.
+	     */
+	    createPublic(prefix?: string): PublicKey;
+	    /**
+	     * Return a WIF-encoded representation of the key.
+	     */
+	    toString(): string;
+	    /**
+	     * Used by `utils.inspect` and `console.log` in node.js. Does not show the full key
+	     * to get the full encoded key you need to explicitly call {@link toString}.
+	     */
+	    inspect(): string;
+	    /**
+	     * Get shared secret for memo cryptography
+	     */
+	    get_shared_secret(public_key: PublicKey): Buffer;
+	}
+	/**
+	 * ECDSA (secp256k1) signature.
+	 */
+	export class Signature {
+	    data: Buffer;
+	    recovery: number;
+	    constructor(data: Buffer, recovery: number);
+	    static fromBuffer(buffer: Buffer): Signature;
+	    static fromString(string: string): Signature;
+	    /**
+	     * Recover public key from signature by providing original signed message.
+	     * @param message 32-byte message that was used to create the signature.
+	     */
+	    recover(message: Buffer, prefix?: string): PublicKey;
+	    toBuffer(): Buffer;
+	    toString(): string;
+	} function transactionDigest(transaction: Transaction | SignedTransaction, chainId?: Buffer): Buffer; function signTransaction(transaction: Transaction, keys: PrivateKey | PrivateKey[], chainId?: Buffer): SignedTransaction; function generateTrxId(transaction: Transaction): string;
+	/** Misc crypto utility functions. */
+	export const cryptoUtils: {
+	    decodePrivate: typeof decodePrivate;
+	    doubleSha256: typeof doubleSha256;
+	    encodePrivate: typeof encodePrivate;
+	    encodePublic: typeof encodePublic;
+	    generateTrxId: typeof generateTrxId;
+	    isCanonicalSignature: typeof isCanonicalSignature;
+	    isWif: typeof isWif;
+	    ripemd160: typeof ripemd160;
+	    sha256: typeof sha256;
+	    signTransaction: typeof signTransaction;
+	    transactionDigest: typeof transactionDigest;
+	};
+	export {};
+
+}
+declare module 'dhive/chain/block-api' {
+	/**
+	 * @file Block, transaction and operation types in the `block_api` format.
+	 *
+	 * The condenser types in `block.ts`, `transaction.ts` and `operation.ts`
+	 * describe the legacy `condenser_api` format and are unaffected by these.
+	 */
+	import { PublicKey } from 'dhive/crypto';
+	import { Asset, NaiAsset, NaiPrice, Price } from 'dhive/chain/asset';
+	import { BeneficiaryRoute } from 'dhive/chain/comment';
+	import { HexBuffer } from 'dhive/chain/misc';
+	import { AccountCreateOperation, AccountCreateWithDelegationOperation, AccountUpdate2Operation, AccountUpdateOperation, AccountWitnessProxyOperation, AccountWitnessVoteOperation, CancelTransferFromSavingsOperation, ChangeRecoveryAccountOperation, ClaimAccountOperation, ClaimRewardBalanceOperation, CollateralizedConvertOperation, CommentOperation, CommentOptionsOperation, ConvertOperation, CreateClaimedAccountOperation, CreateProposalOperation, CustomBinaryOperation, CustomJsonOperation, CustomOperation, DeclineVotingRightsOperation, DelegateVestingSharesOperation, DeleteCommentOperation, EscrowApproveOperation, EscrowDisputeOperation, EscrowReleaseOperation, EscrowTransferOperation, FeedPublishOperation, LimitOrderCancelOperation, LimitOrderCreate2Operation, LimitOrderCreateOperation, Operation, Pow2Operation, PowOperation, RecoverAccountOperation, RecurrentTransferOperation, RemoveProposalOperation, ReportOverProductionOperation, RequestAccountRecoveryOperation, ResetAccountOperation, SetResetAccountOperation, SetWithdrawVestingRouteOperation, TransferFromSavingsOperation, TransferOperation, TransferToSavingsOperation, TransferToVestingOperation, UpdateProposalOperation, UpdateProposalVotesOperation, VoteOperation, WithdrawVestingOperation, WitnessSetPropertiesOperation, WitnessUpdateOperation } from 'dhive/chain/operation';
+	/**
+	 * Maps a condenser operation value shape to its `block_api` JSON shape:
+	 * assets become {@link NaiAsset}, prices {@link NaiPrice}, and public keys
+	 * and binary data the strings the node sends. Fields typed `any` stay `any`.
+	 */
+	export type BlockApiValue<T> = 0 extends (1 & T) ? T : Asset extends T ? NaiAsset : Price extends T ? NaiPrice : PublicKey extends T ? string : HexBuffer extends T ? string : T extends object ? {
+	    [K in keyof T]: BlockApiValue<T[K]>;
+	} : T;
+	/**
+	 * The `block_api` form `{type: '<name>_operation', value}` of a condenser
+	 * operation `[name, value]`, with the value mapped by {@link BlockApiValue}.
+	 */
+	export interface BlockApiOperationOf<O extends Operation> {
+	    type: `${O[0]}_operation`;
+	    value: BlockApiValue<O[1]>;
+	}
+	/**
+	 * `comment_options` in the `block_api` format. Its extensions are static
+	 * variants, sent as `{type, value}` objects rather than condenser's
+	 * `[0, value]` pairs, so this one value shape cannot reuse
+	 * {@link CommentOptionsOperation} as is.
+	 */
+	export interface BlockApiCommentOptionsOperation {
+	    type: 'comment_options_operation';
+	    value: Omit<BlockApiValue<CommentOptionsOperation[1]>, 'extensions'> & {
+	        extensions: {
+	            type: 'comment_payout_beneficiaries';
+	            value: {
+	                beneficiaries: BeneficiaryRoute[];
+	            };
+	        }[];
+	    };
+	}
+	/**
+	 * Operation in the `block_api` format, e.g.
+	 * `{type: 'vote_operation', value: {voter, author, permlink, weight}}`.
+	 * Narrow on `type` to get the value shape of a specific operation.
+	 *
+	 * Value shapes reuse the condenser operation interfaces, with NAI assets in
+	 * place of asset strings. Where those interfaces are loose they stay loose
+	 * here: the `pow` and `pow2` work and props, and `extensions` fields other
+	 * than comment_options', are `any`. `custom` and `custom_binary` data is a
+	 * hex string. An operation added to the chain after this list was written
+	 * arrives with a `type` not listed here.
+	 */
+	export type BlockApiOperation = BlockApiOperationOf<AccountCreateOperation> | BlockApiOperationOf<AccountCreateWithDelegationOperation> | BlockApiOperationOf<AccountUpdateOperation> | BlockApiOperationOf<AccountUpdate2Operation> | BlockApiOperationOf<AccountWitnessProxyOperation> | BlockApiOperationOf<AccountWitnessVoteOperation> | BlockApiOperationOf<CancelTransferFromSavingsOperation> | BlockApiOperationOf<ChangeRecoveryAccountOperation> | BlockApiOperationOf<ClaimAccountOperation> | BlockApiOperationOf<ClaimRewardBalanceOperation> | BlockApiOperationOf<CollateralizedConvertOperation> | BlockApiOperationOf<CommentOperation> | BlockApiCommentOptionsOperation | BlockApiOperationOf<ConvertOperation> | BlockApiOperationOf<CreateClaimedAccountOperation> | BlockApiOperationOf<CreateProposalOperation> | BlockApiOperationOf<CustomOperation> | BlockApiOperationOf<CustomBinaryOperation> | BlockApiOperationOf<CustomJsonOperation> | BlockApiOperationOf<DeclineVotingRightsOperation> | BlockApiOperationOf<DelegateVestingSharesOperation> | BlockApiOperationOf<DeleteCommentOperation> | BlockApiOperationOf<EscrowApproveOperation> | BlockApiOperationOf<EscrowDisputeOperation> | BlockApiOperationOf<EscrowReleaseOperation> | BlockApiOperationOf<EscrowTransferOperation> | BlockApiOperationOf<FeedPublishOperation> | BlockApiOperationOf<LimitOrderCancelOperation> | BlockApiOperationOf<LimitOrderCreateOperation> | BlockApiOperationOf<LimitOrderCreate2Operation> | BlockApiOperationOf<PowOperation> | BlockApiOperationOf<Pow2Operation> | BlockApiOperationOf<RecoverAccountOperation> | BlockApiOperationOf<RecurrentTransferOperation> | BlockApiOperationOf<RemoveProposalOperation> | BlockApiOperationOf<ReportOverProductionOperation> | BlockApiOperationOf<RequestAccountRecoveryOperation> | BlockApiOperationOf<ResetAccountOperation> | BlockApiOperationOf<SetResetAccountOperation> | BlockApiOperationOf<SetWithdrawVestingRouteOperation> | BlockApiOperationOf<TransferOperation> | BlockApiOperationOf<TransferFromSavingsOperation> | BlockApiOperationOf<TransferToSavingsOperation> | BlockApiOperationOf<TransferToVestingOperation> | BlockApiOperationOf<UpdateProposalOperation> | BlockApiOperationOf<UpdateProposalVotesOperation> | BlockApiOperationOf<VoteOperation> | BlockApiOperationOf<WithdrawVestingOperation> | BlockApiOperationOf<WitnessSetPropertiesOperation> | BlockApiOperationOf<WitnessUpdateOperation>;
+	/**
+	 * Signed transaction in the `block_api` format. Unlike condenser's, it
+	 * carries no `transaction_id`, `block_num` or `transaction_num`; the ids
+	 * are in the block's `transaction_ids`, in the same order.
+	 */
+	export interface BlockApiTransaction {
+	    ref_block_num: number;
+	    ref_block_prefix: number;
+	    expiration: string;
+	    operations: BlockApiOperation[];
+	    extensions: any[];
+	    signatures: string[];
+	}
+	/**
+	 * Unsigned block header in the `block_api` format.
+	 */
+	export interface BlockApiBlockHeader {
+	    previous: string;
+	    timestamp: string;
+	    witness: string;
+	    transaction_merkle_root: string;
+	    extensions: {
+	        type: string;
+	        value: any;
+	    }[];
+	}
+	/**
+	 * Full signed block in the `block_api` format.
+	 */
+	export interface BlockApiSignedBlock extends BlockApiBlockHeader {
+	    witness_signature: string;
+	    block_id: string;
+	    signing_key: string;
+	    transaction_ids: string[];
+	    transactions: BlockApiTransaction[];
+	}
+
+}
+declare module 'dhive/helpers/block' {
+	/**
+	 * @file block_api helper.
+	 *
+	 * Blocks come in the `block_api` format: `{type, value}` operations and NAI
+	 * assets. On HAF API nodes these calls are served by HAfAH rather than hived.
+	 */
+	import { BlockApiBlockHeader, BlockApiSignedBlock } from 'dhive/chain/block-api';
+	import { Client } from 'dhive/client';
+	export class BlockAPI {
+	    readonly client: Client;
+	    constructor(client: Client);
+	    /**
+	     * Convenience for calling `block_api`.
+	     */
+	    call(method: string, params?: any): Promise<any>;
+	    /**
+	     * Return block *blockNum*, or `null` if the node has no such block.
+	     */
+	    getBlock(blockNum: number): Promise<BlockApiSignedBlock | null>;
+	    /**
+	     * Return the header of block *blockNum*, or `null` if the node has no such block.
+	     */
+	    getBlockHeader(blockNum: number): Promise<BlockApiBlockHeader | null>;
+	    /**
+	     * Return up to *count* consecutive blocks starting at *startingBlockNum*.
+	     * Nodes reject a *count* above 1000, and return no blocks past their head block.
+	     */
+	    getBlockRange(startingBlockNum: number, count: number): Promise<BlockApiSignedBlock[]>;
+	}
 
 }
 declare module 'dhive/helpers/blockchain' {
@@ -2459,42 +2625,98 @@ declare module 'dhive/helpers/database' {
 	import { Client } from 'dhive/client';
 	/**
 	 * Possible categories for `get_discussions_by_*`.
+	 *
+	 * Hivemind serves only `blog`, `comments`, `created`, `feed`, `hot` and `trending`
+	 * (`get_condenser_api_method` in hivemind's
+	 * `hive/db/sql_scripts/postgrest/utilities/get_api_method.sql`). The other categories
+	 * were removed from the API and fail with a method-not-found error.
 	 */
 	export type DiscussionQueryCategory = 'active' | 'blog' | 'cashout' | 'children' | 'comments' | 'feed' | 'hot' | 'promoted' | 'trending' | 'votes' | 'created';
+	/**
+	 * Query for {@link DatabaseAPI.getDiscussions}, sent to hivemind's
+	 * `condenser_api.get_discussions_by_*`.
+	 *
+	 * Hivemind validates the query with `validate_json_arguments`
+	 * (`hive/db/sql_scripts/postgrest/utilities/validate_json_arguments.sql`) against the
+	 * keys each endpoint accepts: `condenser_api_get_discussions_by` for
+	 * `created`/`hot`/`trending`, `condenser_api_get_discussions_by_blog_or_feed` for
+	 * `blog`/`feed` and `condenser_api_get_discussions_by_comments` for `comments`, all in
+	 * `hive/db/sql_scripts/postgrest/condenser_api/`. A key it does not accept fails with
+	 * `got an unexpected keyword argument '<key>'`, except that the check is skipped when
+	 * fewer recognized keys than the endpoint requires (2 for `created`/`hot`/`trending`,
+	 * 1 for the others) are passed; the unknown key is then silently ignored.
+	 */
 	export interface DisqussionQuery {
 	    /**
-	     * Name of author or tag to fetch.
+	     * For `created`, `hot` and `trending`: the tag or community (`hive-NNNNNN`) to list;
+	     * omit or pass `''` for all posts.
+	     * For `blog` and `feed`: the account whose blog or feed to list; required.
+	     * Not accepted for `comments` (rejected as an unexpected keyword); use `start_author`.
 	     */
 	    tag?: string;
 	    /**
-	     * Number of results, max 100.
+	     * Number of results, default 20. Hivemind rejects values outside 1 to its
+	     * `hivemind_app.max_posts_per_call` setting, which defaults to 20
+	     * (`get_max_posts_per_call_limit` in `utilities/api_limits.sql`).
 	     */
 	    limit: number;
+	    /**
+	     * Not supported. Hivemind rejects any value, including `[]`, with
+	     * `filter_tags not supported`.
+	     */
 	    filter_tags?: string[];
+	    /**
+	     * Not supported. Hivemind does not accept this key and rejects it as an
+	     * unexpected keyword argument.
+	     */
 	    select_authors?: string[];
+	    /**
+	     * Not supported. Hivemind does not accept this key and rejects it as an
+	     * unexpected keyword argument.
+	     */
 	    select_tags?: string[];
 	    /**
-	     * Number of bytes of post body to fetch, default 0 (all)
+	     * Number of characters of each post body to return, default 0 (whole body).
 	     */
 	    truncate_body?: number;
 	    /**
-	     * Name of author to start from, used for paging.
+	     * Author of the post to start from, used for paging; the post must exist.
 	     * Should be used in conjunction with `start_permlink`.
+	     * For `comments` this is required and names the account whose comments to list.
 	     */
 	    start_author?: string;
 	    /**
 	     * Permalink of post to start from, used for paging.
 	     * Should be used in conjunction with `start_author`.
+	     * For `comments`, omit it to start from the newest comment.
 	     */
 	    start_permlink?: string;
+	    /**
+	     * Not supported. Hivemind does not accept this key and rejects it as an
+	     * unexpected keyword argument.
+	     */
 	    parent_author?: string;
+	    /**
+	     * Not supported. Hivemind does not accept this key and rejects it as an
+	     * unexpected keyword argument.
+	     */
 	    parent_permlink?: string;
 	}
+	/**
+	 * Chain state queries.
+	 *
+	 * Despite its name, every method of this helper, including {@link DatabaseAPI.call},
+	 * calls `condenser_api`, not `database_api`. Call `database_api` methods with
+	 * {@link Client.call}, e.g.
+	 * `client.call('database_api', 'find_accounts', { accounts: ['alice'] })`.
+	 */
 	export class DatabaseAPI {
 	    readonly client: Client;
 	    constructor(client: Client);
 	    /**
-	     * Convenience for calling `database_api`.
+	     * Convenience for calling `condenser_api`, which takes positional `params`.
+	     * To call a `database_api` method use
+	     * `client.call('database_api', method, params)` instead.
 	     */
 	    call(method: string, params?: any[]): Promise<any>;
 	    /**
@@ -2531,10 +2753,14 @@ declare module 'dhive/helpers/database' {
 	    }>;
 	    /**
 	     * Return header for *blockNum*.
+	     * @deprecated Use `client.block.getBlockHeader`, which reads `block_api`
+	     * (served by HAfAH on HAF API nodes) and returns the `block_api` format.
 	     */
 	    getBlockHeader(blockNum: number): Promise<BlockHeader>;
 	    /**
 	     * Return block *blockNum*.
+	     * @deprecated Use `client.block.getBlock`, which reads `block_api`
+	     * (served by HAfAH on HAF API nodes) and returns the `block_api` format.
 	     */
 	    getBlock(blockNum: number): Promise<SignedBlock>;
 	    /**
@@ -2924,6 +3150,7 @@ declare module 'dhive/client' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
+	import { BlockAPI } from 'dhive/helpers/block';
 	import { Blockchain } from 'dhive/helpers/blockchain';
 	import { BroadcastAPI } from 'dhive/helpers/broadcast';
 	import { DatabaseAPI } from 'dhive/helpers/database';
@@ -2986,7 +3213,9 @@ declare module 'dhive/client' {
 	    backoff?: (tries: number) => number;
 	    /**
 	     * Node.js http(s) agent, use if you want http keep-alive.
-	     * Defaults to using https.globalAgent.
+	     * The global fetch of Node.js 18+ ignores agents, so setting this makes
+	     * requests go through cross-fetch (node-fetch) instead, which applies it.
+	     * When unset, the runtime's global fetch is used where there is one.
 	     * @see https://nodejs.org/api/http.html#http_new_agent_options.
 	     */
 	    agent?: any;
@@ -3016,7 +3245,8 @@ declare module 'dhive/client' {
 	     */
 	    address: string | string[];
 	    /**
-	     * Database API helper.
+	     * Chain state helper. It calls `condenser_api`, not `database_api`; call
+	     * `database_api` methods with `client.call('database_api', method, params)`.
 	     */
 	    readonly database: DatabaseAPI;
 	    /**
@@ -3031,6 +3261,10 @@ declare module 'dhive/client' {
 	     * Blockchain helper.
 	     */
 	    readonly blockchain: Blockchain;
+	    /**
+	     * Block API helper, returning blocks in the `block_api` format.
+	     */
+	    readonly block: BlockAPI;
 	    /**
 	     * Hivemind helper.
 	     */
@@ -3091,7 +3325,7 @@ declare module 'dhive/client' {
 
 }
 declare module 'dhive/chain/deserializer' {
-	import ByteBuffer = require('@ecency/bytebuffer');
+	import ByteBuffer from '@ecency/bytebuffer';
 	export type Deserializer = (buffer: ByteBuffer) => void;
 	export const types: {
 	    EncryptedMemoD: any;
@@ -3163,6 +3397,7 @@ declare module 'dhive' {
 	import * as utils from 'dhive/utils';
 	export { utils };
 	export { NodeHealthTracker, HealthTrackerOptions } from 'dhive/health-tracker';
+	export * from 'dhive/helpers/block';
 	export * from 'dhive/helpers/blockchain';
 	export * from 'dhive/helpers/database';
 	export * from 'dhive/helpers/rc';
@@ -3171,6 +3406,7 @@ declare module 'dhive' {
 	export * from 'dhive/chain/account';
 	export * from 'dhive/chain/asset';
 	export * from 'dhive/chain/block';
+	export * from 'dhive/chain/block-api';
 	export * from 'dhive/chain/comment';
 	export * from 'dhive/chain/misc';
 	export * from 'dhive/chain/operation';
@@ -3224,7 +3460,6 @@ declare module 'dhive/index-browser' {
 	import 'core-js/features/symbol';
 	import 'core-js/features/symbol/async-iterator';
 	import 'regenerator-runtime/runtime';
-	import 'whatwg-fetch';
 	export * from 'dhive';
 
 }

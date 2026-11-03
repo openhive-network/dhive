@@ -1,12 +1,12 @@
-import assert = require('assert')
+import assert from 'assert'
 import {
   createCipheriv,
   createDecipheriv,
   createHash,
   randomBytes
 } from 'crypto'
+import ByteBuffer from '@ecency/bytebuffer'
 import { PrivateKey, PublicKey } from '../crypto'
-const ByteBuffer = require('@ecency/bytebuffer')
 const Long = ByteBuffer.Long
 
 export const encrypt = (

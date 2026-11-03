@@ -1,5 +1,5 @@
-import bs58 = require('bs58')
-import ByteBuffer = require('@ecency/bytebuffer')
+import bs58 from 'bs58'
+import ByteBuffer from '@ecency/bytebuffer'
 import { types } from './chain/deserializer'
 import { Types } from './chain/serializer'
 import { PrivateKey, PublicKey } from './crypto'

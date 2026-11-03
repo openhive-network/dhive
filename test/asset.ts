@@ -1,7 +1,9 @@
 import "mocha";
 import assert = require("assert");
 
-import { Asset, Price, getVestingSharePrice } from "./../src";
+import { Asset, NaiAsset, Price, getVestingSharePrice } from "./../src";
+
+const fixtures = require("./block-api-fixtures.json");
 
 describe("asset", function() {
   it("should create from string", function() {
@@ -114,5 +116,79 @@ describe("asset", function() {
     assert.throws(() => {
       price1.convert(Asset.from(1, "VESTS"));
     });
+  });
+
+  it("should convert from NAI", function() {
+    const hbd = Asset.fromNai({ nai: "@@000000013", amount: "1000000000", precision: 3 });
+    assert.equal(hbd.symbol, "HBD");
+    assert.equal(hbd.amount, 1000000);
+    assert.equal(hbd.toString(), "1000000.000 HBD");
+    assert.equal(Asset.fromNai({ nai: "@@000000021", amount: "1", precision: 3 }).toString(), "0.001 HIVE");
+    assert.equal(Asset.fromNai({ nai: "@@000000037", amount: "0", precision: 6 }).toString(), "0.000000 VESTS");
+    assert.equal(
+      Asset.from({ nai: "@@000000021", amount: "42000", precision: 3 }, "HIVE").add("1.000 HIVE").toString(),
+      "43.000 HIVE"
+    );
+  });
+
+  it("should convert block_api NAI amounts", function() {
+    const [transfer, claim] = fixtures.get_block.block.transactions
+      .slice(1)
+      .map((tx: any) => tx.operations[0].value);
+    assert.equal(Asset.fromNai(transfer.amount).toString(), "14.000 HBD");
+    assert.deepEqual(Asset.fromNai(transfer.amount).toNai(), transfer.amount);
+    assert.equal(Asset.fromNai(claim.fee).toString(), "0.000 HIVE");
+    assert.deepEqual(Asset.fromNai(claim.fee).toNai(), claim.fee);
+  });
+
+  it("should convert to NAI", function() {
+    assert.deepEqual(Asset.from("1.000 HIVE").toNai(), { nai: "@@000000021", amount: "1000", precision: 3 });
+    assert.deepEqual(Asset.from("0.444 HBD").toNai(), { nai: "@@000000013", amount: "444", precision: 3 });
+    assert.deepEqual(Asset.from("0.123456 VESTS").toNai(), { nai: "@@000000037", amount: "123456", precision: 6 });
+    assert.deepEqual(Asset.from("-1.5 HIVE").toNai(), { nai: "@@000000021", amount: "-1500", precision: 3 });
+    assert.deepEqual(new Asset(44.999999, "HIVE").toNai(), { nai: "@@000000021", amount: "45000", precision: 3 });
+    assert.deepEqual(Asset.from(2, "TESTS").toNai(), { nai: "@@000000021", amount: "2000", precision: 3 });
+    assert.deepEqual(Asset.from("0.001 TBD").toNai(), { nai: "@@000000013", amount: "1", precision: 3 });
+  });
+
+  it("should convert large VESTS amounts exactly", function() {
+    const nai: NaiAsset = { nai: "@@000000037", amount: "312345678901234567890", precision: 6 };
+    const vests = Asset.fromNai(nai);
+    assert.equal(vests.toString(), "312345678901234.567890 VESTS");
+    assert.deepEqual(vests.toNai(), nai);
+    assert.deepEqual(Asset.from(vests.toString()).toNai(), nai);
+  });
+
+  it("should compare and list keys like a constructed asset", function() {
+    assert.deepEqual(Asset.fromString("1.000 HIVE"), new Asset(1, "HIVE"));
+    assert.deepEqual(Asset.fromNai({ nai: "@@000000013", amount: "444", precision: 3 }), new Asset(0.444, "HBD"));
+    assert.deepEqual(Object.keys(Asset.fromString("1.000 HIVE")), ["amount", "symbol"]);
+    assert.deepEqual(Object.keys(Asset.fromString("1.000 HIVE")), Object.keys(new Asset(1, "HIVE")));
+  });
+
+  it("should round-trip strings through NAI", function() {
+    for (const s of [
+      "0.000 HIVE",
+      "1.000 HIVE",
+      "123456789.123 HIVE",
+      "0.001 HBD",
+      "1000000.000 HBD",
+      "0.000001 VESTS",
+      "9007199254.740993 VESTS",
+      "312345678901234.567890 VESTS",
+    ]) {
+      assert.equal(Asset.fromNai(Asset.fromString(s).toNai()).toString(), s);
+    }
+  });
+
+  it("should reject invalid NAI assets", function() {
+    assert.throws(() => Asset.fromNai({ nai: "@@000000099", amount: "1", precision: 3 }), /Unknown asset NAI: @@000000099/);
+    assert.throws(() => Asset.fromNai({ nai: "constructor", amount: "1", precision: 3 }), /Unknown asset NAI/);
+    assert.throws(
+      () => Asset.fromNai({ nai: "@@000000037", amount: "1", precision: 3 }),
+      /Invalid precision for NAI @@000000037 \(VESTS\): expected 6 got: 3/
+    );
+    assert.throws(() => Asset.fromNai({ nai: "@@000000013", amount: "1.5", precision: 3 }), /Invalid NAI asset amount: 1.5/);
+    assert.throws(() => Asset.from({ nai: "@@000000013", amount: "1", precision: 3 }, "HIVE"), /expected symbol: HIVE got: HBD/);
   });
 });

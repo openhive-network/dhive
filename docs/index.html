@@ -55,9 +55,48 @@
 <pre><code class="javascript"><span class="hl-7">var</span><span class="hl-1"> </span><span class="hl-0">dhive</span><span class="hl-1"> = </span><span class="hl-8">require</span><span class="hl-1">(</span><span class="hl-9">&quot;@hiveio/dhive&quot;</span><span class="hl-1">);</span><br/><span class="hl-7">var</span><span class="hl-1"> </span><span class="hl-0">es</span><span class="hl-1"> = </span><span class="hl-8">require</span><span class="hl-1">(</span><span class="hl-9">&quot;event-stream&quot;</span><span class="hl-1">); </span><span class="hl-13">// npm install event-stream</span><br/><span class="hl-7">var</span><span class="hl-1"> </span><span class="hl-0">util</span><span class="hl-1"> = </span><span class="hl-8">require</span><span class="hl-1">(</span><span class="hl-9">&quot;util&quot;</span><span class="hl-1">);</span><br/><br/><span class="hl-7">var</span><span class="hl-1"> </span><span class="hl-0">client</span><span class="hl-1"> = </span><span class="hl-7">new</span><span class="hl-1"> </span><span class="hl-0">dhive</span><span class="hl-1">.</span><span class="hl-8">Client</span><span class="hl-1">([</span><span class="hl-9">&quot;https://api.hive.blog&quot;</span><span class="hl-1">, </span><span class="hl-9">&quot;https://api.hivekings.com&quot;</span><span class="hl-1">, </span><span class="hl-9">&quot;https://anyx.io&quot;</span><span class="hl-1">, </span><span class="hl-9">&quot;https://api.openhive.network&quot;</span><span class="hl-1">]);</span><br/><br/><span class="hl-7">var</span><span class="hl-1"> </span><span class="hl-0">stream</span><span class="hl-1"> = </span><span class="hl-0">client</span><span class="hl-1">.</span><span class="hl-0">blockchain</span><span class="hl-1">.</span><span class="hl-8">getBlockStream</span><span class="hl-1">();</span><br/><br/><span class="hl-0">stream</span><br/><span class="hl-1">  .</span><span class="hl-8">pipe</span><span class="hl-1">(</span><br/><span class="hl-1">    </span><span class="hl-0">es</span><span class="hl-1">.</span><span class="hl-8">map</span><span class="hl-1">(</span><span class="hl-7">function</span><span class="hl-1">(</span><span class="hl-0">block</span><span class="hl-1">, </span><span class="hl-0">callback</span><span class="hl-1">) {</span><br/><span class="hl-1">      </span><span class="hl-8">callback</span><span class="hl-1">(</span><span class="hl-7">null</span><span class="hl-1">, </span><span class="hl-0">util</span><span class="hl-1">.</span><span class="hl-8">inspect</span><span class="hl-1">(</span><span class="hl-0">block</span><span class="hl-1">, { </span><span class="hl-0">colors:</span><span class="hl-1"> </span><span class="hl-7">true</span><span class="hl-1">, </span><span class="hl-0">depth:</span><span class="hl-1"> </span><span class="hl-7">null</span><span class="hl-1"> }) + </span><span class="hl-9">&quot;</span><span class="hl-14">\n</span><span class="hl-9">&quot;</span><span class="hl-1">);</span><br/><span class="hl-1">    })</span><br/><span class="hl-1">  )</span><br/><span class="hl-1">  .</span><span class="hl-8">pipe</span><span class="hl-1">(</span><span class="hl-0">process</span><span class="hl-1">.</span><span class="hl-0">stdout</span><span class="hl-1">);</span>
 </code><button type="button">Copy</button></pre>
 
+<h3 id="reading-blocks-or" class="tsd-anchor-link">Reading blocks: <code>client.block</code> or <code>client.database.getBlock</code><a href="#reading-blocks-or" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<p>Use <code>client.block</code> in new code. It calls <code>block_api</code>, which HAF API nodes serve from HAfAH rather than hived, and plain hived nodes serve as well. Blocks come in the <code>block_api</code> format: operations are <code>{type: &quot;vote_operation&quot;, value: {...}}</code> objects, assets are NAI objects such as <code>{nai: &quot;@@000000013&quot;, amount: &quot;1000&quot;, precision: 3}</code>, and transactions carry no <code>transaction_id</code>, <code>block_num</code> or <code>transaction_num</code> (the ids are in the block's <code>transaction_ids</code>). A missing block is <code>null</code>.</p>
+<pre><code class="typescript"><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-12">block</span><span class="hl-1"> = </span><span class="hl-11">await</span><span class="hl-1"> </span><span class="hl-0">client</span><span class="hl-1">.</span><span class="hl-0">block</span><span class="hl-1">.</span><span class="hl-8">getBlock</span><span class="hl-1">(</span><span class="hl-10">90000000</span><span class="hl-1">); </span><span class="hl-13">// BlockApiSignedBlock | null</span><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-12">header</span><span class="hl-1"> = </span><span class="hl-11">await</span><span class="hl-1"> </span><span class="hl-0">client</span><span class="hl-1">.</span><span class="hl-0">block</span><span class="hl-1">.</span><span class="hl-8">getBlockHeader</span><span class="hl-1">(</span><span class="hl-10">90000000</span><span class="hl-1">);</span><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-12">blocks</span><span class="hl-1"> = </span><span class="hl-11">await</span><span class="hl-1"> </span><span class="hl-0">client</span><span class="hl-1">.</span><span class="hl-0">block</span><span class="hl-1">.</span><span class="hl-8">getBlockRange</span><span class="hl-1">(</span><span class="hl-10">90000000</span><span class="hl-1">, </span><span class="hl-10">10</span><span class="hl-1">); </span><span class="hl-13">// up to 1000 per call</span>
+</code><button type="button">Copy</button></pre>
+
+<p><code>client.database.getBlock</code> and <code>getBlockHeader</code> are deprecated but unchanged: they call <code>condenser_api</code> and return the legacy format (<code>[&quot;vote&quot;, {...}]</code> operations, <code>&quot;1.000 HBD&quot;</code> asset strings). Keep them only for code that depends on that format. <code>client.blockchain.getBlocks()</code> and <code>getBlockStream()</code> still use the condenser path.</p>
 <h2 id="bundling" class="tsd-anchor-link">Bundling<a href="#bundling" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <p>The easiest way to bundle dhive (with browserify, webpack etc.) is to just <code>npm install @hiveio/dhive</code> and <code>require('@hiveio/dhive')</code> which will give you well-tested (see browser compatibility matrix above) pre-bundled code guaranteed to JustWork™. However, that is not always desirable since it will not allow your bundler to de-duplicate any shared dependencies dhive and your app might have.</p>
 <p>To allow for deduplication you can <code>require('@hiveio/dhive/lib/index-browser')</code>, or if you plan to provide your own polyfills: <code>require('@hiveio/dhive/lib/index')</code>. See <code>src/index-browser.ts</code> for a list of polyfills expected.</p>
+<h3 id="es-modules-and-tree-shaking" class="tsd-anchor-link">ES modules and tree-shaking<a href="#es-modules-and-tree-shaking" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<p>The package also ships an ES-module build in <code>lib/esm/</code> and declares <code>&quot;sideEffects&quot;</code> (only the polyfill entry <code>lib/index-browser.js</code>, its ESM twin and <code>dist/</code> have any), so a bundler can drop the parts of dhive an app does not import. <code>package.json</code>'s <code>exports</code> picks the build by condition:</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Gets</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>types</code></td>
+<td><code>lib/index.d.ts</code></td>
+</tr>
+<tr>
+<td><code>browser</code></td>
+<td><code>dist/dhive.js</code>, the prebuilt bundle, as before</td>
+</tr>
+<tr>
+<td><code>module</code> (esbuild, webpack, rollup)</td>
+<td><code>lib/esm/index.js</code></td>
+</tr>
+<tr>
+<td><code>node</code> (both <code>require</code> and <code>import</code>)</td>
+<td><code>lib/index-node.js</code> (CommonJS, one copy of the classes either way)</td>
+</tr>
+<tr>
+<td><code>import</code> / <code>require</code> otherwise</td>
+<td><code>lib/esm/index.js</code> / <code>lib/index-node.js</code></td>
+</tr>
+</tbody>
+</table>
+<p>Bundles for Node (SSR, serverless, <code>esbuild --platform=node</code>) therefore tree-shake without any configuration. A browser build keeps receiving <code>dist/dhive.js</code> unless it leaves the <code>browser</code> condition out (webpack's <code>resolve.conditionNames</code>, Vite's <code>resolve.conditions</code>); the ES-module build then needs the bundler to provide the Node built-ins it imports (<code>crypto</code>, <code>assert</code>, <code>events</code>, <code>stream</code>) and the <code>Buffer</code> global, which <code>dist/dhive.js</code> brings with it.</p>
 <hr>
 <p><em>Share and Enjoy!</em></p>
 </div></div>
@@ -87,8 +126,12 @@
 <li>
 <ul>
 <li><a href="#in-the-browser"><span>In the browser</span></a></li>
-<li><a href="#in-nodejs"><span>In node.js</span></a></li></ul></li>
-<li><a href="#bundling"><span>Bundling</span></a></li></ul></div></details></div>
+<li><a href="#in-nodejs"><span>In node.js</span></a></li>
+<li><a href="#reading-blocks-or"><span>Reading blocks:  or </span></a></li></ul></li>
+<li><a href="#bundling"><span>Bundling</span></a></li>
+<li>
+<ul>
+<li><a href="#es-modules-and-tree-shaking"><span>ES modules and tree-<wbr/>shaking</span></a></li></ul></li></ul></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="modules.html">@hiveio/dhive</a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container">

@@ -33,14 +33,14 @@
  * in the design, construction, operation or maintenance of any military facility.
  */
 
-import assert = require('assert')
+import assert from 'assert'
 import { createHash } from 'crypto'
-import bigInteger = require('bigi')
-import bs58 = require('bs58')
-import ByteBuffer = require('@ecency/bytebuffer')
-import ecurve = require('ecurve')
-import Ripemd160 = require('ripemd160')
-import secp256k1 = require('secp256k1')
+import bigInteger from 'bigi'
+import bs58 from 'bs58'
+import ByteBuffer from '@ecency/bytebuffer'
+import ecurve from 'ecurve'
+import Ripemd160 from 'ripemd160'
+import secp256k1 from 'secp256k1'
 import { VError } from 'verror'
 import { Types } from './chain/serializer'
 import { SignedTransaction, Transaction } from './chain/transaction'

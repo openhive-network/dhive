@@ -4,22 +4,26 @@ PATH  := ./node_modules/.bin:$(PATH)
 
 SRC_FILES := $(shell find src -name '*.ts')
 
+VERSION := $(shell node -p 'require("./package.json").version')
+
 define VERSION_TEMPLATE
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = '$(shell node -p 'require("./package.json").version')';
+exports.default = '$(VERSION)';
 endef
 
 all: lib bundle docs
 
 export VERSION_TEMPLATE
-lib: $(SRC_FILES) node_modules
+lib: $(SRC_FILES) tsconfig.json tsconfig.esm.json node_modules
 	tsc -p tsconfig.json --outDir lib && \
-	echo "$$VERSION_TEMPLATE" > lib/version.js
+	echo "$$VERSION_TEMPLATE" > lib/version.js && \
+	tsc -p tsconfig.esm.json && \
+	echo "export default '$(VERSION)';" > lib/esm/version.js
 	touch lib
 
 dist/%.js: lib
-	browserify $(filter-out $<,$^) --debug --full-paths \
+	browserify $(filter-out $<,$^) --debug \
 		--standalone dhive --plugin tsify \
 		--transform [ babelify --extensions .ts ] \
 		| derequire > $@
@@ -40,15 +44,15 @@ dist/%.gz: dist/dhive.js
 bundle: dist/dhive.js.gz dist/dhive.d.ts
 
 .PHONY: coverage
-coverage: node_modules
+coverage: lib
 	nyc -r html -r text -e .ts -i tsx/cjs mocha --exit --reporter nyan --require tsx/cjs test/*.ts
 
 .PHONY: test
-test: node_modules
+test: lib
 	mocha --exit --require tsx/cjs -r test/_node.js test/*.ts --grep '$(grep)'
 
 .PHONY: ci-test
-ci-test: eslint
+ci-test: eslint lib
 	nyc -r lcov -e .ts -i tsx/cjs mocha --exit --reporter tap --require tsx/cjs test/*.ts
 
 # Test files that call a live Hive node (api.hive.blog, testnet.openhive.network
@@ -57,11 +61,16 @@ NETWORK_TESTS := test/blockchain.ts test/broadcast.ts test/client.ts test/databa
 	test/hivemind.ts test/key.ts test/operations.ts test/transaction.ts
 UNIT_TESTS := $(filter-out $(NETWORK_TESTS),$(wildcard test/*.ts))
 
+# test/package.ts imports the built package (lib/ and lib/esm/) as consumers do.
 .PHONY: unit-test
-unit-test: node_modules
+unit-test: lib
 	mkdir -p reports
 	mocha --exit --timeout 20000 --require tsx/cjs -r test/_node.js \
 		--reporter xunit --reporter-option output=reports/unit-tests.xml $(UNIT_TESTS)
+
+.PHONY: check-reproducible-bundle
+check-reproducible-bundle:
+	test/reproducible-bundle.sh
 
 .PHONY: eslint
 eslint: node_modules

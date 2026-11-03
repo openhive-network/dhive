@@ -10,9 +10,22 @@
 <ul class="tsd-breadcrumb" aria-label="Breadcrumb">
 <li><a href="" aria-current="page">DisqussionQuery</a></li></ul>
 <h1>Interface DisqussionQuery</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>Query for <a href="../classes/DatabaseAPI.html#getdiscussions" class="tsd-kind-method">DatabaseAPI.getDiscussions</a>, sent to hivemind's
+<code>condenser_api.get_discussions_by_*</code>.</p>
+<p>Hivemind validates the query with <code>validate_json_arguments</code>
+(<code>hive/db/sql_scripts/postgrest/utilities/validate_json_arguments.sql</code>) against the
+keys each endpoint accepts: <code>condenser_api_get_discussions_by</code> for
+<code>created</code>/<code>hot</code>/<code>trending</code>, <code>condenser_api_get_discussions_by_blog_or_feed</code> for
+<code>blog</code>/<code>feed</code> and <code>condenser_api_get_discussions_by_comments</code> for <code>comments</code>, all in
+<code>hive/db/sql_scripts/postgrest/condenser_api/</code>. A key it does not accept fails with
+<code>got an unexpected keyword argument '&lt;key&gt;'</code>, except that the check is skipped when
+fewer recognized keys than the endpoint requires (2 for <code>created</code>/<code>hot</code>/<code>trending</code>,
+1 for the others) are passed; the unknown key is then silently ignored.</p>
+</div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">DisqussionQuery</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#filter_tags">filter_tags</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#limit">limit</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#parent_author">parent_author</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#parent_permlink">parent_permlink</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#select_authors">select_authors</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#select_tags">select_tags</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#start_author">start_author</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#start_permlink">start_permlink</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#tag">tag</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#truncate_body">truncate_body</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in helpers/database.ts:65</li></ul></aside>
+<li>Defined in helpers/database.ts:84</li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -36,66 +49,88 @@
 <section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="filter_tags"><code class="tsd-tag">Optional</code><span>filter_<wbr/>tags</span><a href="#filter_tags" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">filter_tags</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">filter_tags</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+<div class="tsd-comment tsd-typography"><p>Not supported. Hivemind rejects any value, including <code>[]</code>, with
+<code>filter_tags not supported</code>.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in helpers/database.ts:74</li></ul></aside></section>
+<li>Defined in helpers/database.ts:102</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="limit"><span>limit</span><a href="#limit" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">limit</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-<div class="tsd-comment tsd-typography"><p>Number of results, max 100.</p>
+<div class="tsd-comment tsd-typography"><p>Number of results, default 20. Hivemind rejects values outside 1 to its
+<code>hivemind_app.max_posts_per_call</code> setting, which defaults to 20
+(<code>get_max_posts_per_call_limit</code> in <code>utilities/api_limits.sql</code>).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in helpers/database.ts:73</li></ul></aside></section>
+<li>Defined in helpers/database.ts:97</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="parent_author"><code class="tsd-tag">Optional</code><span>parent_<wbr/>author</span><a href="#parent_author" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">parent_author</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">parent_author</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>Not supported. Hivemind does not accept this key and rejects it as an
+unexpected keyword argument.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in helpers/database.ts:91</li></ul></aside></section>
+<li>Defined in helpers/database.ts:133</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="parent_permlink"><code class="tsd-tag">Optional</code><span>parent_<wbr/>permlink</span><a href="#parent_permlink" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">parent_permlink</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">parent_permlink</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>Not supported. Hivemind does not accept this key and rejects it as an
+unexpected keyword argument.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in helpers/database.ts:92</li></ul></aside></section>
+<li>Defined in helpers/database.ts:138</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="select_authors"><code class="tsd-tag">Optional</code><span>select_<wbr/>authors</span><a href="#select_authors" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">select_authors</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">select_authors</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+<div class="tsd-comment tsd-typography"><p>Not supported. Hivemind does not accept this key and rejects it as an
+unexpected keyword argument.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in helpers/database.ts:75</li></ul></aside></section>
+<li>Defined in helpers/database.ts:107</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="select_tags"><code class="tsd-tag">Optional</code><span>select_<wbr/>tags</span><a href="#select_tags" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">select_tags</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">select_tags</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+<div class="tsd-comment tsd-typography"><p>Not supported. Hivemind does not accept this key and rejects it as an
+unexpected keyword argument.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in helpers/database.ts:76</li></ul></aside></section>
+<li>Defined in helpers/database.ts:112</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="start_author"><code class="tsd-tag">Optional</code><span>start_<wbr/>author</span><a href="#start_author" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">start_author</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
-<div class="tsd-comment tsd-typography"><p>Name of author to start from, used for paging.
-Should be used in conjunction with <code>start_permlink</code>.</p>
+<div class="tsd-comment tsd-typography"><p>Author of the post to start from, used for paging; the post must exist.
+Should be used in conjunction with <code>start_permlink</code>.
+For <code>comments</code> this is required and names the account whose comments to list.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in helpers/database.ts:85</li></ul></aside></section>
+<li>Defined in helpers/database.ts:122</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="start_permlink"><code class="tsd-tag">Optional</code><span>start_<wbr/>permlink</span><a href="#start_permlink" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">start_permlink</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Permalink of post to start from, used for paging.
-Should be used in conjunction with <code>start_author</code>.</p>
+Should be used in conjunction with <code>start_author</code>.
+For <code>comments</code>, omit it to start from the newest comment.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in helpers/database.ts:90</li></ul></aside></section>
+<li>Defined in helpers/database.ts:128</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="tag"><code class="tsd-tag">Optional</code><span>tag</span><a href="#tag" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">tag</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
-<div class="tsd-comment tsd-typography"><p>Name of author or tag to fetch.</p>
+<div class="tsd-comment tsd-typography"><p>For <code>created</code>, <code>hot</code> and <code>trending</code>: the tag or community (<code>hive-NNNNNN</code>) to list;
+omit or pass <code>''</code> for all posts.
+For <code>blog</code> and <code>feed</code>: the account whose blog or feed to list; required.
+Not accepted for <code>comments</code> (rejected as an unexpected keyword); use <code>start_author</code>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in helpers/database.ts:69</li></ul></aside></section>
+<li>Defined in helpers/database.ts:91</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="truncate_body"><code class="tsd-tag">Optional</code><span>truncate_<wbr/>body</span><a href="#truncate_body" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">truncate_body</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span></div>
-<div class="tsd-comment tsd-typography"><p>Number of bytes of post body to fetch, default 0 (all)</p>
+<div class="tsd-comment tsd-typography"><p>Number of characters of each post body to return, default 0 (whole body).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in helpers/database.ts:80</li></ul></aside></section></section></details></div>
+<li>Defined in helpers/database.ts:116</li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
