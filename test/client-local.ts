@@ -13,8 +13,9 @@ interface LocalNode {
   close: () => Promise<void>;
 }
 
-// Answers each request with the next status in `statuses`, then with 200 and a valid JSON-RPC result.
-async function startNode(statuses: number[] = []): Promise<LocalNode> {
+// Answers each request with the next status in `statuses`, then with 200 and a valid JSON-RPC result,
+// or with the JSON-RPC `error` when one is given.
+async function startNode(statuses: number[] = [], error?: object): Promise<LocalNode> {
   const requests: http.IncomingHttpHeaders[] = [];
   const server = http.createServer((req, res) => {
     req.resume();
@@ -27,7 +28,7 @@ async function startNode(statuses: number[] = []): Promise<LocalNode> {
         return;
       }
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ id: 0, jsonrpc: "2.0", result: "ok" }));
+      res.end(JSON.stringify(error ? { id: 0, jsonrpc: "2.0", error } : { id: 0, jsonrpc: "2.0", result: "ok" }));
     });
   });
   await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
@@ -44,8 +45,8 @@ describe("client (local nodes)", function() {
   this.timeout(10 * 1000);
 
   let nodes: LocalNode[] = [];
-  const start = async (statuses?: number[]) => {
-    const node = await startNode(statuses);
+  const start = async (statuses?: number[], error?: object) => {
+    const node = await startNode(statuses, error);
     nodes.push(node);
     return node;
   };
@@ -112,6 +113,57 @@ describe("client (local nodes)", function() {
     assert.equal(first.requests.length, 1);
     assert.equal(second.requests.length, 0);
     assert.equal(client.currentAddress, first.url);
+  });
+  const callError = async (error: object): Promise<any> => {
+    const node = await start([], error);
+    const client = new Client(node.url);
+    try {
+      await client.call("condenser_api", "get_content", ["kaboom", "boomboomboom"]);
+    } catch (thrown) {
+      return thrown;
+    }
+    assert.fail("expected an RPCError");
+  };
+
+  it("should keep the node's explanation of a hivemind assert", async function() {
+    const data = {
+      code: 10,
+      name: "assert_exception",
+      message: "Assert Exception",
+      extension: { assertion_expression: "Post kaboom/boomboomboom does not exist" },
+      stack: [{
+        context: { level: "error", file: "hivemind", line: 0, method: "get_content" },
+        data: { category: "hivemind" },
+        format: "",
+      }],
+    };
+    const thrown = await callError({ code: -32602, message: "Assert Exception", data });
+    assert.equal(thrown.name, "RPCError");
+    assert.equal(thrown.message, "Assert Exception: Post kaboom/boomboomboom does not exist");
+    assert.deepEqual(thrown.jse_info, data);
+  });
+
+  it("should format a hived assert from its stack format", async function() {
+    const data = {
+      code: 10,
+      name: "assert_exception",
+      message: "Assert Exception",
+      stack: [{
+        context: { level: "error", file: "database.cpp", line: 3150, method: "validate_transaction" },
+        data: { what: "missing required posting authority", account: "foo", missing: ["foo"] },
+        format: "${what}: Missing Posting Authority ${account}",
+      }],
+    };
+    const thrown = await callError({ code: -32000, message: "Assert Exception", data });
+    assert.equal(thrown.name, "RPCError");
+    assert.equal(thrown.message, 'missing required posting authority: Missing Posting Authority foo missing=["foo"]');
+    assert.deepEqual(thrown.jse_info, data);
+  });
+
+  it("should use the error message when the error has no data", async function() {
+    const thrown = await callError({ code: -32601, message: "Could not find method get_content" });
+    assert.equal(thrown.name, "RPCError");
+    assert.equal(thrown.message, "Could not find method get_content");
   });
 });
 
