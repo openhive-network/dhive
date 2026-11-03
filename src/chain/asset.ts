@@ -60,15 +60,16 @@ const NAI_SYMBOLS: { [nai: string]: AssetSymbol } = {
 }
 
 /**
+ * Exact amount in the smallest unit, kept when an asset was parsed from an
+ * exact representation so that NAI conversion does not go through a float.
+ * Held outside the instance so it does not affect deep equality or inspection.
+ */
+const exactUnits = new WeakMap<Asset, string>()
+
+/**
  * Class representing a hive asset, e.g. `1.000 HIVE` or `12.112233 VESTS`.
  */
 export class Asset {
-  /**
-   * Exact amount in the smallest unit, kept when the asset was parsed from an
-   * exact representation so that NAI conversion does not go through a float.
-   */
-  private units?: string
-
   constructor(
     public readonly amount: number,
     public readonly symbol: AssetSymbol
@@ -183,7 +184,7 @@ export class Asset {
       Number(Asset.unitsToDecimal(units, Asset.symbolPrecision(symbol))),
       symbol
     )
-    asset.units = units
+    exactUnits.set(asset, units)
     return asset
   }
 
@@ -245,9 +246,10 @@ export class Asset {
    * Return a string representation of this asset, e.g. `42.000 HIVE`.
    */
   public toString(): string {
+    const units = exactUnits.get(this)
     const amount =
-      this.units !== undefined
-        ? Asset.unitsToDecimal(this.units, this.getPrecision())
+      units !== undefined
+        ? Asset.unitsToDecimal(units, this.getPrecision())
         : this.amount.toFixed(this.getPrecision())
     return `${amount} ${this.symbol}`
   }
@@ -258,9 +260,10 @@ export class Asset {
    */
   public toNai(): NaiAsset {
     const precision = this.getPrecision()
+    const exact = exactUnits.get(this)
     const units =
-      this.units !== undefined
-        ? this.units
+      exact !== undefined
+        ? exact
         : Asset.decimalToUnits(this.amount.toFixed(precision), precision)
     if (units === undefined) {
       throw new Error(`Can not convert ${this.amount} ${this.symbol} to NAI`)
