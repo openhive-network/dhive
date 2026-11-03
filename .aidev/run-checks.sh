@@ -11,8 +11,8 @@
 #   lint      `eslint -c .eslintrc.json src/**/*.ts`, as `make eslint` runs it
 #             (in bash without globstar, so src/*/*.ts)
 #   build     `make lib`: tsc -p tsconfig.json --outDir lib (.js and .d.ts,
-#             gitignored) plus lib/version.js; lib/ is removed first so make
-#             cannot call it up to date
+#             gitignored) plus lib/version.js, and the ES-module build in
+#             lib/esm/; lib/ is removed first so make cannot call it up to date
 #   bundle    the browserify + tsify + babelify | derequire pipeline of the
 #             Makefile's dist/dhive.js rule, written into test-results/<suite>/
 #             instead: dist/ is committed and the gates must not rewrite it
@@ -67,7 +67,7 @@ mocha_offline() {
         || { rc=$?; grep -E '<failure|<testsuite' "$out/mocha-xunit.xml" 2>/dev/null | head -40; return $rc; }
 }
 bundle() {
-    browserify src/index-browser.ts --debug --full-paths --standalone dhive --plugin tsify \
+    browserify src/index-browser.ts --debug --standalone dhive --plugin tsify \
         --transform [ babelify --extensions .ts ] | derequire > "$out/dhive.js" \
         && [ -s "$out/dhive.js" ] && ls -l "$out/dhive.js"
 }
@@ -108,7 +108,9 @@ for s in "$@"; do
         build) step build bash -c 'rm -rf lib && make lib' ;;
         bundle) step bundle bundle ;;
         test) step test mocha_offline ;;
-        coverage) step coverage mocha_offline nyc --temp-dir "$out/nyc-temp" --report-dir "$out/coverage" \
+        # test/package.ts imports the built package; `make coverage` depends on lib too.
+        coverage) step build bash -c 'rm -rf lib && make lib'
+            step coverage mocha_offline nyc --temp-dir "$out/nyc-temp" --report-dir "$out/coverage" \
             -r lcov -r text-summary -e .ts -i tsx/cjs ;;
         *) printf 'case\t%s\tfail\t0\tunknown step\n' "$s" >> "$cases"; status=1 ;;
     esac

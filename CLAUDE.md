@@ -55,7 +55,7 @@ src/
 test/                   # Test suite (Mocha)
 examples/               # Usage examples
 dist/                   # Browser bundle output
-lib/                    # Compiled CommonJS output
+lib/                    # Compiled CommonJS output (lib/esm/: ES-module build)
 docs/                   # Generated TypeDoc
 ```
 
@@ -65,7 +65,7 @@ docs/                   # Generated TypeDoc
 
 ```bash
 make all          # Full build: lib + bundle + docs
-make lib          # Compile TypeScript to lib/
+make lib          # Compile TypeScript to lib/ (CommonJS) and lib/esm/ (ESM)
 make bundle       # Create browser bundle dist/dhive.js
 make docs         # Generate TypeDoc documentation
 make clean        # Remove lib/, dist/, docs/
@@ -80,6 +80,7 @@ make ci-test               # ESLint + tests with coverage (TAP)
 make coverage              # Generate HTML coverage report
 make browser-test          # Browser tests via Sauce Labs
 make browser-test-local    # Browser tests via local Karma
+make check-reproducible-bundle  # Build dist/dhive.js in two checkout paths, compare
 ```
 
 ### Linting
@@ -98,7 +99,8 @@ make eslint       # Run ESLint
 | `src/chain/operation.ts` | All blockchain operation types |
 | `src/chain/serializer.ts` | Binary serialization for transactions |
 | `src/helpers/broadcast.ts` | Transaction signing and broadcasting |
-| `tsconfig.json` | TypeScript configuration |
+| `tsconfig.json` | TypeScript configuration (`tsconfig.esm.json`: the ESM build) |
+| `package.json` | `exports` conditions: `browser` → dist, `module`/`import` → lib/esm, `node`/`require` → lib |
 | `Makefile` | Build automation |
 
 ## Coding Conventions
@@ -139,7 +141,9 @@ make eslint       # Run ESLint
 ### Build Outputs
 
 - `lib/` - CommonJS modules
-- `dist/dhive.js` - Browser bundle (1.24MB, 257KB gzipped)
+- `lib/esm/` - ES modules for bundlers (`sideEffects` lists the polyfill entry and `dist/`)
+- `dist/dhive.js` - Browser bundle (1.24MB, 257KB gzipped as committed for 1.4.0). browserify runs without
+  `--full-paths`, so module ids are numbers and a rebuild is byte-identical in any checkout directory
 - `dist/dhive.d.ts` - TypeScript definitions
 - CDN: `https://unpkg.com/@hiveio/dhive@latest/dist/dhive.js`
 

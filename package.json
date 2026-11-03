@@ -5,12 +5,34 @@
   "author": "hive-network",
   "license": "BSD-3-Clause-No-Military-License",
   "main": "./lib/index-node",
+  "module": "./lib/esm/index.js",
   "typings": "./lib/index",
   "browser": {
     "./lib/index-node": "./dist/dhive.js",
     "./src/index-node": "./dist/dhive.js",
-    "./src/version": "./lib/version.js"
+    "./src/version": "./lib/version.js",
+    "./lib/esm/index.js": "./dist/dhive.js"
   },
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "browser": "./dist/dhive.js",
+      "module": "./lib/esm/index.js",
+      "node": "./lib/index-node.js",
+      "import": "./lib/esm/index.js",
+      "require": "./lib/index-node.js",
+      "default": "./lib/index-node.js"
+    },
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*",
+    "./lib/*.js": "./lib/*.js",
+    "./lib/*": "./lib/*.js"
+  },
+  "sideEffects": [
+    "./lib/index-browser.js",
+    "./lib/esm/index-browser.js",
+    "./dist/*"
+  ],
   "files": [
     "dist/*",
     "lib/*"
@@ -59,6 +81,7 @@
     "derequire": "^2.0.6",
     "dts-generator": "^2.1.0",
     "encoding": "^0.1.12",
+    "esbuild": "0.28.2",
     "eslint": "^8.57.1",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prefer-arrow": "^1.1.7",

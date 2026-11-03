@@ -375,7 +375,8 @@ export async function retryingFetch(
 
 // Hack to be able to generate a valid witness_set_properties op
 // Can hopefully be removed when hived's JSON representation is fixed
-import ByteBuffer = require('@ecency/bytebuffer')
+import ByteBuffer from '@ecency/bytebuffer'
+import JSBI from 'jsbi'
 import { Asset, PriceType } from './chain/asset'
 import { WitnessSetPropertiesOperation } from './chain/operation'
 import { Serializer, Types } from './chain/serializer'
@@ -446,7 +447,6 @@ export const buildWitnessUpdateOp = (
   return ['witness_set_properties', data]
 }
 
-const JSBI = require('jsbi')
 export const operationOrders = {
   vote: 0,
   // tslint:disable-next-line: object-literal-sort-keys

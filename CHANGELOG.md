@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- **ES-module build:** `lib/esm/`, declared through `module`, `exports` (`types`,
+  `browser`, `module`, `node`, `import`, `require`) and `sideEffects`, so bundlers can
+  tree-shake dhive. Node keeps loading the CommonJS build for both `require` and
+  `import`; browser builds keep getting `dist/dhive.js`. Deep paths under `lib/` and
+  `dist/` stay importable.
+
+### Fixed
+
+- **Reproducible bundle:** `dist/dhive.js` is built without browserify's
+  `--full-paths`, so it no longer embeds the build directory in every module id and
+  is byte-identical wherever it is built.
+
 ## 1.4.0
 
 ### Added

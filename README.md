@@ -157,6 +157,20 @@ The easiest way to bundle dhive (with browserify, webpack etc.) is to just `npm 
 
 To allow for deduplication you can `require('@hiveio/dhive/lib/index-browser')`, or if you plan to provide your own polyfills: `require('@hiveio/dhive/lib/index')`. See `src/index-browser.ts` for a list of polyfills expected.
 
+### ES modules and tree-shaking
+
+The package also ships an ES-module build in `lib/esm/` and declares `"sideEffects"` (only the polyfill entry `lib/index-browser.js`, its ESM twin and `dist/` have any), so a bundler can drop the parts of dhive an app does not import. `package.json`'s `exports` picks the build by condition:
+
+| Condition | Gets |
+|-----------|------|
+| `types` | `lib/index.d.ts` |
+| `browser` | `dist/dhive.js`, the prebuilt bundle, as before |
+| `module` (esbuild, webpack, rollup) | `lib/esm/index.js` |
+| `node` (both `require` and `import`) | `lib/index-node.js` (CommonJS, one copy of the classes either way) |
+| `import` / `require` otherwise | `lib/esm/index.js` / `lib/index-node.js` |
+
+Bundles for Node (SSR, serverless, `esbuild --platform=node`) therefore tree-shake without any configuration. A browser build keeps receiving `dist/dhive.js` unless it leaves the `browser` condition out (webpack's `resolve.conditionNames`, Vite's `resolve.conditions`); the ES-module build then needs the bundler to provide the Node built-ins it imports (`crypto`, `assert`, `events`, `stream`) and the `Buffer` global, which `dist/dhive.js` brings with it.
+
 ---
 
 _Share and Enjoy!_
