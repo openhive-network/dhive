@@ -195,7 +195,8 @@ export class Client {
     public address: string | string[]
 
     /**
-     * Database API helper.
+     * Chain state helper. It calls `condenser_api`, not `database_api`; call
+     * `database_api` methods with `client.call('database_api', method, params)`.
      */
     public readonly database: DatabaseAPI
 
