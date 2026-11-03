@@ -27,7 +27,7 @@ branches:
 # The image is .aidev/runtime/Dockerfile, built and pinned by .aidev/runtime/build.sh.
 environment:
   kind: "container"
-  image: "registry.gitlab.syncad.com/hive/dhive/aidev-tests@sha256:0615d95b7eee1fefab982f4e8e58154c1698275e23b465ba156da173dc24a309"
+  image: "registry.gitlab.syncad.com/hive/dhive/aidev-tests@sha256:48602a4e2908bfb2114ae67d5be98825c9f840542142f8434e091e14ce8628cb"
   inputs: ["package.json", "pnpm-lock.yaml"]
   # The image bakes pnpm-lock.yaml into node-test-tools' store, so a lockfile-only
   # move (e.g. ccc's catalog re-sync) can be served from it or a fetch.

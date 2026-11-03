@@ -418,7 +418,6 @@ declare module 'dhive/chain/account' {
 
 }
 declare module 'dhive/chain/misc' {
-	/// <reference types="node" />
 	/**
 	 * @file Misc hive type definitions.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -671,7 +670,6 @@ declare module 'dhive/chain/serializer' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	/// <reference types="node" />
 	import * as ByteBuffer from 'bytebuffer';
 	import { PublicKey } from 'dhive/crypto';
 	import { Asset } from 'dhive/chain/asset';
@@ -680,11 +678,11 @@ declare module 'dhive/chain/serializer' {
 	export type Serializer = (buffer: ByteBuffer, data: any) => void;
 	export const Types: {
 	    Array: (itemSerializer: Serializer) => (buffer: ByteBuffer, data: any[]) => void;
-	    Asset: (buffer: ByteBuffer, data: string | number | Asset) => void;
+	    Asset: (buffer: ByteBuffer, data: Asset | string | number) => void;
 	    Authority: (buffer: ByteBuffer, data: {
 	        [key: string]: any;
 	    }) => void;
-	    Binary: (size?: number | undefined) => (buffer: ByteBuffer, data: HexBuffer | Buffer) => void;
+	    Binary: (size?: number) => (buffer: ByteBuffer, data: Buffer | HexBuffer) => void;
 	    Boolean: (buffer: ByteBuffer, data: boolean) => void;
 	    Date: (buffer: ByteBuffer, data: string) => void;
 	    EncryptedMemo: (buffer: ByteBuffer, data: {
@@ -703,7 +701,7 @@ declare module 'dhive/chain/serializer' {
 	    Price: (buffer: ByteBuffer, data: {
 	        [key: string]: any;
 	    }) => void;
-	    PublicKey: (buffer: ByteBuffer, data: string | PublicKey | null) => void;
+	    PublicKey: (buffer: ByteBuffer, data: PublicKey | string | null) => void;
 	    StaticVariant: (itemSerializers: Serializer[]) => (buffer: ByteBuffer, data: [number, any]) => void;
 	    String: (buffer: ByteBuffer, data: string) => void;
 	    Transaction: (buffer: ByteBuffer, data: {
@@ -806,8 +804,7 @@ declare module 'dhive/crypto' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	/// <reference types="node" />
-	import * as ByteBuffer from '@ecency/bytebuffer';
+	import ByteBuffer = require('@ecency/bytebuffer');
 	import { SignedTransaction, Transaction } from 'dhive/chain/transaction';
 	/**
 	 * Network id used in WIF-encoding.
@@ -821,9 +818,7 @@ declare module 'dhive/crypto' {
 	    readonly prefix: string;
 	    readonly uncompressed: Buffer;
 	    constructor(key: any, prefix?: string);
-	    static fromBuffer(key: ByteBuffer): {
-	        key: any;
-	    };
+	    static fromBuffer(key: ByteBuffer): PublicKey;
 	    /**
 	     * Create a new instance from a WIF-encoded key.
 	     */
@@ -1126,7 +1121,6 @@ declare module 'dhive/chain/operation' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	/// <reference types="node" />
 	import { PublicKey } from 'dhive/crypto';
 	import { AuthorityType } from 'dhive/chain/account';
 	import { Asset, PriceType } from 'dhive/chain/asset';
@@ -1990,7 +1984,6 @@ declare module 'dhive/utils' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	/// <reference types="node" />
 	import { EventEmitter } from 'events';
 	import { NodeHealthTracker } from 'dhive/health-tracker';
 	/**
@@ -2183,7 +2176,6 @@ declare module 'dhive/helpers/blockchain' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	/// <reference types="node" />
 	import { Client } from 'dhive/client';
 	export enum BlockchainMode {
 	    /**
@@ -2932,7 +2924,6 @@ declare module 'dhive/client' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	/// <reference types="node" />
 	import { Blockchain } from 'dhive/helpers/blockchain';
 	import { BroadcastAPI } from 'dhive/helpers/broadcast';
 	import { DatabaseAPI } from 'dhive/helpers/database';
@@ -3077,7 +3068,13 @@ declare module 'dhive/client' {
 	     */
 	    constructor(address: string | string[], options?: ClientOptions);
 	    /**
-	     * Create a new client instance configured for the testnet.
+	     * Create a new client instance configured for the Hive mirrornet,
+	     * which mirrors mainnet data under a separate chain id.
+	     */
+	    static mirrornet(options?: ClientOptions): Client;
+	    /**
+	     * @deprecated The Hive testnet (testnet.openhive.network) no longer exists.
+	     * This returns a mirrornet client; use {@link Client.mirrornet} instead.
 	     */
 	    static testnet(options?: ClientOptions): Client;
 	    /**
@@ -3094,7 +3091,7 @@ declare module 'dhive/client' {
 
 }
 declare module 'dhive/chain/deserializer' {
-	import * as ByteBuffer from '@ecency/bytebuffer';
+	import ByteBuffer = require('@ecency/bytebuffer');
 	export type Deserializer = (buffer: ByteBuffer) => void;
 	export const types: {
 	    EncryptedMemoD: any;
@@ -3102,7 +3099,6 @@ declare module 'dhive/chain/deserializer' {
 
 }
 declare module 'dhive/helpers/aes' {
-	/// <reference types="node" />
 	import { PrivateKey, PublicKey } from 'dhive/crypto';
 	export const encrypt: (private_key: PrivateKey, public_key: PublicKey, message: Buffer, nonce?: string) => any;
 	export const decrypt: (private_key: PrivateKey, public_key: PublicKey, nonce: any, message: any, checksum: number) => any;
@@ -3123,8 +3119,8 @@ declare module 'dhive/helpers/aes' {
 declare module 'dhive/memo' {
 	import { PrivateKey, PublicKey } from 'dhive/crypto';
 	export const Memo: {
-	    decode: (private_key: string | PrivateKey, memo: string) => string;
-	    encode: (private_key: string | PrivateKey, public_key: string | PublicKey, memo: string, testNonce?: string | undefined) => string;
+	    decode: (private_key: PrivateKey | string, memo: string) => string;
+	    encode: (private_key: PrivateKey | string, public_key: PublicKey | string, memo: string, testNonce?: string) => string;
 	};
 
 }
@@ -3163,6 +3159,7 @@ declare module 'dhive' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
+	/// <reference types="node" preserve="true" />
 	import * as utils from 'dhive/utils';
 	export { utils };
 	export { NodeHealthTracker, HealthTrackerOptions } from 'dhive/health-tracker';
