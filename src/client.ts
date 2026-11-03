@@ -162,7 +162,9 @@ export interface ClientOptions {
     backoff?: (tries: number) => number
     /**
      * Node.js http(s) agent, use if you want http keep-alive.
-     * Defaults to using https.globalAgent.
+     * The global fetch of Node.js 18+ ignores agents, so setting this makes
+     * requests go through cross-fetch (node-fetch) instead, which applies it.
+     * When unset, the runtime's global fetch is used where there is one.
      * @see https://nodejs.org/api/http.html#http_new_agent_options.
      */
     agent?: any // https.Agent
