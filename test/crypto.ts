@@ -79,6 +79,23 @@ describe("crypto", function() {
   //   );
   // });
 
+  it("should create public key from buffer", function() {
+    const key = PublicKey.fromBuffer(mainPairPub);
+    assert(key instanceof PublicKey);
+    assert.equal(key.toString(), mainPair.public);
+    assert.throws(() => PublicKey.fromBuffer(Buffer.alloc(33, 1)), /invalid buffer as public key/);
+  });
+
+  it("should multiply public key with private key", function() {
+    const a = PrivateKey.fromString(mainPair.private);
+    const b = PrivateKey.from(randomBytes(32));
+    const point = a.multiply(b.createPublic());
+    assert.equal(point.length, 65);
+    assert.deepEqual(point, b.multiply(a.createPublic()));
+    const sharedSecret = createHash("sha512").update(point.slice(1, 33)).digest();
+    assert.deepEqual(sharedSecret, a.get_shared_secret(b.createPublic()));
+  });
+
   it("should sign and verify", function() {
     const message = randomBytes(32);
     const signature = testKey.sign(message);

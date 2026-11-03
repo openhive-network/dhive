@@ -186,7 +186,7 @@ export class PublicKey {
 
   public static fromBuffer(key: ByteBuffer) {
     assert(secp256k1.publicKeyVerify(key), 'invalid buffer as public key')
-    return { key }
+    return new PublicKey(key)
   }
 
   /**
@@ -289,7 +289,7 @@ export class PrivateKey {
   }
 
   public multiply(pub: any): Buffer {
-    return Buffer.from(secp256k1.publicKeyTweakMul(pub.key, this.secret, false))
+    return Buffer.from(secp256k1.publicKeyTweakMul(pub.key, this.key, false))
   }
 
   /**
