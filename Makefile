@@ -35,7 +35,7 @@ dist/dhive.d.ts: $(SRC_FILES) node_modules
 	perl -i -pe"s@'dhive/index'@'dhive'@g" dist/dhive.d.ts
 
 dist/%.gz: dist/dhive.js
-	gzip -9 -f -c $(basename $@) > $(basename $@).gz
+	gzip -9 -n -f -c $(basename $@) > $(basename $@).gz
 
 bundle: dist/dhive.js.gz dist/dhive.d.ts
 
