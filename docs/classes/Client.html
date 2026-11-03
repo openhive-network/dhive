@@ -15,7 +15,7 @@
 <p>Can be used in both node.js and the browser. Also see <a href="../interfaces/ClientOptions.html" class="tsd-kind-interface">ClientOptions</a>.</p>
 </div></section><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:184</li></ul></aside>
+<li>Defined in client.ts:187</li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -29,6 +29,7 @@
 <h3 class="tsd-index-heading tsd-anchor-link" id="properties">Properties<a href="#properties" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-index-list"><a href="#address" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>address</span></a>
 <a href="#addressprefix" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>address<wbr/>Prefix</span></a>
+<a href="#block" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>block</span></a>
 <a href="#blockchain" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>blockchain</span></a>
 <a href="#broadcast" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>broadcast</span></a>
 <a href="#chainid" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>chain<wbr/>Id</span></a>
@@ -69,7 +70,7 @@ e.g. <code>https://api.hive.blog</code>. or [<code>https://api.hive.blog</code>,
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="" class="tsd-signature-type tsd-kind-class">Client</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:261</li></ul></aside></div></li></ul></section></section></details>
+<li>Defined in client.ts:270</li></ul></aside></div></li></ul></section></section></details>
 <details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Properties"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
 <h2 class="tsd-anchor-link" id="properties-1">Properties<a href="#properties-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
 <section>
@@ -80,47 +81,55 @@ e.g. <code>https://api.hive.blog</code>. or [<code>https://api.hive.blog</code>,
 String or String[] <em>read-only</em></p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:194</li></ul></aside></section>
+<li>Defined in client.ts:197</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="addressprefix"><code class="tsd-tag">Readonly</code><span>address<wbr/>Prefix</span><a href="#addressprefix" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">addressPrefix</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Address prefix for current network.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:245</li></ul></aside></section>
+<li>Defined in client.ts:254</li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="block"><code class="tsd-tag">Readonly</code><span>block</span><a href="#block" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">block</span><span class="tsd-signature-symbol">:</span> <a href="BlockAPI.html" class="tsd-signature-type tsd-kind-class">BlockAPI</a></div>
+<div class="tsd-comment tsd-typography"><p>Block API helper, returning blocks in the <code>block_api</code> format.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in client.ts:223</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="blockchain"><code class="tsd-tag">Readonly</code><span>blockchain</span><a href="#blockchain" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">blockchain</span><span class="tsd-signature-symbol">:</span> <a href="Blockchain.html" class="tsd-signature-type tsd-kind-class">Blockchain</a></div>
 <div class="tsd-comment tsd-typography"><p>Blockchain helper.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:214</li></ul></aside></section>
+<li>Defined in client.ts:218</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="broadcast"><code class="tsd-tag">Readonly</code><span>broadcast</span><a href="#broadcast" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">broadcast</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">BroadcastAPI</span></div>
 <div class="tsd-comment tsd-typography"><p>Broadcast API helper.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:209</li></ul></aside></section>
+<li>Defined in client.ts:213</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="chainid"><code class="tsd-tag">Readonly</code><span>chain<wbr/>Id</span><a href="#chainid" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">chainId</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Buffer</span></div>
 <div class="tsd-comment tsd-typography"><p>Chain ID for current network.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:240</li></ul></aside></section>
+<li>Defined in client.ts:249</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="currentaddress"><span>current<wbr/>Address</span><a href="#currentaddress" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">currentAddress</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:254</li></ul></aside></section>
+<li>Defined in client.ts:263</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="database"><code class="tsd-tag">Readonly</code><span>database</span><a href="#database" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">database</span><span class="tsd-signature-symbol">:</span> <a href="DatabaseAPI.html" class="tsd-signature-type tsd-kind-class">DatabaseAPI</a></div>
-<div class="tsd-comment tsd-typography"><p>Database API helper.</p>
+<div class="tsd-comment tsd-typography"><p>Chain state helper. It calls <code>condenser_api</code>, not <code>database_api</code>; call
+<code>database_api</code> methods with <code>client.call('database_api', method, params)</code>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:199</li></ul></aside></section>
+<li>Defined in client.ts:203</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="healthtracker"><code class="tsd-tag">Readonly</code><span>health<wbr/>Tracker</span><a href="#healthtracker" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">healthTracker</span><span class="tsd-signature-symbol">:</span> <a href="NodeHealthTracker.html" class="tsd-signature-type tsd-kind-class">NodeHealthTracker</a></div>
@@ -128,42 +137,42 @@ String or String[] <em>read-only</em></p>
 Tracks per-node, per-API health and head block freshness.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:235</li></ul></aside></section>
+<li>Defined in client.ts:244</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="hivemind"><code class="tsd-tag">Readonly</code><span>hivemind</span><a href="#hivemind" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">hivemind</span><span class="tsd-signature-symbol">:</span> <a href="HivemindAPI.html" class="tsd-signature-type tsd-kind-class">HivemindAPI</a></div>
 <div class="tsd-comment tsd-typography"><p>Hivemind helper.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:219</li></ul></aside></section>
+<li>Defined in client.ts:228</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="keys"><code class="tsd-tag">Readonly</code><span>keys</span><a href="#keys" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">keys</span><span class="tsd-signature-symbol">:</span> <a href="AccountByKeyAPI.html" class="tsd-signature-type tsd-kind-class">AccountByKeyAPI</a></div>
 <div class="tsd-comment tsd-typography"><p>Accounts by key API helper.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:224</li></ul></aside></section>
+<li>Defined in client.ts:233</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="options"><code class="tsd-tag">Readonly</code><span>options</span><a href="#options" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">options</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/ClientOptions.html" class="tsd-signature-type tsd-kind-interface">ClientOptions</a></div>
 <div class="tsd-comment tsd-typography"><p>Client options, <em>read-only</em>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:188</li></ul></aside></section>
+<li>Defined in client.ts:191</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="rc"><code class="tsd-tag">Readonly</code><span>rc</span><a href="#rc" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">rc</span><span class="tsd-signature-symbol">:</span> <a href="RCAPI.html" class="tsd-signature-type tsd-kind-class">RCAPI</a></div>
 <div class="tsd-comment tsd-typography"><p>RC API helper.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:204</li></ul></aside></section>
+<li>Defined in client.ts:208</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="transaction"><code class="tsd-tag">Readonly</code><span>transaction</span><a href="#transaction" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">transaction</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TransactionStatusAPI</span></div>
 <div class="tsd-comment tsd-typography"><p>Transaction status API helper.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:229</li></ul></aside></section></section></details>
+<li>Defined in client.ts:238</li></ul></aside></section></section></details>
 <details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Methods"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
 <h2 class="tsd-anchor-link" id="methods-1">Methods<a href="#methods-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
 <section>
@@ -189,7 +198,7 @@ Tracks per-node, per-API health and head block freshness.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:329</li></ul></aside></div></li></ul></section>
+<li>Defined in client.ts:339</li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="updateoperations"><span>update<wbr/>Operations</span><a href="#updateoperations" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -202,7 +211,7 @@ Tracks per-node, per-API health and head block freshness.</p>
 <li><span><span class="tsd-kind-parameter">rebrandedApi</span>: <span class="tsd-signature-type">any</span></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:467</li></ul></aside></div></li></ul></section>
+<li>Defined in client.ts:448</li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="mirrornet"><code class="tsd-tag">Static</code><span>mirrornet</span><a href="#mirrornet" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -218,7 +227,7 @@ which mirrors mainnet data under a separate chain id.</p>
 <li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">options</span>: <a href="../interfaces/ClientOptions.html" class="tsd-signature-type tsd-kind-interface">ClientOptions</a></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="" class="tsd-signature-type tsd-kind-class">Client</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:295</li></ul></aside></div></li></ul></section>
+<li>Defined in client.ts:305</li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="testnet"><code class="tsd-tag">Static</code><span class="deprecated">testnet</span><a href="#testnet" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -236,7 +245,7 @@ which mirrors mainnet data under a separate chain id.</p>
 This returns a mirrornet client; use <a href="#mirrornet" class="tsd-kind-method">Client.mirrornet</a> instead.</p>
 </div></div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:311</li></ul></aside></div></li></ul></section></section></details></div>
+<li>Defined in client.ts:321</li></ul></aside></div></li></ul></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -255,7 +264,7 @@ This returns a mirrornet client; use <a href="#mirrornet" class="tsd-kind-method
 <details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Constructors"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Constructors</summary>
 <div><a href="#constructor"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Constructor"><use href="../assets/icons.svg#icon-512"></use></svg><span>constructor</span></a></div></details>
 <details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Properties"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Properties</summary>
-<div><a href="#address"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>address</span></a><a href="#addressprefix"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>address<wbr/>Prefix</span></a><a href="#blockchain"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>blockchain</span></a><a href="#broadcast"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>broadcast</span></a><a href="#chainid"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>chain<wbr/>Id</span></a><a href="#currentaddress"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>current<wbr/>Address</span></a><a href="#database"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>database</span></a><a href="#healthtracker"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>health<wbr/>Tracker</span></a><a href="#hivemind"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>hivemind</span></a><a href="#keys"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>keys</span></a><a href="#options"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>options</span></a><a href="#rc"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>rc</span></a><a href="#transaction"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>transaction</span></a></div></details>
+<div><a href="#address"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>address</span></a><a href="#addressprefix"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>address<wbr/>Prefix</span></a><a href="#block"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>block</span></a><a href="#blockchain"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>blockchain</span></a><a href="#broadcast"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>broadcast</span></a><a href="#chainid"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>chain<wbr/>Id</span></a><a href="#currentaddress"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>current<wbr/>Address</span></a><a href="#database"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>database</span></a><a href="#healthtracker"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>health<wbr/>Tracker</span></a><a href="#hivemind"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>hivemind</span></a><a href="#keys"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>keys</span></a><a href="#options"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>options</span></a><a href="#rc"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>rc</span></a><a href="#transaction"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>transaction</span></a></div></details>
 <details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Methods"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Methods</summary>
 <div><a href="#call"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>call</span></a><a href="#updateoperations"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>update<wbr/>Operations</span></a><a href="#mirrornet"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>mirrornet</span></a><a href="#testnet"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>testnet</span></a></div></details></div></details></div>
 <div class="site-menu">

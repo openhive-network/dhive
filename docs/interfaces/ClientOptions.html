@@ -15,7 +15,7 @@
 </div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">ClientOptions</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#addressprefix">addressPrefix</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#agent">agent</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#backoff">backoff</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">tries</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span> <span class="tsd-signature-symbol">=&gt;</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#chainid">chainId</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#consoleonfailover">consoleOnFailover</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#failoverthreshold">failoverThreshold</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#healthtrackeroptions">healthTrackerOptions</a><span class="tsd-signature-symbol">?:</span> <a href="HealthTrackerOptions.html" class="tsd-signature-type tsd-kind-interface">HealthTrackerOptions</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#rebrandedapi">rebrandedApi</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#timeout">timeout</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:123</li></ul></aside>
+<li>Defined in client.ts:124</li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -43,26 +43,28 @@
 <code>STM</code></p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:135</li></ul></aside></section>
+<li>Defined in client.ts:136</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="agent"><code class="tsd-tag">Optional</code><span>agent</span><a href="#agent" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">agent</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">any</span></div>
 <div class="tsd-comment tsd-typography"><p>Node.js http(s) agent, use if you want http keep-alive.
-Defaults to using https.globalAgent.</p>
+The global fetch of Node.js 18+ ignores agents, so setting this makes
+requests go through cross-fetch (node-fetch) instead, which applies it.
+When unset, the runtime's global fetch is used where there is one.</p>
 </div>
 <div class="tsd-comment tsd-typography">
 <div class="tsd-tag-see">
 <h4 class="tsd-anchor-link" id="see">See<a href="#see" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><a href="https://nodejs.org/api/http.html#http_new_agent_options">https://nodejs.org/api/http.html#http_new_agent_options</a>.</p>
 </div></div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:167</li></ul></aside></section>
+<li>Defined in client.ts:170</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="backoff"><code class="tsd-tag">Optional</code><span>backoff</span><a href="#backoff" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">backoff</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">tries</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span> <span class="tsd-signature-symbol">=&gt;</span> <span class="tsd-signature-type">number</span></div>
 <div class="tsd-comment tsd-typography"><p>Retry backoff function, returns milliseconds. Default = defaultBackoff.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:161</li></ul></aside></section>
+<li>Defined in client.ts:162</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="chainid"><code class="tsd-tag">Optional</code><span>chain<wbr/>Id</span><a href="#chainid" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">chainId</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
@@ -71,14 +73,14 @@ need the new id?
 <code>beeab0de00000000000000000000000000000000000000000000000000000000</code></p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:130</li></ul></aside></section>
+<li>Defined in client.ts:131</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="consoleonfailover"><code class="tsd-tag">Optional</code><span>console<wbr/>On<wbr/>Failover</span><a href="#consoleonfailover" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">consoleOnFailover</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div>
 <div class="tsd-comment tsd-typography"><p>Whether a console.log should be made when RPC failed over to another one</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:156</li></ul></aside></section>
+<li>Defined in client.ts:157</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="failoverthreshold"><code class="tsd-tag">Optional</code><span>failover<wbr/>Threshold</span><a href="#failoverthreshold" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">failoverThreshold</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span></div>
@@ -88,7 +90,7 @@ iterated and retried in case of timeout errors.
 Can be set to 0 to iterate and retry forever. Defaults to 3 rounds.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:151</li></ul></aside></section>
+<li>Defined in client.ts:152</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="healthtrackeroptions"><code class="tsd-tag">Optional</code><span>health<wbr/>Tracker<wbr/>Options</span><a href="#healthtrackeroptions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">healthTrackerOptions</span><span class="tsd-signature-symbol">?:</span> <a href="HealthTrackerOptions.html" class="tsd-signature-type tsd-kind-interface">HealthTrackerOptions</a></div>
@@ -96,14 +98,14 @@ Can be set to 0 to iterate and retry forever. Defaults to 3 rounds.</p>
 Controls cooldown periods, stale block thresholds, etc.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:176</li></ul></aside></section>
+<li>Defined in client.ts:179</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="rebrandedapi"><code class="tsd-tag">Optional</code><span>rebranded<wbr/>Api</span><a href="#rebrandedapi" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">rebrandedApi</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div>
 <div class="tsd-comment tsd-typography"><p>Deprecated - don't use</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:171</li></ul></aside></section>
+<li>Defined in client.ts:174</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="timeout"><code class="tsd-tag">Optional</code><span>timeout</span><a href="#timeout" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">timeout</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span></div>
@@ -114,7 +116,7 @@ be retried any more past the timeout.
 Can be set to 0 to retry forever. Defaults to 60 * 1000 ms.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in client.ts:143</li></ul></aside></section></section></details></div>
+<li>Defined in client.ts:144</li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

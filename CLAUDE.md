@@ -142,7 +142,7 @@ make eslint       # Run ESLint
 
 - `lib/` - CommonJS modules
 - `lib/esm/` - ES modules for bundlers (`sideEffects` lists the polyfill entry and `dist/`)
-- `dist/dhive.js` - Browser bundle (1.24MB, 257KB gzipped as committed for 1.4.0). browserify runs without
+- `dist/dhive.js` - Browser bundle (1.03MB, 245KB gzipped as committed for 1.4.0). browserify runs without
   `--full-paths`, so module ids are numbers and a rebuild is byte-identical in any checkout directory
 - `dist/dhive.d.ts` - TypeScript definitions
 - CDN: `https://unpkg.com/@hiveio/dhive@latest/dist/dhive.js`
