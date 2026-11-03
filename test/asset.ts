@@ -159,6 +159,13 @@ describe("asset", function() {
     assert.deepEqual(Asset.from(vests.toString()).toNai(), nai);
   });
 
+  it("should compare and list keys like a constructed asset", function() {
+    assert.deepEqual(Asset.fromString("1.000 HIVE"), new Asset(1, "HIVE"));
+    assert.deepEqual(Asset.fromNai({ nai: "@@000000013", amount: "444", precision: 3 }), new Asset(0.444, "HBD"));
+    assert.deepEqual(Object.keys(Asset.fromString("1.000 HIVE")), ["amount", "symbol"]);
+    assert.deepEqual(Object.keys(Asset.fromString("1.000 HIVE")), Object.keys(new Asset(1, "HIVE")));
+  });
+
   it("should round-trip strings through NAI", function() {
     for (const s of [
       "0.000 HIVE",
