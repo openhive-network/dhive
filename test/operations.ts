@@ -12,7 +12,7 @@ describe("operations", function() {
   this.slow(20 * 1000);
   this.timeout(60 * 1000);
 
-  const client = Client.testnet({ agent });
+  const client = Client.mirrornet({ agent });
 
   let acc1: { username: string; password: string },
     acc2: { username: string; password: string };

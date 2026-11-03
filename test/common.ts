@@ -55,7 +55,7 @@ export async function createAccount(): Promise<{
   const username = `dhive-${randomString(9)}`;
 
   // Create testnet account and delegate to it
-  const client = Client.testnet({ agent });
+  const client = Client.mirrornet({ agent });
   const ops = {
     creator: 'initminer',
     username,

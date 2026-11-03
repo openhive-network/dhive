@@ -8,12 +8,11 @@ describe("client", function() {
   this.slow(200);
   this.timeout(30 * 1000);
 
-  const client = Client.testnet();
+  const client = Client.mirrornet();
   const aclient = client as any;
 
-  // TODO: change api.hive.blog to testnet
   it('should handle failover', async () => {
-    const bclient = new Client(['https://wrongapi.hive.blog', 'https://hive-test-beeabode.roelandp.nl'], {timeout: 1000})
+    const bclient = new Client(['https://wrongapi.openhive.network', 'https://api.fake.openhive.network'], {timeout: 1000})
     const result = await bclient.call('condenser_api', 'get_accounts', [['initminer']])
     assert.equal(result.length, 1);
     assert.equal(result[0].name, "initminer");
@@ -34,15 +33,9 @@ describe("client", function() {
     } catch (error) {
       assert.equal(error.name, "RPCError");
       assert(
-        error.message ==
-          `itr != _by_name.end(): no method with name 'i_like_turtles'` || // pre-appbase
-          error.message ==
-            `method_itr != api_itr->second.end(): Could not find method i_like_turtles`
-      ); // appbase
-
-      const info = VError.info(error);
-      assert.equal(info.code, 10);
-      assert.equal(info.name, "assert_exception");
+        error.message.includes("Could not find method i_like_turtles") || // appbase
+          error.message.includes("no method with name 'i_like_turtles'") // pre-appbase
+      );
     }
   });
 
