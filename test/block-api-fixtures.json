@@ -1,0 +1,126 @@
+{
+  "get_block": {
+    "block": {
+      "witness": "guiltyparties",
+      "block_id": "055d4a77a15fab4d3d8fa337a388f638f8c1f9d3",
+      "previous": "055d4a760b8b6430f90fc0dbbb5500d16512e8fe",
+      "timestamp": "2024-10-21T21:53:21",
+      "extensions": [],
+      "signing_key": "STM7ZLZ6q85bPyes4tWJFvprMUzgnY1gNDfGLoe7k4NzwABsjC6Zk",
+      "transactions": [
+        {
+          "expiration": "2024-10-21T21:54:18",
+          "extensions": [],
+          "operations": [
+            {
+              "type": "vote_operation",
+              "value": {
+                "voter": "soma.unony",
+                "author": "himalayanwomb",
+                "weight": 1000,
+                "permlink": "mt-patalsu-summit-13944-feet"
+              }
+            }
+          ],
+          "signatures": [
+            "203b9cba109acdd11bf3287dc097760b778f3c5eda7d20f2aded18dd5b90fa6532401ac19dddb7dd8657f5f8434df1a1896891a8fb183ab655657905a3c08b410b"
+          ],
+          "ref_block_num": 19062,
+          "ref_block_prefix": 811895563
+        },
+        {
+          "expiration": "2024-10-21T22:03:13",
+          "extensions": [],
+          "operations": [
+            {
+              "type": "transfer_operation",
+              "value": {
+                "to": "zing.sale",
+                "from": "giuatt07",
+                "memo": "{\"action\":\"purchase\",\"packCount\":1}",
+                "amount": {
+                  "nai": "@@000000013",
+                  "amount": "14000",
+                  "precision": 3
+                }
+              }
+            }
+          ],
+          "signatures": [
+            "207d2e56cb50dd92a3f8cbd81c86e719b82cbdc26d0134f90854552327a8604dae0e1ecdd4ec991e41dc0737b8c1e7e9c117dcbaacbc6b6b6f4093fbf948c4aa50"
+          ],
+          "ref_block_num": 19061,
+          "ref_block_prefix": 541094824
+        },
+        {
+          "expiration": "2024-10-21T21:54:12",
+          "extensions": [],
+          "operations": [
+            {
+              "type": "claim_account_operation",
+              "value": {
+                "fee": {
+                  "nai": "@@000000021",
+                  "amount": "0",
+                  "precision": 3
+                },
+                "creator": "ecency",
+                "extensions": []
+              }
+            }
+          ],
+          "signatures": [
+            "1f25a96722d05a23b7d0637cf63d64dd454ccd5854ce4e71aa8a26b34d77e7f31028e870649de866e932d44a6e0f9a93cc66b25be10fe58ff4ec5738a56ad6064e"
+          ],
+          "ref_block_num": 19060,
+          "ref_block_prefix": 2578742720
+        }
+      ],
+      "transaction_ids": [
+        "9fe7f00f52d5980ecf52e4933a493a25a37a1ddf",
+        "f58d8489240f2469325acaa58165871abd1390e0",
+        "9b1b04fb28be2e226d9f12d53cb2b6eb0d897e94"
+      ],
+      "witness_signature": "20faa4eb6318e9268c5ba2dac509c018e5e23b9a14dd796ba89633afed919956a83041a4bcb39b90b189bacaccfd54c222e23f505e683f239e400ca61d657ac918",
+      "transaction_merkle_root": "75d49019a391aa20ad7cbb4c0c491f29ab80b4fc"
+    }
+  },
+  "get_block_header": {
+    "header": {
+      "witness": "guiltyparties",
+      "previous": "055d4a760b8b6430f90fc0dbbb5500d16512e8fe",
+      "timestamp": "2024-10-21T21:53:21",
+      "extensions": [],
+      "transaction_merkle_root": "75d49019a391aa20ad7cbb4c0c491f29ab80b4fc"
+    }
+  },
+  "get_block_range": {
+    "blocks": [
+      {
+        "witness": "initminer",
+        "block_id": "0000000109833ce528d5bbfb3f6225b39ee10086",
+        "previous": "0000000000000000000000000000000000000000",
+        "timestamp": "2016-03-24T16:05:00",
+        "extensions": [],
+        "signing_key": "STM8GC13uCZbP44HzMLV6zPZGwVQ8Nt4Kji8PapsPiNq1BK153XTX",
+        "transactions": [],
+        "transaction_ids": [],
+        "witness_signature": "204f8ad56a8f5cf722a02b035a61b500aa59b9519b2c33c77a80c0a714680a5a5a7a340d909d19996613c5e4ae92146b9add8a7a663eef37d837ef881477313043",
+        "transaction_merkle_root": "0000000000000000000000000000000000000000"
+      },
+      {
+        "witness": "initminer",
+        "block_id": "00000002ed04e3c3def0238f693931ee7eebbdf1",
+        "previous": "0000000109833ce528d5bbfb3f6225b39ee10086",
+        "timestamp": "2016-03-24T16:05:36",
+        "extensions": [],
+        "signing_key": "STM8GC13uCZbP44HzMLV6zPZGwVQ8Nt4Kji8PapsPiNq1BK153XTX",
+        "transactions": [],
+        "transaction_ids": [],
+        "witness_signature": "1f3e85ab301a600f391f11e859240f090a9404f8ebf0bf98df58eb17f455156e2d16e1dcfc621acb3a7acbedc86b6d2560fdd87ce5709e80fa333a2bbb92966df3",
+        "transaction_merkle_root": "0000000000000000000000000000000000000000"
+      }
+    ]
+  },
+  "missing": {}
+}
