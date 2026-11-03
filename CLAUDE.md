@@ -4,7 +4,7 @@
 
 dhive is a TypeScript RPC client library for the Hive blockchain. It provides a robust API for interacting with Hive nodes, supporting both Node.js and browser environments. The library handles blockchain operations, cryptographic signing, transaction broadcasting, and chain state queries.
 
-**Version**: 1.3.2
+**Version**: 1.4.0
 **License**: BSD-3-Clause-No-Military-License
 
 ## Tech Stack
@@ -139,7 +139,7 @@ make eslint       # Run ESLint
 ### Build Outputs
 
 - `lib/` - CommonJS modules
-- `dist/dhive.js` - Browser bundle (922KB, 209KB gzipped)
+- `dist/dhive.js` - Browser bundle (1.24MB, 257KB gzipped)
 - `dist/dhive.d.ts` - TypeScript definitions
 - CDN: `https://unpkg.com/@hiveio/dhive@latest/dist/dhive.js`
 
