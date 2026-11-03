@@ -1,5 +1,6 @@
 import "mocha";
 import assert = require("assert");
+import { execFile } from "child_process";
 import * as http from "http";
 import { AddressInfo } from "net";
 
@@ -164,6 +165,119 @@ describe("client (local nodes)", function() {
     const thrown = await callError({ code: -32601, message: "Could not find method get_content" });
     assert.equal(thrown.name, "RPCError");
     assert.equal(thrown.message, "Could not find method get_content");
+  });
+});
+
+describe("client fetch selection", function() {
+  this.slow(500);
+  this.timeout(10 * 1000);
+
+  const FALLBACK_MODULES = /[\\/]node_modules[\\/](\.pnpm[\\/][^\\/]+[\\/]node_modules[\\/])?(node-fetch|whatwg-url|cross-fetch)[\\/]/;
+  const loadedFallbackModules = () => Object.keys(require.cache).filter((id) => FALLBACK_MODULES.test(id));
+
+  const globalFetch = globalThis.fetch;
+  let globalFetchCalls: string[];
+  let node: LocalNode;
+
+  beforeEach(async function() {
+    node = await startNode();
+    globalFetchCalls = [];
+    globalThis.fetch = (input: any, init?: any) => {
+      globalFetchCalls.push(String(input));
+      return globalFetch(input, init);
+    };
+  });
+
+  afterEach(async function() {
+    globalThis.fetch = globalFetch;
+    await node.close();
+  });
+
+  it("should use the global fetch and not load node-fetch when no agent is set", async function() {
+    for (const id of loadedFallbackModules()) {
+      delete require.cache[id];
+    }
+    const client = new Client(node.url);
+    assert.equal(await client.call("condenser_api", "get_config"), "ok");
+    assert.deepEqual(globalFetchCalls, [node.url]);
+    assert.equal(node.requests[0]["user-agent"], `dhive/${VERSION}`);
+    assert.deepEqual(loadedFallbackModules(), []);
+  });
+
+  it("should send the request through the agent when one is set", async function() {
+    const agent = new http.Agent();
+    const createConnection = (agent as any).createConnection;
+    let connections = 0;
+    (agent as any).createConnection = function(...args: any[]) {
+      connections++;
+      return createConnection.apply(this, args);
+    };
+    const client = new Client(node.url, { agent });
+    try {
+      assert.equal(await client.call("condenser_api", "get_config"), "ok");
+    } finally {
+      agent.destroy();
+    }
+    assert.equal(connections, 1);
+    assert.deepEqual(globalFetchCalls, []);
+    assert.equal(node.requests.length, 1);
+  });
+
+  it("should fall back to cross-fetch when there is no global fetch", async function() {
+    delete (globalThis as any).fetch;
+    const client = new Client(node.url);
+    assert.equal(await client.call("condenser_api", "get_config"), "ok");
+    assert.equal(node.requests.length, 1);
+    assert(loadedFallbackModules().some((id) => /node-fetch/.test(id)));
+  });
+
+  it("should fail a broadcast over to the next node when the global fetch is refused", async function() {
+    const refused = await startNode();
+    await refused.close();
+    const client = new Client([refused.url, node.url]);
+    client.currentAddress = refused.url;
+    assert.equal(await client.call("network_broadcast_api", "broadcast_transaction", []), "ok");
+    assert.deepEqual(globalFetchCalls, [refused.url, node.url]);
+    assert.equal(client.currentAddress, node.url);
+  });
+
+  it("should time a stalled read out through the global fetch and fail over", async function() {
+    const stalled = http.createServer(() => undefined);
+    await new Promise<void>((resolve) => stalled.listen(0, "127.0.0.1", resolve));
+    const stalledUrl = `http://127.0.0.1:${(stalled.address() as AddressInfo).port}`;
+    const client = new Client([stalledUrl, node.url]);
+    client.currentAddress = stalledUrl;
+    try {
+      assert.equal(await client.call("condenser_api", "get_config"), "ok");
+    } finally {
+      stalled.closeAllConnections();
+      await new Promise<void>((resolve) => stalled.close(() => resolve()));
+    }
+    assert.deepEqual(globalFetchCalls, [stalledUrl, node.url]);
+  });
+
+  it("should not print a punycode deprecation warning for a client call", async function() {
+    // Node only warns when the require of punycode comes from outside node_modules (e.g. a bundled
+    // node-fetch), so the child reports every require of it the way Node would there.
+    const script = `
+      const Module = require("module");
+      const load = Module._load;
+      Module._load = function(request, ...rest) {
+        if (request === "punycode") {
+          process.emitWarning("The punycode module is deprecated.", "DeprecationWarning", "DEP0040");
+        }
+        return load.call(this, request, ...rest);
+      };
+      const { Client } = require("./src");
+      new Client(${JSON.stringify(node.url)}).call("condenser_api", "get_config")
+        .then((result) => { if (result !== "ok") { process.exit(2); } }, () => process.exit(3));
+    `;
+    const stderr = await new Promise<string>((resolve, reject) => {
+      execFile(process.execPath, ["--require", "tsx/cjs", "-e", script], { cwd: `${__dirname}/..` },
+        (error, _stdout, output) => (error ? reject(error) : resolve(output)));
+    });
+    assert.equal(node.requests.length, 1);
+    assert.doesNotMatch(stderr, /punycode|DEP0040/);
   });
 });
 
