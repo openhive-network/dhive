@@ -421,37 +421,8 @@ export class Client {
         // We record it as an API-specific failure so the health tracker can
         // deprioritize this node for this API in future calls.
         if (response.error) {
-            const formatValue = (value: any) => {
-                switch (typeof value) {
-                    case 'object':
-                        return JSON.stringify(value)
-                    default:
-                        return String(value)
-                }
-            }
             const { data } = response.error
-            let { message } = response.error
-            if (data && data.stack && data.stack.length > 0) {
-                const top = data.stack[0]
-                const topData = copy(top.data)
-                message = top.format.replace(
-                    /\$\{([a-z_]+)\}/gi,
-                    (match: string, key: string) => {
-                        let rv = match
-                        if (topData[key]) {
-                            rv = formatValue(topData[key])
-                            delete topData[key]
-                        }
-                        return rv
-                    }
-                )
-                const unformattedData = Object.keys(topData)
-                    .map((key) => ({ key, value: formatValue(topData[key]) }))
-                    .map((item) => `${item.key}=${item.value}`)
-                if (unformattedData.length > 0) {
-                    message += ' ' + unformattedData.join(' ')
-                }
-            }
+            const message = rpcErrorMessage(response.error)
 
             // Track RPC errors that indicate node/plugin issues (not user errors).
             // JSON-RPC error codes (response.error.code):
@@ -483,3 +454,50 @@ export class Client {
  */
 const defaultBackoff = (tries: number): number =>
     Math.min(Math.pow(tries * 10, 2), 10 * 1000)
+
+const formatValue = (value: any) => {
+    switch (typeof value) {
+        case 'object':
+            return JSON.stringify(value)
+        default:
+            return String(value)
+    }
+}
+
+/**
+ * Builds the message of an RPCError from a JSON-RPC error object.
+ * Uses the top stack entry's format (hived) when it is non-blank, otherwise
+ * the node's own message plus any assertion expression (e.g. hivemind).
+ */
+const rpcErrorMessage = (error: { message: string, data?: any }): string => {
+    const { data } = error
+    if (data && data.stack && data.stack.length > 0) {
+        const top = data.stack[0]
+        const topData = copy(top.data || {})
+        let message = (top.format || '').replace(
+            /\$\{([a-z_]+)\}/gi,
+            (match: string, key: string) => {
+                let rv = match
+                if (topData[key]) {
+                    rv = formatValue(topData[key])
+                    delete topData[key]
+                }
+                return rv
+            }
+        )
+        if (message.trim().length > 0) {
+            const unformattedData = Object.keys(topData)
+                .map((key) => ({ key, value: formatValue(topData[key]) }))
+                .map((item) => `${item.key}=${item.value}`)
+            if (unformattedData.length > 0) {
+                message += ' ' + unformattedData.join(' ')
+            }
+            return message
+        }
+    }
+    const assertion = data && data.extension && data.extension.assertion_expression
+    if (typeof assertion === 'string' && assertion.length > 0 && !error.message.includes(assertion)) {
+        return `${error.message}: ${assertion}`
+    }
+    return error.message
+}
