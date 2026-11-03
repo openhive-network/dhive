@@ -47,6 +47,8 @@ import {TransactionStatusAPI} from './helpers/transaction'
 import { NodeHealthTracker, HealthTrackerOptions } from './health-tracker'
 import { copy, retryingFetch, waitForEvent } from './utils'
 
+let testnetDeprecationWarned = false
+
 /**
  * Library version.
  */
@@ -287,18 +289,33 @@ export class Client {
     }
 
     /**
-     * Create a new client instance configured for the testnet.
+     * Create a new client instance configured for the Hive mirrornet,
+     * which mirrors mainnet data under a separate chain id.
      */
-    public static testnet(options?: ClientOptions) {
+    public static mirrornet(options?: ClientOptions) {
         let opts: ClientOptions = {}
         if (options) {
             opts = copy(options)
             opts.agent = options.agent
         }
 
-        opts.addressPrefix = 'TST'
-        opts.chainId = '18dcf0a285365fc58b71f18b3d3fec954aa0c141c44e4e5cb4cf777b9eab274e'
-        return new Client('https://testnet.openhive.network', opts)
+        opts.addressPrefix = 'STM'
+        opts.chainId = '4200000000000000000000000000000000000000000000000000000000000000'
+        return new Client('https://api.fake.openhive.network', opts)
+    }
+
+    /**
+     * @deprecated The Hive testnet (testnet.openhive.network) no longer exists.
+     * This returns a mirrornet client; use {@link Client.mirrornet} instead.
+     */
+    public static testnet(options?: ClientOptions) {
+        if (!testnetDeprecationWarned) {
+            testnetDeprecationWarned = true
+            // tslint:disable-next-line: no-console
+            console.warn('Client.testnet() is deprecated: the Hive testnet no longer exists. ' +
+                'It now returns a mirrornet client; use Client.mirrornet() instead.')
+        }
+        return Client.mirrornet(options)
     }
 
     /**
@@ -344,10 +361,8 @@ export class Client {
 
         // Self is not defined within Node environments
         // This check is needed because the user agent cannot be set in a browser
-        if (typeof self === undefined) {
-            opts.headers = {
-                'User-Agent': `dhive/${packageVersion}`
-            }
+        if (typeof self === 'undefined') {
+            opts.headers['User-Agent'] = `dhive/${packageVersion}`
         }
 
         if (this.options.agent) {
