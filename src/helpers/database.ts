@@ -156,6 +156,8 @@ export class DatabaseAPI {
 
   /**
    * Return header for *blockNum*.
+   * @deprecated Use `client.block.getBlockHeader`, which reads `block_api`
+   * (served by HAfAH on HAF API nodes) and returns the `block_api` format.
    */
   public getBlockHeader(blockNum: number): Promise<BlockHeader> {
     return this.call('get_block_header', [blockNum])
@@ -163,6 +165,8 @@ export class DatabaseAPI {
 
   /**
    * Return block *blockNum*.
+   * @deprecated Use `client.block.getBlock`, which reads `block_api`
+   * (served by HAfAH on HAF API nodes) and returns the `block_api` format.
    */
   public getBlock(blockNum: number): Promise<SignedBlock> {
     return this.call('get_block', [blockNum])

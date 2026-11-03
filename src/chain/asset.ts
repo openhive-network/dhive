@@ -293,3 +293,22 @@ export class Price {
     }
   }
 }
+
+/**
+ * Asset in the NAI (numeric asset identifier) format used by `block_api`,
+ * e.g. `{nai: '@@000000013', amount: '1000', precision: 3}` for `1.000 HBD`.
+ * `amount` is the integer number of the smallest units, as a string.
+ */
+export interface NaiAsset {
+    nai: string
+    amount: string
+    precision: number
+}
+
+/**
+ * Price whose sides are NAI assets.
+ */
+export interface NaiPrice {
+    base: NaiAsset
+    quote: NaiAsset
+}

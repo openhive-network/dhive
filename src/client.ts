@@ -37,6 +37,7 @@ import assert = require('assert')
 import { VError } from 'verror'
 import packageVersion from './version'
 
+import { BlockAPI } from './helpers/block'
 import { Blockchain } from './helpers/blockchain'
 import { BroadcastAPI } from './helpers/broadcast'
 import { DatabaseAPI } from './helpers/database'
@@ -214,6 +215,11 @@ export class Client {
     public readonly blockchain: Blockchain
 
     /**
+     * Block API helper, returning blocks in the `block_api` format.
+     */
+    public readonly block: BlockAPI
+
+    /**
      * Hivemind helper.
      */
     public readonly hivemind: HivemindAPI
@@ -282,6 +288,7 @@ export class Client {
         this.database = new DatabaseAPI(this)
         this.broadcast = new BroadcastAPI(this)
         this.blockchain = new Blockchain(this)
+        this.block = new BlockAPI(this)
         this.rc = new RCAPI(this)
         this.hivemind = new HivemindAPI(this)
         this.keys = new AccountByKeyAPI(this)
