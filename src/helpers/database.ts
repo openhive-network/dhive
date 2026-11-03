@@ -48,6 +48,11 @@ import { Client } from './../client'
 
 /**
  * Possible categories for `get_discussions_by_*`.
+ *
+ * Hivemind serves only `blog`, `comments`, `created`, `feed`, `hot` and `trending`
+ * (`get_condenser_api_method` in hivemind's
+ * `hive/db/sql_scripts/postgrest/utilities/get_api_method.sql`). The other categories
+ * were removed from the API and fail with a method-not-found error.
  */
 export type DiscussionQueryCategory =
   | 'active'
@@ -62,41 +67,92 @@ export type DiscussionQueryCategory =
   | 'votes'
   | 'created'
 
+/**
+ * Query for {@link DatabaseAPI.getDiscussions}, sent to hivemind's
+ * `condenser_api.get_discussions_by_*`.
+ *
+ * Hivemind validates the query with `validate_json_arguments`
+ * (`hive/db/sql_scripts/postgrest/utilities/validate_json_arguments.sql`) against the
+ * keys each endpoint accepts: `condenser_api_get_discussions_by` for
+ * `created`/`hot`/`trending`, `condenser_api_get_discussions_by_blog_or_feed` for
+ * `blog`/`feed` and `condenser_api_get_discussions_by_comments` for `comments`, all in
+ * `hive/db/sql_scripts/postgrest/condenser_api/`. A key it does not accept fails with
+ * `got an unexpected keyword argument '<key>'`, except that the check is skipped when
+ * fewer recognized keys than the endpoint requires (2 for `created`/`hot`/`trending`,
+ * 1 for the others) are passed; the unknown key is then silently ignored.
+ */
 export interface DisqussionQuery {
   /**
-   * Name of author or tag to fetch.
+   * For `created`, `hot` and `trending`: the tag or community (`hive-NNNNNN`) to list;
+   * omit or pass `''` for all posts.
+   * For `blog` and `feed`: the account whose blog or feed to list; required.
+   * Not accepted for `comments` (rejected as an unexpected keyword); use `start_author`.
    */
   tag?: string
   /**
-   * Number of results, max 100.
+   * Number of results, default 20. Hivemind rejects values outside 1 to its
+   * `hivemind_app.max_posts_per_call` setting, which defaults to 20
+   * (`get_max_posts_per_call_limit` in `utilities/api_limits.sql`).
    */
   limit: number
+  /**
+   * Not supported. Hivemind rejects any value, including `[]`, with
+   * `filter_tags not supported`.
+   */
   filter_tags?: string[]
+  /**
+   * Not supported. Hivemind does not accept this key and rejects it as an
+   * unexpected keyword argument.
+   */
   select_authors?: string[]
+  /**
+   * Not supported. Hivemind does not accept this key and rejects it as an
+   * unexpected keyword argument.
+   */
   select_tags?: string[]
   /**
-   * Number of bytes of post body to fetch, default 0 (all)
+   * Number of characters of each post body to return, default 0 (whole body).
    */
   truncate_body?: number
   /**
-   * Name of author to start from, used for paging.
+   * Author of the post to start from, used for paging; the post must exist.
    * Should be used in conjunction with `start_permlink`.
+   * For `comments` this is required and names the account whose comments to list.
    */
   start_author?: string
   /**
    * Permalink of post to start from, used for paging.
    * Should be used in conjunction with `start_author`.
+   * For `comments`, omit it to start from the newest comment.
    */
   start_permlink?: string
+  /**
+   * Not supported. Hivemind does not accept this key and rejects it as an
+   * unexpected keyword argument.
+   */
   parent_author?: string
+  /**
+   * Not supported. Hivemind does not accept this key and rejects it as an
+   * unexpected keyword argument.
+   */
   parent_permlink?: string
 }
 
+/**
+ * Chain state queries.
+ *
+ * Despite its name, every method of this helper, including {@link DatabaseAPI.call},
+ * calls `condenser_api`, not `database_api`. Call `database_api` methods with
+ * {@link Client.call}, e.g.
+ * `client.call('database_api', 'find_accounts', { accounts: ['alice'] })`.
+ */
 export class DatabaseAPI {
   constructor(readonly client: Client) {}
 
   /**
-   * Convenience for calling `database_api`.
+   * Convenience for calling `condenser_api`, which takes positional `params`.
+   * To call a `database_api` method use
+   * `client.call('database_api', method, params)` instead.
    */
   public call(method: string, params?: any[]) {
     return this.client.call('condenser_api', method, params)
