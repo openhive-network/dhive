@@ -139,6 +139,18 @@ stream
   .pipe(process.stdout);
 ```
 
+### Reading blocks: `client.block` or `client.database.getBlock`
+
+Use `client.block` in new code. It calls `block_api`, which HAF API nodes serve from HAfAH rather than hived, and plain hived nodes serve as well. Blocks come in the `block_api` format: operations are `{type: "vote_operation", value: {...}}` objects, assets are NAI objects such as `{nai: "@@000000013", amount: "1000", precision: 3}`, and transactions carry no `transaction_id`, `block_num` or `transaction_num` (the ids are in the block's `transaction_ids`). A missing block is `null`.
+
+```typescript
+const block = await client.block.getBlock(90000000); // BlockApiSignedBlock | null
+const header = await client.block.getBlockHeader(90000000);
+const blocks = await client.block.getBlockRange(90000000, 10); // up to 1000 per call
+```
+
+`client.database.getBlock` and `getBlockHeader` are deprecated but unchanged: they call `condenser_api` and return the legacy format (`["vote", {...}]` operations, `"1.000 HBD"` asset strings). Keep them only for code that depends on that format. `client.blockchain.getBlocks()` and `getBlockStream()` still use the condenser path.
+
 ## Bundling
 
 The easiest way to bundle dhive (with browserify, webpack etc.) is to just `npm install @hiveio/dhive` and `require('@hiveio/dhive')` which will give you well-tested (see browser compatibility matrix above) pre-bundled code guaranteed to JustWork™. However, that is not always desirable since it will not allow your bundler to de-duplicate any shared dependencies dhive and your app might have.
